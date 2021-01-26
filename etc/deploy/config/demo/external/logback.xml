@@ -11,7 +11,7 @@
 
 	<property name="LOGS_HOME" value="/data/edatos-external/roadmap/logs" />
 
-	<!-- <turboFilter class="es.gobcan.istac.statistical.operations.roadmap.core.util.ExpiringDuplicateMessageFilter"> -->
+	<!-- <turboFilter class="ExpiringDuplicateMessageFilter"> -->
 	<!-- <allowedRepetitions>4</allowedRepetitions> -->
 	<!-- <cacheSize>200</cacheSize> -->
 	<!-- <expireAfterWriteSeconds>1800</expireAfterWriteSeconds> -->
