@@ -115,7 +115,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         casAuthenticationProvider.setAuthenticationUserDetailsService(authenticationUserDetailsService());
         casAuthenticationProvider.setServiceProperties(serviceProperties());
         casAuthenticationProvider.setTicketValidator(casServiceTicketValidator());
-        casAuthenticationProvider.setKey("STATISTICAL_OPERATIONS_ROADMAP_CAS");
+        casAuthenticationProvider.setKey("EDATOS_EXTERNAL_USERS_CAS");
         return casAuthenticationProvider;
     }
 

@@ -219,7 +219,7 @@
 	<dependencyManagement>
 		<dependencies>
 
-			<!-- Statistical Operations Roadmap -->
+			<!-- eDatos External Users -->
 
 			<dependency>
 				<groupId>es.gobcan.istac.edatos-external-users</groupId>

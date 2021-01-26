@@ -36,7 +36,7 @@ public class EdatosExternalUsersCoreTestApp {
     }
 
     /**
-     * Initializes statistical_operations_roadmap.
+     * Initializes edatos_external_users.
      * <p>
      * Spring profiles can be configured with a program arguments
      * --spring.profiles.active=your-active-profile

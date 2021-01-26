@@ -106,7 +106,7 @@
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>${docker-maven-plugin.version}</version>
 				<configuration>
-					<imageName>statistical_operations_roadmap</imageName>
+					<imageName>edatos_external_users</imageName>
 					<dockerDirectory>src/main/docker</dockerDirectory>
 					<resources>
 						<resource>

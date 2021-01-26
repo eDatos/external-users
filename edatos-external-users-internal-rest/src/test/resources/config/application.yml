@@ -16,7 +16,7 @@
 
 spring:
     application:
-        name: statistical_operations_roadmap
+        name: edatos_external_users
     jackson:
         serialization.write_dates_as_timestamps: false
     cache:

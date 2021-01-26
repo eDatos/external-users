@@ -26,7 +26,7 @@ import io.github.jhipster.config.liquibase.AsyncSpringLiquibase;
 import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "es.gobcan.istac.statistical.operations.roadmap.core.repository", repositoryFactoryBeanClass = ArteJpaRepositoryFactoryBean.class)
+@EnableJpaRepositories(basePackages = "es.gobcan.istac.edatos.external.users.core.repository", repositoryFactoryBeanClass = ArteJpaRepositoryFactoryBean.class)
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {

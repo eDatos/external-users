@@ -1,12 +1,12 @@
 version: '2'
 services:
-    statistical_operations_roadmap-postgresql:
+    edatos_external_users-postgresql:
         image: postgres:9.6.2
         # volumes:
-        #     - ~/volumes/jhipster/statistical_operations_roadmap/postgresql/:/var/lib/postgresql/data/
+        #     - ~/volumes/jhipster/edatos_external_users/postgresql/:/var/lib/postgresql/data/
         environment:
-            - POSTGRES_USER=statistical_operations_roadmap
-            - POSTGRES_PASSWORD=statistical_operations_roadmap
+            - POSTGRES_USER=edatos_external_users
+            - POSTGRES_PASSWORD=edatos_external_users
             - POSTGRES_DB=dev
         ports:
             - 5432:5432
