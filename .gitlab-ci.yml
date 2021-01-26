@@ -28,8 +28,8 @@ build:
     - 'mvn $MAVEN_CLI_OPTS deploy -s /tmp/settings.xml '
   artifacts:
     paths:
-    - statistical-operations-roadmap-internal-web/target/*.war
-    - statistical-operations-roadmap-external-web/target/*.war    
+    - edatos-external-users-internal-web/target/*.war
+    - edatos-external-users-external-web/target/*.war
   only:
     - develop
 
@@ -48,8 +48,8 @@ release:
       fi
   artifacts:
     paths:
-    - statistical-operations-roadmap-internal-web/target/*.war
-    - statistical-operations-roadmap-external-web/target/*.war 
+    - edatos-external-users-internal-web/target/*.war
+    - edatos-external-users-external-web/target/*.war
   only:
     - master
   when: manual

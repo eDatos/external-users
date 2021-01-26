@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'statistical-operations-roadmap'`, () => {
+  it(`should have as title 'edatos-external-users'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('statistical-operations-roadmap');
+    expect(app.title).toEqual('edatos-external-users');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('statistical-operations-roadmap app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('edatos-external-users app is running!');
   });
 });

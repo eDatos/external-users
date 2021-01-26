@@ -52,13 +52,13 @@ La plantilla consta de una aplicación con interfaz web y un servicio web REST.
 - Definir si se desea externalizar la configuración de la aplicación o mantener dentro del propio archivo war.
     1. Si no se desea externalizar la configuración de las propiedades a un directorio DATA se puede omitir este paso.
     2. Si se desea externalizar la configuración de las propiedades a un directorio DATA se tendrán que realizar los siguientes pasos:
-        - Se hará una copia del archivo **statistical-operations-roadmap.war/WEB-INF/classes/config/application-env.yml** a un directorio externalizado de su elección.
-        - Se editará el archivo **statistical-operations-roadmap.war/WEB-INF/classes/config/data-location.properties** y se especificará la ruta anterior.
+        - Se hará una copia del archivo **edatos-external-users.war/WEB-INF/classes/config/application-env.yml** a un directorio externalizado de su elección.
+        - Se editará el archivo **edatos-external-users.war/WEB-INF/classes/config/data-location.properties** y se especificará la ruta anterior.
 - Se cumplimentarán las propiedades del fichero **application-env.yml**. Se puede consultar el detalle sobre cada una de las propiedades en el [Anexo de descripción de propiedades de configuración](#anexo-descripci%C3%B3n-de-las-propiedades-de-configuraci%C3%B3n).
 
 
 ### Paso 3. Configuración de logging.
-Pueden modificarse los ficheros relacionados con la configuración de logging en **statistical-operations-roadmap.war/WEB-INF/classes/logback.xml**.
+Pueden modificarse los ficheros relacionados con la configuración de logging en **edatos-external-users.war/WEB-INF/classes/logback.xml**.
 
 ### Paso 4. Arrancar la aplicación.
 

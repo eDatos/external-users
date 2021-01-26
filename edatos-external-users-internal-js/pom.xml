@@ -85,7 +85,7 @@
 							<outputDirectory>${project.build.directory}/META-INF/resources</outputDirectory>
 							<resources>
 								<resource>
-									<directory>webapp/dist/statistical-operations-roadmap</directory>
+									<directory>webapp/dist/edatos-external-users</directory>
 									<filtering>false</filtering>
 								</resource>
 							</resources>

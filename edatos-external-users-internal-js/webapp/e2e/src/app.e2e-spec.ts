@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('statistical-operations-roadmap app is running!');
+    expect(page.getTitleText()).toEqual('edatos-external-users app is running!');
   });
 
   afterEach(async () => {
