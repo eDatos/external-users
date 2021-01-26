@@ -10,18 +10,18 @@
 		<relativePath />
 	</parent>
 
-	<groupId>es.gobcan.istac.statistical-operations</groupId>
-	<artifactId>statistical-operations-roadmap</artifactId>
+	<groupId>es.gobcan.istac.edatos-external-users</groupId>
+	<artifactId>edatos-external-users</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Statistical Operations Roadmap</name>
+	<name>eDatos External Users</name>
 
 	<scm>
-		<connection>scm:git:http://git.arte-consultores.com/istac/statistical-operations-roadmap/</connection>
-		<developerConnection>scm:git:http://git.arte-consultores.com/istac/statistical-operations-roadmap/</developerConnection>
+		<connection>scm:git:http://git.arte-consultores.com/istac/edatos-external-users/</connection>
+		<developerConnection>scm:git:http://git.arte-consultores.com/istac/edatos-external-users/</developerConnection>
 		<tag>HEAD</tag>
-		<url>http://git.arte-consultores.com/istac/statistical-operations-roadmap</url>
+		<url>http://git.arte-consultores.com/istac/edatos-external-users</url>
 	</scm>
 	<issueManagement>
 		<system>Jira</system>
@@ -193,25 +193,25 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-				<module>statistical-operations-roadmap-core</module>
-				<module>statistical-operations-roadmap-internal-rest</module>
-				<module>statistical-operations-roadmap-internal-web</module>
-				<module>statistical-operations-roadmap-internal-api-impl</module>
-				<module>statistical-operations-roadmap-external-api-impl</module>
-				<module>statistical-operations-roadmap-external-web</module>
+				<module>edatos-external-users-core</module>
+				<module>edatos-external-users-internal-rest</module>
+				<module>edatos-external-users-internal-web</module>
+				<module>edatos-external-users-internal-api-impl</module>
+				<module>edatos-external-users-external-api-impl</module>
+				<module>edatos-external-users-external-web</module>
 			</modules>
 		</profile>
 
 		<profile>
 			<id>env</id>
 			<modules>
-				<module>statistical-operations-roadmap-core</module>
-				<module>statistical-operations-roadmap-internal-rest</module>
-				<module>statistical-operations-roadmap-internal-js</module>
-				<module>statistical-operations-roadmap-internal-web</module>
-				<module>statistical-operations-roadmap-internal-api-impl</module>
-				<module>statistical-operations-roadmap-external-api-impl</module>
-				<module>statistical-operations-roadmap-external-web</module>
+				<module>edatos-external-users-core</module>
+				<module>edatos-external-users-internal-rest</module>
+				<module>edatos-external-users-internal-js</module>
+				<module>edatos-external-users-internal-web</module>
+				<module>edatos-external-users-internal-api-impl</module>
+				<module>edatos-external-users-external-api-impl</module>
+				<module>edatos-external-users-external-web</module>
 			</modules>
 		</profile>
 	</profiles>
@@ -222,33 +222,33 @@
 			<!-- Statistical Operations Roadmap -->
 
 			<dependency>
-				<groupId>es.gobcan.istac.statistical-operations</groupId>
-				<artifactId>statistical-operations-roadmap-core</artifactId>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>es.gobcan.istac.statistical-operations</groupId>
-				<artifactId>statistical-operations-roadmap-internal-rest</artifactId>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-internal-rest</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>es.gobcan.istac.statistical-operations</groupId>
-				<artifactId>statistical-operations-roadmap-internal-js</artifactId>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-internal-js</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>es.gobcan.istac.statistical-operations</groupId>
-				<artifactId>statistical-operations-roadmap-internal-web</artifactId>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-internal-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>es.gobcan.istac.statistical-operations</groupId>
-				<artifactId>statistical-operations-roadmap-internal-api-impl</artifactId>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-internal-api-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>es.gobcan.istac.statistical-operations</groupId>
-				<artifactId>statistical-operations-roadmap-external-api-impl</artifactId>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-external-api-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -546,8 +546,8 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>es.gobcan.istac.statistical-operations</groupId>
-				<artifactId>statistical-operations-roadmap-core</artifactId>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-core</artifactId>
 				<version>${project.version}</version>
 				<type>test-jar</type>
 				<scope>test</scope>
