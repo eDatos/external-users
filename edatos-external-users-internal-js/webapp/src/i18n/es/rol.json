@@ -1,5 +1,5 @@
 {
-    "statisticalOperationsRoadmapApp": {
+    "edatosExternalUsersApp": {
         "rol": {
             "created": "Se ha creado el rol {{ param }}",
             "updated": "Se ha actualizado el rol {{ param }}",

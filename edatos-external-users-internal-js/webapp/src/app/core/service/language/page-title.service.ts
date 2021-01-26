@@ -43,7 +43,7 @@ export class PageTitleService {
 
     
     private get(routeSnapshot: ActivatedRouteSnapshot) {
-        let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'statisticalOperationsRoadmapApp';
+        let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'edatosExternalUsersApp';
         if (routeSnapshot.firstChild) {
             title = this.get(routeSnapshot.firstChild) || title;
         }
