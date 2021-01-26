@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.LoggerContext;
 import es.gobcan.istac.edatos.external.users.internal.rest.vm.LoggerVM;
-import es.gobcan.istac.edatos.external.users.StatisticalOperationsRoadmapRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.internal.rest.resources.LogsResource;
 import es.gobcan.istac.edatos.external.users.internal.rest.util.TestUtil;
 
@@ -30,7 +30,7 @@ import es.gobcan.istac.edatos.external.users.internal.rest.util.TestUtil;
  * @see LogsResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StatisticalOperationsRoadmapRestTestApp.class)
+@SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 public class LogsResourceIntTest {
 
     private static final String ENDPOINT_URL = "/management/logs";

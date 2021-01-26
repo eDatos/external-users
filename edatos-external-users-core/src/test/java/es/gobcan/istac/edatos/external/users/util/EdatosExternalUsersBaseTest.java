@@ -11,7 +11,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.OfficialityTypeEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.SurveySourceEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.SurveyTypeEntity;
 
-public abstract class StatisticalOperationsRoadmapBaseTest extends EDatosBaseTest {
+public abstract class EdatosExternalUsersBaseTest extends EDatosBaseTest {
 
     protected void createOfficialityTypes(EntityManager em, String... identifiers) {
         for (String identifier : identifiers) {

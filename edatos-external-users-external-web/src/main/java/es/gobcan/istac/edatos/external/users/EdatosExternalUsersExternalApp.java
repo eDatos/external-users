@@ -25,13 +25,13 @@ import io.github.jhipster.config.JHipsterConstants;
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({LiquibaseProperties.class})
-public class StatisticalOperationsRoadmapExternalApp {
+public class EdatosExternalUsersExternalApp {
 
-    private static final Logger log = LoggerFactory.getLogger(StatisticalOperationsRoadmapExternalApp.class);
+    private static final Logger log = LoggerFactory.getLogger(EdatosExternalUsersExternalApp.class);
 
     private final Environment env;
 
-    public StatisticalOperationsRoadmapExternalApp(Environment env) {
+    public EdatosExternalUsersExternalApp(Environment env) {
         this.env = env;
     }
 
@@ -53,7 +53,7 @@ public class StatisticalOperationsRoadmapExternalApp {
     }
 
     public static void main(String[] args) throws UnknownHostException {
-        SpringApplication app = new SpringApplication(StatisticalOperationsRoadmapExternalApp.class);
+        SpringApplication app = new SpringApplication(EdatosExternalUsersExternalApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         String protocol = "http";

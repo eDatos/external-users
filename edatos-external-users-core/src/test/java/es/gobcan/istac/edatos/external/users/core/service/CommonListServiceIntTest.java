@@ -23,11 +23,11 @@ import es.gobcan.istac.edatos.external.users.core.domain.OfficialityTypeEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.SurveySourceEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.SurveyTypeEntity;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersCoreTestApp;
-import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsRoadmapBaseTest;
+import es.gobcan.istac.edatos.external.users.util.EdatosExternalUsersBaseTest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersCoreTestApp.class)
-public class CommonListServiceIntTest extends StatisticalOperationsRoadmapBaseTest {
+public class CommonListServiceIntTest extends EdatosExternalUsersBaseTest {
 
     @Autowired
     protected CommonListService commonListService;

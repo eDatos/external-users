@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.gobcan.istac.edatos.external.users.StatisticalOperationsRoadmapRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.NeedTypeEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.NeedTypeRepository;
@@ -39,7 +39,7 @@ import es.gobcan.istac.edatos.external.users.internal.rest.mapper.NeedTypeMapper
 import es.gobcan.istac.edatos.external.users.internal.rest.resources.NeedTypeResource;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StatisticalOperationsRoadmapRestTestApp.class)
+@SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
 public class NeedTypeResourceInTest {
 

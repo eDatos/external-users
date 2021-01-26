@@ -30,7 +30,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.gobcan.istac.edatos.external.users.internal.rest.mapper.NeedStateMapper;
-import es.gobcan.istac.edatos.external.users.StatisticalOperationsRoadmapRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.NeedStateEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.NeedStateRepository;
@@ -39,7 +39,7 @@ import es.gobcan.istac.edatos.external.users.internal.rest.resources.NeedStateRe
 import es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StatisticalOperationsRoadmapRestTestApp.class)
+@SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
 public class NeedStateResourceInTest {
 

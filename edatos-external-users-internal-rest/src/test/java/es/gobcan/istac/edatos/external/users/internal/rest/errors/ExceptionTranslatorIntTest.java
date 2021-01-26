@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import es.gobcan.istac.edatos.external.users.StatisticalOperationsRoadmapRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 
@@ -27,7 +27,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
  * @see ExceptionTranslator
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StatisticalOperationsRoadmapRestTestApp.class)
+@SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 public class ExceptionTranslatorIntTest {
 
     @Autowired

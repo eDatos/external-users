@@ -34,11 +34,11 @@ import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersCoreTestApp;
-import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsRoadmapBaseTest;
+import es.gobcan.istac.edatos.external.users.util.EdatosExternalUsersBaseTest;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersCoreTestApp.class)
-public class FamilyServiceIntTest extends StatisticalOperationsRoadmapBaseTest {
+public class FamilyServiceIntTest extends EdatosExternalUsersBaseTest {
 
     @InjectMocks
     @Resource

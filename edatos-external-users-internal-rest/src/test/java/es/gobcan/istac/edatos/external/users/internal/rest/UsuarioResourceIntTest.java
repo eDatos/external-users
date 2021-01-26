@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.gobcan.istac.edatos.external.users.internal.rest.dto.UsuarioDto;
 import es.gobcan.istac.edatos.external.users.internal.rest.vm.ManagedUserVM;
-import es.gobcan.istac.edatos.external.users.StatisticalOperationsRoadmapRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Rol;
@@ -51,7 +51,7 @@ import es.gobcan.istac.edatos.external.users.internal.rest.util.TestUtil;
  * @see UsuarioResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StatisticalOperationsRoadmapRestTestApp.class)
+@SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
 public class UsuarioResourceIntTest {
 

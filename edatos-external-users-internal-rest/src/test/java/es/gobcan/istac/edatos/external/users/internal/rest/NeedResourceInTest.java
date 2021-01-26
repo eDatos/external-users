@@ -44,7 +44,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import es.gobcan.istac.edatos.external.users.internal.rest.dto.NeedDto;
 import es.gobcan.istac.edatos.external.users.internal.rest.mapper.NeedMapper;
-import es.gobcan.istac.edatos.external.users.StatisticalOperationsRoadmapRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.NeedEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
@@ -57,7 +57,7 @@ import es.gobcan.istac.edatos.external.users.internal.rest.resources.NeedResourc
 import es.gobcan.istac.edatos.external.users.internal.rest.util.TestUtil;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StatisticalOperationsRoadmapRestTestApp.class)
+@SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
 public class NeedResourceInTest {
 
