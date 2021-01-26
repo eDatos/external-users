@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+	<include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20180117115714_added_function_lower_unaccent.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20180118152128_added_procedure_add_usuario_with_existing_rol.xml" relativeToChangelogFile="false" />
+
+	<include file="config/liquibase/changelog/20180126141725_added_entity_Fichero.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20180126141730_added_entity_Documento.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200325111314_added_entity_InternationalString.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200325111315_added_entity_LocalisedString.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200325111316_added_entity_ExternalItem.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200325111317_added_entity_Family.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200406143830_added_entity_SurveyType.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200406143831_added_entity_OfficialityType.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200406143832_added_entity_Operation.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200408095100_added_entity_Cost.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200408095101_added_entity_CollMethod.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200408095102_added_entity_InstanceType.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200408095103_added_entity_SurveySource.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200408095104_added_entity_Instance.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200619095212_added_entity_Need_Type.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200619095426_added_entity_Need_State.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20200619095530_added_entity_Need.xml" relativeToChangelogFile="false" />
+
+</databaseChangeLog>

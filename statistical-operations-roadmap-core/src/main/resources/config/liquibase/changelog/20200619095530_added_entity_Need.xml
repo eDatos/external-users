@@ -1,0 +1,53 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="arte" id="1583415036963-1">
+        <createSequence sequenceName="seq_tb_needs" startValue="1" incrementBy="50" />
+    </changeSet>
+    <changeSet author="arte" id="1583415036963-2">
+        <createTable tableName="tb_needs">
+            <column name="id" type="BIGINT" autoIncrement="${autoIncrement}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp" defaultValueDate="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="timestamp"/>
+            <column name="opt_lock" type="BIGINT"/>
+            <column name="code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="JSON">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="urn" type="VARCHAR(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="identification_date" type="timestamp"/>
+            <column name="type_fk" type="int8"/>
+            <column name="state_fk" type="int8"/>
+            <column name="proc_status" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+            <column name="uuid" type="varchar(36)">
+				<constraints nullable="false" />
+			</column>
+        </createTable>
+    </changeSet>
+    <changeSet author="arte" id="1583415036963-3">
+        <addPrimaryKey columnNames="id" constraintName="tb_needsPK" tableName="tb_needs"/>
+    </changeSet>
+    <changeSet author="arte" id="1584627753720-12">
+        <addUniqueConstraint columnNames="code" constraintName="UKs81evfirssl9rdcfbprs44mmj" tableName="tb_needs"/>
+        <addUniqueConstraint columnNames="uuid" constraintName="UC_TB_NEEDSUUID_COL" tableName="tb_needs" />
+    </changeSet>
+    <changeSet author="arte" id="1584544880149-6">
+        <addForeignKeyConstraint baseColumnNames="type_fk" baseTableName="tb_needs" constraintName="FK5gcng9n7gfaj626w5pcubnhrw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_need_types"/>
+    </changeSet>
+    <changeSet author="arte" id="1584627753720-14">
+        <addForeignKeyConstraint baseColumnNames="state_fk" baseTableName="tb_needs" constraintName="FKas4pxyc9kndaiwjnqsc8swke0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_need_states"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,31 @@
+<div class="page-filters">
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label for="titulo" translate="operation.code.label"></label>
+            <arte-input
+                name="code"
+                [attr.aria-label]="'operation.code.placeholder' | translate"
+                [placeholder]="'operation.code.placeholder'"
+                [(ngModel)]="filters.code"
+                (keyup)="filter()"
+            ></arte-input>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="titulo" translate="operation.title.label"></label>
+            <arte-input
+                name="title"
+                [attr.aria-label]="'operation.title.placeholder' | translate"
+                [placeholder]="'operation.title.placeholder'"
+                [(ngModel)]="filters.title"
+                (keyup)="filter()"
+            ></arte-input>
+        </div>
+    </div>
+
+    <div class="page-filters-btns">
+        <button class="btn btn-default" (click)="resetFilters();">
+            <i class="fa fa-times"></i>
+            <span translate="entity.action.filtersReset"></span>
+        </button>
+    </div>
+</div>

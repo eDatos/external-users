@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<property name="now" value="now()" dbms="h2" />
+
+	<property name="now" value="current_timestamp" dbms="postgresql" />
+
+	<property name="floatType" value="float4" dbms="postgresql, h2" />
+	<property name="floatType" value="float" dbms="mysql, oracle, mssql" />
+
+	<changeSet id="20200406143832-0" author="arte">
+		<createSequence sequenceName="seq_tb_operations" startValue="1" incrementBy="50" />
+	</changeSet>
+	<changeSet id="20200406143832-1" author="arte">
+		<createTable tableName="tb_operations">
+			<column name="id" type="bigint" autoIncrement="${autoIncrement}">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="code" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="urn" type="varchar(4000)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="currently_active" type="boolean">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="indicator_system" type="boolean">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="internal_inventory_date" type="timestamp" />
+
+			<column name="inventory_date" type="timestamp" />
+
+			<column name="proc_status" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="release_calendar" type="boolean">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="release_calendar_access" type="varchar(4000)" />
+
+			<column name="status" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="update_date" type="timestamp" />
+
+			<column name="acronym_fk" type="BIGINT" />
+			<column name="comment_fk" type="BIGINT" />
+			<column name="common_metadata_fk" type="BIGINT" />
+			<column name="description_fk" type="BIGINT" />
+			<column name="notes_fk" type="BIGINT" />
+			<column name="objective_fk" type="BIGINT" />
+			<column name="officiality_type_fk" type="BIGINT" />
+			<column name="rel_pol_us_ac_fk" type="BIGINT" />
+			<column name="rev_policy_fk" type="BIGINT" />
+			<column name="rev_practice_fk" type="BIGINT" />
+			<column name="specific_data_sharing_fk" type="BIGINT" />
+			<column name="specific_legal_acts_fk" type="BIGINT" />
+			<column name="subject_area_fk" type="BIGINT" />
+			<column name="survey_type_fk" type="BIGINT" />
+
+			<column name="title_fk" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="uuid" type="varchar(36)">
+				<constraints nullable="false" />
+			</column>
+
+			<column name="created_by" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="created_date" type="timestamp" defaultValueDate="${now}">
+				<constraints nullable="false" />
+			</column>
+			<column name="last_modified_by" type="varchar(50)" />
+			<column name="last_modified_date" type="timestamp" />
+			<column name="opt_lock" type="bigint" />
+
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-2" author="arte">
+		<createTable tableName="tb_ei_producers">
+			<column name="tb_operations" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="producer_fk" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-3" author="arte">
+		<createTable tableName="tb_ei_publishers">
+			<column name="tb_operations" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="publisher_fk" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-4" author="arte">
+		<createTable tableName="tb_ei_reg_contributors">
+			<column name="tb_operations" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="regional_contributor_fk" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-5" author="arte">
+		<createTable tableName="tb_ei_reg_responsibles">
+			<column name="tb_operations" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="regional_responsible_fk" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-6" author="arte">
+		<createTable tableName="tb_ei_secondary_areas">
+			<column name="tb_operations" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="secun_subject_areas_fk" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-7" author="arte">
+		<createTable tableName="tb_ei_update_frequency">
+			<column name="tb_operations" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="update_frequency_fk" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-8" author="arte">
+		<createTable tableName="tb_families_operations">
+			<column name="family" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+			<column name="operation" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="20200406143832-9" author="arte">
+		<addPrimaryKey columnNames="tb_operations, producer_fk" tableName="tb_ei_producers" />
+	</changeSet>
+
+	<changeSet id="20200406143832-10" author="arte">
+		<addPrimaryKey columnNames="tb_operations, publisher_fk" tableName="tb_ei_publishers" />
+	</changeSet>
+
+	<changeSet id="20200406143832-11" author="arte">
+		<addPrimaryKey columnNames="tb_operations, regional_contributor_fk" tableName="tb_ei_reg_contributors" />
+	</changeSet>
+
+	<changeSet id="20200406143832-12" author="arte">
+		<addPrimaryKey columnNames="tb_operations, regional_responsible_fk" tableName="tb_ei_reg_responsibles" />
+	</changeSet>
+
+	<changeSet id="20200406143832-13" author="arte">
+		<addPrimaryKey columnNames="tb_operations, secun_subject_areas_fk" tableName="tb_ei_secondary_areas" />
+	</changeSet>
+
+	<changeSet id="20200406143832-14" author="arte">
+		<addPrimaryKey columnNames="tb_operations, update_frequency_fk" tableName="tb_ei_update_frequency" />
+	</changeSet>
+
+	<changeSet id="20200406143832-15" author="arte">
+		<addPrimaryKey columnNames="family, operation" tableName="tb_families_operations" />
+	</changeSet>
+
+	<changeSet id="20200406143832-16" author="arte">
+		<addForeignKeyConstraint baseColumnNames="rel_pol_us_ac_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_REL_POL_US_51" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="comment_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_COMMENT_FK" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="common_metadata_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_COMMON_META15" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+		<addForeignKeyConstraint baseColumnNames="notes_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_NOTES_FK" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="rev_practice_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_REV_PRACTIC99" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="objective_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_OBJECTIVE_FK" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="description_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_DESCRIPTION82" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="specific_legal_acts_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_SPECIFIC_LE58" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="subject_area_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_SUBJECT_ARE70" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+		<addForeignKeyConstraint baseColumnNames="title_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_TITLE_FK" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="acronym_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_ACRONYM_FK" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="rev_policy_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_REV_POLICY_FK" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="specific_data_sharing_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_SPECIFIC_DA90" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_international_strings" />
+		<addForeignKeyConstraint baseColumnNames="officiality_type_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_OFFICIALITY28" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_lis_officiality_types" />
+		<addForeignKeyConstraint baseColumnNames="survey_type_fk" baseTableName="tb_operations"
+			constraintName="FK_TB_OPERATIONS_SURVEY_TYPE11" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_lis_survey_types" />
+	</changeSet>
+
+	<changeSet id="20200406143832-17" author="arte">
+		<addForeignKeyConstraint baseColumnNames="family" baseTableName="tb_families_operations"
+			constraintName="FKa8i7ypts9sout32yil6jh91my" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_families" />
+		<addForeignKeyConstraint baseColumnNames="operation" baseTableName="tb_families_operations"
+			constraintName="FKhcgmrfbltobfkva1xesv9lg8i" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_operations" />
+	</changeSet>
+
+	<changeSet id="20200406143832-18" author="arte">
+		<addForeignKeyConstraint baseColumnNames="regional_contributor_fk" baseTableName="tb_ei_reg_contributors"
+			constraintName="FKoa2hfwliavc7ovijlt9n38de5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+		<addForeignKeyConstraint baseColumnNames="tb_operations" baseTableName="tb_ei_update_frequency"
+			constraintName="FKreab7ib7kjeusi7kyl30mu8p6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_operations" />
+		<addForeignKeyConstraint baseColumnNames="secun_subject_areas_fk" baseTableName="tb_ei_secondary_areas"
+			constraintName="FKs2jq2ilix0mequqrgtoqp1svp" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+		<addForeignKeyConstraint baseColumnNames="tb_operations" baseTableName="tb_ei_reg_contributors"
+			constraintName="FK3a843rt6n1py8gfopev01jumf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_operations" />
+		<addForeignKeyConstraint baseColumnNames="producer_fk" baseTableName="tb_ei_producers"
+			constraintName="FK7a8hdbwmrna65tms192prvew6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+		<addForeignKeyConstraint baseColumnNames="tb_operations" baseTableName="tb_ei_publishers"
+			constraintName="FKf2q55ogtb38u7qqvsk0s7x7or" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_operations" />
+		<addForeignKeyConstraint baseColumnNames="tb_operations" baseTableName="tb_ei_reg_responsibles"
+			constraintName="FKhhiro80rup1md3xkuxqwmo3bx" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_operations" />
+		<addForeignKeyConstraint baseColumnNames="tb_operations" baseTableName="tb_ei_producers"
+			constraintName="FKhjt4dqqvlhah4ipvg2jrcs8v0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_operations" />
+		<addForeignKeyConstraint baseColumnNames="publisher_fk" baseTableName="tb_ei_publishers"
+			constraintName="FKja6mdrgi6sqte1kejq5qmgty8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+		<addForeignKeyConstraint baseColumnNames="tb_operations" baseTableName="tb_ei_secondary_areas"
+			constraintName="FKklo896lmh1caj5yckmifn01q" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_operations" />
+		<addForeignKeyConstraint baseColumnNames="update_frequency_fk" baseTableName="tb_ei_update_frequency"
+			constraintName="FKld7m2tgryl7i7t8pyjjyal5rt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+		<addForeignKeyConstraint baseColumnNames="regional_responsible_fk" baseTableName="tb_ei_reg_responsibles"
+			constraintName="FKlye3rj2ynicnhyommr61gog7n" deferrable="false" initiallyDeferred="false" referencedColumnNames="id"
+			referencedTableName="tb_external_items" />
+	</changeSet>
+
+	<changeSet id="20200406143832-19" author="arte">
+		<addUniqueConstraint columnNames="uuid" constraintName="UC_TB_OPERATIONSUUID_COL" tableName="tb_operations" />
+		<addUniqueConstraint columnNames="code" constraintName="UKco64l4qvtdjgaae1ysykfftt4" tableName="tb_operations" />
+	</changeSet>
+
+</databaseChangeLog>

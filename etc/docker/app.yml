@@ -1,0 +1,14 @@
+version: '2'
+services:
+    statistical_operations_roadmap-app:
+        image: statistical_operations_roadmap
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://statistical_operations_roadmap-postgresql:5432/statistical_operations_roadmap
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
+    statistical_operations_roadmap-postgresql:
+        extends:
+            file: postgresql.yml
+            service: statistical_operations_roadmap-postgresql
