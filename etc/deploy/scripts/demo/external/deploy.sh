@@ -23,7 +23,7 @@ ssh -o ProxyCommand="ssh -W %h:%p deploy@estadisticas.arte-consultores.com" depl
     . $SCRIPTS_PATH/utilities.sh
     
     ###
-    # STATISTICAL OPERATIONS ROADMAP EXTERNAL
+    # EDATOS EXTERNAL USERS EXTERNAL
     ###
     
     if [ $RESTART -eq 1 ]; then
