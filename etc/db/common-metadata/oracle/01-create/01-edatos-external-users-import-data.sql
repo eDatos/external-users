@@ -32,3 +32,18 @@ commit;
 
 -- commit;
 
+-- Ejemplos para el entorno de demo
+-----------------------------------------
+-- insert into TB_DATA_CONFIGURATIONS (ID,VERSION,SYSTEM_PROPERTY,CONF_KEY,CONF_VALUE) values(1011,1,1,'metamac.edatos_external_users.db.url','jdbc:postgresql://localhost:5432/external_users-bd');
+-- UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'DATA_CONFIGURATIONS';
+--
+-- insert into TB_DATA_CONFIGURATIONS (ID,VERSION,SYSTEM_PROPERTY,CONF_KEY,CONF_VALUE) values(1012,1,1,'metamac.edatos_external_users.db.driver_name','org.postgresql.Driver');
+-- UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'DATA_CONFIGURATIONS';
+--
+-- insert into TB_DATA_CONFIGURATIONS (ID,VERSION,SYSTEM_PROPERTY,CONF_KEY,CONF_VALUE) values(1013,1,1,'metamac.edatos_external_users.db.username','external_users-bd');
+-- UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'DATA_CONFIGURATIONS';
+--
+-- insert into TB_DATA_CONFIGURATIONS (ID,VERSION,SYSTEM_PROPERTY,CONF_KEY,CONF_VALUE) values(1014,1,1,'metamac.edatos_external_users.db.password','Rw7c+q8lrrQiE/8R34KkecdOD/j/1PV5dohCnwlmQbE=');
+-- UPDATE TB_SEQUENCES SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1 WHERE SEQUENCE_NAME = 'DATA_CONFIGURATIONS';
+--
+-- commit;
