@@ -35,7 +35,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="es.gobcan.istac.statistical.operations.roadmap" level="#logback.loglevel#" />
+	<logger name="es.gobcan.istac.edatos.external.users" level="#logback.loglevel#" />
 
 	<logger name="io.github.jhipster" level="#logback.loglevel#" />
 
