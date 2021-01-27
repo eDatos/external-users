@@ -56,9 +56,9 @@ spring:
 # spring.jmx.default-domain y spring.hikari.pool-name evitan que al levantar dos aplicaciones con un spring boot similar al template
 # (con beans de jmx configurado) la primera registre sus beans impidiendo a las siguientes registrar los suyos
     jmx:
-        default-domain: statistical_operation_roadmap
+        default-domain: edatos_external_users
     hikari:
-        pool-name: statistical_operation_roadmap_pool
+        pool-name: edatos_external_users_pool
     mail:
         host: FILL_HOST
         port: FILL_PORT
@@ -71,7 +71,7 @@ spring:
             starttls.enable: true
             ssl.trust: smtp.gmail.com
     messages:
-        basename: i18n/messages-roadmap, i18n/messages-common, i18n/messages-rest-common, messages-rest-operations
+        basename: i18n/messages-external-users, i18n/messages-common, i18n/messages-rest-common, messages-rest-operations
     mvc:
         favicon:
             enabled: false
