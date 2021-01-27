@@ -11,7 +11,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusE
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
 
-public class RoadmapDataTestsUtils {
+public class ExternalUsersDataTestsUtils {
 
     public static final String NEED_CODE_1 = "code1";
     public static final String NEED_CODE_2 = "code2";
@@ -38,7 +38,7 @@ public class RoadmapDataTestsUtils {
         LOCALISED_STRING.getTexts().add(new LocalisedStringVO(LOCALISED_STRING_LABEL_2, LOCALISED_STRING_LOCALE_2));
     }
 
-    private RoadmapDataTestsUtils() {
+    private ExternalUsersDataTestsUtils() {
         // NOTHING TO DO HERE!
     }
 

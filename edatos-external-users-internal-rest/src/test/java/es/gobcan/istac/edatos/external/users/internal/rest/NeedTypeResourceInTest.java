@@ -1,11 +1,11 @@
 package es.gobcan.istac.edatos.external.users.internal.rest;
 
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.LOCALISED_STRING;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_TYPE_CODE_1;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_TYPE_CODE_2;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_TYPE_CODE_3;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_TYPE_CODE_NO_EXIST;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.createNeedTypeEntity;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_TYPE_CODE_1;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_TYPE_CODE_2;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_TYPE_CODE_3;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_TYPE_CODE_NO_EXIST;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.createNeedTypeEntity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

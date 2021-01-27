@@ -1,13 +1,13 @@
 package es.gobcan.istac.edatos.external.users.internal.rest;
 
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.LOCALISED_STRING;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.LOCALISED_STRING_LABEL_UPDATE;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.LOCALISED_STRING_LOCALE_UPDATE;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_CODE_1;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_CODE_2;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_CODE_3;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_CODE_UPDATE;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.createEntity;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING_LABEL_UPDATE;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING_LOCALE_UPDATE;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_1;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_2;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_3;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_UPDATE;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.createEntity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;

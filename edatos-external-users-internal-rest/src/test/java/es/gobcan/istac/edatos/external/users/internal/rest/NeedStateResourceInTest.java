@@ -1,10 +1,10 @@
 package es.gobcan.istac.edatos.external.users.internal.rest;
 
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.LOCALISED_STRING;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_STATE_CODE_1;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_STATE_CODE_2;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_STATE_CODE_3;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils.NEED_STATE_CODE_NO_EXIST;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_STATE_CODE_1;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_STATE_CODE_2;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_STATE_CODE_3;
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_STATE_CODE_NO_EXIST;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,7 +36,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.NeedStateRepository;
 import es.gobcan.istac.edatos.external.users.core.service.NeedStateService;
 import es.gobcan.istac.edatos.external.users.internal.rest.resources.NeedStateResource;
-import es.gobcan.istac.edatos.external.users.internal.rest.util.RoadmapDataTestsUtils;
+import es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
@@ -83,13 +83,13 @@ public class NeedStateResourceInTest {
 
     @Before
     public void initTest() {
-        NeedStateEntity needStateEntity1 = RoadmapDataTestsUtils.createNeedStateEntity(NEED_STATE_CODE_1, LOCALISED_STRING);
+        NeedStateEntity needStateEntity1 = ExternalUsersDataTestsUtils.createNeedStateEntity(NEED_STATE_CODE_1, LOCALISED_STRING);
         em.persist(needStateEntity1);
 
-        NeedStateEntity needStateEntity2 = RoadmapDataTestsUtils.createNeedStateEntity(NEED_STATE_CODE_2, LOCALISED_STRING);
+        NeedStateEntity needStateEntity2 = ExternalUsersDataTestsUtils.createNeedStateEntity(NEED_STATE_CODE_2, LOCALISED_STRING);
         em.persist(needStateEntity2);
 
-        NeedStateEntity needStateEntity3 = RoadmapDataTestsUtils.createNeedStateEntity(NEED_STATE_CODE_3, LOCALISED_STRING);
+        NeedStateEntity needStateEntity3 = ExternalUsersDataTestsUtils.createNeedStateEntity(NEED_STATE_CODE_3, LOCALISED_STRING);
         em.persist(needStateEntity3);
     }
 
