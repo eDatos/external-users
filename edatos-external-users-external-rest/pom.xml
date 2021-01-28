@@ -9,9 +9,9 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>edatos-external-users-internal-rest</artifactId>
+	<artifactId>edatos-external-users-external-rest</artifactId>
 	<packaging>jar</packaging>
-	<name>edatos-external-users :: INTERNAL REST</name>
+	<name>edatos-external-users :: EXTERNAL REST</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
