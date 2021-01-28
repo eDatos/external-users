@@ -40,7 +40,7 @@ spring:
         host: localhost
         port: 0
     messages:
-        basename: i18n/test_messages, i18n/messages-external-users
+        basename: i18n/test_messages, i18n/messages-extusers
     mvc:
         favicon:
             enabled: false

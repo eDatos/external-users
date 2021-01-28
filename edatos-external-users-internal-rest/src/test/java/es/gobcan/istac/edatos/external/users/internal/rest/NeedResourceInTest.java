@@ -296,7 +296,7 @@ public class NeedResourceInTest {
         
         resultActions.andExpect(status().isBadRequest()).andDo(MockMvcResultHandlers.print())
         .andExpect(jsonPath("$.errorItems").isNotEmpty())
-        .andExpect(jsonPath("$.errorItems.[0].code").value("exception.external_users.invalid.proc_status"))
+        .andExpect(jsonPath("$.errorItems.[0].code").value("exception.extusers.invalid.proc_status"))
         .andExpect(jsonPath("$.errorItems.[0].params").value(Matchers.hasItems(ProcStatusEnum.DRAFT.toString())));
         // @formatter:on
     }
