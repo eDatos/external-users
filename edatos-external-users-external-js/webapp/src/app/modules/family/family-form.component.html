@@ -1,0 +1,165 @@
+<div class="page" #titlesContainer [class.menu-is-visible]="sideMenuRef.visible">
+    <ac-side-menu [parent]="instance" #sideMenuRef></ac-side-menu>
+
+    <div class="page-content">
+        <div class="page-header">
+            <div class="page-header-top">
+                <button class="btn menu-toggler d-none d-md-block" (click)="sideMenuRef.visible = !sideMenuRef.visible">
+                    <i class="fa" [ngClass]="sideMenuRef.visible ? 'fa-times' : 'fa-bars'" aria-hidden="true"></i>
+                </button>
+                <button *ngIf="!isEditMode()" routerLink="/family" type="button"
+                    class="btn btn-secondary btn-frameless back-arrow"
+                    [attr.aria-label]="'entity.action.back' | translate">
+                    <i class="material-icons">
+                        arrow_back
+                    </i>
+                </button>
+                <h2 class="page-header-title">
+                    <div class="page-header-title-icon">
+                        <i class="fa fa-circle"></i>
+                    </div>
+                    <div class="page-header-title-text">
+                        <span *ngIf="!existsFamily()" translate="family.home.createLabel"></span>
+                        <span *ngIf="existsFamily()">{{getText(family.title)}}</span>
+                    </div>
+                </h2>
+                <div class="page-header-btns">
+                    <ng-container *ngIf="existsFamily()">
+                        <button type="button" (click)="publishInternally()" class="btn btn-warning"
+                            [disabled]="isEditMode()" *ngIf="canPublishInternally()">
+                            <span class="fa fa-arrow-up"></span>&nbsp;
+                            <span class="hidden-md-down" translate="entity.action.publishInternally"></span>
+                        </button>
+                        <button type="button" (click)="publishExternally()" class="btn btn-success"
+                            [disabled]="isEditMode()" *ngIf="canPublishExternally()">
+                            <span class="fa fa-arrow-up"></span>&nbsp;
+                            <span class="hidden-md-down" translate="entity.action.publishExternally"></span>
+                        </button>
+                        <button type="button" (click)="delete()" replaceUrl="true" class="btn btn-danger"
+                            [disabled]="isEditMode()">
+                            <span class="fa fa-remove"></span>&nbsp;
+                            <span class="hidden-md-down" translate="entity.action.eliminar"></span>
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="isEditMode()">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+                            <span class="fa fa-ban"></span>&nbsp;
+                            <span translate="entity.action.cancel"></span>
+                        </button>
+                        <button type="submit" form="edit-form" [disabled]="!isValidForm()" class="btn btn-primary">
+                            <span class="fa fa-save"></span>&nbsp;
+                            <span translate="entity.action.save"></span>
+                        </button>
+                    </ng-container>
+                    <ng-container *ngIf="existsFamily() && !isEditMode()">
+                        <button class="btn btn-secondary" [routerLink]="['../', family.id, 'edit']" type="button">
+                            <span class="fa fa-pencil"></span>&nbsp;
+                            <span translate="entity.action.edit"></span>
+                        </button>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-body">
+            <form class="page-form" id="edit-form" [formGroup]="editForm" role="form" (ngSubmit)="save()">
+
+                <!-- IDENTIFIERS -->
+
+                <fieldset class="page-section" [disabled]="!isEditMode()">
+                    <h3>
+                        <span translate="family.section.identifiers"></span>
+                    </h3>
+                    <div class="row">
+                        <div class="form-group form-group-inline col-md-6">
+                            <div class="form-row">
+                                <label class="col-form-label col-md-4" translate="family.code.label"></label>
+                                <div class="col-md-8">
+                                    <arte-input name="code" [(ngModel)]="family.code" formControlName="code"
+                                        [control]="editForm.controls.code" [required]="true" [disabled]="existsFamily()"
+                                        arteAutofocus>
+                                    </arte-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-inline col-md-6">
+                            <div class="form-row">
+                                <label class="col-form-label col-md-4" translate="family.title.label"></label>
+                                <div class="col-md-8">
+                                    <arte-input name="title" [(ngModel)]="family.titleDefault" formControlName="title"
+                                        [control]="editForm.controls.title" [required]="true">
+                                    </arte-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-group-inline col-md-6">
+                            <label class="col-form-label col-md-4" translate="family.acronym.label"></label>
+                            <!-- TODO EDATOS-3130 acrónimo -->
+                        </div>
+                        <div class="form-group form-group-inline col-md-6">
+                            <label class="col-form-label col-md-4" translate="family.urn.label"></label>
+                            <dd class="col-md-8">{{family.urn}}</dd>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- CONTENT DESCRIPTORS -->
+
+                <fieldset class="page-section" [disabled]="!isEditMode()" *ngIf="existsFamily()">
+                    <h3>
+                        <span translate="family.section.contentDescriptors">
+                        </span>
+                    </h3>
+                    <div class="row">
+                        <div class="form-group form-group-inline col-md-6">
+                            <label class="col-form-label col-md-4" translate="family.description.label"></label>
+                            <!-- TODO EDATOS-3130 descripción -->
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- PRODUCTION DESCRIPTORS -->
+
+                <fieldset class="page-section" [disabled]="!isEditMode()" *ngIf="existsFamily()">
+                    <h3>
+                        <span translate="family.section.productionDescriptors"></span>
+                    </h3>
+                    <div class="row">
+                        <div class="form-group form-group-inline col-md-6">
+                            <label class="col-form-label col-md-4" translate="family.creationDate.label"></label>
+                            <dd class="col-md-8">{{ family.createdDate | date: 'dd/MM/yyyy HH:mm' }}</dd>
+                        </div>
+                        <div class="form-group form-group-inline col-md-6">
+                            <label class="col-form-label col-md-4"
+                                translate="family.internalInventoryDate.label"></label>
+                            <dd class="col-md-8">{{ family.internalInventoryDate | date: 'dd/MM/yyyy HH:mm' }}</dd>
+                        </div>
+                        <div class="form-group form-group-inline col-md-6">
+                            <label class="col-form-label col-md-4" translate="enum.procStatus.label"></label>
+                            <span translate="enum.procStatus.{{family.procStatus}}" class="badge form" [ngClass]="{
+                                    'badge-secondary': family.procStatus == 'DRAFT',
+                                    'badge-warning': family.procStatus == 'INTERNALLY_PUBLISHED',
+                                    'badge-success': family.procStatus == 'EXTERNALLY_PUBLISHED'
+                                    }"></span>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- DIFFUSION DESCRIPTORS -->
+
+                <fieldset class="page-section" [disabled]="!isEditMode()" *ngIf="existsFamily()">
+                    <h3>
+                        <span translate="family.section.diffusionDescriptors"></span>
+                    </h3>
+                    <div class="row">
+                        <div class="form-group form-group-inline col-md-6">
+                            <label class="col-form-label col-md-4" translate="family.inventoryDate.label"></label>
+                            <dd class="col-md-8">{{ family.inventoryDate | date: 'dd/MM/yyyy HH:mm' }}</dd>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+</div>

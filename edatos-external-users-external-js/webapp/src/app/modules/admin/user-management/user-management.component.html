@@ -1,0 +1,55 @@
+<div class="page">
+    <div class="page-header has-filters">
+        <div class="page-header-top">
+            <h2 class="page-header-title">
+                <span class="page-header-title-text" translate="userManagement.home.title"></span>
+            </h2>
+            <button *ngIf="permissionService.puedeNavegarUserManagement()" class="btn btn-primary"
+                [routerLink]="['../user-management-new']">
+                <span class="btn-icon fa fa-plus"></span>
+                <span translate="userManagement.home.createLabel"></span>
+            </button>
+        </div>
+        <ac-user-search [filters]="filters"></ac-user-search>
+    </div>
+    <div class="page-body">
+        <ng-container *ngIf="users">
+            <ng-container *ngIf="users.length > 0; else emptyList">
+                <div class="page-table-container-fluid">
+                    <arte-table
+                        [columns]="columns"
+                        [value]="users"
+                        [rows]="itemsPerPage"
+                        [totalRecords]="totalItems"
+                        tableStyleClass='page-table table-has-pointer-rows'
+                        (onLazyLoad)="loadData($event)"
+                        [tableStatus]="{
+                            rows: itemsPerPage,
+                            sortField: predicate,
+                            sortOrder: reverse ? 1 : -1,
+                            first: (page - 1) * itemsPerPage
+                        }">
+                        
+                        <ng-template pTemplate="body" let-user>
+                            <tr [ngClass]="{'entity-deleted': !isActivo(user) }"
+                                [routerLink]="['../user-management', user.login]">
+                                <td>{{user.login}}</td>
+                                <td>{{user.nombre}}</td>
+                                <td>{{user.apellido1}}</td>
+                                <td>{{user.apellido2}}</td>
+                                <td>{{user.email}}</td>
+                                <td>
+                                    <span *ngFor="let rol of user.roles" class="badge badge-info"
+                                        translate="edatosExternalUsersApp.rolesEnum.{{rol}}"></span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </arte-table>
+                </div>
+            </ng-container>
+            <ng-template #emptyList>
+                <arte-entity-list-empty></arte-entity-list-empty>
+            </ng-template>
+        </ng-container>
+    </div>
+</div>

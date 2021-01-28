@@ -1,0 +1,59 @@
+@import 'variables';
+@import 'mixins';
+
+/* ==========================================================================
+Navbar
+========================================================================== */
+.navbar-version {
+    font-size: 10px;
+    color: $grey-lightest;
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+
+
+.app-navbar {
+    background-color: $main-dark;
+    padding-left: $page-padding-left;
+    padding-right: $page-padding-right;
+    .dropdown-item.active,
+    .dropdown-item.active:focus,
+    .dropdown-item.active:hover {
+        background-color: $main-dark;
+    }
+    ul.navbar-nav {
+        .nav-item {
+            white-space: nowrap;
+            &.active {
+                background: $grey-dark;
+            }
+        }
+    }
+}
+
+.navbar-title {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* ==========================================================================
+Logo styles
+========================================================================== */
+
+.navbar-brand {
+    &.logo {
+        .logo-img {
+            height: $navbar-content-height;
+            margin-right: 15px;
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    $page-padding-left: 15px;
+    $page-padding-right: 15px;
+    .app-navbar {
+        padding-left: $page-padding-left;
+        padding-right: $page-padding-right;
+    }
+}
