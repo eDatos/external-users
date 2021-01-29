@@ -18,6 +18,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.gobcan.istac.edatos-external-users</groupId>
+			<artifactId>edatos-external-users-external-rest</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>es.gobcan.istac.edatos-external-users</groupId>
 			<artifactId>edatos-external-users-external-api-impl</artifactId>
 		</dependency>
 		<dependency>
@@ -106,6 +110,13 @@
 				<!-- log configuration -->
 				<logback.loglevel>INFO</logback.loglevel>
 			</properties>
+
+			<dependencies>
+				<dependency>
+					<groupId>es.gobcan.istac.edatos-external-users</groupId>
+					<artifactId>edatos-external-users-external-js</artifactId>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>
