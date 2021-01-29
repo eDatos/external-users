@@ -15,10 +15,10 @@ import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.converter.CriterionConverter;
 
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.util.CriteriaUtil;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Rol;
 
 public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
 
@@ -45,7 +45,7 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
     @Override
     public void registerProcessors() {
         //@formatter:off
-        registerRestrictionProcessor(RestrictionProcessorBuilder.enumRestrictionProcessor(Rol.class)
+        registerRestrictionProcessor(RestrictionProcessorBuilder.enumRestrictionProcessor(Role.class)
                 .withQueryProperty(QueryProperty.ROL)
                 .withCriterionConverter(new RolCriterionBuilder())
                 .build());
