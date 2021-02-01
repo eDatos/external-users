@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Rol;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 
 public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable {
 
@@ -16,7 +16,7 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
     private String apellido1;
     private String apellido2;
     private String email;
-    private SortedSet<Rol> roles;
+    private SortedSet<Role> roles;
 
     public Long getId() {
         return id;
@@ -66,11 +66,11 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
         this.email = email;
     }
 
-    public Set<Rol> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Rol> set) {
+    public void setRoles(Set<Role> set) {
         if (set == null) {
             this.roles = new TreeSet<>();
         } else {

@@ -25,7 +25,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 
 import es.gobcan.istac.edatos.external.users.core.config.Constants;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Rol;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionEntity;
 
 @Entity
@@ -59,11 +59,11 @@ public class UsuarioEntity extends AbstractVersionedAndAuditingAndLogicalDeletio
     @Size(min = 3)
     private String email;
 
-    @ElementCollection(targetClass = Rol.class)
+    @ElementCollection(targetClass = Role.class)
     @JoinTable(name = "tb_usuarios_roles", joinColumns = @JoinColumn(name = "usuario_fk", referencedColumnName = "id"))
     @Column(name = "rol", nullable = false)
     @Enumerated(EnumType.STRING)
-    private Set<Rol> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -114,11 +114,11 @@ public class UsuarioEntity extends AbstractVersionedAndAuditingAndLogicalDeletio
         this.email = email;
     }
 
-    public Set<Rol> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Rol> roles) {
+    public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
 

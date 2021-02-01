@@ -65,50 +65,6 @@ public class UsuarioResource extends AbstractResource {
         this.auditPublisher = auditPublisher;
     }
 
-    @PostMapping("/usuarios")
-    @Timed
-    @PreAuthorize("@secChecker.puedeCrearUsuario(authentication)")
-    public ResponseEntity<UsuarioDto> create(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
-        if (managedUserVM.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.ID_EXISTE, ErrorMessagesConstants.ID_EXISTE)).body(null);
-        }
-
-        if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
-        }
-
-        UsuarioEntity nuevoUsuario = usuarioMapper.toEntity(managedUserVM);
-        nuevoUsuario = usuarioService.create(nuevoUsuario);
-        mailService.sendCreationEmail(nuevoUsuario);
-        UsuarioDto nuevoUsuarioDto = usuarioMapper.toDto(nuevoUsuario);
-
-        auditPublisher.publish(AuditConstants.USUARIO_CREACION, nuevoUsuarioDto.getLogin());
-        return ResponseEntity.created(new URI("/api/usuarios/" + nuevoUsuarioDto.getLogin())).headers(HeaderUtil.createAlert("userManagement.created", nuevoUsuarioDto.getLogin()))
-                .body(nuevoUsuarioDto);
-    }
-
-    @PutMapping("/usuarios")
-    @Timed
-    @PreAuthorize("@secChecker.puedeModificarUsuario(authentication, #managedUserVM?.login)")
-    public ResponseEntity<UsuarioDto> update(@Valid @RequestBody ManagedUserVM managedUserVM) {
-        Optional<UsuarioEntity> usuarioExistente = userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase());
-
-        if (usuarioExistente.isPresent() && (!usuarioExistente.get().getId().equals(managedUserVM.getId()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
-        }
-
-        if (!usuarioExistente.isPresent()) {
-            usuarioExistente = Optional.ofNullable(userRepository.findOne(managedUserVM.getId()));
-        }
-
-        UsuarioEntity usuario = usuarioMapper.updateFromDto(usuarioExistente.orElse(null), managedUserVM);
-        usuario = usuarioService.update(usuario);
-        Optional<UsuarioDto> updatedUser = Optional.ofNullable(usuarioMapper.toDto(usuario));
-
-        auditPublisher.publish(AuditConstants.USUARIO_EDICION, managedUserVM.getLogin());
-        return ResponseUtil.wrapOrNotFound(updatedUser, HeaderUtil.createAlert("userManagement.updated", managedUserVM.getLogin()));
-    }
-
     @GetMapping("/usuarios")
     @Timed
     @PreAuthorize("@secChecker.puedeConsultarUsuario(authentication)")
@@ -123,28 +79,6 @@ public class UsuarioResource extends AbstractResource {
     @PreAuthorize("@secChecker.puedeConsultarUsuario(authentication)")
     public ResponseEntity<UsuarioDto> get(@PathVariable String login, Boolean includeDeleted) {
         return ResponseUtil.wrapOrNotFound(usuarioService.getUsuarioWithAuthoritiesByLogin(login, includeDeleted).map(usuarioMapper::toDto));
-    }
-
-    @DeleteMapping("/usuarios/{login:" + Constants.LOGIN_REGEX + "}")
-    @Timed
-    @PreAuthorize("@secChecker.puedeBorrarUsuario(authentication)")
-    public ResponseEntity<UsuarioDto> delete(@PathVariable String login) {
-        UsuarioEntity usuario = usuarioService.delete(login);
-        UsuarioDto result = usuarioMapper.toDto(usuario);
-
-        auditPublisher.publish(AuditConstants.USUARIO_DESACTIVACION, login);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, login)).body(result);
-    }
-
-    @PutMapping("/usuarios/{login}/restore")
-    @Timed
-    @PreAuthorize("@secChecker.puedeModificarUsuario(authentication, #login)")
-    public ResponseEntity<UsuarioDto> recover(@Valid @PathVariable String login) {
-        UsuarioEntity usuario = usuarioService.recover(login);
-        UsuarioDto result = usuarioMapper.toDto(usuario);
-
-        auditPublisher.publish(AuditConstants.USUARIO_ACTIVACION, login);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, login)).body(result);
     }
 
     @GetMapping("/autenticar")

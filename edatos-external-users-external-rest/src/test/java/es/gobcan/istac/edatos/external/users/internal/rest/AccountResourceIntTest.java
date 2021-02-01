@@ -27,11 +27,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.internal.rest.dto.UsuarioDto;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Rol;
 import es.gobcan.istac.edatos.external.users.core.repository.UsuarioRepository;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.core.service.UsuarioService;
@@ -77,8 +77,8 @@ public class AccountResourceIntTest {
 
     private MockMvc restMvc;
 
-    private HashSet<Rol> mockRolSet(Rol rol) {
-        return new HashSet<>(Collections.singletonList(rol));
+    private HashSet<Role> mockRolSet(Role role) {
+        return new HashSet<>(Collections.singletonList(role));
     }
 
     @Before
@@ -108,8 +108,8 @@ public class AccountResourceIntTest {
 
     @Test
     public void testGetExistingAccount() throws Exception {
-        Set<Rol> authorities = new HashSet<>();
-        authorities.add(Rol.ADMIN);
+        Set<Role> authorities = new HashSet<>();
+        authorities.add(Role.ADMINISTRADOR);
 
         UsuarioEntity user = new UsuarioEntity();
         user.setLogin("test");
@@ -152,7 +152,7 @@ public class AccountResourceIntTest {
         userDto.setCreatedDate(null);
         userDto.setLastModifiedBy(null);
         userDto.setLastModifiedDate(null);
-        userDto.setRoles(mockRolSet(Rol.ADMIN));
+        userDto.setRoles(mockRolSet(Role.ADMINISTRADOR));
 
         restMvc.perform(put("/api/usuarios").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDto))).andExpect(status().isOk());
 
