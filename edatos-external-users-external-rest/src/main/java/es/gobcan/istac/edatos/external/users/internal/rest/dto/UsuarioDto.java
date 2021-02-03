@@ -5,9 +5,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Rol;
 
-public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable {
+public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable, Identifiable {
 
     private static final long serialVersionUID = 1L;
     private Long id;
@@ -16,6 +18,10 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
     private String apellido1;
     private String apellido2;
     private String email;
+    private Gender gender;
+    private Language language;
+    private String organization;
+    private String phoneNumber;
     private SortedSet<Rol> roles;
 
     public Long getId() {
@@ -93,4 +99,35 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
         return "UsuarioDto [id=" + id + ", login=" + login + ", nombre=" + nombre + ", email=" + email + "]";
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 }

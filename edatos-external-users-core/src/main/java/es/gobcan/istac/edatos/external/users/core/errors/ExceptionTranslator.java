@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.ConstraintViolationException;
+
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.siemac.edatos.core.common.exception.EDatosExceptionItem;
 import org.slf4j.Logger;
@@ -56,6 +58,15 @@ public class ExceptionTranslator {
             dto.add(fieldError.getObjectName(), fieldError.getField(), fieldError.getCode());
         }
         return dto;
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ParameterizedErrorVM processParameterizedValidationError(ConstraintViolationException ex) {
+        List<ParameterizedErrorItem> items = new ArrayList<>();
+        items.add(new ParameterizedErrorItemBuilder().message(ex.getMessage()).build());
+        return new ParameterizedErrorVM(items);
     }
 
     @ExceptionHandler(CustomParameterizedException.class)

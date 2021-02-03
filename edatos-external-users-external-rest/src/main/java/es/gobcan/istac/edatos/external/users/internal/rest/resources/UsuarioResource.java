@@ -94,14 +94,11 @@ public class UsuarioResource extends AbstractResource {
         Optional<UsuarioEntity> usuarioExistente = userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase());
 
         if (usuarioExistente.isPresent() && (!usuarioExistente.get().getId().equals(managedUserVM.getId()))) {
+            // login already exists, there cannot be two users with the same login
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
         }
 
-        if (!usuarioExistente.isPresent()) {
-            usuarioExistente = Optional.ofNullable(userRepository.findOne(managedUserVM.getId()));
-        }
-
-        UsuarioEntity usuario = usuarioMapper.updateFromDto(usuarioExistente.orElse(null), managedUserVM);
+        UsuarioEntity usuario = usuarioMapper.toEntity(managedUserVM);
         usuario = usuarioService.update(usuario);
         Optional<UsuarioDto> updatedUser = Optional.ofNullable(usuarioMapper.toDto(usuario));
 

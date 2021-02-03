@@ -6,6 +6,8 @@ public interface EntityMapper<D, E> {
 
     public D toDto(E entity);
 
+    public E toEntity(D dto);
+
     public List<E> toEntities(List<D> dtos);
 
     public List<D> toDtos(List<E> entities);

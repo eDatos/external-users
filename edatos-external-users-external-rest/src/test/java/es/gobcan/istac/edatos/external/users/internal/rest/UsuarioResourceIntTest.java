@@ -226,8 +226,7 @@ public class UsuarioResourceIntTest {
 
     @Test
     public void testUserFromId() {
-        assertThat(userMapper.fromId(existingUser.getId()).getId()).isEqualTo(existingUser.getId());
-        assertThat(userMapper.fromId(null)).isNull();
+        assertThat(userRepository.findOne(existingUser.getId()).getId()).isEqualTo(existingUser.getId());
     }
 
     @Test
