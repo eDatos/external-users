@@ -2,7 +2,7 @@ import { Gender } from "@app/core/model/gender.model";
 import { Language } from "@app/core/model/language.model";
 import { BaseAuditingEntity } from 'arte-ng/src/lib/model';
 import * as jwtDecode from 'jwt-decode';
-import { Rol } from './rol.model';
+import { Role } from './rol.model';
 
 
 
@@ -44,7 +44,7 @@ export class UserCAS {
         return new UserCAS(payload.sub, rolesCas);
     }
 
-    public hasRole(rol: Rol): boolean {
+    public hasRole(rol: Role): boolean {
         return this.roles.some(userRol => userRol.app == this.ACL_APP_NAME && userRol.role == rol);
     }
 }

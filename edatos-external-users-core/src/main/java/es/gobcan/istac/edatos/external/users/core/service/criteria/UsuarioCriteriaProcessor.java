@@ -39,14 +39,14 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
     }
 
     public enum QueryProperty {
-        LOGIN, NOMBRE, APELLIDO1, APELLIDO2, ROL, EMAIL, USUARIO, DELETION_DATE
+        LOGIN, NOMBRE, APELLIDO1, APELLIDO2, ROLE, EMAIL, USUARIO, DELETION_DATE
     }
 
     @Override
     public void registerProcessors() {
         //@formatter:off
         registerRestrictionProcessor(RestrictionProcessorBuilder.enumRestrictionProcessor(Role.class)
-                .withQueryProperty(QueryProperty.ROL)
+                .withQueryProperty(QueryProperty.ROLE)
                 .withCriterionConverter(new RolCriterionBuilder())
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
@@ -74,7 +74,6 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.EMAIL)
                 .withEntityProperty(ENTITY_FIELD_EMAIL)
                 .build());
-
         //@formatter:on
     }
 

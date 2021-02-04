@@ -1,16 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { EntityFilter, BaseEntityFilter } from 'arte-ng/src/lib/model';
-import { Rol } from '@app/core/model';
+import { Role } from '@app/core/model';
 
 export class UserFilter extends BaseEntityFilter implements EntityFilter {
     public name?: string;
     public includeDeleted: boolean;
-    public rol: Rol;
+    public rol: Role;
     public allRoles: string[];
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
-        this.allRoles = Object.keys(Rol);
+        this.allRoles = Object.keys(Role);
     }
 
     protected registerParameters() {
@@ -47,8 +47,8 @@ export class UserFilter extends BaseEntityFilter implements EntityFilter {
         return criterias;
     }
 
-    private convertParamToRole(param: any): Rol {
+    private convertParamToRole(param: any): Role {
         const currentKey = this.allRoles.find((key) => key === param);
-        return currentKey ? Rol[currentKey] : undefined;
+        return currentKey ? Role[currentKey] : undefined;
     }
 }

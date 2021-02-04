@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.component';
-import { User, Rol, Gender, Language } from '@app/core/model';
+import { User, Role, Gender, Language } from '@app/core/model';
 import { UserService } from '@app/core/service/user';
 import { PermissionService } from '@app/core/service/auth';
 import { GenericModalService, ArteEventManager } from 'arte-ng/src/lib/services';
@@ -18,7 +18,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
     private subscription: Subscription;
     paramLogin: string;
     eventSubscriber: Subscription;
-    public rolesEnum = Rol;
+    public rolesEnum = Role;
     languageEnum = Language;
     genderEnum = Gender;
 

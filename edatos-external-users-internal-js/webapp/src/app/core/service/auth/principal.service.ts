@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Rol, UserCAS } from '@app/core/model';
+import { Role, UserCAS } from '@app/core/model';
 import { Subject, Observable } from 'rxjs';
 import { AuthServerProvider } from './auth-jwt.service';
 
@@ -18,11 +18,11 @@ export class Principal {
         this.authenticationState.next(this.userIdentity);
     }
 
-    hasRoles(rolesRuta: Rol[]): Promise<boolean> {
+    hasRoles(rolesRuta: Role[]): Promise<boolean> {
         return Promise.resolve(this.rolesRutaMatchesRolesUsuario(rolesRuta));
     }
 
-    rolesRutaMatchesRolesUsuario(rolesRuta: Rol[]) {
+    rolesRutaMatchesRolesUsuario(rolesRuta: Role[]) {
         rolesRuta = rolesRuta || [];
         if (rolesRuta.length === 0) {
             return true;

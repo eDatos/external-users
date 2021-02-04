@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { UserFilter } from './user-filter.model';
 import { debounceTime } from 'rxjs/operators';
-import { Rol } from '@app/core/model';
+import { Role } from '@app/core/model';
 import { ArteEventManager } from 'arte-ng/src/lib/services';
 
 @Component({
@@ -16,7 +16,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
 
     @Input()
     public filters: UserFilter;
-    public rolEnum = Rol;
+    public rolEnum = Role;
 
     constructor(private eventManager: ArteEventManager) { }
 
