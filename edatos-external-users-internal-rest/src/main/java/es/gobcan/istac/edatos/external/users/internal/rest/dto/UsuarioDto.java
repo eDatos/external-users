@@ -92,6 +92,13 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
         this.apellido2 = source.getApellido2();
         this.email = source.getEmail();
         this.roles = new TreeSet<>(source.getRoles());
+        this.gender = source.getGender();
+        this.language = source.getLanguage();
+        this.organization = source.getOrganization();
+        this.phoneNumber = source.getPhoneNumber();
+        this.setOptLock(source.getOptLock());
+        this.setCreatedDate(source.getCreatedDate());
+        this.setCreatedBy(source.getCreatedBy());
     }
 
     @Override
