@@ -31,6 +31,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.internal.rest.dto.UsuarioDto;
 import es.gobcan.istac.edatos.external.users.internal.rest.vm.ManagedUserVM;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
@@ -121,6 +123,8 @@ public class UsuarioResourceIntTest {
         user.setEmail(DEFAULT_EMAIL);
         user.setNombre(DEFAULT_NOMBRE);
         user.setApellido1(DEFAULT_PRIMER_APELLIDO);
+        user.setGender(Gender.MALE);
+        user.setLanguage(Language.SPANISH);
         return user;
     }
 
@@ -203,25 +207,42 @@ public class UsuarioResourceIntTest {
     }
 
     @Test
-    public void updateUserExistingLogin() throws Exception {
-
+    public void updateUserProperties() throws Exception {
         UsuarioEntity anotherUser = new UsuarioEntity();
         anotherUser.setLogin("jhipster");
         anotherUser.setEmail("jhipster@localhost");
         anotherUser.setNombre("java");
         anotherUser.setApellido1("hipster");
-        userRepository.save(anotherUser);
+        anotherUser.setGender(Gender.MALE);
+        anotherUser.setLanguage(Language.SPANISH);
+        userRepository.saveAndFlush(anotherUser);
 
         // Update the user
         UsuarioEntity updatedUser = userRepository.findOne(existingUser.getId());
 
-        //@formatter:off
         ManagedUserVM managedUserVM = new ManagedUserVM();
         UsuarioDto source = usuarioMapper.toDto(updatedUser);
         source.setLogin(anotherUser.getLogin());
         managedUserVM.updateFrom(source);
-        //@formatter:on
         restUserMockMvc.perform(put(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM))).andExpect(status().isBadRequest());
+
+        UsuarioDto user = userMapper.toDto(userRepository.findOneByLogin(anotherUser.getLogin()).orElseThrow(() -> new IllegalArgumentException("User not present by login")));
+        user.setLogin("myNewLogin2");
+        user.setEmail("test@t");
+        user.setApellido2("hipster2");
+        user.setGender(Gender.FEMALE);
+        user.setLanguage(Language.CATALAN);
+        user.setPhoneNumber("600112233");
+        user.setOrganization("ACME Corporation");
+        // userRepository.saveAndFlush(anotherUser);
+
+        managedUserVM = new ManagedUserVM();
+        managedUserVM.updateFrom(user);
+        restUserMockMvc.perform(put(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.login").value("mynewlogin2"))
+                .andExpect(jsonPath("$.gender").value("FEMALE"))
+                .andExpect(jsonPath("$.organization").value("ACME Corporation"))
+                .andExpect(jsonPath("$.phoneNumber").value("600112233"));
     }
 
     @Test
