@@ -3,6 +3,7 @@ package es.gobcan.istac.edatos.external.users.core.service.criteria;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -106,10 +107,12 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
         }
 
         private Criterion buildUsersByRole(QueryPropertyRestriction property) {
-            String query = "{alias}.id in (select ur.usuario_fk from tb_usuarios_roles ur where rol = (%s))";
-            String sql = String.format(query, property.getRightExpression());
-            return Restrictions.sqlRestriction(sql);
+            String query = "{alias}.id in (select ur.usuario_fk from tb_usuarios_roles ur";
+            if (!Objects.equals(property.getRightValue(), Role.ANY_ROLE_ALLOWED.name())) {
+                query += " where rol = (" + property.getRightExpression() + ")";
+            }
+            query += ")";
+            return Restrictions.sqlRestriction(query);
         }
     }
-
 }
