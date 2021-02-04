@@ -39,7 +39,7 @@ export class UserFilter extends BaseEntityFilter implements EntityFilter {
             criterias.push(`USUARIO ILIKE '%${this.escapeSingleQuotes(this.name)}%'`);
         }
         if (this.rol) {
-            criterias.push(`ROL EQ '${this.rol}'`);
+            criterias.push(`ROLE EQ '${this.rol}'`);
         }
         if (!this.includeDeleted) {
             criterias.push(`DELETION_DATE IS_NULL`);
