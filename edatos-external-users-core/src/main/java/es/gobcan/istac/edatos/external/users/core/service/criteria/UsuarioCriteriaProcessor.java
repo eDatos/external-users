@@ -33,13 +33,14 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
     private static final String ENTITY_FIELD_APELLIDO2 = "apellido2";
     private static final String ENTITY_FIELD_EMAIL = "email";
     private static final String ENTITY_FIELD_DELETION_DATE = "deletionDate";
+    private static final String ENTITY_FIELD_LANGUAGE = "language";
 
     public UsuarioCriteriaProcessor() {
         super(UsuarioEntity.class);
     }
 
     public enum QueryProperty {
-        LOGIN, NOMBRE, APELLIDO1, APELLIDO2, ROLE, EMAIL, USUARIO, DELETION_DATE
+        LOGIN, NOMBRE, APELLIDO1, APELLIDO2, ROLE, EMAIL, USUARIO, DELETION_DATE, LANGUAGE
     }
 
     @Override
@@ -69,7 +70,10 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.DELETION_DATE)
                 .withEntityProperty(ENTITY_FIELD_DELETION_DATE)
                 .build());
-        
+        registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
+                .withQueryProperty(QueryProperty.LANGUAGE)
+                .withEntityProperty(ENTITY_FIELD_LANGUAGE)
+                .build());
         registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.EMAIL)
                 .withEntityProperty(ENTITY_FIELD_EMAIL)
