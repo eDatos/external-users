@@ -17,6 +17,8 @@ export class User extends BaseAuditingEntity {
                 public language?: Language,
                 public organization?: string,
                 public phoneNumber?: string,
+                public deletionDate?: Date,
+                public deletedBy?: string,
                 public roles?: any[]) {
         super();
     }

@@ -33,7 +33,10 @@
                         <ng-template pTemplate="body" let-user>
                             <tr [ngClass]="{'entity-deleted': !isActivo(user) }"
                                 [routerLink]="['../user-management', user.login]">
-                                <td>{{user.login}}</td>
+                                <td>
+                                    {{user.login}}
+                                    <span class="badge badge-danger ml-1" *ngIf="user.deletionDate">{{ "userManagement.status.deleted" | translate }}</span>
+                                </td>
                                 <td>{{user.nombre}}</td>
                                 <td>{{user.apellido1}}</td>
                                 <td>{{user.apellido2}}</td>
