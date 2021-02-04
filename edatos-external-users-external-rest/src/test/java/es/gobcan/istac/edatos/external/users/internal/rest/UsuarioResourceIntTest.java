@@ -38,7 +38,7 @@ import es.gobcan.istac.edatos.external.users.internal.rest.vm.ManagedUserVM;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Rol;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.UsuarioRepository;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
@@ -108,8 +108,8 @@ public class UsuarioResourceIntTest {
                 .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    private Set<Rol> mockRolesDto() {
-        return Stream.of(Rol.ADMIN).collect(Collectors.toSet());
+    private Set<Role> mockRolesDto() {
+        return Stream.of(Role.ADMINISTRADOR).collect(Collectors.toSet());
     }
 
     /**
@@ -139,7 +139,7 @@ public class UsuarioResourceIntTest {
     public void createUser() throws Exception {
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
-        Set<Rol> authorities = mockRolesDto();
+        Set<Role> authorities = mockRolesDto();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         UsuarioDto source = usuarioMapper.toDto(newUser);

@@ -122,28 +122,6 @@ public class UsuarioResource extends AbstractResource {
         return ResponseUtil.wrapOrNotFound(usuarioService.getUsuarioWithAuthoritiesByLogin(login, includeDeleted).map(usuarioMapper::toDto));
     }
 
-    @DeleteMapping("/usuarios/{login:" + Constants.LOGIN_REGEX + "}")
-    @Timed
-    @PreAuthorize("@secChecker.puedeBorrarUsuario(authentication)")
-    public ResponseEntity<UsuarioDto> delete(@PathVariable String login) {
-        UsuarioEntity usuario = usuarioService.delete(login);
-        UsuarioDto result = usuarioMapper.toDto(usuario);
-
-        auditPublisher.publish(AuditConstants.USUARIO_DESACTIVACION, login);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, login)).body(result);
-    }
-
-    @PutMapping("/usuarios/{login}/restore")
-    @Timed
-    @PreAuthorize("@secChecker.puedeModificarUsuario(authentication, #login)")
-    public ResponseEntity<UsuarioDto> recover(@Valid @PathVariable String login) {
-        UsuarioEntity usuario = usuarioService.recover(login);
-        UsuarioDto result = usuarioMapper.toDto(usuario);
-
-        auditPublisher.publish(AuditConstants.USUARIO_ACTIVACION, login);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, login)).body(result);
-    }
-
     @GetMapping("/autenticar")
     @Timed
     public String isAuthenticated(HttpServletRequest request) {
