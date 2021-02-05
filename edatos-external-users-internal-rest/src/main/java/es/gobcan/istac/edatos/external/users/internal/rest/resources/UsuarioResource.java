@@ -65,6 +65,47 @@ public class UsuarioResource extends AbstractResource {
         this.auditPublisher = auditPublisher;
     }
 
+    @PostMapping("/usuarios")
+    @Timed
+    @PreAuthorize("@secChecker.puedeCrearUsuario(authentication)")
+    public ResponseEntity<UsuarioDto> create(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
+        if (managedUserVM.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.ID_EXISTE, ErrorMessagesConstants.ID_EXISTE)).body(null);
+        }
+
+        if (userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase()).isPresent()) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
+        }
+
+        UsuarioEntity nuevoUsuario = usuarioMapper.toEntity(managedUserVM);
+        nuevoUsuario = usuarioService.create(nuevoUsuario);
+        mailService.sendCreationEmail(nuevoUsuario);
+        UsuarioDto nuevoUsuarioDto = usuarioMapper.toDto(nuevoUsuario);
+
+        auditPublisher.publish(AuditConstants.USUARIO_CREACION, nuevoUsuarioDto.getLogin());
+        return ResponseEntity.created(new URI("/api/usuarios/" + nuevoUsuarioDto.getLogin())).headers(HeaderUtil.createAlert("userManagement.created", nuevoUsuarioDto.getLogin()))
+                .body(nuevoUsuarioDto);
+    }
+
+    @PutMapping("/usuarios")
+    @Timed
+    @PreAuthorize("@secChecker.puedeModificarUsuario(authentication, #managedUserVM?.login)")
+    public ResponseEntity<UsuarioDto> update(@Valid @RequestBody ManagedUserVM managedUserVM) {
+        Optional<UsuarioEntity> usuarioExistente = userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase());
+
+        if (usuarioExistente.isPresent() && (!usuarioExistente.get().getId().equals(managedUserVM.getId()))) {
+            // login already exists, there cannot be two users with the same login
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
+        }
+
+        UsuarioEntity usuario = usuarioMapper.toEntity(managedUserVM);
+        usuario = usuarioService.update(usuario);
+        Optional<UsuarioDto> updatedUser = Optional.ofNullable(usuarioMapper.toDto(usuario));
+
+        auditPublisher.publish(AuditConstants.USUARIO_EDICION, managedUserVM.getLogin());
+        return ResponseUtil.wrapOrNotFound(updatedUser, HeaderUtil.createAlert("userManagement.updated", managedUserVM.getLogin()));
+    }
+
     @GetMapping("/usuarios")
     @Timed
     @PreAuthorize("@secChecker.puedeConsultarUsuario(authentication)")

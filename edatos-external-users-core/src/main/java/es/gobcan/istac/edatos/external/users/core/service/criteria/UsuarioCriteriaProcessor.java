@@ -3,6 +3,7 @@ package es.gobcan.istac.edatos.external.users.core.service.criteria;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -33,20 +34,21 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
     private static final String ENTITY_FIELD_APELLIDO2 = "apellido2";
     private static final String ENTITY_FIELD_EMAIL = "email";
     private static final String ENTITY_FIELD_DELETION_DATE = "deletionDate";
+    private static final String ENTITY_FIELD_LANGUAGE = "language";
 
     public UsuarioCriteriaProcessor() {
         super(UsuarioEntity.class);
     }
 
     public enum QueryProperty {
-        LOGIN, NOMBRE, APELLIDO1, APELLIDO2, ROL, EMAIL, USUARIO, DELETION_DATE
+        LOGIN, NOMBRE, APELLIDO1, APELLIDO2, ROLE, EMAIL, USUARIO, DELETION_DATE, LANGUAGE
     }
 
     @Override
     public void registerProcessors() {
         //@formatter:off
         registerRestrictionProcessor(RestrictionProcessorBuilder.enumRestrictionProcessor(Role.class)
-                .withQueryProperty(QueryProperty.ROL)
+                .withQueryProperty(QueryProperty.ROLE)
                 .withCriterionConverter(new RolCriterionBuilder())
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
@@ -69,12 +71,14 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.DELETION_DATE)
                 .withEntityProperty(ENTITY_FIELD_DELETION_DATE)
                 .build());
-        
+        registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
+                .withQueryProperty(QueryProperty.LANGUAGE)
+                .withEntityProperty(ENTITY_FIELD_LANGUAGE)
+                .build());
         registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.EMAIL)
                 .withEntityProperty(ENTITY_FIELD_EMAIL)
                 .build());
-
         //@formatter:on
     }
 
@@ -103,10 +107,12 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
         }
 
         private Criterion buildUsersByRole(QueryPropertyRestriction property) {
-            String query = "{alias}.id in (select ur.usuario_fk from tb_usuarios_roles ur where rol = (%s))";
-            String sql = String.format(query, property.getRightExpression());
-            return Restrictions.sqlRestriction(sql);
+            String query = "{alias}.id in (select ur.usuario_fk from tb_usuarios_roles ur";
+            if (!Objects.equals(property.getRightValue(), Role.ANY_ROLE_ALLOWED.name())) {
+                query += " where rol = (" + property.getRightExpression() + ")";
+            }
+            query += ")";
+            return Restrictions.sqlRestriction(query);
         }
     }
-
 }

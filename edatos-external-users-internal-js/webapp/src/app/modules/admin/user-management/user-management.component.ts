@@ -70,6 +70,14 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             }
         },
         {
+            fieldName: 'language',
+            sortable: true,
+            header: {
+                handler: 'translate',
+                translatePath: 'userManagement.language'
+            }
+        },
+        {
             fieldName: 'roles',
             header: {
                 handler: 'translate',

@@ -1,0 +1,12 @@
+{
+    "edatosExternalUsersApp": {
+        "languageEnum": {
+            "SPANISH": "Castellano",
+            "CATALAN": "Catalán"
+        },
+        "genderEnum": {
+            "MALE": "Hombre",
+            "FEMALE": "Mujer"
+        }
+    }
+}

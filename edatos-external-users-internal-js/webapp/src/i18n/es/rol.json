@@ -13,9 +13,18 @@
             "roles": "Roles"
         },
         "rolesEnum": {
-            "ADMIN": "Administrador",
-            "USER": "Usuario",
-            "ADMINISTRADOR": "Administrador"
+           "JEFE_NORMALIZACION": "Jefe de normalización",
+           "TECNICO_NORMALIZACION": "Técnico de normalización",
+           "TECNICO_APOYO_NORMALIZACION": "Técnico de apoyo de normalización",
+           "TECNICO_APOYO_PRODUCCION": "Técnico de apoyo de producción",
+           "TECNICO_PRODUCCION": "Técnico de producción",
+           "TECNICO_APOYO_DIFUSION": "Técnico de apoyo de difusión",
+           "TECNICO_DIFUSION": "Técnico de difusión",
+           "TECNICO_APOYO_PLANIFICACION": "Técnico de apoyo de planificación",
+           "TECNICO_PLANIFICACION": "Técnico de planificación",
+           "LECTOR": "Lector",
+           "ADMINISTRADOR": "Administrador",
+           "ANY_ROLE_ALLOWED": "Cualquier rol permitido"
         }
     }
 }

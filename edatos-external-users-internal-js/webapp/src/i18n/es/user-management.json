@@ -14,6 +14,9 @@
         "delete": {
             "question": "¿Seguro que quieres eliminar el usuario {{ login }}?"
         },
+        "status": {
+            "deleted": "Eliminado"
+        },
         "deletionDate": "Fecha de borrado",
         "restore": {
             "question": "¿Seguro que quieres restaurar el usuario {{ login }}?"
@@ -29,6 +32,8 @@
         "apellido1": "Primer apellido",
         "apellido2": "Segundo apellido",
         "email": "Email",
+        "language": "Idioma",
+        "gender": "Género",
         "activado": "Activado",
         "desactivado": "Desactivado",
         "profiles": "Roles",

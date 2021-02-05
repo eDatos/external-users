@@ -27,6 +27,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.internal.rest.dto.UsuarioDto;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
@@ -49,7 +51,7 @@ import es.gobcan.istac.edatos.external.users.internal.rest.util.TestUtil;
 @Transactional
 public class AccountResourceIntTest {
 
-    private static final String ROL_ADMIN = "ADMIN";
+    private static final String ROL_ADMIN = "ADMINISTRADOR";
 
     @Autowired
     private UsuarioRepository userRepository;
@@ -138,21 +140,25 @@ public class AccountResourceIntTest {
         UsuarioEntity user = new UsuarioEntity();
         user.setLogin("save-account");
         user.setEmail("save-account@example.com");
+        user.setLanguage(Language.SPANISH);
+        user.setGender(Gender.MALE);
         userRepository.saveAndFlush(user);
 
         UsuarioDto userDto = new UsuarioDto();
         userDto.setId(user.getId());
         userDto.setOptLock(user.getOptLock());
+        userDto.setCreatedDate(user.getCreatedDate());
+        userDto.setCreatedBy(user.getCreatedBy());
         userDto.setLogin(user.getLogin());
         userDto.setNombre("firstname");
         userDto.setApellido1("lastname1");
         userDto.setApellido2("lastname2");
         userDto.setEmail("save-account@example.com");
-        userDto.setCreatedBy(null);
-        userDto.setCreatedDate(null);
         userDto.setLastModifiedBy(null);
         userDto.setLastModifiedDate(null);
         userDto.setRoles(mockRolSet(Role.ADMINISTRADOR));
+        userDto.setLanguage(Language.CATALAN);
+        userDto.setGender(Gender.FEMALE);
 
         restMvc.perform(put("/api/usuarios").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDto))).andExpect(status().isOk());
 
@@ -170,24 +176,29 @@ public class AccountResourceIntTest {
         UsuarioEntity user = new UsuarioEntity();
         user.setLogin("save-existing-email");
         user.setEmail("save-existing-email@example.com");
+        user.setLanguage(Language.CATALAN);
+        user.setGender(Gender.MALE);
 
         userRepository.saveAndFlush(user);
-
         UsuarioEntity anotherUser = new UsuarioEntity();
         anotherUser.setLogin("save-existing-email2");
         anotherUser.setEmail("save-existing-email2@example.com");
-
+        anotherUser.setLanguage(Language.SPANISH);
+        anotherUser.setGender(Gender.MALE);
         userRepository.saveAndFlush(anotherUser);
 
         UsuarioDto userDto = new UsuarioDto();
         userDto.setId(user.getId());
         userDto.setOptLock(user.getOptLock());
         userDto.setLogin(user.getLogin());
+        userDto.setCreatedDate(user.getCreatedDate());
+        userDto.setCreatedBy(user.getCreatedBy());
         userDto.setNombre("firstname");
         userDto.setApellido1("lastname1");
         userDto.setApellido2("lastname2");
         userDto.setEmail("save-existing-email2@example.com");
-
+        userDto.setLanguage(Language.SPANISH);
+        userDto.setGender(Gender.MALE);
         restMvc.perform(put("/api/usuarios").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDto))).andExpect(status().isOk());
 
         UsuarioEntity updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null);
@@ -201,23 +212,25 @@ public class AccountResourceIntTest {
         UsuarioEntity user = new UsuarioEntity();
         user.setLogin("save-existing-email-and-login");
         user.setEmail("save-existing-email-and-login@example.com");
-
+        user.setLanguage(Language.CATALAN);
+        user.setGender(Gender.MALE);
         userRepository.saveAndFlush(user);
 
         UsuarioDto userDto = new UsuarioDto();
         userDto.setId(user.getId());
+        userDto.setCreatedDate(user.getCreatedDate());
+        userDto.setCreatedBy(user.getCreatedBy());
         userDto.setOptLock(user.getOptLock());
         userDto.setLogin(user.getLogin());
         userDto.setNombre("firstname");
         userDto.setApellido1("lastname1");
         userDto.setApellido2("lastname2");
         userDto.setEmail("save-existing-email-and-login@example.com");
-        userDto.setCreatedBy(null);
-        userDto.setCreatedDate(null);
         userDto.setLastModifiedBy(null);
         userDto.setLastModifiedDate(null);
         userDto.setRoles(null);
-
+        userDto.setLanguage(Language.CATALAN);
+        userDto.setGender(Gender.MALE);
         restMvc.perform(put("/api/usuarios").contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(userDto))).andExpect(status().isOk());
 
         UsuarioEntity updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);

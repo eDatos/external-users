@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, Data, CanLoad, Route } from '@angular/router';
 import { Principal } from '../service/auth/principal.service';
-import { Rol } from '../model/rol.model';
+import { Role } from '../model/rol.model';
 import { LoginService } from '../service/auth/login.service';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
         return this.checkRoles(roles, route.data);
     }
 
-    checkLogin(roles: Rol[]): Promise<boolean> {
+    checkLogin(roles: Role[]): Promise<boolean> {
         return this.principal.identity().then((account) => {
             if (!!account) {
                 return this.noPermissionRequired(roles) || this.principal.hasRoles(roles);
@@ -43,7 +43,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
         })
     }
 
-    private noPermissionRequired(roles: Rol[]) {
+    private noPermissionRequired(roles: Role[]) {
         return !roles || roles.length === 0;
     }
 
@@ -55,7 +55,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
         }
     }
 
-    private rolesFromRouteSnapshot(route: ActivatedRouteSnapshot): Rol[] {
+    private rolesFromRouteSnapshot(route: ActivatedRouteSnapshot): Role[] {
         if (route.firstChild && route.firstChild.data && route.firstChild.data[UserRouteAccessGuard.ROLES]) {
             return this.rolesFromRoute(route.firstChild);
         } else {
@@ -63,7 +63,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
         }
     }
 
-    private rolesFromRoute(route): Rol[] {
+    private rolesFromRoute(route): Role[] {
         return route.data[UserRouteAccessGuard.ROLES];
     }
 }

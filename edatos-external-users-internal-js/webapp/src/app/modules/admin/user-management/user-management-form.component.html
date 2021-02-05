@@ -150,6 +150,41 @@
                             </small>
                         </div>
                     </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="userManagement.gender"></label>
+                            <div class="col-md-8">
+                                <arte-autocomplete-enum
+                                    name="gender"
+                                    [multiple]="false"
+                                    [(ngModel)]="user.gender"
+                                    [suggestionsEnum]="genderEnum"
+                                    [translationPath]="'edatosExternalUsersApp.genderEnum.'"
+                                    [disabled]="!isEditMode()"
+                                    required>
+                                </arte-autocomplete-enum>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="userManagement.language"></label>
+                            <div class="col-md-8">
+                                <arte-autocomplete-enum
+                                    name="language"
+                                    [multiple]="false"
+                                    [(ngModel)]="user.language"
+                                    [suggestionsEnum]="languageEnum"
+                                    [translationPath]="'edatosExternalUsersApp.languageEnum.'"
+                                    [disabled]="!isEditMode()"
+                                    required>
+                                </arte-autocomplete-enum>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="userManagement.email"></label>

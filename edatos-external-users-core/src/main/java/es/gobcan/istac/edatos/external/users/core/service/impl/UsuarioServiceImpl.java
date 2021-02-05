@@ -33,16 +33,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private QueryUtil queryUtil;
 
     @Override
-    public UsuarioEntity create(@NotNull UsuarioEntity user) {
-        UsuarioEntity newUser = new UsuarioEntity();
-        newUser.setLogin(user.getLogin());
-        newUser.setNombre(user.getNombre());
-        newUser.setApellido1(user.getApellido1());
-        newUser.setApellido2(user.getApellido2());
-        newUser.setEmail(user.getEmail());
-        newUser.setRoles(user.getRoles());
-        usuarioRepository.saveAndFlush(newUser);
-        return newUser;
+    public UsuarioEntity create(UsuarioEntity user) {
+        return usuarioRepository.saveAndFlush(user);
     }
 
     @Override

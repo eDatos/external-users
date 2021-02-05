@@ -25,6 +25,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 
 import es.gobcan.istac.edatos.external.users.core.config.Constants;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionEntity;
 
@@ -58,6 +60,21 @@ public class UsuarioEntity extends AbstractVersionedAndAuditingAndLogicalDeletio
     @Email
     @Size(min = 3)
     private String email;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Gender gender;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Language language;
+
+    @Size(max = 255)
+    private String organization;
+
+    private String phoneNumber;
 
     @ElementCollection(targetClass = Role.class)
     @JoinTable(name = "tb_usuarios_roles", joinColumns = @JoinColumn(name = "usuario_fk", referencedColumnName = "id"))
@@ -125,5 +142,37 @@ public class UsuarioEntity extends AbstractVersionedAndAuditingAndLogicalDeletio
     @Override
     public String toString() {
         return this.getClass().getName() + " (id = " + getId() + ", login" + getLogin() + ", Nombre = " + getNombre() + ", email" + getEmail() + ")";
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
