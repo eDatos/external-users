@@ -6,13 +6,12 @@
 
     &.has-header-fixed {
         .page-header {
-            position: fixed;
-            top: $navbar-height;
+            position: relative;
             left: 0;
             right: 0;
         }
         .page-body {
-            padding-top: $page-header-height;
+            padding-top: 30px;
         }
     }
 
@@ -134,7 +133,7 @@
         padding-right: $page-padding-right;
     }
     .page-section {
-        margin-top: 1.4rem;
+        //margin-top: 1.4rem;
         h3 {
             font-size: 1.3rem;
         }
