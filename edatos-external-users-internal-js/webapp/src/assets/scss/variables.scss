@@ -147,11 +147,10 @@ $border-required-none: $border-width-required solid transparent;
 $border-required-error: $border-width-required solid $accent-dark;
 $border-required-valid: $border-width-required solid $brand-success;
 
-
-
-
-
+$page-padding-top: 25px;
 $page-padding-left: 40px;
 $page-padding-right: 40px;
 $page-header-height: 50px;
 $page-header-zindex: 10;
+
+$secondary-navbar-height: 30px;
