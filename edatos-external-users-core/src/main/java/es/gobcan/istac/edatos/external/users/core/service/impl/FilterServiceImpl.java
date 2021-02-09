@@ -24,13 +24,13 @@ public class FilterServiceImpl implements FilterService {
 
     @Override
     public FilterEntity create(FilterEntity filter) {
-        // TODO(EDATOS-3280): Filter validation needed
+        // TODO(EDATOS-3280): Discuss with @frodgar if filter validation is needed
         return filterRepository.saveAndFlush(filter);
     }
 
     @Override
     public FilterEntity update(FilterEntity filter) {
-        // TODO(EDATOS-3280): Filter validation needed
+        // TODO(EDATOS-3280): Discuss with @frodgar if filter validation is needed
         return filterRepository.saveAndFlush(filter);
     }
 

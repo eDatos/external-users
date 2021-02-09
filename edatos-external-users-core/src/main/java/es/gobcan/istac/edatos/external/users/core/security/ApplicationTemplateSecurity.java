@@ -23,6 +23,10 @@ public class ApplicationTemplateSecurity {
         return this.esAdmin(authentication);
     }
 
+    public boolean canUpdateFilters(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
     public boolean puedeConsultarAuditoria(Authentication authentication) {
         return this.esAdmin(authentication);
     }

@@ -41,4 +41,6 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
     public static final CommonServiceExceptionType NEED_NOT_FOUND = create("exception.extusers.need.not_found");
     public static final CommonServiceExceptionType NEED_ALREADY_EXIST_CODE_DUPLICATED = create("exception.extusers.need.already_exists.code_duplicated");
 
+    public static final CommonServiceExceptionType EMPTY_BODY = create("exception.extusers.empty_body");
+
 }

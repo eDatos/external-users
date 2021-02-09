@@ -4,12 +4,15 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
+import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,17 +53,51 @@ public class FilterResource extends AbstractResource {
         return ResponseEntity.ok(filterMapper.toDtos(filterService.findAll()));
     }
 
+    @GetMapping("/{id}")
+    @Timed
+    @PreAuthorize("@secChecker.canListAllFilters(authentication)")
+    public ResponseEntity<FilterDto> getFilterById(@PathVariable Long id) {
+        return ResponseEntity.ok(filterMapper.toDto(filterService.find(id)));
+    }
+
     @PostMapping
     @Timed
     @PreAuthorize("@secChecker.canCreateFilters(authentication)")
     public ResponseEntity<FilterDto> createFilter(@RequestBody FilterDto dto) throws URISyntaxException {
+        if (dto != null && dto.getId() != null) {
+            // TODO(EDATOS-3280): Debate with @frodgar if whis kind of exception should go in a resource or, instead,
+            //  should be done in a different way. See also EDATOS-3124.
+            throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
+        }
+
         FilterEntity entity = filterMapper.toEntity(dto);
         entity = filterService.create(entity);
         FilterDto newDto = filterMapper.toDto(entity);
 
         auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getLogin());
         return ResponseEntity.created(new URI(BASE_URL + "/" + newDto.getId()))
-                             .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, newDto.getId().toString()))
+                             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString()))
+                             .body(newDto);
+    }
+
+    // TODO(EDATOS-3280): Debate with @frodgar if UPDATE methods should contain the ID in the URL or the body
+    @PutMapping
+    @Timed
+    @PreAuthorize("@secChecker.canUpdateFilters(authentication)")
+    public ResponseEntity<FilterDto> updateFilter(@RequestBody FilterDto dto) {
+        if (dto == null || dto.getId() == null) {
+            // TODO(EDATOS-3280): Debate with @frodgar if whis kind of exception should go in a resource or, instead,
+            //  should be done in a different way. See also EDATOS-3124.
+            throw new EDatosException(CommonServiceExceptionType.PARAMETER_REQUIRED, "id");
+        }
+
+        FilterEntity entity = filterMapper.toEntity(dto);
+        entity = filterService.update(entity);
+        FilterDto newDto = filterMapper.toDto(entity);
+
+        auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getLogin());
+        return ResponseEntity.ok()
+                             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString()))
                              .body(newDto);
     }
 
