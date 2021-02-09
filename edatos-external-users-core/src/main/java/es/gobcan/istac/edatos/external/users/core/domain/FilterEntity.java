@@ -60,7 +60,7 @@ public class FilterEntity extends AbstractVersionedAndAuditingEntity implements 
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
     public void setId(Long id) {
