@@ -35,6 +35,11 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
+    public FilterEntity find(Long id) {
+        return filterRepository.findOne(id);
+    }
+
+    @Override
     public List<FilterEntity> findAll() {
         return filterRepository.findAll();
     }

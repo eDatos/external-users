@@ -15,6 +15,8 @@ public interface FilterService {
 
     FilterEntity update(FilterEntity filter);
 
+    FilterEntity find(Long id);
+
     List<FilterEntity> findAll();
 
     List<FilterEntity> findAllByUser(UsuarioEntity user);
