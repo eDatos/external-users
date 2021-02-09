@@ -143,6 +143,19 @@ public class FilterResourceIntTest {
     }
 
     @Test
+    public void testCanUpdateFilter() throws Exception {
+        FilterDto dto = filterMapper.toDto(filter1);
+        dto.setName("My new filter name");
+
+        this.mockMvc.perform(put(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
+                                               .content(TestUtil.convertObjectToJsonBytes(dto)))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.name", is("My new filter name")));
+
+        assertThat(filter1.getLastModifiedDate()).isNotEqualTo(dto.getLastModifiedDate());
+    }
+
+    @Test
     public void testDeleteFilter() throws Exception {
         this.mockMvc.perform(delete(ENDPOINT_URL + "/" + filter1.getId())).andExpect(status().isNoContent());
         assertThat(userRepository.findOne(filter1.getId())).isNull();
