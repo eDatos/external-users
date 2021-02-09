@@ -30,6 +30,7 @@ public interface FilterMapper extends EntityMapper<FilterDto, FilterEntity> {
      */
     @Override
     @Mapping(target = "name", defaultExpression = "java( dto.getResourceName() )")
+    @Mapping(target = "lastAccessDate", defaultExpression = "java( java.time.Instant.now() )")
     @Mapping(target = "user", source = "login")
     FilterEntity toEntity(FilterDto dto);
 }
