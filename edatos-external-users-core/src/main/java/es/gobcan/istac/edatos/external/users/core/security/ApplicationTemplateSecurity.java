@@ -15,6 +15,14 @@ public class ApplicationTemplateSecurity {
     private static final String ACL_APP_NAME = "GESTOR_OPERACIONES";
     private static final String SEPARATOR = "#";
 
+    public boolean canListAllFilters(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
+    public boolean canCreateFilters(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
     public boolean puedeConsultarAuditoria(Authentication authentication) {
         return this.esAdmin(authentication);
     }
