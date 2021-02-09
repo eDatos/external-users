@@ -26,6 +26,10 @@ public final class AuditConstants {
     public static final String NEED_EDITION = "NEED_EDITION";
     public static final String NEED_DELETION = "NEED_DELETION";
 
+    public static final String FILTER_CREATION = "FILTER_CREATION";
+    public static final String FILTER_EDITION = "FILTER_EDITION";
+    public static final String FILTER_DELETION = "FILTER_DELETION";
+
     private AuditConstants() {
     }
 }
