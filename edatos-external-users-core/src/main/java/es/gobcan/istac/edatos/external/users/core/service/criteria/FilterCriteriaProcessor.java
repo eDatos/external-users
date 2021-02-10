@@ -50,7 +50,7 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
      * Be aware that to fail at startup this class need to be instantiated early.
      * Marking this as a {@code @Component} will delegate this to Spring.
      *
-     * @implNote Limitations: this class DOES NOT check for nested entity properties
+     * @implNote Limitations: this method DOES NOT check for nested entity properties
      * like {@code user.login}.
      *
      * TODO(EDATOS-3280): Ask @frodgar if there's a better way to handle this. Maybe this should be
