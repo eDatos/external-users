@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -57,6 +58,9 @@ public class FilterResourceIntTest {
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    @Autowired
+    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
     private MockMvc mockMvc;
     private UsuarioEntity user1;
     private UsuarioEntity user2;
@@ -66,7 +70,10 @@ public class FilterResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(filterResource).setControllerAdvice(exceptionTranslator).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(filterResource)
+                                      .setControllerAdvice(exceptionTranslator)
+                                      .setCustomArgumentResolvers(pageableArgumentResolver)
+                                      .build();
     }
 
     @Before
@@ -148,7 +155,7 @@ public class FilterResourceIntTest {
         dto.setName("My new filter name");
 
         this.mockMvc.perform(put(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(dto)))
+                                              .content(TestUtil.convertObjectToJsonBytes(dto)))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.name", is("My new filter name")));
 
@@ -164,9 +171,41 @@ public class FilterResourceIntTest {
     @Test
     public void testListAllFilters() throws Exception {
         this.mockMvc.perform(get(ENDPOINT_URL))
+                    .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
                     .andExpect(jsonPath("$[0].name", is("My filter 1")))
                     .andExpect(jsonPath("$[1].name", is("My filter 2")));
+    }
+
+    @Test
+    public void testGetFilterByName() throws Exception {
+        this.mockMvc.perform(get(ENDPOINT_URL + "?query=NAME ILIKE '%filter 2'"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$[0].name", is("My filter 2")));
+    }
+
+    @Test
+    public void testGetFilterByUserLogin() throws Exception {
+        this.mockMvc.perform(get(ENDPOINT_URL + "?query=LOGIN EQ 'user1'"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(2)))
+                    .andExpect(jsonPath("$[0].name", is("My filter 1")))
+                    .andExpect(jsonPath("$[1].name", is("My filter 2")));
+
+        FilterEntity filter = new FilterEntity();
+        filter.setName("User 2 filter");
+        filter.setPermalink(PERMALINK_1);
+        filter.setUser(user2);
+        filterRepository.saveAndFlush(filter);
+
+        this.mockMvc.perform(get(ENDPOINT_URL + "?query=LOGIN EQ 'user2'"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(1)))
+                    .andExpect(jsonPath("$[0].name", is("User 2 filter")));
     }
 }

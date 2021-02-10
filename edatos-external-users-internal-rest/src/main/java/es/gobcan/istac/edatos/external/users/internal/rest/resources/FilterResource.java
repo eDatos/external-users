@@ -6,6 +6,9 @@ import java.util.List;
 
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -26,6 +30,7 @@ import es.gobcan.istac.edatos.external.users.core.service.FilterService;
 import es.gobcan.istac.edatos.external.users.internal.rest.dto.FilterDto;
 import es.gobcan.istac.edatos.external.users.internal.rest.mapper.FilterMapper;
 import es.gobcan.istac.edatos.external.users.internal.rest.util.HeaderUtil;
+import es.gobcan.istac.edatos.external.users.internal.rest.util.PaginationUtil;
 
 @RestController
 @RequestMapping(FilterResource.BASE_URL)
@@ -46,18 +51,20 @@ public class FilterResource extends AbstractResource {
         this.auditPublisher = auditPublisher;
     }
 
-    @GetMapping
-    @Timed
-    @PreAuthorize("@secChecker.canListAllFilters(authentication)")
-    public ResponseEntity<List<FilterDto>> getAllFilters() {
-        return ResponseEntity.ok(filterMapper.toDtos(filterService.findAll()));
-    }
-
     @GetMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.canListAllFilters(authentication)")
+    @PreAuthorize("@secChecker.canAccessFilters(authentication)")
     public ResponseEntity<FilterDto> getFilterById(@PathVariable Long id) {
         return ResponseEntity.ok(filterMapper.toDto(filterService.find(id)));
+    }
+
+    @GetMapping
+    @Timed
+    @PreAuthorize("@secChecker.canAccessFilters(authentication)")
+    public ResponseEntity<List<FilterDto>> getFilters(Pageable pageable, @RequestParam(required = false) String query) {
+        Page<FilterDto> result = filterService.find(query, pageable).map(filterMapper::toDto);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
+        return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
 
     @PostMapping
@@ -75,7 +82,7 @@ public class FilterResource extends AbstractResource {
         FilterDto newDto = filterMapper.toDto(entity);
 
         auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getLogin());
-        return ResponseEntity.created(new URI(BASE_URL + "/" + newDto.getId()))
+        return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId()))
                              .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString()))
                              .body(newDto);
     }
@@ -103,11 +110,13 @@ public class FilterResource extends AbstractResource {
 
     @DeleteMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.canCreateFilters(authentication)")
+    @PreAuthorize("@secChecker.canDeleteFilters(authentication)")
     public ResponseEntity<Void> deleteFilter(@PathVariable Long id) {
         filterService.delete(filterService.find(id));
 
         auditPublisher.publish(AuditConstants.FILTER_DELETION, id.toString());
-        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+        return ResponseEntity.noContent()
+                             .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString()))
+                             .build();
     }
 }
