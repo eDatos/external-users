@@ -195,6 +195,7 @@
 			</activation>
 			<modules>
 				<module>edatos-external-users-core</module>
+				<module>edatos-external-users-rest-common</module>
 				<module>edatos-external-users-internal-rest</module>
 				<module>edatos-external-users-internal-web</module>
 				<module>edatos-external-users-internal-api-impl</module>
@@ -208,6 +209,7 @@
 			<id>env</id>
 			<modules>
 				<module>edatos-external-users-core</module>
+				<module>edatos-external-users-rest-common</module>
 				<module>edatos-external-users-internal-rest</module>
 				<module>edatos-external-users-internal-js</module>
 				<module>edatos-external-users-internal-web</module>
@@ -228,6 +230,11 @@
 			<dependency>
 				<groupId>es.gobcan.istac.edatos-external-users</groupId>
 				<artifactId>edatos-external-users-core</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-rest-common</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -263,6 +270,11 @@
 			<dependency>
 				<groupId>es.gobcan.istac.edatos-external-users</groupId>
 				<artifactId>edatos-external-users-external-js</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-external-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

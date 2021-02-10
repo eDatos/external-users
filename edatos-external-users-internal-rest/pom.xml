@@ -19,7 +19,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.gobcan.istac.edatos-external-users</groupId>
-			<artifactId>edatos-external-users-core</artifactId>
+			<artifactId>edatos-external-users-rest-common</artifactId>
+			<version>${parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>es.gobcan.istac.edatos-external-users</groupId>
+			<artifactId>edatos-external-users-rest-common</artifactId>
+			<version>${parent.version}</version>
+			<type>test-jar</type>
+			<scope>tests</scope>
 		</dependency>
 
 		<dependency>
