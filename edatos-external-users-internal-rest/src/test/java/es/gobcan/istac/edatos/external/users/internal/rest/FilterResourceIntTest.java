@@ -165,7 +165,7 @@ public class FilterResourceIntTest {
     @Test
     public void testDeleteFilter() throws Exception {
         this.mockMvc.perform(delete(ENDPOINT_URL + "/" + filter1.getId())).andExpect(status().isNoContent());
-        assertThat(userRepository.findOne(filter1.getId())).isNull();
+        assertThat(filterRepository.findOne(filter1.getId())).isNull();
     }
 
     @Test
