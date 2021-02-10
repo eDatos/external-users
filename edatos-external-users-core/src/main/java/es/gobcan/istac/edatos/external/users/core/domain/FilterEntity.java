@@ -19,7 +19,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 
@@ -46,7 +45,6 @@ public class FilterEntity extends AbstractVersionedAndAuditingEntity implements 
     @JoinColumn(name = "user_fk", nullable = false)
     private UsuarioEntity user;
 
-    @URL
     @NotNull
     @Column(nullable = false)
     private String permalink;
