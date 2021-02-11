@@ -9,9 +9,9 @@
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>edatos-external-users-external-api-impl</artifactId>
+	<artifactId>edatos-external-users-external-api</artifactId>
 	<packaging>jar</packaging>
-	<name>edatos-external-users :: EXTERNAL API IMPL</name>
+	<name>edatos-external-users :: EXTERNAL API</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
