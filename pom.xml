@@ -572,6 +572,13 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
+				<groupId>es.gobcan.istac.edatos-external-users</groupId>
+				<artifactId>edatos-external-users-rest-common</artifactId>
+				<version>${project.version}</version>
+				<type>test-jar</type>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
 				<groupId>org.siemac.metamac</groupId>
 				<artifactId>edatos-rest-common</artifactId>
 				<version>${edatos-rest-common.version}</version>
