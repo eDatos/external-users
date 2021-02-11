@@ -21,8 +21,8 @@
 			<artifactId>edatos-external-users-internal-rest</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>es.gobcan.istac.edatos-external-users</groupId>
-			<artifactId>edatos-external-users-internal-api-impl</artifactId>
+			<groupId>org.siemac.metamac</groupId>
+			<artifactId>edatos-rest-common</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>

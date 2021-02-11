@@ -198,7 +198,6 @@
 				<module>edatos-external-users-rest-common</module>
 				<module>edatos-external-users-internal-rest</module>
 				<module>edatos-external-users-internal-web</module>
-				<module>edatos-external-users-internal-api-impl</module>
 				<module>edatos-external-users-external-rest</module>
 				<module>edatos-external-users-external-api-impl</module>
 				<module>edatos-external-users-external-web</module>
@@ -213,7 +212,6 @@
 				<module>edatos-external-users-internal-rest</module>
 				<module>edatos-external-users-internal-js</module>
 				<module>edatos-external-users-internal-web</module>
-				<module>edatos-external-users-internal-api-impl</module>
 				<module>edatos-external-users-external-rest</module>
 				<module>edatos-external-users-external-api-impl</module>
 				<module>edatos-external-users-external-web</module>
@@ -250,11 +248,6 @@
 			<dependency>
 				<groupId>es.gobcan.istac.edatos-external-users</groupId>
 				<artifactId>edatos-external-users-internal-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>es.gobcan.istac.edatos-external-users</groupId>
-				<artifactId>edatos-external-users-internal-api-impl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
