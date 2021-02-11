@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.common;
+package es.gobcan.istac.edatos.external.users;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;

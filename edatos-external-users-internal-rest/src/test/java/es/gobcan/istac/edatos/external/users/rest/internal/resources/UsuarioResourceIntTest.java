@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
@@ -30,7 +31,6 @@ import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.UsuarioRepository;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.core.service.UsuarioService;
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.UsuarioDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.UsuarioMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.TestUtil;

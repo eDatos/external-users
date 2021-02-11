@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.LoggerContext;
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.rest.common.util.TestUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.vm.LoggerVM;
 

@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.NeedEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
@@ -34,7 +35,6 @@ import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionParameters;
 import es.gobcan.istac.edatos.external.users.core.repository.NeedRepository;
 import es.gobcan.istac.edatos.external.users.core.service.NeedService;
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.NeedDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.NeedMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.ExternalUsersDataTestsUtils;

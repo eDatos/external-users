@@ -12,7 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import io.github.jhipster.config.JHipsterProperties;
 
 import static org.mockito.Mockito.when;

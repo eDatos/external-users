@@ -18,11 +18,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.NeedStateEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.NeedStateRepository;
 import es.gobcan.istac.edatos.external.users.core.service.NeedStateService;
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.NeedStateMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.ExternalUsersDataTestsUtils;
 

@@ -20,11 +20,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.NeedTypeEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.NeedTypeRepository;
 import es.gobcan.istac.edatos.external.users.core.service.NeedTypeService;
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.NeedTypeMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.ExternalUsersDataTestsUtils;
 

@@ -17,12 +17,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventConverter;
 import es.gobcan.istac.edatos.external.users.core.domain.AuditEventEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.PersistenceAuditEventRepository;
 import es.gobcan.istac.edatos.external.users.core.service.AuditEventService;
 import es.gobcan.istac.edatos.external.users.core.service.impl.AuditEventServiceImpl;
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
 
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

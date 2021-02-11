@@ -14,11 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.InternationalStringEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.InternationalStringRepository;
 import es.gobcan.istac.edatos.external.users.mock.MetadataConfigurationServiceMockImpl;
-import es.gobcan.istac.edatos.external.users.rest.common.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.util.EdatosExternalUsersBaseTest;
 import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsAsserts;
 import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks;
