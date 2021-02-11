@@ -5,4 +5,4 @@
 ███████╗██╔╝ ██╗   ██║   ███████╗██║  ██║██║ ╚████║██║  ██║███████╗    ╚██████╔╝███████║███████╗██║  ██║███████║
 ╚══════╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝     ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝╚══════╝
 
-${AnsiColor.BRIGHT_BLUE}edatos-external-users 👩‍💻 :: Running Spring Boot ${spring-boot.version}
+${AnsiColor.BRIGHT_BLUE}edatos-external-users 👩‍💻 :: Running Spring Boot ${spring-boot.version}${AnsiColor.DEFAULT}
