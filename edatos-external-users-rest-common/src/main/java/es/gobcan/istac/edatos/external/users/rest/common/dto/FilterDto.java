@@ -3,9 +3,10 @@ package es.gobcan.istac.edatos.external.users.rest.common.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
-import org.siemac.edatos.core.common.dto.AuditableDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
-public class FilterDto extends AuditableDto implements Serializable, Identifiable {
+public class FilterDto extends AbstractVersionedAndAuditingDto implements Serializable, Identifiable {
 
     private static final long serialVersionUID = 1L;
 

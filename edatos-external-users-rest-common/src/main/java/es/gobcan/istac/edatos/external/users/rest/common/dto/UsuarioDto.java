@@ -8,6 +8,8 @@ import java.util.TreeSet;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
 public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable, Identifiable {
 

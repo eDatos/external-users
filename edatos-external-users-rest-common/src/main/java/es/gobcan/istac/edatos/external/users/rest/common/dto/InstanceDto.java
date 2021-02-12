@@ -9,6 +9,7 @@ import org.siemac.edatos.core.common.dto.ExternalItemDto;
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
 public class InstanceDto extends AuditableDto implements Identifiable {
 

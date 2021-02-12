@@ -1,13 +1,10 @@
-package es.gobcan.istac.edatos.external.users.rest.common.dto;
+package es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces;
 
 import java.time.Instant;
 
-import org.siemac.edatos.core.common.dto.AuditableDto;
-
-public class AbstractVersionedAndAuditingAndLogicalDeletionDto extends AuditableDto {
+public abstract class AbstractVersionedAndAuditingAndLogicalDeletionDto extends AbstractVersionedAndAuditingDto {
 
     private String deletedBy;
-
     private Instant deletionDate;
 
     public String getDeletedBy() {

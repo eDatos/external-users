@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
+
 public abstract class TableValueDto implements Serializable, Identifiable {
 
     private static final long serialVersionUID = 1L;

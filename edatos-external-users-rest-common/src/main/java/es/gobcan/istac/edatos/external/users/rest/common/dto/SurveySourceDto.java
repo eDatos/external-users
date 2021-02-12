@@ -3,6 +3,8 @@ package es.gobcan.istac.edatos.external.users.rest.common.dto;
 import org.siemac.edatos.core.common.dto.IdentityDto;
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
+
 public class SurveySourceDto extends IdentityDto implements Identifiable {
 
     private static final long serialVersionUID = 1L;

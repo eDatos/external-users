@@ -7,7 +7,7 @@ import org.mapstruct.ObjectFactory;
 import org.mapstruct.TargetType;
 import org.springframework.stereotype.Component;
 
-import es.gobcan.istac.edatos.external.users.rest.common.dto.Identifiable;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
 @Component
 public class GenericMapperResolver {

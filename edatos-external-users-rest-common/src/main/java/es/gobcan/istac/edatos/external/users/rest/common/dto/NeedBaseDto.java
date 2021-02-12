@@ -6,6 +6,7 @@ import org.siemac.edatos.core.common.dto.AuditableDto;
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
 public class NeedBaseDto extends AuditableDto implements Serializable, Identifiable {
 
