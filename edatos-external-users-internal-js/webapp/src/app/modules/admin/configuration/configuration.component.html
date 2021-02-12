@@ -1,12 +1,14 @@
-<div class="page has-menu has-header-fixed" [class.menu-is-visible]="sideMenuRef.visible">
-    <arte-side-menu [parent]="instance" #sideMenuRef></arte-side-menu>
+<div class="page has-menu has-header-fixed">
+    <!-- TODO(EDATOS-3279): Deactivated due to visual bug -->
+    <!--<arte-side-menu [parent]="instance" #sideMenuRef></arte-side-menu>-->
 
     <div class="page-content" *ngIf="allConfiguration && configuration" #titlesContainer>
         <div class="page-header has-filters" #pageHeaderRef>
             <div class="page-header-top">
-                <button class="btn menu-toggler d-none d-md-block" (click)="sideMenuRef.visible = !sideMenuRef.visible">
+                <!-- TODO(EDATOS-3279): Deactivated due to visual bug -->
+                <!--<button class="btn menu-toggler d-none d-md-block" (click)="sideMenuRef.visible = !sideMenuRef.visible">
                     <i class="fa" [ngClass]="sideMenuRef.visible ? 'fa-times' : 'fa-bars'" aria-hidden="true"></i>
-                </button>
+                </button>-->
                 <h2 class="page-header-title">
                     <span class="page-header-title-text" translate="configuration.title"></span>
                 </h2>
@@ -29,7 +31,7 @@
             <div class="page-section">
                 <h3 translate="configuration.spring"></h3>
                 <div class="page-table-container-fluid">
-                    <table class="page-table table table-hover table-layou-fixed " arteStickyTableHeader [stickTo]="pageHeaderRef">
+                    <table class="page-table table table-hover table-layou-fixed ">
                         <thead>
                             <tr>
                                 <th style="width: 20%" (click)="orderProp = 'prefix'; reverse=!reverse"><span
@@ -62,7 +64,7 @@
                 <div class="page-section">
                     <h3><span>{{key}}</span></h3>
                     <div class="page-table-container-fluid">
-                        <table class="page-table table table-sm table-hover" arteStickyTableHeader [stickTo]="pageHeaderRef">
+                        <table class="page-table table table-sm table-hover">
                             <thead>
                                 <tr>
                                     <th style="width: 20%"><span translate="configuration.table.prefix"></span></th>

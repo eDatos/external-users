@@ -6,13 +6,12 @@
 
     &.has-header-fixed {
         .page-header {
-            position: fixed;
-            top: $navbar-height;
+            position: relative;
             left: 0;
             right: 0;
         }
         .page-body {
-            padding-top: $page-header-height;
+            padding-top: $secondary-navbar-height;
         }
     }
 
@@ -63,6 +62,7 @@
         min-height: 100%;
     }
     .page-header {
+        padding-top: $page-padding-top;
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
         background-color: white;
@@ -128,13 +128,12 @@
         }
     }
 
-    
+
     .page-body {
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
     }
     .page-section {
-        margin-top: 1.4rem;
         h3 {
             font-size: 1.3rem;
         }
@@ -161,7 +160,7 @@
         .table-count {
             padding-left: $page-padding-left;
         }
-        
+
     }
 
     .page-table {
