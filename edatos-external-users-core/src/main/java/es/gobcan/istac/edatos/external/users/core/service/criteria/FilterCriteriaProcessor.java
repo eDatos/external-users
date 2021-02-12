@@ -53,17 +53,12 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
      * @implNote Limitations: this method DOES NOT check for nested entity properties
      * like {@code user.login}.
      *
-     * TODO(EDATOS-3280): Ask @frodgar if there's a better way to handle this. Maybe this should be
-     *   implemented by com.arte.libs.grammar.orm.jpa.criteria.
-     *
      * @param fieldName the name of the field that is going to be checked.
      * @return the same field name passed as argument, if it exists.
      *
      * @throws IllegalArgumentException if the field doesn't exists.
      */
     private static String validateFieldExists(String fieldName) {
-        // TODO(EDATOS-3280): Ask @frodgar why AbstractCriteriaProcessor::entityClass is private.
-        //  That attribute is useful in this case to avoid repetition of FilterEntity.class.
         List<String> fieldNames = FieldUtils.getAllFieldsList(FilterEntity.class)
                                             .stream()
                                             .map(Field::getName)
