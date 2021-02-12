@@ -19,15 +19,18 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.gobcan.istac.edatos-external-users</groupId>
-			<artifactId>edatos-external-users-core</artifactId>
+			<artifactId>edatos-external-users-rest-common</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>es.gobcan.istac.edatos-external-users</groupId>
+			<artifactId>edatos-external-users-rest-common</artifactId>
+			<type>test-jar</type>
+			<scope>tests</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 		</dependency>
-
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -51,12 +54,6 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>es.gobcan.istac.edatos-external-users</groupId>
-			<artifactId>edatos-external-users-core</artifactId>
-			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
