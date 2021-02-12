@@ -1,21 +1,5 @@
 package es.gobcan.istac.edatos.external.users.internal.rest;
 
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING_LABEL_UPDATE;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.LOCALISED_STRING_LOCALE_UPDATE;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_1;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_2;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_3;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.NEED_CODE_UPDATE;
-import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.createEntity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -42,8 +26,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.gobcan.istac.edatos.external.users.internal.rest.dto.NeedDto;
-import es.gobcan.istac.edatos.external.users.internal.rest.mapper.NeedMapper;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.NeedEntity;
@@ -53,8 +35,14 @@ import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionParameters;
 import es.gobcan.istac.edatos.external.users.core.repository.NeedRepository;
 import es.gobcan.istac.edatos.external.users.core.service.NeedService;
+import es.gobcan.istac.edatos.external.users.internal.rest.dto.NeedDto;
+import es.gobcan.istac.edatos.external.users.internal.rest.mapper.NeedMapper;
 import es.gobcan.istac.edatos.external.users.internal.rest.resources.NeedResource;
 import es.gobcan.istac.edatos.external.users.internal.rest.util.TestUtil;
+
+import static es.gobcan.istac.edatos.external.users.internal.rest.util.ExternalUsersDataTestsUtils.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
@@ -296,7 +284,7 @@ public class NeedResourceInTest {
         
         resultActions.andExpect(status().isBadRequest()).andDo(MockMvcResultHandlers.print())
         .andExpect(jsonPath("$.errorItems").isNotEmpty())
-        .andExpect(jsonPath("$.errorItems.[0].code").value("exception.extusers.invalid.proc_status"))
+        .andExpect(jsonPath("$.errorItems.[0].code").value("exception.external_users.invalid.proc_status"))
         .andExpect(jsonPath("$.errorItems.[0].params").value(Matchers.hasItems(ProcStatusEnum.DRAFT.toString())));
         // @formatter:on
     }

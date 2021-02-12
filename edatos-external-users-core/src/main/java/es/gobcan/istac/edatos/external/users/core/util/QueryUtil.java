@@ -15,6 +15,7 @@ import com.arte.libs.grammar.domain.QueryRequest;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FamilyCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.FilterCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.InstanceCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.NeedCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.OperationCriteriaProcessor;
@@ -26,6 +27,12 @@ public class QueryUtil {
     private static final Logger logger = LoggerFactory.getLogger(QueryUtil.class);
     private static final String INCLUDE_DELETED_HINT = "HINT INCLUDE_DELETED SET 'true'";
     private QueryExprCompiler queryExprCompiler = new QueryExprCompiler();
+
+    private final FilterCriteriaProcessor filterCriteriaProcessor;
+
+    public QueryUtil(FilterCriteriaProcessor filterCriteriaProcessor) {
+        this.filterCriteriaProcessor = filterCriteriaProcessor;
+    }
 
     public DetachedCriteria queryToUserCriteria(Pageable pageable, String query) {
         return queryToCriteria(pageable, query, new UsuarioCriteriaProcessor());
@@ -124,6 +131,14 @@ public class QueryUtil {
 
     public DetachedCriteria queryToNeedSortCriteria(String query, Sort sort) {
         return queryToCriteria(sort, query, new NeedCriteriaProcessor());
+    }
+
+    public DetachedCriteria queryToFilterCriteria(String query, Pageable pageable) {
+        return queryToCriteria(pageable, query, filterCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToFilterSortCriteria(String query, Sort sort) {
+        return queryToCriteria(sort, query, filterCriteriaProcessor);
     }
 
 }

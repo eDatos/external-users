@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.siemac.edatos.core.common.exception.EDatosException;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.ConcurrencyFailureException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
@@ -64,9 +66,30 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ParameterizedErrorVM processParameterizedValidationError(ConstraintViolationException ex) {
-        List<ParameterizedErrorItem> items = new ArrayList<>();
-        items.add(new ParameterizedErrorItemBuilder().message(ex.getMessage()).build());
-        return new ParameterizedErrorVM(items);
+        return new CustomParameterizedExceptionBuilder().message("La entidad no se ha podido almancenar")
+                                                        .errorItems(ex.getConstraintViolations()
+                                                                      .stream()
+                                                                      .map(this::getParameterizedItemFromViolation)
+                                                                      .collect(Collectors.toList()))
+                                                        .cause(ex)
+                                                        .code(ErrorConstants.ERR_DATA_CONSTRAINT)
+                                                        .build()
+                                                        .getParameterizedErrorVM();
+    }
+
+    private ParameterizedErrorItem getParameterizedItemFromViolation(ConstraintViolation<?> violation) {
+        // @formatter:off
+        return new ParameterizedErrorItemBuilder().message("'" + violation.getPropertyPath().toString() + "' " + violation.getMessage())
+                                                  .code(ErrorConstants.ERR_DATA_CONSTRAINT)
+                                                  .build();
+        // @formatter:on
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorVM processParameterizedValidationError(DataIntegrityViolationException ex) {
+        return new ErrorVM(ErrorConstants.ERR_DATA_CONSTRAINT, "La entidad no se ha podido almancenar");
     }
 
     @ExceptionHandler(CustomParameterizedException.class)

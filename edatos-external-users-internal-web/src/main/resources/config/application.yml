@@ -71,7 +71,7 @@ spring:
             starttls.enable: true
             ssl.trust: smtp.gmail.com
     messages:
-        basename: i18n/messages-extusers
+        basename: i18n/messages-external_users
     mvc:
         favicon:
             enabled: false
