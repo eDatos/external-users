@@ -28,13 +28,11 @@ public class FilterServiceImpl implements FilterService {
 
     @Override
     public FilterEntity create(FilterEntity filter) {
-        // TODO(EDATOS-3280): Discuss with @frodgar if filter validation is needed
         return filterRepository.saveAndFlush(filter);
     }
 
     @Override
     public FilterEntity update(FilterEntity filter) {
-        // TODO(EDATOS-3280): Discuss with @frodgar if filter validation is needed
         return filterRepository.saveAndFlush(filter);
     }
 
@@ -55,18 +53,12 @@ public class FilterServiceImpl implements FilterService {
 
     @Override
     public Page<FilterEntity> find(String query, Pageable pageable) {
-        // TODO(EDATOS-3280): Debate with @frodgar if there's a better method to process query params. Maybe
-        //  Spring Data offers a simpler way that fit us?
-        //  For reference: Spring Data criteria querys (https://www.baeldung.com/spring-data-criteria-queries)
         DetachedCriteria criteria = queryUtil.queryToFilterCriteria(query, pageable);
         return filterRepository.findAll(criteria, pageable);
     }
 
     @Override
     public List<FilterEntity> find(String query, Sort sort) {
-        // TODO(EDATOS-3280): Debate with @frodgar if there's a better method to process query params. Maybe
-        //  Spring Data offers a simpler way that fit us?
-        //  For reference: Spring Data criteria querys (https://www.baeldung.com/spring-data-criteria-queries)
         DetachedCriteria criteria = queryUtil.queryToFilterSortCriteria(query, sort);
         return filterRepository.findAll(criteria);
     }

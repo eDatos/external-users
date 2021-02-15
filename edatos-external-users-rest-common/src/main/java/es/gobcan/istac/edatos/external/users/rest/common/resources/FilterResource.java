@@ -72,8 +72,6 @@ public class FilterResource extends AbstractResource {
     @PreAuthorize("@secChecker.canCreateFilters(authentication)")
     public ResponseEntity<FilterDto> createFilter(@RequestBody FilterDto dto) throws URISyntaxException {
         if (dto != null && dto.getId() != null) {
-            // TODO(EDATOS-3280): Debate with @frodgar if whis kind of exception should go in a resource or, instead,
-            //  should be done in a different way. See also EDATOS-3124.
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
         }
 
@@ -87,14 +85,11 @@ public class FilterResource extends AbstractResource {
                              .body(newDto);
     }
 
-    // TODO(EDATOS-3280): Debate with @frodgar if UPDATE methods should contain the ID in the URL or the body
     @PutMapping
     @Timed
     @PreAuthorize("@secChecker.canUpdateFilters(authentication)")
     public ResponseEntity<FilterDto> updateFilter(@RequestBody FilterDto dto) {
         if (dto == null || dto.getId() == null) {
-            // TODO(EDATOS-3280): Debate with @frodgar if whis kind of exception should go in a resource or, instead,
-            //  should be done in a different way. See also EDATOS-3124.
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_REQUIRED, "id");
         }
 
