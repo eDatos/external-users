@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { User } from '@app/core/model/user.model';
 import { UserService } from '@app/core/service/user';
-import { ArteEventManager } from 'arte-ng/src/lib/services';
+import { ArteEventManager } from 'arte-ng/services';
 
 @Component({
     selector: 'app-user-mgmt-delete-dialog',

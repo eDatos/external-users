@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { ResponseUtils, createRequestOption } from 'arte-ng/src/lib/utils';
+import { ResponseUtils, createRequestOption } from 'arte-ng/utils';
 import { Operation } from '@app/shared/model';
-import { ResponseWrapper } from 'arte-ng/src/lib/model';
+import { ResponseWrapper } from 'arte-ng/model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';

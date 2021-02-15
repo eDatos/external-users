@@ -5,7 +5,7 @@ import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.c
 import { User, Role, Gender, Language } from '@app/core/model';
 import { UserService } from '@app/core/service/user';
 import { PermissionService } from '@app/core/service/auth';
-import { GenericModalService, ArteEventManager } from 'arte-ng/src/lib/services';
+import { GenericModalService, ArteEventManager } from 'arte-ng/services';
 
 @Component({
     selector: 'app-user-mgmt-form',

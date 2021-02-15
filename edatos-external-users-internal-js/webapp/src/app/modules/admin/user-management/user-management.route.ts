@@ -5,7 +5,7 @@ import { UserMgmtFormComponent } from './user-management-form.component';
 import { ITEMS_PER_PAGE } from '@app/app.constants';
 import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
 import { USER_MANAGEMENT_ROLES } from '@app/core/service/auth';
-import { PagingParamsResolver } from 'arte-ng/src/lib/services';
+import { PagingParamsResolver } from 'arte-ng/services';
 
 
 export const userMgmtRoute: Routes = [

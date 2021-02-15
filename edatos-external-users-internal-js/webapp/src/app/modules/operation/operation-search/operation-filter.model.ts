@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { BaseEntityFilter, EntityFilter } from 'arte-ng/src/lib/model';
+import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
 
 export class OperationFilter extends BaseEntityFilter implements EntityFilter {
     public code: string;

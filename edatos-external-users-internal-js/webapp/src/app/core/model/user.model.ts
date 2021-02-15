@@ -1,6 +1,6 @@
 import { Gender } from "@app/core/model/gender.model";
 import { Language } from "@app/core/model/language.model";
-import { BaseAuditingEntity } from 'arte-ng/src/lib/model';
+import { BaseAuditingEntity } from 'arte-ng/model';
 import * as jwtDecode from 'jwt-decode';
 import { Role } from './rol.model';
 

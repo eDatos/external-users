@@ -4,7 +4,7 @@ import { Subject, Subscription } from 'rxjs';
 import { UserFilter } from './user-filter.model';
 import { debounceTime } from 'rxjs/operators';
 import { Role } from '@app/core/model';
-import { ArteEventManager } from 'arte-ng/src/lib/services';
+import { ArteEventManager } from 'arte-ng/services';
 
 @Component({
     selector: 'ac-user-search',

@@ -1,4 +1,4 @@
-import { BaseAuditingEntity } from 'arte-ng/src/lib/model';
+import { BaseAuditingEntity } from 'arte-ng/model';
 import { InternationalString } from './international-string.model';
 import { ProcStatusEnum } from './proc-status-enum.model';
 

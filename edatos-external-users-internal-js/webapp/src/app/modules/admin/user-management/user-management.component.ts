@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { ArteEventManager } from 'arte-ng/src/lib/services';
+import { ArteEventManager } from 'arte-ng/services';
 
 import { UserFilter } from './user-search';
 import { User } from '@app/core/model';
@@ -10,7 +10,7 @@ import { PermissionService } from '@app/core/service/auth';
 import { UserService } from '@app/core/service/user';
 import { LazyLoadEvent } from 'primeng/api';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
-import { ResponseWrapper } from 'arte-ng/src/lib/model';
+import { ResponseWrapper } from 'arte-ng/model';
 
 @Component({
     selector: 'app-user-mgmt',

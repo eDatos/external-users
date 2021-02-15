@@ -5,8 +5,8 @@ import { Observable, Subscription } from 'rxjs';
 import { Family, FamilyService, InternationalString, ProcStatusEnum } from '@app/shared';
 import { FamilyDeleteDialogComponent } from './family-delete-dialog.component';
 import { HasTitlesContainer } from 'arte-ng';
-import { ArteEventManager, GenericModalService } from 'arte-ng/src/lib/services';
-import { TextValidator } from 'arte-ng/src/lib/validators';
+import { ArteEventManager, GenericModalService } from 'arte-ng/services';
+import { TextValidator } from 'arte-ng/validators';
 import { ConfigService } from '@app/config';
 @Component({
     selector: 'app-family-form',
