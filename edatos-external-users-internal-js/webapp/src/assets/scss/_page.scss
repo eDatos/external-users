@@ -1,17 +1,32 @@
 @import 'variables';
 @import 'mixins';
 
+#metamac-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $primary-navbar-zindex;
+    width: 100%;
+}
+
+.app-navbar {
+    position: fixed;
+    top: $primary-navbar-height;
+    z-index: $secondary-navbar-zindex;
+    width: 100%;
+}
+
 .page {
     height: 100%;
-
+    margin-top: $primary-navbar-height + $secondary-navbar-height + $page-header-height;
     &.has-header-fixed {
         .page-header {
-            position: relative;
+            position: fixed;
+            z-index: $page-header-zindex;
+            top: $primary-navbar-height + $secondary-navbar-height;
             left: 0;
             right: 0;
-        }
-        .page-body {
-            padding-top: $secondary-navbar-height;
         }
     }
 
@@ -19,6 +34,14 @@
         transition: padding-left .3s ease-in-out;
         &.has-header-fixed .page-header {
             transition: left .3s ease-in-out;
+        }
+        .side-menu {
+            position: fixed;
+            top: $primary-navbar-height + $secondary-navbar-height;
+            border-right-color: $grey-medium;
+            .menu-is-visible {
+                z-index: 10;
+            }
         }
     }
 
@@ -49,10 +72,6 @@
         &.has-header-fixed .page-header {
             left: $side-menu-width;
         }
-
-        .side-menu {
-            border-right-color: $grey-medium;
-        }
     }
 
     .page-content {
@@ -68,12 +87,6 @@
         background-color: white;
         box-shadow: 0 1px 4px -1px rgba(0,0,0,.3);
         z-index: $page-header-zindex;
-        &.page-header-fixed {
-            position: fixed;
-            top: $navbar-height;
-            left: 0;
-            right: 0;
-        }
         .page-header-title {
             display: inline-flex;
             align-items: center;
