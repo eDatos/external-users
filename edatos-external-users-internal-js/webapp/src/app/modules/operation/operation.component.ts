@@ -7,8 +7,8 @@ import { OperationFilter, OperationSearchComponent } from './operation-search';
 import { OperationFormComponent } from './operation-form.component';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { LazyLoadEvent } from 'primeng/api';
-import { ResponseWrapper } from 'arte-ng/src/lib/model';
-import { ArteEventManager } from 'arte-ng/src/lib/services';
+import { ResponseWrapper } from 'arte-ng/model';
+import { ArteEventManager } from 'arte-ng/services';
 import { ConfigService } from '@app/config';
 
 @Component({

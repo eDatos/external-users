@@ -1,5 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SharedModule } from '@app/shared';
+import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteTriInputSwitchModule } from "arte-ng";
+import { ArteDirectivesModule } from "arte-ng/directives";
 
 import {
     AuditsComponent,
@@ -24,7 +26,13 @@ import { UserSearchComponent } from './user-management/user-search';
 @NgModule({
     imports: [
         SharedModule,
-        AdminRoutingModule
+        AdminRoutingModule,
+        ArteCalendarModule,
+        ArteSideMenuModule,
+        ArteDirectivesModule,
+        ArteAutocompleteModule,
+        ArteAuditInfoModule,
+        ArteTriInputSwitchModule,
     ],
     declarations: [
         AuditsComponent,

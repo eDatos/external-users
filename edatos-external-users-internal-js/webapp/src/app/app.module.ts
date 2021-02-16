@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { ArteTableModule, ArteTableService } from 'arte-ng';
 
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppComponent } from './app.component';
@@ -21,7 +22,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
-import { ArteNgModule } from 'arte-ng';
+import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 
 export function init(configService: ConfigService, authServerProvider: AuthServerProvider) {
   return () => {
@@ -70,7 +71,6 @@ export function initTranslations(translateService: TranslateService, cookieServi
     }),
     ToastModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-    ArteNgModule.forRoot(AuthServerProvider)
   ],
   providers: [
     {
@@ -100,7 +100,12 @@ export function initTranslations(translateService: TranslateService, cookieServi
       useClass: ErrorHandlerInterceptor,
       multi: true
     },
-    MessageService
+    MessageService,
+    ArteTableService,
+    ArteEventManager,
+    PagingParamsResolver,
+    ArteAlertService,
+    ScrollService,
   ],
   bootstrap: [AppComponent]
 })

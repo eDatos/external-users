@@ -3,8 +3,15 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ArteNgModule } from 'arte-ng';
-import { GenericModalService } from 'arte-ng/src/lib/services';
+import {
+    ArteInputModule,
+    ArteOrderListModule,
+    ArteTableModule,
+    ArteAutocompleteModule,
+    ArteSpinnerModule,
+    ArteEntityListEmptyModule,
+} from 'arte-ng';
+import { GenericModalService } from 'arte-ng/services';
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -53,7 +60,12 @@ import {
         NgArrayPipesModule,
         FormsModule,
         TooltipModule,
-        ArteNgModule
+        ArteInputModule,
+        ArteTableModule,
+        ArteOrderListModule,
+        ArteAutocompleteModule,
+        ArteSpinnerModule,
+        ArteEntityListEmptyModule,
     ],
     providers: [
         DatePipe,
@@ -85,7 +97,10 @@ import {
         TooltipModule,
         NgArrayPipesModule,
         ReactiveFormsModule,
-        ArteNgModule
+        ArteInputModule,
+        ArteTableModule,
+        ArteOrderListModule,
+        ArteEntityListEmptyModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

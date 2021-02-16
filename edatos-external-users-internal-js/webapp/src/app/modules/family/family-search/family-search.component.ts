@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { FamilyFilter } from './family-filter.model';
 import { debounceTime } from 'rxjs/operators';
-import { ArteEventManager } from 'arte-ng/src/lib/services';
+import { ArteEventManager } from 'arte-ng/services';
 
 @Component({
     selector: 'ac-family-search',

@@ -1,24 +1,58 @@
 @import 'variables';
 @import 'mixins';
 
+#metamac-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: $primary-navbar-zindex;
+    width: 100%;
+    height: $primary-navbar-height;
+}
+
+.app-navbar {
+    position: fixed;
+    top: $primary-navbar-height;
+    z-index: $secondary-navbar-zindex;
+    width: 100%;
+}
+
 .page {
+    width: 100%;
     height: 100%;
+    margin-top: $primary-navbar-height + $secondary-navbar-height;
 
     &.has-header-fixed {
         .page-header {
-            position: relative;
+            position: fixed;
+            z-index: $page-header-zindex;
+            top: $primary-navbar-height + $secondary-navbar-height;
             left: 0;
             right: 0;
         }
-        .page-body {
-            padding-top: $secondary-navbar-height;
+        & .page-body {
+            margin-top: $primary-navbar-height + $secondary-navbar-height + $page-header-height;
         }
     }
 
     &.has-menu, &.has-menu-animated {
         transition: padding-left .3s ease-in-out;
+
         &.has-header-fixed .page-header {
             transition: left .3s ease-in-out;
+        }
+
+        .side-menu {
+           position: fixed;
+        }
+
+        &.menu-is-visible {
+            .side-menu {
+                z-index: $side-menu-zindex;
+                top: $primary-navbar-height + $secondary-navbar-height;
+                border-right-color: $grey-medium;
+            }
         }
     }
 
@@ -49,10 +83,6 @@
         &.has-header-fixed .page-header {
             left: $side-menu-width;
         }
-
-        .side-menu {
-            border-right-color: $grey-medium;
-        }
     }
 
     .page-content {
@@ -65,15 +95,10 @@
         padding-top: $page-padding-top;
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
+        padding-bottom: $page-padding-bottom;
         background-color: white;
         box-shadow: 0 1px 4px -1px rgba(0,0,0,.3);
         z-index: $page-header-zindex;
-        &.page-header-fixed {
-            position: fixed;
-            top: $navbar-height;
-            left: 0;
-            right: 0;
-        }
         .page-header-title {
             display: inline-flex;
             align-items: center;
@@ -128,12 +153,12 @@
         }
     }
 
-
     .page-body {
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
     }
     .page-section {
+        padding-top: $page-padding-top;
         h3 {
             font-size: 1.3rem;
         }

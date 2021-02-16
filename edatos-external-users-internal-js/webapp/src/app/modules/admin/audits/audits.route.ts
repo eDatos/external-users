@@ -3,7 +3,7 @@ import { ITEMS_PER_PAGE } from '@app/app.constants';
 import { AuditsComponent } from './audits.component';
 import { HERRAMIENTAS_ROLES } from '@app/core/service/auth';
 import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
-import { PagingParamsResolver } from 'arte-ng/src/lib/services';
+import { PagingParamsResolver } from 'arte-ng/services';
 
 
 export const auditsRoute: Route = {

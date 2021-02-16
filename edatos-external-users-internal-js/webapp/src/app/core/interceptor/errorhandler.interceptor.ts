@@ -2,7 +2,7 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { ArteAlertService } from 'arte-ng/src/lib/services';
+import { ArteAlertService } from 'arte-ng/services';
 
 @Injectable({
     providedIn: 'root'
