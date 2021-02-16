@@ -147,15 +147,19 @@ $border-required-none: $border-width-required solid transparent;
 $border-required-error: $border-width-required solid $accent-dark;
 $border-required-valid: $border-width-required solid $brand-success;
 
-$primary-navbar-height: 88px;
+$primary-navbar-height: 70px;
 $primary-navbar-zindex: 20;
-$secondary-navbar-height: 30px;
+$secondary-navbar-height: 58px;
 $secondary-navbar-zindex: 15;
 
-$page-padding-top: 25px;
+$page-padding-top: 15px;
 $page-padding-left: 40px;
 $page-padding-right: 40px;
-$page-header-height: 50px;
+$page-padding-bottom: 15px;
+
+$page-body-padding-top: 60px;
+
+$page-header-height: 70px;
 $page-header-zindex: 10;
 
 $side-menu-zindex: 10;

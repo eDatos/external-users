@@ -1,29 +1,27 @@
 <div *ngIf="audits" class="page">
 
-    <div class="page-header has-filters">
-        <div class="page-header-top">
-            <h2 class="page-header-title">
-                <span class="page-header-title-text" translate="audits.title"></span>
-            </h2>
-            <button class="btn btn-outline-dark btn-icon-only" (click)="hiddenFilters = !hiddenFilters">
-                <i class="fa fa-filter mr-1" aria-hidden="true"></i>
-                <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}"
-                    aria-hidden="true"></i>
-            </button>
-        </div>
-        <div class="page-filters entity-search audits-search" [hidden]="hiddenFilters">
-            <div class="entity-search-field audit-date-search-field">
-                <label translate="audits.filter.title"></label>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <span translate="audits.filter.from" class="input-group-addon"></span>
-                        <arte-calendar [(ngModel)]="fromDate" name="start" (onSelect)="onDatesChange()"></arte-calendar>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <span translate="audits.filter.to" class="input-group-addon"></span>
-                        <arte-calendar [(ngModel)]="toDate" name="end" (onSelect)="onDatesChange()" [maxDate]="today">
-                        </arte-calendar>
-                    </div>
+    <div class="page-header page-header-top has-filters">
+        <h2 class="page-header-title">
+            <span class="page-header-title-text" translate="audits.title"></span>
+        </h2>
+        <button class="btn btn-outline-dark btn-icon-only" (click)="hiddenFilters = !hiddenFilters">
+            <i class="fa fa-filter mr-1" aria-hidden="true"></i>
+            <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}"
+               aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="page-filters entity-search audits-search" [hidden]="hiddenFilters">
+        <div class="entity-search-field audit-date-search-field">
+            <label translate="audits.filter.title"></label>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <span translate="audits.filter.from" class="input-group-addon"></span>
+                    <arte-calendar [(ngModel)]="fromDate" name="start" (onSelect)="onDatesChange()"></arte-calendar>
+                </div>
+                <div class="form-group col-md-6">
+                    <span translate="audits.filter.to" class="input-group-addon"></span>
+                    <arte-calendar [(ngModel)]="toDate" name="end" (onSelect)="onDatesChange()" [maxDate]="today">
+                    </arte-calendar>
                 </div>
             </div>
         </div>
