@@ -47,7 +47,7 @@
                                         <div class="col-4">{{key}}</div>
                                         <div class="col-8 text-right">
                                             <span
-                                                class="badge badge-default break">{{entry.properties[key] | json}}</span>
+                                                class="badge badge-default text-wrap text-right">{{entry.properties[key] | json}}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -74,7 +74,7 @@
                                 <tr *ngFor="let item of (allConfiguration[key] | filterBy:['key']:filter)">
                                     <td class="break">{{item.key}}</td>
                                     <td class="break text-right">
-                                        <span class="badge badge-default break">{{item.val}}</span>
+                                        <span class="badge badge-default text-wrap text-right">{{item.val}}</span>
                                     </td>
                                 </tr>
                             </tbody>

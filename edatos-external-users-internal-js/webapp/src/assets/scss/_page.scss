@@ -8,6 +8,7 @@
     right: 0;
     z-index: $primary-navbar-zindex;
     width: 100%;
+    height: $primary-navbar-height;
 }
 
 .app-navbar {
@@ -40,7 +41,7 @@
             top: $primary-navbar-height + $secondary-navbar-height;
             border-right-color: $grey-medium;
             .menu-is-visible {
-                z-index: 10;
+                z-index: $side-menu-zindex;
             }
         }
     }

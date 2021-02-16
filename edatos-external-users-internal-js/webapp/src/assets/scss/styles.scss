@@ -83,11 +83,7 @@ h4 {
 }
 
 .break {
-    // This class is mainly used in table cells (like the one used in the configuration component). In that particular
-    // component, the table has two main columns: config prop and value. The latter uses a 'badge' css class from bootstrap
-    // that overrides the white-space property. That's why it's marked here as !important. Otherwise, 'nowrap' is used
-    // instead (because bootstrap).
-    white-space: normal !important;
+    white-space: normal;
     word-break: break-all;
 }
 
