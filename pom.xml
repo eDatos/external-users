@@ -87,14 +87,14 @@
 
 		<sonar.issue.ignore.multicriteria>S3437,UndocumentedApi,BoldAndItalicTagsCheck</sonar.issue.ignore.multicriteria>
 
-		<!-- Rule https://sonarqube.com/coding_rules#rule_key=Web%3ABoldAndItalicTagsCheck is ignored. Even if we agree that using the "i" tag is an awful practice, 
+		<!-- Rule https://sonarqube.com/coding_rules#rule_key=Web%3ABoldAndItalicTagsCheck is ignored. Even if we agree that using the "i" tag is an awful practice,
 			this is what is recommended by http://fontawesome.io/examples/ -->
 		<sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.resourceKey>src/main/webapp/**/*.*</sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.resourceKey>
 		<sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.ruleKey>Web:BoldAndItalicTagsCheck</sonar.issue.ignore.multicriteria.BoldAndItalicTagsCheck.ruleKey>
 		<!-- Rule https://sonarqube.com/coding_rules#rule_key=squid%3AS3437 is ignored, as a JPA-managed field cannot be transient -->
 		<sonar.issue.ignore.multicriteria.S3437.resourceKey>src/main/java/**/*</sonar.issue.ignore.multicriteria.S3437.resourceKey>
 		<sonar.issue.ignore.multicriteria.S3437.ruleKey>squid:S3437</sonar.issue.ignore.multicriteria.S3437.ruleKey>
-		<!-- Rule http://sonarqube.com/coding_rules#rule_key=squid%3AUndocumentedApi is ignored, as we want to follow "clean code" guidelines and classes, methods 
+		<!-- Rule http://sonarqube.com/coding_rules#rule_key=squid%3AUndocumentedApi is ignored, as we want to follow "clean code" guidelines and classes, methods
 			and arguments names should be self-explanatory -->
 		<sonar.issue.ignore.multicriteria.UndocumentedApi.resourceKey>src/main/java/**/*</sonar.issue.ignore.multicriteria.UndocumentedApi.resourceKey>
 		<sonar.issue.ignore.multicriteria.UndocumentedApi.ruleKey>squid:UndocumentedApi</sonar.issue.ignore.multicriteria.UndocumentedApi.ruleKey>
@@ -137,7 +137,7 @@
 		<metamac-common-metadata-rest-external-api.version>2.3.0</metamac-common-metadata-rest-external-api.version>
 		<metamac-srm-rest-internal-api.version>2.2.0</metamac-srm-rest-internal-api.version>
 		<metamac-srm-rest-external-api.version>2.2.0</metamac-srm-rest-external-api.version>
-		
+
 		<hibernate-types.version>2.9.11</hibernate-types.version>
 		<h2.version>1.4.200</h2.version>
 	</properties>
@@ -154,7 +154,7 @@
 						<tagNameFormat>${maven.build.timestamp}-v@{project.version}</tagNameFormat>
 					</configuration>
 				</plugin>
-				<!-- This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. Remove when the m2e plugin 
+				<!-- This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. Remove when the m2e plugin
 					can correctly bind to Maven lifecycle -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
@@ -199,7 +199,6 @@
 				<module>edatos-external-users-internal-rest</module>
 				<module>edatos-external-users-internal-web</module>
 				<module>edatos-external-users-external-rest</module>
-				<module>edatos-external-users-external-api</module>
 				<module>edatos-external-users-external-web</module>
 			</modules>
 		</profile>
@@ -213,7 +212,6 @@
 				<module>edatos-external-users-internal-js</module>
 				<module>edatos-external-users-internal-web</module>
 				<module>edatos-external-users-external-rest</module>
-				<module>edatos-external-users-external-api</module>
 				<module>edatos-external-users-external-web</module>
 				<module>edatos-external-users-external-js</module>
 			</modules>
@@ -248,11 +246,6 @@
 			<dependency>
 				<groupId>es.gobcan.istac.edatos-external-users</groupId>
 				<artifactId>edatos-external-users-internal-web</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>es.gobcan.istac.edatos-external-users</groupId>
-				<artifactId>edatos-external-users-external-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
@@ -549,7 +542,7 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>com.vladmihalcea</groupId>
 				<artifactId>hibernate-types-52</artifactId>
