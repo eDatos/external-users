@@ -147,3 +147,16 @@ jhipster:
 logging:
     level:
         org.hibernate.orm.deprecation: ERROR
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here
+# ===================================================================
+
+application:
+    metadata:
+        metamacNavbarKey: metamac.navbar.url
+        metamacFaviconUrlKey: metamac.app.style.favicon.url
+    endpoint:
+        # Required: Aplication URL
+        app-url: FILL_APP_URL
