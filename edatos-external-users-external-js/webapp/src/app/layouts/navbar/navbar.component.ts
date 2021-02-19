@@ -44,7 +44,6 @@ export class NavbarComponent implements OnInit {
         this.collapseNavbar();
         this.loginService.logout();
         const config = this.configService.getConfig();
-        window.location.href = config.cas.logout;
     }
 
     toggleNavbar() {
