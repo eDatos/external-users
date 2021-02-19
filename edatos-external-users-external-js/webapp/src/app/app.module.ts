@@ -26,12 +26,13 @@ import { ArteNgModule } from 'arte-ng';
 export function init(configService: ConfigService, authServerProvider: AuthServerProvider) {
   return () => {
     const promise: Promise<boolean> = new Promise((resolve, reject) => {
-      if (authServerProvider.getToken()) {
+    /*  if (authServerProvider.getToken()) {   // TODO EDATOS-3266
         resolve(true);
       } else {
         const config = configService.getConfig();
         window.location.href = config.cas.login + '?service=' + encodeURIComponent(config.cas.service);
-      }
+      }*/
+      resolve(true);
     });
     return promise;
   };

@@ -22,7 +22,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
     }
 
     checkLogin(roles: Role[]): Promise<boolean> {
-        return this.principal.identity().then((account) => {
+     /*   return this.principal.identity().then((account) => {    // TODO EDATOS-3266
             if (!!account) {
                 return this.noPermissionRequired(roles) || this.principal.hasRoles(roles);
             } else {
@@ -31,16 +31,20 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
                 return false;
             }
         });
+        */
+       return Promise.resolve(true);
     }
 
     private checkRoles(roles, routeData: Data): true | Promise<boolean> {
-        return this.checkLogin(roles).then((canActivate) => {
+  /*      return this.checkLogin(roles).then((canActivate) => {   // TODO EDATOS-3266
             if (!canActivate) {
                 this.redirect(routeData);
                 return false;
             }
             return true;
         })
+        */
+       return true;
     }
 
     private noPermissionRequired(roles: Role[]) {

@@ -5,8 +5,8 @@ const PROXY_CONFIG = [
             '/management',
             '/v2/api-docs',
             '/h2-console',
-            '/login/cas',
-            '/logout'
+           // '/login/cas', // TODO EDATOS-3266
+           // '/logout' // TODO EDATOS-3266
         ],
         target: "http://localhost:8080",
         secure: false

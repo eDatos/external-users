@@ -5,8 +5,7 @@ import { Role } from '@app/core/model';
 export const USER_MANAGEMENT_ROLES = [Role.ADMINISTRADOR];
 export const HERRAMIENTAS_ROLES = [Role.ADMINISTRADOR];
 export const ADMINISTRACION_ROLES = [Role.ADMINISTRADOR];
-export const FAMILY_ROLES = [Role.ADMINISTRADOR];
-export const OPERATION_ROLES = [Role.ADMINISTRADOR];
+export const ALL_ALLOWED = [Role.ANY_ROLE_ALLOWED];
 
 @Injectable()
 export class PermissionService {

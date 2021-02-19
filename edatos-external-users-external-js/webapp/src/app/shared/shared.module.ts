@@ -26,11 +26,6 @@ import { TableModule } from 'primeng/table';
 import {TooltipModule} from 'primeng/tooltip';
 import { NgArrayPipesModule } from 'ngx-pipes';
 
-import {
-    FamilyService,
-    OperationService
-} from './service';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -57,8 +52,6 @@ import {
     ],
     providers: [
         DatePipe,
-        FamilyService,
-        OperationService,
         { // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
             provide: GenericModalService,
             useClass: GenericModalService,
