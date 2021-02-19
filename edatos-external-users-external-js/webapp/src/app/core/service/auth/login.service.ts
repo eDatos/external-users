@@ -13,8 +13,4 @@ export class LoginService {
         this.principal.authenticate(null);
     }
 
-    loginInCas() {
-        const config = this.configService.getConfig();
-        window.location.href = config.cas.login + '?service=' + encodeURIComponent(config.cas.service);
-    }
 }

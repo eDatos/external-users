@@ -1,9 +1,4 @@
 export interface GenericConfig {
-    cas: {
-        login: any;
-        logout: any;
-        service: any;
-    };
     endpoint: {
         appUrl: any;
     };

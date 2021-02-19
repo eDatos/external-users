@@ -17,7 +17,7 @@ export class AuthExpiredInterceptor implements HttpInterceptor {
                     if (error.status === 401) {
                         const loginService: LoginService = this.injector.get(LoginService);
                         loginService.logout();
-                        loginService.loginInCas();
+                      //  loginService.loginInCas(); // TODO EDATOS-3266
                     }
                     return throwError(error);
                 })
