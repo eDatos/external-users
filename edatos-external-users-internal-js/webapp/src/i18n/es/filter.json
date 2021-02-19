@@ -1,0 +1,17 @@
+{
+    "filter": {
+        "home": {
+            "title": "Filtros",
+            "createLabel": "Crear filtro"
+        },
+        "name": {
+            "label": "Nombre"
+        },
+        "login": {
+            "label": "Usuario"
+        },
+        "lastAccessDate": {
+            "label": "Fecha de último acceso"
+        }
+    }
+}
