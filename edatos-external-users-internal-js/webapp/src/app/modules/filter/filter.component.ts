@@ -95,7 +95,9 @@ export class FilterComponent implements OnInit {
         this.page = e.first / e.rows + 1;
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
-            this.predicate = e.sortField;
+            // TODO(EDATOS-3280): Why would this be necessary? Maybe instead the criteria processor on the server
+            //  should use LASTACCESSDATE instead of LAST_ACCESS_DATE?
+            this.predicate = this.filterSearch.fromCamelCaseToSnakeCase(e.sortField);
             this.reverse = e.sortOrder === 1;
         }
         this.transition();

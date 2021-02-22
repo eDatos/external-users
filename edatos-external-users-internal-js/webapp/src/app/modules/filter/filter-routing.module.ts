@@ -18,7 +18,7 @@ export const FILTER_ROUTES: Routes = [
             pageTitle: 'filter.home.title',
             defaultPagingParams: {
                 page: '1',
-                sort: 'code,asc',
+                sort: 'created_date,desc',
                 size: ITEMS_PER_PAGE,
             },
         },
