@@ -8,6 +8,7 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.springframework.stereotype.Component;
 
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
+import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
@@ -84,10 +85,10 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.NAME).sortable()
                 .withEntityProperty(ENTITY_FIELD_NAME)
                 .build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder
-                .stringRestrictionProcessor()
-                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+        registerOrderProcessor(OrderProcessorBuilder
+                .orderProcessor()
                 .withQueryProperty(QueryProperty.LOGIN)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".login")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
