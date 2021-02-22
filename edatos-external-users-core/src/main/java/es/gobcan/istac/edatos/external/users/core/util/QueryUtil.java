@@ -2,6 +2,7 @@ package es.gobcan.istac.edatos.external.users.core.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.siemac.edatos.core.common.exception.EDatosException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import com.arte.libs.grammar.antlr.QueryExprCompiler;
 import com.arte.libs.grammar.domain.QueryRequest;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FamilyCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FilterCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.InstanceCriteriaProcessor;
@@ -134,11 +136,22 @@ public class QueryUtil {
     }
 
     public DetachedCriteria queryToFilterCriteria(String query, Pageable pageable) {
-        return queryToCriteria(pageable, query, filterCriteriaProcessor);
+        try {
+            return queryToCriteria(pageable, query, filterCriteriaProcessor);
+        } catch (IllegalArgumentException ex) {
+            // TODO(EDATOS-3280): There should be a concrete exception for this case, not IllegalArgumentException.
+            // This exception catches a query/sort parameter that isn't recognized.
+            throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+        }
     }
 
     public DetachedCriteria queryToFilterSortCriteria(String query, Sort sort) {
         return queryToCriteria(sort, query, filterCriteriaProcessor);
+    }
+
+    private String getQueryParameter(IllegalArgumentException ex) {
+        // TODO(EDATOS-3280): Is this a robust way to extract the query parameter?
+        return StringUtils.substringBetween(ex.getMessage(), "Current: ", " Expected");
     }
 
 }
