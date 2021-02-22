@@ -33,11 +33,6 @@ import { TableModule } from 'primeng/table';
 import {TooltipModule} from 'primeng/tooltip';
 import { NgArrayPipesModule } from 'ngx-pipes';
 
-import {
-    FamilyService,
-    OperationService
-} from './service';
-
 @NgModule({
     imports: [
         CommonModule,
@@ -69,12 +64,10 @@ import {
     ],
     providers: [
         DatePipe,
-        FamilyService,
-        OperationService,
         { // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
             provide: GenericModalService,
             useClass: GenericModalService,
-            deps: [ NgbModal ]
+            deps: [ NgbModal ],
         } // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
     ],
     exports: [

@@ -24,22 +24,6 @@ const APP_ROUTES: Routes = [
         }
     },
     {
-        path: 'family',
-        loadChildren: () => import('./modules/family/family.module').then(m => m.FamilyModule),
-        canLoad: [UserRouteAccessGuard],
-        data: {
-            roles: FAMILY_ROLES,
-        }
-    },
-    {
-        path: 'operation',
-        loadChildren: () => import('./modules/operation/operation.module').then(m => m.OperationModule),
-        canLoad: [UserRouteAccessGuard],
-        data: {
-            roles: OPERATION_ROLES,
-        },
-    },
-    {
         path: 'filter',
         loadChildren: () => import('./modules/filter/filter.module').then((m) => m.FilterModule),
         canLoad: [UserRouteAccessGuard],
