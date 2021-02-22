@@ -36,7 +36,10 @@
         "title": "Mi cuenta"
     },
     "app": {
-        "name": "Gestor de usuarios externos de EDatos"
+        "name": {
+            "complete": "Gestor de usuarios externos de EDatos",
+            "short": "Usuarios externos"
+        }
     },
     "arte": {
         "arte-table-count": {
