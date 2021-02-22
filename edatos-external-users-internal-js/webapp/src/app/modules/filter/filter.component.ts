@@ -62,9 +62,19 @@ export class FilterComponent implements OnInit {
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe((params) => {
-            this.filterSearch
-                .fromQueryParams(params)
-                .subscribe(() => this.filterService.find().subscribe((rw) => this.onSuccess(rw)));
+            this.filterSearch.fromQueryParams(params).subscribe(() =>
+                this.filterService
+                    .find({
+                        page: this.page - 1,
+                        size:
+                            PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1
+                                ? this.itemsPerPage
+                                : ITEMS_PER_PAGE,
+                        sort: this.sort(),
+                        query: this.filterSearch.toQuery(),
+                    })
+                    .subscribe((rw) => this.onSuccess(rw))
+            );
         });
     }
 
