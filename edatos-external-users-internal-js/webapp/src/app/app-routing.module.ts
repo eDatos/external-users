@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HERRAMIENTAS_ROLES, FAMILY_ROLES, OPERATION_ROLES } from './core/service';
-import { UserRouteAccessGuard } from './core/guard';
 import { DEFAULT_PATH } from './app.constants';
+import { UserRouteAccessGuard } from './core/guard';
+import { FAMILY_ROLES, FILTER_ROLES, HERRAMIENTAS_ROLES, OPERATION_ROLES } from './core/service';
 
 const APP_ROUTES: Routes = [
     {
@@ -24,20 +24,12 @@ const APP_ROUTES: Routes = [
         }
     },
     {
-        path: 'family',
-        loadChildren: () => import('./modules/family/family.module').then(m => m.FamilyModule),
+        path: 'filter',
+        loadChildren: () => import('./modules/filter/filter.module').then((m) => m.FilterModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: FAMILY_ROLES,
-        }
-    },
-    {
-        path: 'operation',
-        loadChildren: () => import('./modules/operation/operation.module').then(m => m.OperationModule),
-        canLoad: [UserRouteAccessGuard],
-        data: {
-            roles: OPERATION_ROLES,
-        }
+            roles: FILTER_ROLES,
+        },
     },
     {
         path: '**',

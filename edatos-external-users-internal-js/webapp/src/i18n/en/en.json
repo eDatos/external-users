@@ -1,0 +1,670 @@
+{
+    "account": {
+        "form": {
+            "apellido1": "",
+            "apellido1.placeholder": "",
+            "apellido2": "",
+            "apellido2.placeholder": "",
+            "button": "",
+            "nombre": "",
+            "nombre.placeholder": ""
+        },
+        "messages": {
+            "error": {
+                "emailexists": "",
+                "fail": ""
+            },
+            "success": "",
+            "validate": {
+                "apellido1": {
+                    "maxlength": "",
+                    "minlength": "",
+                    "required": ""
+                },
+                "apellido2": {
+                    "maxlength": "",
+                    "minlength": "",
+                    "required": ""
+                },
+                "nombre": {
+                    "maxlength": "",
+                    "minlength": "",
+                    "required": ""
+                }
+            }
+        },
+        "title": ""
+    },
+    "arte": {
+        "arte-table-count": {
+            "itemCount": ""
+        },
+        "audit-info": {
+            "createdBy": "",
+            "createdDate": "",
+            "deletedBy": "",
+            "deletionDate": "",
+            "lastModifiedBy": "",
+            "lastModifiedDate": "",
+            "title": ""
+        },
+        "autocomplete": {
+            "createNewItem": "",
+            "emptyMessage": "",
+            "placeholder": ""
+        },
+        "autocomplete-long-list": {
+            "placeholder": ""
+        },
+        "calendar": {
+            "placeholder": ""
+        },
+        "entity-list-empty": {
+            "detail": "",
+            "sorry": ""
+        },
+        "file-upload": {
+            "cancel": "",
+            "choose": "",
+            "delete": "",
+            "download": "",
+            "emptyFileList": "",
+            "filename": "",
+            "filesToUpload": "",
+            "invalidFileSizeMessageDetail": "",
+            "invalidFileSizeMessageSummary": "",
+            "invalidFileTypeMessageDetail": "",
+            "invalidFileTypeMessageSummary": "",
+            "maxFileSizeExceeded": "",
+            "noUploadPending": "",
+            "upload": ""
+        },
+        "form-control-status": {
+            "error-messages": {
+                "ZonedDateTimelocal": "",
+                "datetimelocal": "",
+                "max": "",
+                "maxbytes": "",
+                "maxlength": "",
+                "min": "",
+                "minbytes": "",
+                "minlength": "",
+                "not-valid": "",
+                "number": "",
+                "pattern": "",
+                "required": ""
+            }
+        },
+        "input": {
+            "placeholder": ""
+        },
+        "input-number": {
+            "placeholder": ""
+        },
+        "input-text": {
+            "placeholder": ""
+        },
+        "multi-input": {
+            "placeholder": ""
+        },
+        "tri-input-switch": {
+            "no": "",
+            "yes": ""
+        }
+    },
+    "audits": {
+        "filter": {
+            "button": {
+                "clear": "",
+                "close": "",
+                "today": "",
+                "weeks": ""
+            },
+            "from": "",
+            "title": "",
+            "to": ""
+        },
+        "table": {
+            "data": {
+                "code": "",
+                "remoteAddress": ""
+            },
+            "header": {
+                "data": "",
+                "date": "",
+                "principal": "",
+                "status": ""
+            }
+        },
+        "title": ""
+    },
+    "configuration": {
+        "filter": "",
+        "spring": "",
+        "table": {
+            "prefix": "",
+            "properties": ""
+        },
+        "title": ""
+    },
+    "edatosExternalUsersApp": {
+        "rol": {
+            "accion": "",
+            "created": "",
+            "delete": {
+                "question": ""
+            },
+            "deleted": "",
+            "nombre": "",
+            "roles": "",
+            "sujeto": "",
+            "updated": ""
+        },
+        "rolesEnum": {
+            "ADMINISTRADOR": "",
+            "ANY_ROLE_ALLOWED": "",
+            "JEFE_NORMALIZACION": "",
+            "LECTOR": "",
+            "TECNICO_APOYO_DIFUSION": "",
+            "TECNICO_APOYO_NORMALIZACION": "",
+            "TECNICO_APOYO_PLANIFICACION": "",
+            "TECNICO_APOYO_PRODUCCION": "",
+            "TECNICO_DIFUSION": "",
+            "TECNICO_NORMALIZACION": "",
+            "TECNICO_PLANIFICACION": "",
+            "TECNICO_PRODUCCION": ""
+        }
+    },
+    "entity": {
+        "action": {
+            "back": "",
+            "cancel": "",
+            "close": "",
+            "confirm": "",
+            "crear": "",
+            "delete": "",
+            "edit": "",
+            "eliminar": "",
+            "filtersReset": "",
+            "modificar": "",
+            "open": "",
+            "publishExternally": "",
+            "publishInternally": "",
+            "recuperar": "",
+            "restore": "",
+            "save": "",
+            "view": ""
+        },
+        "audits": {
+            "createdBy": "",
+            "createdDate": "",
+            "deletedBy": "",
+            "deletionDate": "",
+            "lastModifiedBy": "",
+            "lastModifiedDate": "",
+            "title": ""
+        },
+        "calendar": {
+            "placeholder": ""
+        },
+        "crear": {
+            "title": ""
+        },
+        "currency": {
+            "errors": {
+                "notANumber": ""
+            }
+        },
+        "delete": {
+            "title": ""
+        },
+        "eliminar": {
+            "title": ""
+        },
+        "input": {
+            "placeholder": ""
+        },
+        "list": {
+            "empty": {
+                "createNewIitem": "",
+                "detail": "",
+                "multiInput": "",
+                "selectOption": "",
+                "sorry": "",
+                "writeForSuggestions": ""
+            }
+        },
+        "modificar": {
+            "title": ""
+        },
+        "recuperar": {
+            "title": ""
+        },
+        "restore": {
+            "title": ""
+        },
+        "validation": {
+            "ZonedDateTimelocal": "",
+            "datetimelocal": "",
+            "max": "",
+            "maxbytes": "",
+            "maxlength": "",
+            "min": "",
+            "minbytes": "",
+            "minlength": "",
+            "not-valid": "",
+            "number": "",
+            "pattern": "",
+            "required": ""
+        }
+    },
+    "enum": {
+        "procStatus": {
+            "DRAFT": "",
+            "EXTERNALLY_PUBLISHED": "",
+            "INTERNALLY_PUBLISHED": "",
+            "label": ""
+        }
+    },
+    "error": {
+        "403": {
+            "detail": "",
+            "title": ""
+        },
+        "404": {
+            "detail": "",
+            "title": ""
+        },
+        "NotNull": "",
+        "Size": "",
+        "accessDenied": "",
+        "blockedUser": {
+            "detail": "",
+            "title": ""
+        },
+        "entidad-no-encontrada": "",
+        "file": {
+            "empty": "",
+            "maxFileSize": "",
+            "notFound": ""
+        },
+        "file-empty": "",
+        "id-existe": "",
+        "internalServerError": "",
+        "nonExistingUser": {
+            "detail": "",
+            "title": ""
+        },
+        "query-no-soportada": "",
+        "rol": {
+            "users-has-role": ""
+        },
+        "server.not.reachable": "",
+        "title": "",
+        "url.not.found": "",
+        "userManagement": {
+            "usuario-ldap-no-encontrado": ""
+        },
+        "usuario-existe": ""
+    },
+    "family": {
+        "acronym": {
+            "label": "",
+            "placeholder": ""
+        },
+        "code": {
+            "label": "",
+            "placeholder": ""
+        },
+        "creationDate": {
+            "label": ""
+        },
+        "delete": {
+            "question": ""
+        },
+        "description": {
+            "label": "",
+            "placeholder": ""
+        },
+        "home": {
+            "createLabel": "",
+            "title": ""
+        },
+        "internalInventoryDate": {
+            "label": ""
+        },
+        "inventoryDate": {
+            "label": ""
+        },
+        "section": {
+            "contentDescriptors": "",
+            "diffusionDescriptors": "",
+            "identifiers": "",
+            "productionDescriptors": ""
+        },
+        "title": {
+            "label": "",
+            "placeholder": ""
+        },
+        "urn": {
+            "label": "",
+            "placeholder": ""
+        }
+    },
+    "filter": {
+        "home": {
+            "createLabel": "",
+            "title": ""
+        },
+        "lastAccessDate": {
+            "label": ""
+        },
+        "login": {
+            "label": ""
+        },
+        "name": {
+            "label": ""
+        }
+    },
+    "global": {
+        "alerts": {
+            "title": {
+                "info": ""
+            }
+        },
+        "browsehappy": "",
+        "form": {
+            "email": "",
+            "email.placeholder": ""
+        },
+        "item-count": "",
+        "loading": "",
+        "menu": {
+            "account": {
+                "login": "",
+                "logout": "",
+                "main": "",
+                "myAccount": "",
+                "sessions": ""
+            },
+            "admin": {
+                "apidocs": "",
+                "audits": "",
+                "configuration": "",
+                "health": "",
+                "jhipster-needle-menu-add-admin-element": "",
+                "logs": "",
+                "main": "",
+                "metrics": "",
+                "userManagement": ""
+            },
+            "administracion": {
+                "main": ""
+            },
+            "entities": {
+                "jhipster-needle-menu-add-entry": ""
+            },
+            "home": "",
+            "jhipster-needle-menu-add-element": ""
+        },
+        "messages": {
+            "validate": {
+                "email": {
+                    "invalid": "",
+                    "maxlength": "",
+                    "minlength": "",
+                    "required": ""
+                }
+            }
+        },
+        "no": "",
+        "pageSizeSelector": "",
+        "title": "",
+        "yes": ""
+    },
+    "health": {
+        "details": {
+            "details": "",
+            "error": "",
+            "name": "",
+            "properties": "",
+            "value": ""
+        },
+        "indicator": {
+            "cas": "",
+            "db": "",
+            "diskSpace": "",
+            "ldap": "",
+            "mail": ""
+        },
+        "refresh.button": "",
+        "stacktrace": "",
+        "status": {
+            "DOWN": "",
+            "UP": ""
+        },
+        "table": {
+            "service": "",
+            "status": ""
+        },
+        "title": ""
+    },
+    "home": {
+        "detail": "",
+        "pageTitle": "",
+        "title": ""
+    },
+    "logs": {
+        "filter": "",
+        "nbloggers": "",
+        "table": {
+            "button": {
+                "ERROR": "",
+                "INFO": "",
+                "WARN": ""
+            },
+            "level": "",
+            "name": ""
+        },
+        "title": ""
+    },
+    "metrics": {
+        "cache": {
+            "cachename": "",
+            "evictions": "",
+            "hits": "",
+            "misses": "",
+            "title": ""
+        },
+        "datasource": {
+            "count": "",
+            "max": "",
+            "mean": "",
+            "min": "",
+            "name": "",
+            "p50": "",
+            "p75": "",
+            "p95": "",
+            "p99": "",
+            "title": "",
+            "usage": ""
+        },
+        "filter": "",
+        "jvm": {
+            "gc": {
+                "marksweepcount": "",
+                "marksweeptime": "",
+                "scavengecount": "",
+                "scavengetime": "",
+                "title": ""
+            },
+            "http": {
+                "active": "",
+                "code": {
+                    "notfound": "",
+                    "ok": "",
+                    "servererror": ""
+                },
+                "table": {
+                    "average1": "",
+                    "average15": "",
+                    "average5": "",
+                    "code": "",
+                    "count": "",
+                    "mean": ""
+                },
+                "title": "",
+                "total": ""
+            },
+            "memory": {
+                "heap": "",
+                "nonheap": "",
+                "title": "",
+                "total": ""
+            },
+            "threads": {
+                "all": "",
+                "blocked": "",
+                "dump": {
+                    "blockedcount": "",
+                    "blockedtime": "",
+                    "hide": "",
+                    "id": "",
+                    "lockname": "",
+                    "show": "",
+                    "stacktrace": "",
+                    "title": "",
+                    "waitedcount": "",
+                    "waitedtime": ""
+                },
+                "runnable": "",
+                "timedwaiting": "",
+                "title": "",
+                "waiting": ""
+            },
+            "title": ""
+        },
+        "refresh.button": "",
+        "servicesstats": {
+            "table": {
+                "count": "",
+                "max": "",
+                "mean": "",
+                "min": "",
+                "name": "",
+                "p50": "",
+                "p75": "",
+                "p95": "",
+                "p99": ""
+            },
+            "title": ""
+        },
+        "title": "",
+        "updating": ""
+    },
+    "operation": {
+        "acronym": {
+            "label": "",
+            "placeholder": ""
+        },
+        "code": {
+            "label": "",
+            "placeholder": ""
+        },
+        "creationDate": {
+            "label": ""
+        },
+        "delete": {
+            "question": ""
+        },
+        "description": {
+            "label": "",
+            "placeholder": ""
+        },
+        "home": {
+            "createLabel": "",
+            "title": ""
+        },
+        "internalInventoryDate": {
+            "label": ""
+        },
+        "inventoryDate": {
+            "label": ""
+        },
+        "section": {
+            "contentDescriptors": "",
+            "diffusionDescriptors": "",
+            "identifiers": "",
+            "productionDescriptors": ""
+        },
+        "title": {
+            "label": "",
+            "placeholder": ""
+        },
+        "urn": {
+            "label": "",
+            "placeholder": ""
+        }
+    },
+    "table": {
+        "pageCount": ""
+    },
+    "userManagement": {
+        "activado": "",
+        "apellido1": "",
+        "apellido2": "",
+        "created": "",
+        "deactivate": {
+            "question": ""
+        },
+        "delete": {
+            "question": ""
+        },
+        "deleted": "",
+        "deletionDate": "",
+        "desactivado": "",
+        "detail": {
+            "title": ""
+        },
+        "email": "",
+        "filters": {
+            "name": {
+                "label": "",
+                "placeholder": ""
+            },
+            "rolEnum": {
+                "label": ""
+            },
+            "rolLong": {
+                "label": "",
+                "placeholder": ""
+            },
+            "rolShort": {
+                "label": "",
+                "placeholder": ""
+            }
+        },
+        "gender": "",
+        "home": {
+            "createLabel": "",
+            "createOrEditLabel": "",
+            "includeDeleted": "",
+            "title": ""
+        },
+        "language": "",
+        "login": "",
+        "nombre": "",
+        "permissions": "",
+        "personalData": "",
+        "profiles": "",
+        "restore": {
+            "question": ""
+        },
+        "rol": "",
+        "roles": "",
+        "status": {
+            "deleted": ""
+        },
+        "updated": ""
+    }
+}

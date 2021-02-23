@@ -1,6 +1,7 @@
 {
     "useTabs": false,
     "tabWidth": 4,
+    "endOfLine": "auto",
     "bracketSpacing": true,
     "arrowParens": "always",
     "singleQuote": true,

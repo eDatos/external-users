@@ -15,7 +15,7 @@
         "member-ordering": [
             true,
             {
-                "order": ["static-before-instance", "variables-before-functions"]
+                "order": ["static-field", "static-method", "instance-field", "instance-method"]
             }
         ],
         "no-arg": true,

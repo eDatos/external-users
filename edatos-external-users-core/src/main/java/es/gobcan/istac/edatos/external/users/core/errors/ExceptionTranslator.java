@@ -135,6 +135,7 @@ public class ExceptionTranslator {
     public ParameterizedErrorVM processParameterizedValidationError(EDatosException eDatosException) {
         List<ParameterizedErrorItem> items = new ArrayList<>();
         for (EDatosExceptionItem item : eDatosException.getExceptionItems()) {
+            eDatosException.setPrincipalException(item);
             items.add(toParameterizedErrorItem(item));
         }
         EDatosExceptionItem principalException = eDatosException.getPrincipalException();

@@ -2,34 +2,35 @@
     <div class="page-header">
         <div class="page-header-top">
             <h2 class="page-header-title">
-                <span class="page-header-title-text" translate="operation.home.title"></span>
+                <span class="page-header-title-text" translate="filter.home.title"></span>
             </h2>
             <div>
-                <button class="btn btn-primary" [routerLink]="['../operation', 'new']">
+                <button class="btn btn-primary" [routerLink]="['../filter', 'new']">
                     <span class="fa fa-plus"></span>
-                    <span translate="operation.home.createLabel"></span>
+                    <span translate="filter.home.createLabel"></span>
                 </button>
             </div>
         </div>
-        <ac-operation-search [filters]="filters"></ac-operation-search>
+        <!--        <ac-filter-search [filters]="filters"></ac-filter-search>-->
     </div>
     <div class="page-body">
-        <arte-spinner *ngIf="!operations"></arte-spinner>
-        <ng-container *ngIf="operations">
-            <ng-container *ngIf="operations.length > 0;else emptyList">
+        <arte-spinner *ngIf="!filters"></arte-spinner>
+        <ng-container *ngIf="filters">
+            <ng-container *ngIf="filters.length > 0;else emptyList">
                 <div class="page-table-container-fluid">
                     <arte-table
                         [columns]="columns"
-                        [value]="operations"
+                        [value]="filters"
                         [rows]="itemsPerPage"
                         [totalRecords]="totalItems"
                         tableStyleClass="page-table table-has-pointer-rows"
                         (onLazyLoad)="loadData($event)">
 
-                        <ng-template pTemplate="body" let-operation>
-                            <tr [routerLink]="['../operation', operation.id]">
-                                <td>{{operation.code}}</td>
-                                <td>{{getText(operation.title)}}</td>
+                        <ng-template pTemplate="body" let-filter>
+                            <tr [routerLink]="['../filter', filter.id]">
+                                <td>{{filter.name}}</td>
+                                <td>{{filter.login}}</td>
+                                <td>{{filter.lastAccessDate}}</td>
                             </tr>
                         </ng-template>
                     </arte-table>

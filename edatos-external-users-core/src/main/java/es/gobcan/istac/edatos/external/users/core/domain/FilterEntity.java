@@ -22,6 +22,11 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 
+/**
+ * Filters are visualizations the user saved to consult them later. They work through permalinks, that contains
+ * information about the visualization (i.e. the selected dimensions and categories). This entity saves extra info that
+ * can be obtained though permalinks (i.e. {@link #dataset}) to save time and avoid server overload.
+ */
 @Entity
 @Table(name = "tb_filter", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_fk", "permalink"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)

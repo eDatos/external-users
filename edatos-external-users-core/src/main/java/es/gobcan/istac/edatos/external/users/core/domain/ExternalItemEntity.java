@@ -163,14 +163,14 @@ public class ExternalItemEntity implements Serializable {
 
     /**
      * This method is used by equals and hashCode.
-     * 
+     *
      * @return {@link #getId}
      */
     public Object getKey() {
         return getId();
     }
 
-    public final class Properties {
+    public static final class Properties {
 
         private Properties() {
         }
