@@ -139,8 +139,10 @@ public class QueryUtil {
         try {
             return queryToCriteria(pageable, query, filterCriteriaProcessor);
         } catch (IllegalArgumentException ex) {
-            // TODO(EDATOS-3280): There should be a concrete exception for this case, not IllegalArgumentException.
-            // This exception catches a query/sort parameter that isn't recognized.
+            if (!ex.getMessage().startsWith("Incorrect order property")) {
+                throw ex;
+            }
+            // Catches a query/sort parameter that isn't recognized.
             throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
         }
     }
@@ -150,8 +152,6 @@ public class QueryUtil {
     }
 
     private String getQueryParameter(IllegalArgumentException ex) {
-        // TODO(EDATOS-3280): Is this a robust way to extract the query parameter?
         return StringUtils.substringBetween(ex.getMessage(), "Current: ", " Expected");
     }
-
 }
