@@ -135,8 +135,6 @@ public class ExceptionTranslator {
     public ParameterizedErrorVM processParameterizedValidationError(EDatosException eDatosException) {
         List<ParameterizedErrorItem> items = new ArrayList<>();
         for (EDatosExceptionItem item : eDatosException.getExceptionItems()) {
-            // TODO(EDATOS-3266): Find a way to better set the principal exception.
-            //  This is not the best way.
             eDatosException.setPrincipalException(item);
             items.add(toParameterizedErrorItem(item));
         }

@@ -45,7 +45,6 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
     }
 
     fromCamelCaseToSnakeCase(param: string): string {
-        // TODO(EDATOS-3280): Standard casing for query parameters?
         return param.replace(/([A-Z])/g, '_$1').toLowerCase();
     }
 }
