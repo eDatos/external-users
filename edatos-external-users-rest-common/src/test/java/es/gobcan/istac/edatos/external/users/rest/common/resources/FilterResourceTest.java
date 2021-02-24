@@ -207,4 +207,17 @@ public class FilterResourceTest {
                     .andExpect(jsonPath("$", hasSize(1)))
                     .andExpect(jsonPath("$[0].name", is("User 2 filter")));
     }
+
+    @Test
+    public void testSortFiltersByUserLogin() throws Exception {
+        filter2.setUser(user2);
+        filterRepository.saveAndFlush(filter2);
+
+        this.mockMvc.perform(get(ENDPOINT_URL + "?sort=login,desc"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(2)))
+                    .andExpect(jsonPath("$[0].login", is("user2")))
+                    .andExpect(jsonPath("$[1].login", is("user1")));
+    }
 }
