@@ -139,11 +139,11 @@ public class QueryUtil {
         try {
             return queryToCriteria(pageable, query, filterCriteriaProcessor);
         } catch (IllegalArgumentException ex) {
-            if (!ex.getMessage().startsWith("Incorrect order property")) {
-                throw ex;
+            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
+                // Catches a query/sort parameter that isn't recognized.
+                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
             }
-            // Catches a query/sort parameter that isn't recognized.
-            throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+            throw ex;
         }
     }
 

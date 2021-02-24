@@ -85,6 +85,12 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.NAME).sortable()
                 .withEntityProperty(ENTITY_FIELD_NAME)
                 .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .stringRestrictionProcessor()
+                .withQueryProperty(QueryProperty.LOGIN)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".login")
+                .build());
         registerOrderProcessor(OrderProcessorBuilder
                 .orderProcessor()
                 .withQueryProperty(QueryProperty.LOGIN)
