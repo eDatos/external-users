@@ -30,6 +30,7 @@ public class DefaultController {
 
     @PostConstruct
     public void init() {
+        // TODO EDATOS-3215 y EDATOS-3266 Pendiente de cambio : this.faviconUrl = this.metadataService.retrieveFaviconUrl();
         this.faviconUrl = metadataService.findProperty(applicationProperties.getMetadata().getMetamacFaviconUrlKey());
     }
 

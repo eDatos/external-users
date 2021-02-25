@@ -10,12 +10,12 @@ import { ConfigService } from '@app/config';
 
 @Component({
     selector: 'app-hello',
-    templateUrl: './hello.component.html'
+    templateUrl: './hello.component.html',
 })
-export class HelloComponent implements OnInit{
+export class HelloComponent implements OnInit {
     public title = 'Hello! Application';
 
-    constructor(){}
+    constructor() {}
 
     ngOnInit(): void {}
 }
