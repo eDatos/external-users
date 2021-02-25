@@ -47,7 +47,7 @@ public class ExternalUserServiceImpl implements ExternalUserService {
         ExternalUserEntity usuario = externalUserRepository.findOneByEmailAndDeletionDateIsNull(email)
             .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build());
         usuario.setDeletionDate(Instant.now());
-        usuario.setDeletedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+        usuario.setDeletedBy(SecurityUtils.getCurrentUserLogin());
         return externalUserRepository.saveAndFlush(usuario);
     }
 
