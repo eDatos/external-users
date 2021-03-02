@@ -1,21 +1,22 @@
-<nav class="navbar app-navbar navbar-dark navbar-expand-lg">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <img class="logo-img" src="assets/images/logo-arte.png" alt="Logo" />
-        <!--<span translate="global.title" class="navbar-title"></span>-->
-        <span class="navbar-version">{{version}}</span>
-    </a>
-    
-    <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarResponsive"
-        aria-controls="navbarResponsive"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-        (click)="toggleNavbar()">
-        <i class="fa fa-bars"></i>
-    </button>
+<div class="navbar-container">
+    <nav class="navbar app-navbar navbar-dark navbar-expand-lg">
+        <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
+            <img class="logo-img" src="assets/images/logo-arte.png" alt="Logo"/>
+            <!--<span translate="global.title" class="navbar-title"></span>-->
+            <span class="navbar-version">{{version}}</span>
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarResponsive"
+            aria-controls="navbarResponsive"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+            (click)="toggleNavbar()">
+            <i class="fa fa-bars"></i>
+        </button>
         <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
             <ul class="navbar-nav ml-auto">
                 <li *ngIf="correctlyLogged()" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
@@ -91,4 +92,5 @@
                 </li>
             </ul>
         </div>
-</nav>
+    </nav>
+</div>

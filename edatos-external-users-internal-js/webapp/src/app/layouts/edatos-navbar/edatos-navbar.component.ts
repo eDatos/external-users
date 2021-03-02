@@ -8,7 +8,7 @@ declare const MetamacNavBar: {
 
 @Component({
     selector: 'app-edatos-navbar',
-    template: ` <nav id="edatos-navbar"></nav>`,
+    template: `<nav id="edatos-navbar"></nav>`,
     styleUrls: ['./edatos-navbar.component.scss'],
 })
 export class EdatosNavbarComponent implements OnInit {
