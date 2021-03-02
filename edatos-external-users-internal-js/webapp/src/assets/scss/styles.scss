@@ -1,4 +1,3 @@
-@import "~bootstrap/scss/bootstrap.scss";
 @import './vendor/index';
 @import 'variables';
 
@@ -7,8 +6,10 @@
 }
 
 .app {
+    @import "~bootstrap/scss/bootstrap.scss";
     clear: both;
 }
+
 /* BEGIN BOOTSTRAP */
 .btn {
     &.btn-frameless {
