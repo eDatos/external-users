@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '@app/config';
+import { ScriptService } from 'ngx-script-loader';
 
 declare const MetamacNavBar: {
     loadNavbar(obj?: { element: string }): void;
@@ -7,15 +8,15 @@ declare const MetamacNavBar: {
 
 @Component({
     selector: 'app-edatos-navbar',
-    template: '<nav id="edatos-navbar"></nav>',
+    template: ` <nav id="edatos-navbar"></nav>`,
     styleUrls: ['./edatos-navbar.component.scss'],
 })
 export class EdatosNavbarComponent implements OnInit {
-    constructor(private configService: ConfigService) {}
+    constructor(private configService: ConfigService, private scriptService: ScriptService) {}
 
     ngOnInit() {
         const navbarScriptUrl = this.configService.getConfig().metadata.navbarScriptUrl;
-        this.loadScript(`${navbarScriptUrl}/js/metamac-navbar.js`).then(
+        this.scriptService.loadScript(`${navbarScriptUrl}/js/metamac-navbar.js`).subscribe(
             (_) => {
                 MetamacNavBar.loadNavbar({
                     element: 'edatos-navbar',
@@ -25,18 +26,5 @@ export class EdatosNavbarComponent implements OnInit {
                 console.error('Error al obtener el navbar', err);
             }
         );
-    }
-
-    private loadScript(dynamicScript) {
-        return new Promise((resolve, reject) => {
-            const scriptEle = document.createElement('script');
-            scriptEle.onload = resolve;
-            scriptEle.onerror = reject;
-            scriptEle.src = dynamicScript;
-            scriptEle.type = 'text/javascript';
-            scriptEle.async = false;
-            scriptEle.charset = 'utf-8';
-            document.getElementsByTagName('head')[0].appendChild(scriptEle);
-        });
     }
 }

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { ArteTableModule, ArteTableService } from 'arte-ng';
+import { ScriptLoaderModule } from 'ngx-script-loader';
 
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppComponent } from './app.component';
@@ -73,6 +74,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
     }),
     ToastModule,
     ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
+    ScriptLoaderModule,
   ],
   providers: [
     {
