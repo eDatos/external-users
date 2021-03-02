@@ -1,17 +1,6 @@
 @import './vendor/fontawesome';
-
 @import '~bootstrap/scss/bootstrap-reboot';
+
 .app {
-    @import '~bootstrap/scss/buttons';
-    @import '~bootstrap/scss/grid';
-    @import '~bootstrap/scss/badge';
-    @import '~bootstrap/scss/alert';
-    @import '~bootstrap/scss/modal';
-    @import '~bootstrap/scss/progress';
-    @import '~bootstrap/scss/variables';
-    @import '~bootstrap/scss/forms';
-    @import '~bootstrap/scss/transitions';
-    @import '~bootstrap/scss/utilities';
-    @import '~bootstrap/scss/media';
-    @import '~bootstrap/scss/tables';
+    @import "bootstrap.scss";
 }
