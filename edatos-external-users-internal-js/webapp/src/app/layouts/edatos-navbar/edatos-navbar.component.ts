@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ERROR_ALERT_KEY } from '@app/app.constants';
 import { ConfigService } from '@app/config';
 
 declare const MetamacNavBar: {
@@ -8,12 +7,10 @@ declare const MetamacNavBar: {
 
 @Component({
     selector: 'app-edatos-navbar',
-    templateUrl: './edatos-navbar.component.html',
+    template: '<nav id="edatos-navbar"></nav>',
     styleUrls: ['./edatos-navbar.component.scss'],
 })
 export class EdatosNavbarComponent implements OnInit {
-    public errorAlertKey = ERROR_ALERT_KEY;
-
     constructor(private configService: ConfigService) {}
 
     ngOnInit() {
@@ -25,7 +22,6 @@ export class EdatosNavbarComponent implements OnInit {
                 });
             },
             (err) => {
-                // TODO: preguntar qué hacer;
                 console.error('Error al obtener el navbar', err);
             }
         );
