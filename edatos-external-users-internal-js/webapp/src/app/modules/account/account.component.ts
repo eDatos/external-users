@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageTitleService } from '@app/core/service';
 import { UserService } from '@app/core/service/user';
 
 @Component({
@@ -12,7 +13,9 @@ export class AccountComponent implements OnInit {
     isSaving: Boolean;
     account: any;
 
-    constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) { }
+    constructor(private userService: UserService, private route: ActivatedRoute, private router: Router, private pageTitleService: PageTitleService) {
+        this.pageTitleService.update();
+    }
 
     ngOnInit() {
         this.isSaving = false;

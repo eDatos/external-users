@@ -8,7 +8,7 @@ const APP_ROUTES: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: DEFAULT_PATH
+        redirectTo: DEFAULT_PATH,
     },
     {
         path: 'account',
@@ -33,7 +33,7 @@ const APP_ROUTES: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'notfound'
+        redirectTo: 'notfound',
     }
 ];
 

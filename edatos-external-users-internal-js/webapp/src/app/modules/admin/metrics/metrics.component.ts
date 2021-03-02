@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
+import { PageTitleService } from '@app/core/service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
 import { MetricsMonitoringModalComponent } from './metrics-modal.component';
 import { MetricsService } from './metrics.service';
 
 @Component({
     selector: 'app-metrics',
-    templateUrl: './metrics.component.html'
+    templateUrl: './metrics.component.html',
 })
 export class MetricsMonitoringComponent implements OnInit {
     metrics: any = {};
@@ -15,8 +18,9 @@ export class MetricsMonitoringComponent implements OnInit {
     updatingMetrics = true;
     JCACHE_KEY: string;
 
-    constructor(private modalService: NgbModal, private metricsService: MetricsService) {
+    constructor(private modalService: NgbModal, private metricsService: MetricsService, private pageTitleService: PageTitleService) {
         this.JCACHE_KEY = 'jcache.statistics';
+        this.pageTitleService.update();
     }
 
     ngOnInit() {
@@ -46,7 +50,7 @@ export class MetricsMonitoringComponent implements OnInit {
                     // Keep the name of the domain
                     this.cachesStats[newKey] = {
                         name: this.JCACHE_KEY.length,
-                        value
+                        value,
                     };
                 }
             });

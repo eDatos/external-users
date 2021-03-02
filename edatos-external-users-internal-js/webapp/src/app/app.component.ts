@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { PageTitleService } from '@app/core/service';
 import { TranslateService } from '@ngx-translate/core';
 import { ERROR_ALERT_KEY } from './app.constants';
 
@@ -7,15 +8,10 @@ import { ERROR_ALERT_KEY } from './app.constants';
     selector: 'app-root',
     templateUrl: './app.component.html',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
     public errorAlertKey = ERROR_ALERT_KEY;
 
-    constructor(private translateService: TranslateService, private titleService: Title) {
-    }
-
-    ngOnInit() {
-        this.translateService.get('app.name.complete').subscribe((appName) => {
-            this.titleService.setTitle(appName);
-        });
+    constructor(private translateService: TranslateService, private titleService: Title, private pageTitleService: PageTitleService) {
+        this.pageTitleService.update();
     }
 }

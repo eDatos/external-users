@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageTitleService } from '@app/core/service';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 import { ArteEventManager } from 'arte-ng/services';
@@ -91,7 +94,8 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private eventManager: ArteEventManager,
         private activatedRoute: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        private titleService: PageTitleService,
     ) {
         this.filters = new UserFilter();
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -104,6 +108,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        this.titleService.update();
         this.processUrlParams();
         this.loadAll();
         this.registerChangeInUsers();
@@ -152,7 +157,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         }
         this.transition();
     }
-    
+
     transition() {
         this.router.navigate(['/admin', 'user-management'], {
             queryParams: {

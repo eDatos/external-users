@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PageTitleService } from '@app/core/service';
 
 @Component({
     selector: 'app-error',
@@ -15,7 +16,9 @@ export class ErrorComponent implements OnInit {
     public title: string;
     public detail: string;
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private pageTitleService: PageTitleService) {
+        this.pageTitleService.update();
+    }
 
     ngOnInit() {
         this.route.data.subscribe((routeData) => {

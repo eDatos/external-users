@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { PageTitleService } from '@app/core/service';
+import { HealthService } from '@app/modules/admin';
 
 import { ConfigurationService } from './configuration.service';
 import { HasTitlesContainer } from 'arte-ng';
@@ -19,12 +21,13 @@ export class ConfigurationComponent implements OnInit, HasTitlesContainer {
     @ViewChild('titlesContainer') titlesContainer: ElementRef;
     public instance: ConfigurationComponent;
 
-    constructor(private configurationService: ConfigurationService) {
+    constructor(private configurationService: ConfigurationService, private pageTitleService: PageTitleService) {
         this.configKeys = [];
         this.filter = '';
         this.orderProp = 'prefix';
         this.reverse = false;
         this.instance = this;
+        this.pageTitleService.update();
     }
 
     keys(dict): Array<string> {

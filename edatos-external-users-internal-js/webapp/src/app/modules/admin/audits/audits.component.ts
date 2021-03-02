@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PageTitleService } from '@app/core/service';
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
 import { LazyLoadEvent } from 'primeng/api';
@@ -67,7 +68,8 @@ export class AuditsComponent implements OnInit {
         private auditsService: AuditsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private datePipe: DatePipe
+        private datePipe: DatePipe,
+        private pageTitleService: PageTitleService
     ) {
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -75,6 +77,7 @@ export class AuditsComponent implements OnInit {
             this.predicate = data['pagingParams'].predicate;
             this.itemsPerPage = data['pagingParams'].itemsPerPage;
         });
+        this.pageTitleService.update();
     }
 
     ngOnInit() {
@@ -130,7 +133,7 @@ export class AuditsComponent implements OnInit {
         }
         this.transition();
     }
-    
+
     transition() {
         this.router.navigate(['/admin', 'audits'], {
             queryParams: {

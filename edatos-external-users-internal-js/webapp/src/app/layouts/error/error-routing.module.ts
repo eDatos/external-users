@@ -8,7 +8,7 @@ export const errorRoute: Routes = [
         component: ErrorComponent,
         data: {
             roles: [],
-            pageTitle: 'error.title'
+            pageTitle: 'error.404.title'
         }
     },
     {
@@ -16,7 +16,7 @@ export const errorRoute: Routes = [
         component: ErrorComponent,
         data: {
             roles: [],
-            pageTitle: 'error.title',
+            pageTitle: 'error.403.title',
             error403: true
         }
     },
@@ -25,7 +25,7 @@ export const errorRoute: Routes = [
         component: ErrorComponent,
         data: {
             roles: [],
-            pageTitle: 'error.title',
+            pageTitle: 'error.404.title',
             error404: true
         }
     },
@@ -34,7 +34,7 @@ export const errorRoute: Routes = [
         component: ErrorComponent,
         data: {
             roles: [],
-            pageTitle: 'error.title',
+            pageTitle: 'error.nonExistingUser.title',
             nonExistentUser: true
         }
     },
@@ -43,7 +43,7 @@ export const errorRoute: Routes = [
         component: ErrorComponent,
         data: {
             roles: [],
-            pageTitle: 'error.title',
+            pageTitle: 'error.blockedUser.title',
             blockedUser: true
         }
     }

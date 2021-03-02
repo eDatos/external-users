@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PageTitleService } from '@app/core/service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { HealthService } from './health.service';
@@ -13,7 +14,9 @@ export class HealthCheckComponent implements OnInit {
     healthData: any;
     updatingHealth: boolean;
 
-    constructor(private modalService: NgbModal, private healthService: HealthService) {}
+    constructor(private modalService: NgbModal, private healthService: HealthService, private pageTitleService: PageTitleService) {
+        this.pageTitleService.update();
+    }
 
     ngOnInit() {
         this.refresh();

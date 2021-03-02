@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
+import { PageTitleService } from '@app/core/service';
 import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { Filter } from '@app/shared/model/filter.model';
 import { FilterService } from '@app/shared/service/filter/filter.service';
@@ -53,8 +54,7 @@ export class FilterComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private filterSearch: FilterFilter,
-        private titleService: Title,
-        private translateService: TranslateService
+        private pageTitleService: PageTitleService
     ) {
         this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -62,11 +62,7 @@ export class FilterComponent implements OnInit {
             this.predicate = data['pagingParams'].predicate;
             this.itemsPerPage = data['pagingParams'].itemsPerPage;
         });
-        this.translateService
-            .get(['app.name.short', 'filter.home.title'])
-            .subscribe(({ 'app.name.short': appName, 'filter.home.title': filterHomeTitle }) => {
-                this.titleService.setTitle(`${appName} - ${filterHomeTitle}`);
-            });
+        this.pageTitleService.update();
     }
 
     ngOnInit(): void {
