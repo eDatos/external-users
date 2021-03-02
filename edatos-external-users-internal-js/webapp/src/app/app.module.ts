@@ -23,6 +23,7 @@ import { environment } from '../environments/environment';
 import { CookieService } from 'ngx-cookie';
 import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
 import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
+import { EdatosNavbarComponent } from './layouts/edatos-navbar/edatos-navbar.component';
 
 export function init(configService: ConfigService, authServerProvider: AuthServerProvider) {
   return () => {
@@ -52,7 +53,8 @@ export function initTranslations(translateService: TranslateService, cookieServi
   declarations: [
     AppComponent,
     NavbarComponent,
-    ErrorComponent
+    ErrorComponent,
+    EdatosNavbarComponent,
   ],
   imports: [
     BrowserModule,
