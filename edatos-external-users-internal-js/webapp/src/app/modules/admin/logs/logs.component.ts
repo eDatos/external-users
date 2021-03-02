@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PageTitleService } from '@app/core/service';
 import { Log } from './log.model';
 import { LogsService } from './logs.service';
 
@@ -15,12 +14,10 @@ export class LogsComponent implements OnInit {
     reverse: boolean;
     public hiddenFilters: boolean = true;
 
-    constructor(private logsService: LogsService, private pageTitleService: PageTitleService) {
+    constructor(private logsService: LogsService) {
         this.filter = '';
         this.orderProp = 'name';
-        this.reverse = false;
-        this.pageTitleService.update();
-    }
+        this.reverse = false;}
 
     ngOnInit() {
         this.logsService.findAll().subscribe((loggers) => (this.loggers = loggers));

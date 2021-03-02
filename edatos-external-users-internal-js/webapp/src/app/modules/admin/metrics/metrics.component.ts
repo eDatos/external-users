@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { PageTitleService } from '@app/core/service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
 
 import { MetricsMonitoringModalComponent } from './metrics-modal.component';
 import { MetricsService } from './metrics.service';
@@ -18,10 +15,8 @@ export class MetricsMonitoringComponent implements OnInit {
     updatingMetrics = true;
     JCACHE_KEY: string;
 
-    constructor(private modalService: NgbModal, private metricsService: MetricsService, private pageTitleService: PageTitleService) {
-        this.JCACHE_KEY = 'jcache.statistics';
-        this.pageTitleService.update();
-    }
+    constructor(private modalService: NgbModal, private metricsService: MetricsService) {
+        this.JCACHE_KEY = 'jcache.statistics';}
 
     ngOnInit() {
         this.refresh();

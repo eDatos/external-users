@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
-import { PageTitleService } from '@app/core/service';
 import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { Filter } from '@app/shared/model/filter.model';
 import { FilterService } from '@app/shared/service/filter/filter.service';
-import { TranslateService } from '@ngx-translate/core';
 import { ResponseWrapper } from 'arte-ng/model';
 import { LazyLoadEvent } from 'primeng/api';
 
@@ -53,17 +50,14 @@ export class FilterComponent implements OnInit {
         private filterService: FilterService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private filterSearch: FilterFilter,
-        private pageTitleService: PageTitleService
+        private filterSearch: FilterFilter
     ) {
         this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
             this.itemsPerPage = data['pagingParams'].itemsPerPage;
-        });
-        this.pageTitleService.update();
-    }
+        });}
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe((params) => {

@@ -1,19 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitleService } from '@app/core/service';
-import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-
-import { ArteEventManager } from 'arte-ng/services';
-
-import { UserFilter } from './user-search';
+import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { UserService } from '@app/core/service/user';
-import { LazyLoadEvent } from 'primeng/api';
-import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ResponseWrapper } from 'arte-ng/model';
+
+import { ArteEventManager } from 'arte-ng/services';
+import { LazyLoadEvent } from 'primeng/api';
+import { Subscription } from 'rxjs';
+
+import { UserFilter } from './user-search';
 
 @Component({
     selector: 'app-user-mgmt',
@@ -94,8 +91,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private eventManager: ArteEventManager,
         private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private titleService: PageTitleService,
+        private router: Router
     ) {
         this.filters = new UserFilter();
         this.itemsPerPage = ITEMS_PER_PAGE;
@@ -108,7 +104,6 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.titleService.update();
         this.processUrlParams();
         this.loadAll();
         this.registerChangeInUsers();

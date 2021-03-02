@@ -1,17 +1,40 @@
-import { Component } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { PageTitleService } from '@app/core/service';
 import { TranslateService } from '@ngx-translate/core';
+import { filter, map } from 'rxjs/operators';
 import { ERROR_ALERT_KEY } from './app.constants';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     public errorAlertKey = ERROR_ALERT_KEY;
 
-    constructor(private translateService: TranslateService, private titleService: Title, private pageTitleService: PageTitleService) {
-        this.pageTitleService.update();
+    constructor(private translateService: TranslateService, private pageTitleService: PageTitleService, private router: Router) {}
+
+    ngOnInit() {
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationEnd),
+                map(() => this.router)
+            )
+            .subscribe((_) => {
+                const titleKey = this.getTitle(this.router.routerState, this.router.routerState.root).join(' - ');
+                this.pageTitleService.update(titleKey);
+            });
+    }
+
+    getTitle(state, parent) {
+        const data = [];
+        if (parent?.snapshot.data?.pageTitle) {
+            data.push(parent.snapshot.data.pageTitle);
+        }
+
+        if (state && parent) {
+            data.push(...this.getTitle(state, state.firstChild(parent)));
+        }
+        return data;
     }
 }

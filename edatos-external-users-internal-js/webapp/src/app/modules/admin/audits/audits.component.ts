@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PageTitleService } from '@app/core/service';
+import { LazyLoadEvent } from 'primeng/api';
+import { Table, TableService } from 'primeng/table';
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
-import { LazyLoadEvent } from 'primeng/api';
-import { TableService, Table } from 'primeng/table';
 
 @Component({
     selector: 'app-audit',
@@ -68,17 +67,14 @@ export class AuditsComponent implements OnInit {
         private auditsService: AuditsService,
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private datePipe: DatePipe,
-        private pageTitleService: PageTitleService
+        private datePipe: DatePipe
     ) {
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
             this.itemsPerPage = data['pagingParams'].itemsPerPage;
-        });
-        this.pageTitleService.update();
-    }
+        });}
 
     ngOnInit() {
         this.getToday();

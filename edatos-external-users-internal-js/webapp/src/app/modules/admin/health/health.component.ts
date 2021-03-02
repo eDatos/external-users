@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PageTitleService } from '@app/core/service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HealthModalComponent } from './health-modal.component';
 
 import { HealthService } from './health.service';
-import { HealthModalComponent } from './health-modal.component';
 
 @Component({
     selector: 'app-health',
@@ -14,9 +13,7 @@ export class HealthCheckComponent implements OnInit {
     healthData: any;
     updatingHealth: boolean;
 
-    constructor(private modalService: NgbModal, private healthService: HealthService, private pageTitleService: PageTitleService) {
-        this.pageTitleService.update();
-    }
+    constructor(private modalService: NgbModal, private healthService: HealthService) {}
 
     ngOnInit() {
         this.refresh();
