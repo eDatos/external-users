@@ -5,7 +5,7 @@ import { LogsService } from './logs.service';
 @Component({
     selector: 'app-logs',
     templateUrl: './logs.component.html',
-    styleUrls: ['./logs.component.scss']
+    styleUrls: ['./logs.component.scss'],
 })
 export class LogsComponent implements OnInit {
     loggers: Log[];
@@ -17,7 +17,8 @@ export class LogsComponent implements OnInit {
     constructor(private logsService: LogsService) {
         this.filter = '';
         this.orderProp = 'name';
-        this.reverse = false;}
+        this.reverse = false;
+    }
 
     ngOnInit() {
         this.logsService.findAll().subscribe((loggers) => (this.loggers = loggers));

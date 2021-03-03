@@ -5,7 +5,8 @@
             type="button"
             routerLink="/admin/user-management"
             class="btn btn-secondary btn-frameless back-arrow"
-            [attr.aria-label]="'entity.action.back' | translate">
+            [attr.aria-label]="'entity.action.back' | translate"
+        >
             <i class="material-icons">arrow_back</i>
         </button>
         <h2 class="page-header-title">
@@ -19,11 +20,7 @@
         </h2>
         <div class="page-header-btns">
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button
-                    *ngIf="!isEditMode() && !user.deletionDate"
-                    class="btn btn-secondary"
-                    [routerLink]="['/admin', 'user-management', user.login, 'edit']"
-                    type="button">
+                <button *ngIf="!isEditMode() && !user.deletionDate" class="btn btn-secondary" [routerLink]="['/admin', 'user-management', user.login, 'edit']" type="button">
                     <span class="fa fa-pencil"></span>
                     <span translate="entity.action.edit"></span>
                 </button>
@@ -55,7 +52,6 @@
         </div>
     </div>
 
-
     <div class="page-body">
         <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
             <fieldset class="page-section" [disabled]="!isEditMode()" arteAutofocus>
@@ -73,7 +69,8 @@
                                     [minlength]="1"
                                     [maxlength]="255"
                                     [pattern]="'^[_\'.@A-Za-z0-9-]*$'"
-                                    (blur)="validarUsuario(editForm.controls.login?.dirty)">
+                                    (blur)="validarUsuario(editForm.controls.login?.dirty)"
+                                >
                                 </arte-input>
                             </div>
                         </div>
@@ -94,7 +91,7 @@
                             </ng-container>
                         </div>
                     </div>
-        
+
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="userManagement.nombre"></label>
@@ -102,17 +99,18 @@
                                 <arte-input name="nombre" [(ngModel)]="user.nombre" [maxlength]="255"></arte-input>
                             </div>
                         </div>
-        
+
                         <div *ngIf="editForm.controls.nombre?.dirty && editForm.controls.nombre?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
                                 *ngIf="editForm.controls.nombre?.errors.maxlength"
                                 translate="entity.validation.maxlength"
-                                [translateParams]="{ max: 255 }">
+                                [translateParams]="{ max: 255 }"
+                            >
                             </small>
                         </div>
                     </div>
-        
+
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="userManagement.apellido1"></label>
@@ -120,7 +118,7 @@
                                 <arte-input name="apellido1" [(ngModel)]="user.apellido1" [maxlength]="255"></arte-input>
                             </div>
                         </div>
-        
+
                         <div *ngIf="editForm.controls.apellido1?.dirty && editForm.controls.apellido1?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
@@ -131,7 +129,7 @@
                             </small>
                         </div>
                     </div>
-        
+
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="userManagement.apellido2"></label>
@@ -139,7 +137,7 @@
                                 <arte-input name="apellido2" [(ngModel)]="user.apellido2" [maxlength]="255"></arte-input>
                             </div>
                         </div>
-        
+
                         <div *ngIf="editForm.controls.apellido2?.dirty && editForm.controls.apellido2?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
@@ -162,7 +160,8 @@
                                     [suggestionsEnum]="genderEnum"
                                     [translationPath]="'edatosExternalUsersApp.genderEnum.'"
                                     [disabled]="!isEditMode()"
-                                    required>
+                                    required
+                                >
                                 </arte-autocomplete-enum>
                             </div>
                         </div>
@@ -179,7 +178,8 @@
                                     [suggestionsEnum]="languageEnum"
                                     [translationPath]="'edatosExternalUsersApp.languageEnum.'"
                                     [disabled]="!isEditMode()"
-                                    required>
+                                    required
+                                >
                                 </arte-autocomplete-enum>
                             </div>
                         </div>
@@ -189,14 +189,7 @@
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="userManagement.email"></label>
                             <div class="col-md-8">
-                                <arte-input
-                                    name="email"
-                                    [(ngModel)]="user.email"
-                                    [required]="true"
-                                    [minlength]="3"
-                                    [maxlength]="255"
-                                    [email]="true">
-                                </arte-input>
+                                <arte-input name="email" [(ngModel)]="user.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
                             </div>
                         </div>
                         <div *ngIf="(editForm.controls.email?.touched || editForm.controls.email?.dirty) && editForm.controls.email?.invalid" class="entity-field-error">
@@ -206,7 +199,8 @@
                                     class="form-text text-danger"
                                     *ngIf="editForm.controls.email?.errors.maxlength"
                                     translate="entity.validation.maxlength"
-                                    [translateParams]="{ max: 255 }">
+                                    [translateParams]="{ max: 255 }"
+                                >
                                 </small>
                                 <small
                                     class="form-text text-danger"
@@ -236,7 +230,8 @@
                                     [suggestionsEnum]="rolesEnum"
                                     [translationPath]="'edatosExternalUsersApp.rolesEnum.'"
                                     [disabled]="!isEditMode()"
-                                    required>
+                                    required
+                                >
                                 </arte-autocomplete-enum>
                             </div>
                         </div>
@@ -246,6 +241,6 @@
             <div class="page-section">
                 <arte-audit-info [entity]="user" *ngIf="existeUsuario()"></arte-audit-info>
             </div>
-        </form>        
+        </form>
     </div>
 </div>

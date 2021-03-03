@@ -16,17 +16,17 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
         this.registerParam({
             paramName: 'name',
             updateFilterFromParam: (param) => (this.name = param),
-            clearFilter: () => (this.name = null)
+            clearFilter: () => (this.name = null),
         });
         this.registerParam({
             paramName: 'login',
             updateFilterFromParam: (param) => (this.login = param),
-            clearFilter: () => (this.login = null)
+            clearFilter: () => (this.login = null),
         });
         this.registerParam({
             paramName: 'lastAccessDate',
             updateFilterFromParam: (param) => (this.lastAccessDate = param),
-            clearFilter: () => (this.lastAccessDate = null)
+            clearFilter: () => (this.lastAccessDate = null),
         });
     }
 

@@ -27,90 +27,85 @@ import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService
 import { EdatosNavbarComponent } from './layouts/edatos-navbar/edatos-navbar.component';
 
 export function init(configService: ConfigService, authServerProvider: AuthServerProvider) {
-  return () => {
-    const promise: Promise<boolean> = new Promise((resolve, reject) => {
-      if (authServerProvider.getToken()) {
-        resolve(true);
-      } else {
-        const config = configService.getConfig();
-        window.location.href = config.cas.login + '?service=' + encodeURIComponent(config.cas.service);
-      }
-    });
-    return promise;
-  };
+    return () => {
+        const promise: Promise<boolean> = new Promise((resolve, reject) => {
+            if (authServerProvider.getToken()) {
+                resolve(true);
+            } else {
+                const config = configService.getConfig();
+                window.location.href = config.cas.login + '?service=' + encodeURIComponent(config.cas.service);
+            }
+        });
+        return promise;
+    };
 }
 
 export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './i18n/', '.json');
+    return new TranslateHttpLoader(http, './i18n/', '.json');
 }
 
 export function initTranslations(translateService: TranslateService, cookieService: CookieService) {
-  const currentLang: string = cookieService.get(LANG_KEY) || DEFAULT_LANG;
-  translateService.setDefaultLang(DEFAULT_LANG);
-  translateService.addLangs(AVAILABLE_LANGUAGES)
-  return () => translateService.use(currentLang).toPromise();
+    const currentLang: string = cookieService.get(LANG_KEY) || DEFAULT_LANG;
+    translateService.setDefaultLang(DEFAULT_LANG);
+    translateService.addLangs(AVAILABLE_LANGUAGES);
+    return () => translateService.use(currentLang).toPromise();
 }
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    ErrorComponent,
-    EdatosNavbarComponent,
-  ],
-  imports: [
-    BrowserModule,
-    ErrorRoutingModule,
-    NgxWebstorageModule.forRoot({ prefix: 'ac', separator: '-' }),
-    CoreModule,
-    ConfigModule,
-    SharedModule,
-    AppRoutingModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    }),
-    ToastModule,
-    ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
-    ScriptLoaderModule,
-  ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: init,
-      deps: [ConfigService, AuthServerProvider],
-      multi: true
-    },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initTranslations,
-      deps: [TranslateService, CookieService],
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthExpiredInterceptor,
-      multi: true
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorHandlerInterceptor,
-      multi: true
-    },
-    MessageService,
-    ArteTableService,
-    ArteEventManager,
-    PagingParamsResolver,
-    ArteAlertService,
-    ScrollService,
-  ],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, NavbarComponent, ErrorComponent, EdatosNavbarComponent],
+    imports: [
+        BrowserModule,
+        ErrorRoutingModule,
+        NgxWebstorageModule.forRoot({ prefix: 'ac', separator: '-' }),
+        CoreModule,
+        ConfigModule,
+        SharedModule,
+        AppRoutingModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+        }),
+        ToastModule,
+        ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
+        ScriptLoaderModule,
+    ],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: init,
+            deps: [ConfigService, AuthServerProvider],
+            multi: true,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initTranslations,
+            deps: [TranslateService, CookieService],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthExpiredInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorHandlerInterceptor,
+            multi: true,
+        },
+        MessageService,
+        ArteTableService,
+        ArteEventManager,
+        PagingParamsResolver,
+        ArteAlertService,
+        ScrollService,
+    ],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

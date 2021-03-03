@@ -8,8 +8,8 @@ export const errorRoute: Routes = [
         component: ErrorComponent,
         data: {
             roles: [],
-            pageTitle: 'error.404.title'
-        }
+            pageTitle: 'error.404.title',
+        },
     },
     {
         path: 'accessdenied',
@@ -17,8 +17,8 @@ export const errorRoute: Routes = [
         data: {
             roles: [],
             pageTitle: 'error.403.title',
-            error403: true
-        }
+            error403: true,
+        },
     },
     {
         path: 'notfound',
@@ -26,8 +26,8 @@ export const errorRoute: Routes = [
         data: {
             roles: [],
             pageTitle: 'error.404.title',
-            error404: true
-        }
+            error404: true,
+        },
     },
     {
         path: 'non-existent-user',
@@ -35,8 +35,8 @@ export const errorRoute: Routes = [
         data: {
             roles: [],
             pageTitle: 'error.nonExistingUser.title',
-            nonExistentUser: true
-        }
+            nonExistentUser: true,
+        },
     },
     {
         path: 'blocked',
@@ -44,13 +44,13 @@ export const errorRoute: Routes = [
         data: {
             roles: [],
             pageTitle: 'error.blockedUser.title',
-            blockedUser: true
-        }
-    }
+            blockedUser: true,
+        },
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(errorRoute)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class ErrorRoutingModule {}

@@ -19,15 +19,16 @@
         }
     }
 
-    &.has-menu, &.has-menu-animated {
-        transition: padding-left .3s ease-in-out;
+    &.has-menu,
+    &.has-menu-animated {
+        transition: padding-left 0.3s ease-in-out;
 
         &.has-header-fixed .page-header {
-            transition: left .3s ease-in-out;
+            transition: left 0.3s ease-in-out;
         }
 
         .side-menu {
-           position: fixed;
+            position: fixed;
         }
 
         &.menu-is-visible {
@@ -80,7 +81,7 @@
         padding-right: $page-padding-right;
         padding-bottom: $page-padding-bottom;
         background-color: white;
-        box-shadow: 0 1px 4px -1px rgba(0,0,0,.3);
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
         z-index: $page-header-zindex;
         .page-header-title {
             display: inline-flex;
@@ -147,7 +148,6 @@
         }
     }
 
-
     .page-table-container-fluid {
         margin-left: -$page-padding-left;
         margin-right: -$page-padding-right;
@@ -168,7 +168,6 @@
         .table-count {
             padding-left: $page-padding-left;
         }
-
     }
 
     .page-table {
@@ -180,7 +179,7 @@
             padding-bottom: 1rem;
         }
         & > thead > tr > th {
-            font-size: .8rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             background-color: #f8f8f8;
             color: #444;
@@ -191,7 +190,6 @@
         align-items: center;
         height: 100%;
     }
-
 }
 
 @include media-breakpoint-down(sm) {

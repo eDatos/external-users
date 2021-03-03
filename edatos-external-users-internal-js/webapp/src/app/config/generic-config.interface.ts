@@ -10,5 +10,5 @@ export interface GenericConfig {
     metadata: {
         navbarScriptUrl: string;
         defaultLanguage: string;
-    }
+    };
 }

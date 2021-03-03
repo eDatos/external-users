@@ -14,7 +14,7 @@ import {
     throwIfAlreadyLoaded,
     UserService,
     PageTitleService,
-    ProfileService
+    ProfileService,
 } from './service';
 import { UserRouteAccessGuard } from './guard';
 import localeEs from '@angular/common/locales/es';
@@ -23,11 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
-    imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CookieModule.forRoot()
-    ],
+    imports: [BrowserAnimationsModule, HttpClientModule, CookieModule.forRoot()],
     providers: [
         AuthServerProvider,
         CSRFService,
@@ -41,10 +37,10 @@ registerLocaleData(localeEs, 'es');
         Title,
         {
             provide: LOCALE_ID,
-            useValue: 'es'
+            useValue: 'es',
         },
-        ProfileService
-    ]
+        ProfileService,
+    ],
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

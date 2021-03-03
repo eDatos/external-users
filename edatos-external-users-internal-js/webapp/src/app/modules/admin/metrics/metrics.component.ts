@@ -16,7 +16,8 @@ export class MetricsMonitoringComponent implements OnInit {
     JCACHE_KEY: string;
 
     constructor(private modalService: NgbModal, private metricsService: MetricsService) {
-        this.JCACHE_KEY = 'jcache.statistics';}
+        this.JCACHE_KEY = 'jcache.statistics';
+    }
 
     ngOnInit() {
         this.refresh();

@@ -4,7 +4,7 @@ import { UserService } from '@app/core/service/user';
 
 @Component({
     selector: 'ac-account',
-    templateUrl: './account.component.html'
+    templateUrl: './account.component.html',
 })
 export class AccountComponent implements OnInit {
     error: string;

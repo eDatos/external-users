@@ -46,18 +46,14 @@ export class FilterComponent implements OnInit {
     private reverse: boolean;
     private predicate: any;
 
-    constructor(
-        private filterService: FilterService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private filterSearch: FilterFilter
-    ) {
+    constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private router: Router, private filterSearch: FilterFilter) {
         this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
             this.predicate = data['pagingParams'].predicate;
             this.itemsPerPage = data['pagingParams'].itemsPerPage;
-        });}
+        });
+    }
 
     ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe((params) => {
@@ -65,10 +61,7 @@ export class FilterComponent implements OnInit {
                 this.filterService
                     .find({
                         page: this.page - 1,
-                        size:
-                            PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1
-                                ? this.itemsPerPage
-                                : ITEMS_PER_PAGE,
+                        size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
                         sort: this.sort(),
                         query: this.filterSearch.toQuery(),
                     })

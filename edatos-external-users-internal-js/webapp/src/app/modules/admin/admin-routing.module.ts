@@ -9,11 +9,10 @@ import { userMgmtRoute } from './user-management/user-management.route';
 import { metricsRoute } from './metrics/metrics.route';
 import { NgModule } from '@angular/core';
 
-
 export const adminRoutes: Routes = [auditsRoute, configurationRoute, healthRoute, logsRoute, ...userMgmtRoute, metricsRoute];
 
 @NgModule({
     imports: [RouterModule.forChild(adminRoutes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AdminRoutingModule {}

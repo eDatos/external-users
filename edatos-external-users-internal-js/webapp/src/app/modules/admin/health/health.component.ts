@@ -7,7 +7,7 @@ import { HealthService } from './health.service';
 @Component({
     selector: 'app-health',
     templateUrl: './health.component.html',
-    styles: ['.table-responsive { margin-top: 1px; }']
+    styles: ['.table-responsive { margin-top: 1px; }'],
 })
 export class HealthCheckComponent implements OnInit {
     healthData: any;

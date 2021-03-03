@@ -12,16 +12,16 @@ const APP_ROUTES: Routes = [
     },
     {
         path: 'account',
-        loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule),
-        canLoad: [UserRouteAccessGuard]
+        loadChildren: () => import('./modules/account/account.module').then((m) => m.AccountModule),
+        canLoad: [UserRouteAccessGuard],
     },
     {
         path: 'admin',
-        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+        loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: HERRAMIENTAS_ROLES
-        }
+            roles: HERRAMIENTAS_ROLES,
+        },
     },
     {
         path: 'filter',
@@ -34,11 +34,11 @@ const APP_ROUTES: Routes = [
     {
         path: '**',
         redirectTo: 'notfound',
-    }
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(APP_ROUTES, { useHash: true })],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AppRoutingModule {}

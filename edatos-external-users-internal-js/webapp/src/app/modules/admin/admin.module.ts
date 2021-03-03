@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SharedModule } from '@app/shared';
-import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteTriInputSwitchModule } from "arte-ng";
-import { ArteDirectivesModule } from "arte-ng/directives";
+import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteTriInputSwitchModule } from 'arte-ng';
+import { ArteDirectivesModule } from 'arte-ng/directives';
 
 import {
     AuditsComponent,
@@ -19,7 +19,7 @@ import {
     HealthService,
     MetricsService,
     LogsService,
-    AdminRoutingModule
+    AdminRoutingModule,
 } from '.';
 import { UserSearchComponent } from './user-management/user-search';
 
@@ -45,10 +45,10 @@ import { UserSearchComponent } from './user-management/user-search';
         HealthCheckComponent,
         HealthModalComponent,
         MetricsMonitoringComponent,
-        MetricsMonitoringModalComponent
+        MetricsMonitoringModalComponent,
     ],
     entryComponents: [UserMgmtFormComponent, UserMgmtDeleteDialogComponent, HealthModalComponent, MetricsMonitoringModalComponent],
     providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {}

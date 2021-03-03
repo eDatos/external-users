@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class MetricsService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     getMetrics(): Observable<any> {
         return this.http.get('management/metrics');

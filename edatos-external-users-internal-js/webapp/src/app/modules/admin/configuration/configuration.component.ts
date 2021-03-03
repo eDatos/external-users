@@ -5,7 +5,7 @@ import { ConfigurationService } from './configuration.service';
 
 @Component({
     selector: 'app-configuration',
-    templateUrl: './configuration.component.html'
+    templateUrl: './configuration.component.html',
 })
 export class ConfigurationComponent implements OnInit, HasTitlesContainer {
     allConfiguration: any = [];
@@ -24,7 +24,8 @@ export class ConfigurationComponent implements OnInit, HasTitlesContainer {
         this.filter = '';
         this.orderProp = 'prefix';
         this.reverse = false;
-        this.instance = this;}
+        this.instance = this;
+    }
 
     keys(dict): Array<string> {
         return dict === undefined ? [] : Object.keys(dict);

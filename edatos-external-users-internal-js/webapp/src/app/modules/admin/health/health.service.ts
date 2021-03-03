@@ -40,7 +40,7 @@ export class HealthService {
     /* private methods */
     private addHealthObject(result, isLeaf, healthObject, name): any {
         const healthData: any = {
-            name
+            name,
         };
 
         const details = {};
