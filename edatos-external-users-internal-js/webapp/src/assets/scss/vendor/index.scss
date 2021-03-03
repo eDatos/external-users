@@ -20,10 +20,3 @@
 .app {
     @import "bootstrap.scss";
 }
-
-.navbar-container {
-    @import '~bootstrap/scss/navbar';
-    @import '~bootstrap/scss/dropdown';
-    @import "~bootstrap/scss/buttons";
-    @import "~bootstrap/scss/utilities";
-}
