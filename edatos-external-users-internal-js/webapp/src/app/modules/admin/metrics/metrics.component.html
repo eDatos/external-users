@@ -17,58 +17,45 @@
                     <b translate="metrics.jvm.memory.title"></b>
                     <p>
                         <span translate="metrics.jvm.memory.total"></span>
-                        ({{metrics.gauges['jvm.memory.total.used'].value / 1000000 | number:'1.0-0'}}M /
-                        {{metrics.gauges['jvm.memory.total.max'].value / 1000000 | number:'1.0-0'}}M)
+                        ({{metrics.gauges['jvm.memory.total.used'].value / 1000000 | number:'1.0-0'}}M / {{metrics.gauges['jvm.memory.total.max'].value / 1000000 |
+                        number:'1.0-0'}}M)
                     </p>
-                    <ngb-progressbar type="success" [max]="metrics.gauges['jvm.memory.total.max'].value"
-                        [value]="metrics.gauges['jvm.memory.total.used'].value">
+                    <ngb-progressbar type="success" [max]="metrics.gauges['jvm.memory.total.max'].value" [value]="metrics.gauges['jvm.memory.total.used'].value">
                         <span>{{metrics.gauges['jvm.memory.total.used'].value * 100 / metrics.gauges['jvm.memory.total.max'].value | number:'1.0-0'}}%</span>
                     </ngb-progressbar>
                     <p>
                         <span translate="metrics.jvm.memory.heap"></span>
-                        ({{metrics.gauges['jvm.memory.heap.used'].value / 1000000 | number:'1.0-0'}}M /
-                        {{metrics.gauges['jvm.memory.heap.max'].value / 1000000 | number:'1.0-0'}}M)
+                        ({{metrics.gauges['jvm.memory.heap.used'].value / 1000000 | number:'1.0-0'}}M / {{metrics.gauges['jvm.memory.heap.max'].value / 1000000 | number:'1.0-0'}}M)
                     </p>
-                    <ngb-progressbar [max]="metrics.gauges['jvm.memory.heap.max'].value"
-                        [value]="metrics.gauges['jvm.memory.heap.used'].value" type="success">
+                    <ngb-progressbar [max]="metrics.gauges['jvm.memory.heap.max'].value" [value]="metrics.gauges['jvm.memory.heap.used'].value" type="success">
                         <span>{{metrics.gauges['jvm.memory.heap.used'].value * 100 / metrics.gauges['jvm.memory.heap.max'].value | number:'1.0-0'}}%</span>
                     </ngb-progressbar>
                     <p>
                         <span translate="metrics.jvm.memory.nonheap"></span>
-                        ({{metrics.gauges['jvm.memory.non-heap.used'].value / 1000000 | number:'1.0-0'}}M /
-                        {{metrics.gauges['jvm.memory.non-heap.committed'].value / 1000000 | number:'1.0-0'}}M)
+                        ({{metrics.gauges['jvm.memory.non-heap.used'].value / 1000000 | number:'1.0-0'}}M / {{metrics.gauges['jvm.memory.non-heap.committed'].value / 1000000 |
+                        number:'1.0-0'}}M)
                     </p>
-                    <ngb-progressbar [max]="metrics.gauges['jvm.memory.non-heap.committed'].value"
-                        [value]="metrics.gauges['jvm.memory.non-heap.used'].value" type="success">
+                    <ngb-progressbar [max]="metrics.gauges['jvm.memory.non-heap.committed'].value" [value]="metrics.gauges['jvm.memory.non-heap.used'].value" type="success">
                         <span>{{metrics.gauges['jvm.memory.non-heap.used'].value * 100 / metrics.gauges['jvm.memory.non-heap.committed'].value | number:'1.0-0'}}%</span>
                     </ngb-progressbar>
                 </div>
                 <div class="col-md-4">
                     <b translate="metrics.jvm.threads.title"></b> (Total: {{metrics.gauges['jvm.threads.count'].value}})
-                    <a class="hand" (click)="refreshThreadDumpData()" data-toggle="modal" data-target="#threadDump"><i
-                            class="fa fa-eye"></i></a>
-                    <p><span translate="metrics.jvm.threads.runnable"></span>
-                        {{metrics.gauges['jvm.threads.runnable.count'].value}}</p>
-                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.runnable.count'].value"
-                        [max]="metrics.gauges['jvm.threads.count'].value" type="success">
+                    <a class="hand" (click)="refreshThreadDumpData()" data-toggle="modal" data-target="#threadDump"><i class="fa fa-eye"></i></a>
+                    <p><span translate="metrics.jvm.threads.runnable"></span> {{metrics.gauges['jvm.threads.runnable.count'].value}}</p>
+                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.runnable.count'].value" [max]="metrics.gauges['jvm.threads.count'].value" type="success">
                         <span>{{metrics.gauges['jvm.threads.runnable.count'].value * 100 / metrics.gauges['jvm.threads.count'].value | number:'1.0-0'}}%</span>
                     </ngb-progressbar>
-                    <p><span translate="metrics.jvm.threads.timedwaiting"></span>
-                        ({{metrics.gauges['jvm.threads.timed_waiting.count'].value}})</p>
-                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.timed_waiting.count'].value"
-                        [max]="metrics.gauges['jvm.threads.count'].value" type="warning">
+                    <p><span translate="metrics.jvm.threads.timedwaiting"></span> ({{metrics.gauges['jvm.threads.timed_waiting.count'].value}})</p>
+                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.timed_waiting.count'].value" [max]="metrics.gauges['jvm.threads.count'].value" type="warning">
                         <span>{{metrics.gauges['jvm.threads.timed_waiting.count'].value * 100 / metrics.gauges['jvm.threads.count'].value | number:'1.0-0'}}%</span>
                     </ngb-progressbar>
-                    <p><span translate="metrics.jvm.threads.waiting"></span>
-                        ({{metrics.gauges['jvm.threads.waiting.count'].value}})</p>
-                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.waiting.count'].value"
-                        [max]="metrics.gauges['jvm.threads.count'].value" type="warning">
+                    <p><span translate="metrics.jvm.threads.waiting"></span> ({{metrics.gauges['jvm.threads.waiting.count'].value}})</p>
+                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.waiting.count'].value" [max]="metrics.gauges['jvm.threads.count'].value" type="warning">
                         <span>{{metrics.gauges['jvm.threads.waiting.count'].value * 100 / metrics.gauges['jvm.threads.count'].value | number:'1.0-0'}}%</span>
                     </ngb-progressbar>
-                    <p><span translate="metrics.jvm.threads.blocked"></span>
-                        ({{metrics.gauges['jvm.threads.blocked.count'].value}})</p>
-                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.blocked.count'].value"
-                        [max]="metrics.gauges['jvm.threads.count'].value" type="success">
+                    <p><span translate="metrics.jvm.threads.blocked"></span> ({{metrics.gauges['jvm.threads.blocked.count'].value}})</p>
+                    <ngb-progressbar [value]="metrics.gauges['jvm.threads.blocked.count'].value" [max]="metrics.gauges['jvm.threads.count'].value" type="success">
                         <span>{{metrics.gauges['jvm.threads.blocked.count'].value * 100 / metrics.gauges['jvm.threads.count'].value | number:'1.0-0'}}%</span>
                     </ngb-progressbar>
                 </div>
@@ -76,13 +63,11 @@
                     <b translate="metrics.jvm.gc.title"></b>
                     <div class="row" *ngIf="metrics.gauges['jvm.garbage.PS-MarkSweep.count']">
                         <div class="col-md-9" translate="metrics.jvm.gc.marksweepcount"></div>
-                        <div class="col-md-3 text-right">{{metrics.gauges['jvm.garbage.PS-MarkSweep.count'].value}}
-                        </div>
+                        <div class="col-md-3 text-right">{{metrics.gauges['jvm.garbage.PS-MarkSweep.count'].value}}</div>
                     </div>
                     <div class="row" *ngIf="metrics.gauges['jvm.garbage.PS-MarkSweep.time']">
                         <div class="col-md-9" translate="metrics.jvm.gc.marksweeptime"></div>
-                        <div class="col-md-3 text-right">{{metrics.gauges['jvm.garbage.PS-MarkSweep.time'].value}}ms
-                        </div>
+                        <div class="col-md-3 text-right">{{metrics.gauges['jvm.garbage.PS-MarkSweep.time'].value}}ms</div>
                     </div>
                     <div class="row" *ngIf="metrics.gauges['jvm.garbage.PS-Scavenge.count']">
                         <div class="col-md-9" translate="metrics.jvm.gc.scavengecount"></div>
@@ -90,14 +75,12 @@
                     </div>
                     <div class="row" *ngIf="metrics.gauges['jvm.garbage.PS-Scavenge.time']">
                         <div class="col-md-9" translate="metrics.jvm.gc.scavengetime"></div>
-                        <div class="col-md-3 text-right">{{metrics.gauges['jvm.garbage.PS-Scavenge.time'].value}}ms
-                        </div>
+                        <div class="col-md-3 text-right">{{metrics.gauges['jvm.garbage.PS-Scavenge.time'].value}}ms</div>
                     </div>
                 </div>
             </div>
             <div class="well well-lg" *ngIf="updatingMetrics" translate="metrics.updating"></div>
         </div>
-
 
         <div class="page-section">
             <h3 translate="metrics.jvm.http.title"></h3>
@@ -115,12 +98,9 @@
                             <th style="width: 30%" translate="metrics.jvm.http.table.code"></th>
                             <th style="width: 30%" translate="metrics.jvm.http.table.count"></th>
                             <th style="width: 10%" class="text-right" translate="metrics.jvm.http.table.mean"></th>
-                            <th style="width: 10%" class="text-right"><span
-                                    translate="metrics.jvm.http.table.average1"></span></th>
-                            <th style="width: 10%" class="text-right"><span
-                                    translate="metrics.jvm.http.table.average5"></span></th>
-                            <th style="width: 10%" class="text-right"><span
-                                    translate="metrics.jvm.http.table.average15"></span></th>
+                            <th style="width: 10%" class="text-right"><span translate="metrics.jvm.http.table.average1"></span></th>
+                            <th style="width: 10%" class="text-right"><span translate="metrics.jvm.http.table.average5"></span></th>
+                            <th style="width: 10%" class="text-right"><span translate="metrics.jvm.http.table.average15"></span></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,22 +110,15 @@
                                 <ngb-progressbar
                                     [max]="metrics.timers['com.codahale.metrics.servlet.InstrumentedFilter.requests'].count"
                                     [value]="metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].count"
-                                    type="success">
+                                    type="success"
+                                >
                                     <span>{{metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].count}}</span>
                                 </ngb-progressbar>
                             </td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].mean_rate) | number:'1.0-2'}}
-                            </td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].m1_rate) | number:'1.0-2'}}
-                            </td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].m5_rate) | number:'1.0-2'}}
-                            </td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].m15_rate) | number:'1.0-2'}}
-                            </td>
+                            <td class="text-right">{{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].mean_rate) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].m1_rate) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].m5_rate) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.ok'].m15_rate) | number:'1.0-2'}}</td>
                         </tr>
                         <tr>
                             <td translate="metrics.jvm.http.code.notfound"></td>
@@ -153,7 +126,8 @@
                                 <ngb-progressbar
                                     [max]="metrics.timers['com.codahale.metrics.servlet.InstrumentedFilter.requests'].count"
                                     [value]="metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound'].count"
-                                    type="success">
+                                    type="success"
+                                >
                                     <span>{{metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.notFound'].count}}</span>
                                 </ngb-progressbar>
                             </td>
@@ -176,7 +150,8 @@
                                 <ngb-progressbar
                                     [max]="metrics.timers['com.codahale.metrics.servlet.InstrumentedFilter.requests'].count"
                                     [value]="metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].count"
-                                    type="success">
+                                    type="success"
+                                >
                                     <span>{{metrics.meters['com.codahale.metrics.servlet.InstrumentedFilter.responseCodes.serverError'].count}}</span>
                                 </ngb-progressbar>
                             </td>
@@ -198,7 +173,6 @@
             </div>
         </div>
 
-
         <div class="page-section">
             <h3 translate="metrics.servicesstats.title"></h3>
             <div class="page-table-container-fluid table-responsive" *ngIf="!updatingMetrics">
@@ -206,8 +180,7 @@
                     <thead>
                         <tr>
                             <th style="width: 10%" translate="metrics.servicesstats.table.name"></th>
-                            <th style="width: 10%" class="text-right" translate="metrics.servicesstats.table.count">
-                            </th>
+                            <th style="width: 10%" class="text-right" translate="metrics.servicesstats.table.count"></th>
                             <th style="width: 10%" class="text-right" translate="metrics.servicesstats.table.mean"></th>
                             <th style="width: 10%" class="text-right" translate="metrics.servicesstats.table.min"></th>
                             <th style="width: 10%" class="text-right" translate="metrics.servicesstats.table.p50"></th>
@@ -234,7 +207,6 @@
             </div>
         </div>
 
-
         <div class="page-section">
             <h3 translate="metrics.cache.title"></h3>
             <div class="page-table-container-fluid table-responsive" *ngIf="!updatingMetrics">
@@ -252,8 +224,7 @@
                             <th style="width: 8%" class="text-right" data-translate="metrics.cache.missPercent"></th>
                             <th style="width: 8%" class="text-right" data-translate="metrics.cache.averageGetTime"></th>
                             <th style="width: 8%" class="text-right" data-translate="metrics.cache.averagePutTime"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.averageRemoveTime">
-                            </th>
+                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.averageRemoveTime"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -267,15 +238,9 @@
                             <td class="text-right">{{metrics.gauges[entry.key + '.cache-evictions'].value}}</td>
                             <td class="text-right">{{metrics.gauges[entry.key + '.cache-hit-percentage'].value}}</td>
                             <td class="text-right">{{metrics.gauges[entry.key + '.cache-miss-percentage'].value }}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.gauges[entry.key + '.average-get-time'].value) | number : '1.2-2' }}
-                            </td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.gauges[entry.key + '.average-put-time'].value) | number : '1.2-2'}}
-                            </td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.gauges[entry.key + '.average-remove-time'].value) | number : '1.2-2' }}
-                            </td>
+                            <td class="text-right">{{filterNaN(metrics.gauges[entry.key + '.average-get-time'].value) | number : '1.2-2' }}</td>
+                            <td class="text-right">{{filterNaN(metrics.gauges[entry.key + '.average-put-time'].value) | number : '1.2-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.gauges[entry.key + '.average-remove-time'].value) | number : '1.2-2' }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -283,18 +248,20 @@
         </div>
 
         <div class="page-section">
-            <h3 translate="metrics.datasource.title"
-                *ngIf="metrics.gauges && metrics.gauges['HikariPool-1.pool.TotalConnections'] && metrics.gauges['HikariPool-1.pool.TotalConnections'].value > 0">
-            </h3>
-            <div class="page-table-container-fluid table-responsive"
-                *ngIf="!updatingMetrics && metrics.gauges && metrics.gauges['HikariPool-1.pool.TotalConnections'] && metrics.gauges['HikariPool-1.pool.TotalConnections'].value > 0">
+            <h3
+                translate="metrics.datasource.title"
+                *ngIf="metrics.gauges && metrics.gauges['HikariPool-1.pool.TotalConnections'] && metrics.gauges['HikariPool-1.pool.TotalConnections'].value > 0"
+            ></h3>
+            <div
+                class="page-table-container-fluid table-responsive"
+                *ngIf="!updatingMetrics && metrics.gauges && metrics.gauges['HikariPool-1.pool.TotalConnections'] && metrics.gauges['HikariPool-1.pool.TotalConnections'].value > 0"
+            >
                 <table class="page-table table">
                     <thead>
                         <tr>
                             <th style="width: 20%">
                                 <span translate="metrics.datasource.usage"></span>
-                                ({{metrics.gauges['HikariPool-1.pool.ActiveConnections'].value}} /
-                                {{metrics.gauges['HikariPool-1.pool.TotalConnections'].value}})
+                                ({{metrics.gauges['HikariPool-1.pool.ActiveConnections'].value}} / {{metrics.gauges['HikariPool-1.pool.TotalConnections'].value}})
                             </th>
                             <th style="width: 10%" class="text-right" translate="metrics.datasource.count"></th>
                             <th style="width: 10%" class="text-right" translate="metrics.datasource.mean"></th>
@@ -310,29 +277,26 @@
                         <tr>
                             <td>
                                 <div>
-                                    <ngb-progressbar [max]="metrics.gauges['HikariPool-1.pool.TotalConnections'].value"
+                                    <ngb-progressbar
+                                        [max]="metrics.gauges['HikariPool-1.pool.TotalConnections'].value"
                                         [value]="metrics.gauges['HikariPool-1.pool.ActiveConnections'].value"
-                                        type="success">
-                                        <span>{{metrics.gauges['HikariPool-1.pool.ActiveConnections'].value * 100 / metrics.gauges['HikariPool-1.pool.TotalConnections'].value |
-                                    number:'1.0-0'}}%</span>
+                                        type="success"
+                                    >
+                                        <span
+                                            >{{metrics.gauges['HikariPool-1.pool.ActiveConnections'].value * 100 / metrics.gauges['HikariPool-1.pool.TotalConnections'].value |
+                                            number:'1.0-0'}}%</span
+                                        >
                                     </ngb-progressbar>
                                 </div>
                             </td>
                             <td class="text-right">{{metrics.histograms['HikariPool-1.pool.Usage'].count}}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].mean) | number:'1.0-2'}}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].min) | number:'1.0-2'}}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p50) | number:'1.0-2'}}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p75) | number:'1.0-2'}}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p95) | number:'1.0-2'}}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p99) | number:'1.0-2'}}</td>
-                            <td class="text-right">
-                                {{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].max) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].mean) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].min) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p50) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p75) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p95) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].p99) | number:'1.0-2'}}</td>
+                            <td class="text-right">{{filterNaN(metrics.histograms['HikariPool-1.pool.Usage'].max) | number:'1.0-2'}}</td>
                         </tr>
                     </tbody>
                 </table>

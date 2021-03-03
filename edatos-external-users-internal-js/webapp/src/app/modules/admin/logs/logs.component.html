@@ -5,8 +5,7 @@
         </h2>
         <button class="btn btn-outline-dark btn-icon-only" (click)="hiddenFilters = !hiddenFilters">
             <i class="fa fa-filter mr-1" aria-hidden="true"></i>
-            <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}"
-               aria-hidden="true"></i>
+            <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}" aria-hidden="true"></i>
         </button>
 
         <div class="page-filters entity-search" [hidden]="hiddenFilters">
@@ -28,40 +27,52 @@
             <table class="page-table table table-hover">
                 <thead>
                     <tr title="click to order">
-                        <th (click)="orderProp = 'name'; reverse=!reverse"><span
-                                translate="logs.table.name"></span></th>
-                        <th (click)="orderProp = 'level'; reverse=!reverse"><span
-                                translate="logs.table.level"></span></th>
+                        <th (click)="orderProp = 'name'; reverse=!reverse"><span translate="logs.table.name"></span></th>
+                        <th (click)="orderProp = 'level'; reverse=!reverse"><span translate="logs.table.level"></span></th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr
-                        *ngFor="let logger of (loggers | filterBy:['name']:filter | orderBy:(reverse ? '' : '-' ) + orderProp)">
+                    <tr *ngFor="let logger of (loggers | filterBy:['name']:filter | orderBy:(reverse ? '' : '-' ) + orderProp)">
                         <td class="break"><small>{{logger.name | slice:0:140}}</small></td>
                         <td class="btns">
-                            <button type="button" (click)="changeLevel(logger.name, 'TRACE')"
+                            <button
+                                type="button"
+                                (click)="changeLevel(logger.name, 'TRACE')"
                                 [ngClass]="(logger.level=='TRACE') ? 'btn-danger' : 'btn-outline-secondary'"
-                                class="btn btn-sm">
+                                class="btn btn-sm"
+                            >
                                 TRACE
                             </button>
-                            <button type="button" (click)="changeLevel(logger.name, 'DEBUG')"
+                            <button
+                                type="button"
+                                (click)="changeLevel(logger.name, 'DEBUG')"
                                 [ngClass]="(logger.level=='DEBUG') ? 'btn-warning' : 'btn-outline-secondary'"
-                                class="btn btn-sm">
+                                class="btn btn-sm"
+                            >
                                 DEBUG
                             </button>
-                            <button type="button" (click)="changeLevel(logger.name, 'INFO')"
+                            <button
+                                type="button"
+                                (click)="changeLevel(logger.name, 'INFO')"
                                 [ngClass]="(logger.level=='INFO') ? 'btn-info' : 'btn-outline-secondary'"
-                                class="btn btn-sm" translate="logs.table.button.INFO">
-                            </button>
-                            <button type="button" (click)="changeLevel(logger.name, 'WARN')"
+                                class="btn btn-sm"
+                                translate="logs.table.button.INFO"
+                            ></button>
+                            <button
+                                type="button"
+                                (click)="changeLevel(logger.name, 'WARN')"
                                 [ngClass]="(logger.level=='WARN') ? 'btn-success' : 'btn-outline-secondary'"
-                                class="btn btn-sm" translate="logs.table.button.WARN">
-                            </button>
-                            <button type="button" (click)="changeLevel(logger.name, 'ERROR')"
+                                class="btn btn-sm"
+                                translate="logs.table.button.WARN"
+                            ></button>
+                            <button
+                                type="button"
+                                (click)="changeLevel(logger.name, 'ERROR')"
                                 [ngClass]="(logger.level=='ERROR') ? 'btn-primary' : 'btn-outline-secondary'"
-                                class="btn btn-sm" translate="logs.table.button.ERROR">
-                            </button>
+                                class="btn btn-sm"
+                                translate="logs.table.button.ERROR"
+                            ></button>
                             <span *ngIf="!logger.inherited">&nbsp;<i class="fa fa-asterisk"></i></span>
                         </td>
                     </tr>

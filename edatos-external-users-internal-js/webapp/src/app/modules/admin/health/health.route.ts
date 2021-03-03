@@ -9,7 +9,7 @@ export const healthRoute: Route = {
     component: HealthCheckComponent,
     data: {
         pageTitle: 'health.title',
-        roles: HERRAMIENTAS_ROLES
+        roles: HERRAMIENTAS_ROLES,
     },
-    canActivate: [UserRouteAccessGuard]
+    canActivate: [UserRouteAccessGuard],
 };

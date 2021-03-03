@@ -3,7 +3,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-metrics-modal',
-    templateUrl: './metrics-modal.component.html'
+    templateUrl: './metrics-modal.component.html',
 })
 export class MetricsMonitoringModalComponent implements OnInit {
     threadDumpFilter: any;

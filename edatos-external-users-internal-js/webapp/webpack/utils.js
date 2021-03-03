@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = {
     parseVersion,
     root,
-    isExternalLib
+    isExternalLib,
 };
 
 const parseString = require('xml2js').parseString;

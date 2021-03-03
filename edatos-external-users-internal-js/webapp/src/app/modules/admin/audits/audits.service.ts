@@ -8,7 +8,7 @@ import { ResponseUtils } from 'arte-ng/utils';
 
 @Injectable()
 export class AuditsService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     find(req: any): Observable<ResponseWrapper> {
         let params: HttpParams = new HttpParams();

@@ -9,7 +9,7 @@ export const metricsRoute: Route = {
     component: MetricsMonitoringComponent,
     data: {
         pageTitle: 'metrics.title',
-        roles: HERRAMIENTAS_ROLES
+        roles: HERRAMIENTAS_ROLES,
     },
-    canActivate: [UserRouteAccessGuard]
+    canActivate: [UserRouteAccessGuard],
 };

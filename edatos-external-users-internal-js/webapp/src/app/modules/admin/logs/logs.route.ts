@@ -9,7 +9,7 @@ export const logsRoute: Route = {
     component: LogsComponent,
     data: {
         pageTitle: 'logs.title',
-        roles: HERRAMIENTAS_ROLES
+        roles: HERRAMIENTAS_ROLES,
     },
-    canActivate: [UserRouteAccessGuard]
+    canActivate: [UserRouteAccessGuard],
 };

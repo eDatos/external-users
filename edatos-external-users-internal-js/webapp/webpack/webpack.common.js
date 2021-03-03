@@ -6,9 +6,8 @@ const fs = require('fs');
 const utils = require('./utils.js');
 
 const options = {
-    env: process.env.BUILD_ENV
-}
-
+    env: process.env.BUILD_ENV,
+};
 
 function geti18nLanguages(i18nPathRelativeToSrc) {
     const i18nPath = path.join(__dirname, '../src', i18nPathRelativeToSrc);
@@ -17,11 +16,10 @@ function geti18nLanguages(i18nPathRelativeToSrc) {
 
 const availableLanguages = geti18nLanguages('i18n');
 
-
 const DATAS = {
     VERSION: `'${utils.parseVersion()}'`,
     DEBUG_INFO_ENABLED: options.env === 'development',
-    AVAILABLE_LANGUAGES: JSON.stringify(availableLanguages)
+    AVAILABLE_LANGUAGES: JSON.stringify(availableLanguages),
 };
 
 module.exports = {
@@ -33,19 +31,19 @@ module.exports = {
                     replacements: [
                         {
                             pattern: /\/\* @toreplace (\w*?) \*\//gi,
-                            replacement: (match, p1, offset, string) => `_${p1} = ${DATAS[p1]};`
-                        }
-                    ]
-                })
-            }
-        ]
+                            replacement: (match, p1, offset, string) => `_${p1} = ${DATAS[p1]};`,
+                        },
+                    ],
+                }),
+            },
+        ],
     },
     plugins: [
         new MergeJsonWebpackPlugin({
             output: {
-                groupBy: availableLanguages.map(lang => ({ pattern: `./src/i18n/${lang}/*.json`, fileName: `./i18n/${lang}.json` }))
-            }
+                groupBy: availableLanguages.map((lang) => ({ pattern: `./src/i18n/${lang}/*.json`, fileName: `./i18n/${lang}.json` })),
+            },
         }),
-        new StringReplacePlugin()
-    ]
-}
+        new StringReplacePlugin(),
+    ],
+};

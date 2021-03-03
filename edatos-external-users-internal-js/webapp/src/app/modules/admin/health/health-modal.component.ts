@@ -5,7 +5,7 @@ import { HealthService } from './health.service';
 
 @Component({
     selector: 'app-health-modal',
-    templateUrl: './health-modal.component.html'
+    templateUrl: './health-modal.component.html',
 })
 export class HealthModalComponent {
     currentHealth: any;

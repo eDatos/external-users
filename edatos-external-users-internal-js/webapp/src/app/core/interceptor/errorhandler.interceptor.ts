@@ -5,13 +5,14 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { ArteAlertService } from 'arte-ng/services';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
     constructor(private alertService: ArteAlertService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        return next.handle(req)
+        return next
+            .handle(req)
             .pipe(
                 catchError((err) => {
                     if (err instanceof HttpErrorResponse && err.error instanceof Blob) {
@@ -25,7 +26,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                                     headers: err.headers,
                                     status: err.status,
                                     statusText: err.statusText,
-                                    url: err.url
+                                    url: err.url,
                                 });
                                 observer.error(errorResponse);
                                 observer.complete();
@@ -39,11 +40,11 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             )
             .pipe(
                 catchError((err) => {
-                    if (err.status != 401 /*|| !(err.text() === '' || (err.json().path && err.json().path.indexOf('/api/account') === 0))*/ ) {
+                    if (err.status != 401 /*|| !(err.text() === '' || (err.json().path && err.json().path.indexOf('/api/account') === 0))*/) {
                         this.alertService.handleResponseError(err);
                     }
                     return throwError(err);
                 })
-            )
+            );
     }
 }

@@ -10,7 +10,7 @@ export class Principal {
     private authenticated = false;
     private authenticationState = new Subject<any>();
 
-    constructor(private authServerProvider: AuthServerProvider) { }
+    constructor(private authServerProvider: AuthServerProvider) {}
 
     authenticate(identity) {
         this.userIdentity = identity;
@@ -42,8 +42,7 @@ export class Principal {
         if (token) {
             this.userIdentity = UserCAS.fromJwt(token);
             this.authenticated = true;
-        }
-        else {
+        } else {
             this.userIdentity = null;
             this.authenticated = false;
         }

@@ -20,8 +20,6 @@ export class FilterService {
 
     find(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
-        return this.http
-            .get(this.resourceUrl, { ...options, observe: 'response' })
-            .pipe(map((res) => ResponseUtils.convertToResponseWrapper(res, Filter)));
+        return this.http.get(this.resourceUrl, { ...options, observe: 'response' }).pipe(map((res) => ResponseUtils.convertToResponseWrapper(res, Filter)));
     }
 }

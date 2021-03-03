@@ -6,7 +6,7 @@ import { MetricsService } from './metrics.service';
 
 @Component({
     selector: 'app-metrics',
-    templateUrl: './metrics.component.html'
+    templateUrl: './metrics.component.html',
 })
 export class MetricsMonitoringComponent implements OnInit {
     metrics: any = {};
@@ -46,7 +46,7 @@ export class MetricsMonitoringComponent implements OnInit {
                     // Keep the name of the domain
                     this.cachesStats[newKey] = {
                         name: this.JCACHE_KEY.length,
-                        value
+                        value,
                     };
                 }
             });

@@ -6,6 +6,6 @@ import { AccountComponent } from './account.component';
     imports: [SharedModule, AccountRoutingModule],
     declarations: [AccountComponent],
     providers: [],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AccountModule {}
