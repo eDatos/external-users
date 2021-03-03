@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { PageTitleService } from '@app/core/service';
-import { TranslateService } from '@ngx-translate/core';
 import { filter, map } from 'rxjs/operators';
 import { ERROR_ALERT_KEY } from './app.constants';
 
@@ -12,7 +11,7 @@ import { ERROR_ALERT_KEY } from './app.constants';
 export class AppComponent implements OnInit {
     public errorAlertKey = ERROR_ALERT_KEY;
 
-    constructor(private translateService: TranslateService, private pageTitleService: PageTitleService, private router: Router) {}
+    constructor(private pageTitleService: PageTitleService, private router: Router) {}
 
     ngOnInit() {
         this.router.events
@@ -26,7 +25,7 @@ export class AppComponent implements OnInit {
             });
     }
 
-    getTitle(state, parent) {
+    private getTitle(state, parent) {
         const data = [];
         if (parent?.snapshot.data?.pageTitle) {
             data.push(parent.snapshot.data.pageTitle);
