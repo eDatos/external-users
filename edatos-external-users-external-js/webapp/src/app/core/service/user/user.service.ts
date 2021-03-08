@@ -3,23 +3,33 @@ import { Observable } from 'rxjs';
 import { User } from '@app/core/model';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ResponseWrapper } from 'arte-ng/src/lib/model';
 import { createRequestOption, ResponseUtils } from 'arte-ng/src/lib/utils';
+import { ResponseWrapper } from 'arte-ng/src/lib/model';
 
 @Injectable()
 export class UserService {
-    private resourceUrl = 'api/usuarios';
+    private resourceUrl = 'api/account/signup';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     create(user: User): Observable<User> {
+        console.log('fffffff');
         return this.http.post(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, User)));
+    }
+
+    buscarUsuarioPorEmail(email: string): Observable<User> {
+        return this.http.get(`${this.resourceUrl}/${email}/findByEmail`).pipe(map((res) => ResponseUtils.convert(res, User)));
+    }
+
+    getLogueado(): Observable<User> {
+        return this.http.get('api/usuario').pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     update(user: User): Observable<User> {
         return this.http.put(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
+    /* 
     get(login: string, includeDeleted = true): Observable<User> {
         const options = createRequestOption({ includeDeleted });
         return this.http.get(`${this.resourceUrl}/${login}`, options).pipe(map((res) => ResponseUtils.convert(res, User)));
@@ -37,12 +47,5 @@ export class UserService {
     restore(login: string): Observable<User> {
         return this.http.put(`${this.resourceUrl}/${login}/restore`, null).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
-
-    buscarUsuarioEnLdap(login: string): Observable<User> {
-        return this.http.get(`${this.resourceUrl}/${login}/ldap`).pipe(map((res) => ResponseUtils.convert(res, User)));
-    }
-
-    getLogueado(): Observable<User> {
-        return this.http.get('api/usuario').pipe(map((res) => ResponseUtils.convert(res, User)));
-    }
+    */
 }

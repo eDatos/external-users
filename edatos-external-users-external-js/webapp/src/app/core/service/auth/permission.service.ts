@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Principal } from './principal.service';
 import { Role } from '@app/core/model';
 
-export const USER_MANAGEMENT_ROLES = [Role.ADMINISTRADOR];
-export const HERRAMIENTAS_ROLES = [Role.ADMINISTRADOR];
-export const ADMINISTRACION_ROLES = [Role.ADMINISTRADOR];
+export const USER = [Role.USER];
+export const HERRAMIENTAS_ROLES = [Role.HERRAMIENTAS_ROLES];
 export const ALL_ALLOWED = [Role.ANY_ROLE_ALLOWED];
 
 @Injectable()
@@ -12,7 +11,7 @@ export class PermissionService {
     constructor(private principal: Principal) {}
 
     puedeNavegarUserManagement(): boolean {
-        return this.principal.rolesRutaMatchesRolesUsuario(USER_MANAGEMENT_ROLES);
+        return this.principal.rolesRutaMatchesRolesUsuario(ALL_ALLOWED);
     }
 
     puedeNavegarHerramientas(): boolean {
@@ -20,6 +19,6 @@ export class PermissionService {
     }
 
     puedeNavegarAdministracion(): boolean {
-        return this.principal.rolesRutaMatchesRolesUsuario(ADMINISTRACION_ROLES);
+        return this.principal.rolesRutaMatchesRolesUsuario(USER);
     }
 }

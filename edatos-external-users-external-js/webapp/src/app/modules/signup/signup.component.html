@@ -1,0 +1,160 @@
+<div class="page">
+    <div class="page-header">
+        <div class="page-header-top">
+            <h2 class="page-header-title">
+                <span class="page-header-title-text" translate="signup.home.title"></span>
+            </h2>
+            <ng-container>
+                <button type="submit" form="edit-form" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <span class="fa fa-floppy-o"></span>
+                    <span translate="entity.action.save"></span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
+    <div class="page-body">
+        <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
+            <fieldset class="page-section" arteAutofocus>
+                <div class="row">
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.name"></label>
+                            <div class="col-md-8">
+                                <arte-input name="name" [(ngModel)]="user.name" [maxlength]="255" [required]="true"></arte-input>
+                            </div>
+                        </div>
+
+                        <div *ngIf="(editForm.controls.name?.touched || editForm.controls.name?.dirty) && editForm.controls.name?.invalid" class="entity-field-error">
+                            <small class="form-text text-danger" *ngIf="editForm.controls.name?.errors.required" translate="entity.validation.required"> </small>
+                            <ng-container *ngIf="editForm.controls.name?.dirty">
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.name?.errors.maxlength"
+                                    translate="entity.validation.maxlength"
+                                    [translateParams]="{ max: 255 }"
+                                >
+                                </small>
+                                <small class="form-text text-danger" *ngIf="editForm.controls.name?.errors.name" translate="global.messages.validate.name.invalid"> </small>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.surname1"></label>
+                            <div class="col-md-8">
+                                <arte-input name="surname1" [(ngModel)]="user.surname1" [maxlength]="255" [required]="true"></arte-input>
+                            </div>
+                        </div>
+
+                        <div *ngIf="(editForm.controls.surname1?.touched || editForm.controls.surname1?.dirty) && editForm.controls.surname1?.invalid" class="entity-field-error">
+                            <small class="form-text text-danger" *ngIf="editForm.controls.surname1?.errors.required" translate="entity.validation.required"> </small>
+                            <ng-container *ngIf="editForm.controls.surname1?.dirty">
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.surname1?.errors.maxlength"
+                                    translate="entity.validation.maxlength"
+                                    [translateParams]="{ max: 255 }"
+                                >
+                                </small>
+                                <small class="form-text text-danger" *ngIf="editForm.controls.surname1?.errors.surname1" translate="global.messages.validate.surname1.invalid">
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.surname2"></label>
+                            <div class="col-md-8">
+                                <arte-input name="surname2" [(ngModel)]="user.surname2" [maxlength]="255" [required]="true"></arte-input>
+                            </div>
+                        </div>
+
+                        <div *ngIf="(editForm.controls.surname2?.touched || editForm.controls.surname2?.dirty) && editForm.controls.surname2?.invalid" class="entity-field-error">
+                            <small class="form-text text-danger" *ngIf="editForm.controls.surname2?.errors.required" translate="entity.validation.required"> </small>
+                            <ng-container *ngIf="editForm.controls.surname2?.dirty">
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.surname2?.errors.maxlength"
+                                    translate="entity.validation.maxlength"
+                                    [translateParams]="{ max: 255 }"
+                                >
+                                </small>
+                                <small class="form-text text-danger" *ngIf="editForm.controls.surname2?.errors.surname2" translate="global.messages.validate.surname2.invalid">
+                                </small>
+                            </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.gender"></label>
+                            <div class="col-md-8">
+                                <arte-autocomplete-enum
+                                    name="gender"
+                                    [multiple]="false"
+                                    [(ngModel)]="user.gender"
+                                    [suggestionsEnum]="genderEnum"
+                                    [translationPath]="'gender.'"
+                                    required
+                                >
+                                </arte-autocomplete-enum>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.language"></label>
+                            <div class="col-md-8">
+                                <arte-autocomplete-enum
+                                    name="language"
+                                    [multiple]="false"
+                                    [(ngModel)]="user.language"
+                                    [suggestionsEnum]="languageEnum"
+                                    [translationPath]="'language.'"
+                                    required
+                                >
+                                </arte-autocomplete-enum>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.email"></label>
+                            <div class="col-md-8">
+                                <arte-input name="email" [(ngModel)]="user.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
+                            </div>
+                        </div>
+                        <div *ngIf="(editForm.controls.email?.touched || editForm.controls.email?.dirty) && editForm.controls.email?.invalid" class="entity-field-error">
+                            <small class="form-text text-danger" *ngIf="editForm.controls.email?.errors.required" translate="entity.validation.required"> </small>
+                            <ng-container *ngIf="editForm.controls.email?.dirty">
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.email?.errors.maxlength"
+                                    translate="entity.validation.maxlength"
+                                    [translateParams]="{ max: 255 }"
+                                >
+                                </small>
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.email?.errors.minlength"
+                                    translate="entity.validation.minlength"
+                                    [translateParams]="{ requiredLength: 3}"
+                                >
+                                </small>
+                                <small class="form-text text-danger" *ngIf="editForm.controls.email?.errors.email" translate="global.messages.validate.email.invalid"> </small>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div class="page-section">
+                <arte-audit-info [entity]="user" *ngIf="existeUsuario()"></arte-audit-info>
+            </div>
+        </form>
+    </div>
+</div>
