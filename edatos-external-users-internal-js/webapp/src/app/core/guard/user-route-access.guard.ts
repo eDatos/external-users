@@ -9,7 +9,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
     public static AUTH_REDIRECT = 'authRedirect';
     private static ROLES = 'roles';
 
-    constructor(private router: Router, private principal: Principal, private loginService: LoginService) { }
+    constructor(private router: Router, private principal: Principal, private loginService: LoginService) {}
 
     canActivate(route: ActivatedRouteSnapshot): boolean | Promise<boolean> {
         const roles = this.rolesFromRouteSnapshot(route);
@@ -40,7 +40,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
                 return false;
             }
             return true;
-        })
+        });
     }
 
     private noPermissionRequired(roles: Role[]) {

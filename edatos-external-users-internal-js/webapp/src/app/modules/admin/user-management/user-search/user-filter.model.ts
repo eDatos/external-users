@@ -17,19 +17,19 @@ export class UserFilter extends BaseEntityFilter implements EntityFilter {
         this.registerParam({
             paramName: 'name',
             updateFilterFromParam: (param) => (this.name = param),
-            clearFilter: () => (this.name = null)
+            clearFilter: () => (this.name = null),
         });
         this.registerParam({
             paramName: 'rol',
             updateFilterFromParam: (param) => (this.rol = this.convertParamToRole(param)),
-            clearFilter: () => (this.rol = null)
+            clearFilter: () => (this.rol = null),
         });
         this.registerParam({
             paramName: 'includeDeleted',
             updateFilterFromParam: (param) => {
                 this.includeDeleted = param === 'true';
             },
-            clearFilter: () => (this.includeDeleted = false)
+            clearFilter: () => (this.includeDeleted = false),
         });
     }
 

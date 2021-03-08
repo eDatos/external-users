@@ -3,14 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import {
-    ArteInputModule,
-    ArteOrderListModule,
-    ArteTableModule,
-    ArteAutocompleteModule,
-    ArteSpinnerModule,
-    ArteEntityListEmptyModule,
-} from 'arte-ng';
+import { ArteInputModule, ArteOrderListModule, ArteTableModule, ArteAutocompleteModule, ArteSpinnerModule, ArteEntityListEmptyModule } from 'arte-ng';
 import { GenericModalService } from 'arte-ng/services';
 
 import { CommonModule } from '@angular/common';
@@ -30,7 +23,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
-import {TooltipModule} from 'primeng/tooltip';
+import { TooltipModule } from 'primeng/tooltip';
 import { NgArrayPipesModule } from 'ngx-pipes';
 
 @NgModule({
@@ -64,11 +57,12 @@ import { NgArrayPipesModule } from 'ngx-pipes';
     ],
     providers: [
         DatePipe,
-        { // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
+        {
+            // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
             provide: GenericModalService,
             useClass: GenericModalService,
-            deps: [ NgbModal ],
-        } // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
+            deps: [NgbModal],
+        }, // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
     ],
     exports: [
         FormsModule,
@@ -95,6 +89,6 @@ import { NgArrayPipesModule } from 'ngx-pipes';
         ArteOrderListModule,
         ArteEntityListEmptyModule,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}

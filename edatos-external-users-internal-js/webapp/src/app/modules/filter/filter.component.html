@@ -24,8 +24,8 @@
                         [rows]="itemsPerPage"
                         [totalRecords]="totalItems"
                         tableStyleClass="page-table table-has-pointer-rows"
-                        (onLazyLoad)="loadData($event)">
-
+                        (onLazyLoad)="loadData($event)"
+                    >
                         <ng-template pTemplate="body" let-filter>
                             <tr [routerLink]="['../filter', filter.id]">
                                 <td>{{filter.name}}</td>

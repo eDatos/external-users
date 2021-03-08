@@ -11,8 +11,7 @@
             </h2>
             <button class="btn btn-outline-dark btn-icon-only" (click)="hiddenFilters = !hiddenFilters">
                 <i class="fa fa-filter mr-1" aria-hidden="true"></i>
-                <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}"
-                   aria-hidden="true"></i>
+                <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}" aria-hidden="true"></i>
             </button>
 
             <div class="page-filters entity-search" [hidden]="hiddenFilters">
@@ -27,25 +26,21 @@
             <div class="page-section">
                 <h3 translate="configuration.spring"></h3>
                 <div class="page-table-container-fluid">
-                    <table class="page-table table table-hover table-layou-fixed " arteStickyTableHeader [stickTo]="pageHeaderRef">
+                    <table class="page-table table table-hover table-layou-fixed" arteStickyTableHeader [stickTo]="pageHeaderRef">
                         <thead>
                             <tr>
-                                <th style="width: 20%" (click)="orderProp = 'prefix'; reverse=!reverse"><span
-                                        translate="configuration.table.prefix"></span></th>
-                                <th style="width: 80%" (click)="orderProp = 'properties'; reverse=!reverse"><span
-                                        translate="configuration.table.properties"></span></th>
+                                <th style="width: 20%" (click)="orderProp = 'prefix'; reverse=!reverse"><span translate="configuration.table.prefix"></span></th>
+                                <th style="width: 80%" (click)="orderProp = 'properties'; reverse=!reverse"><span translate="configuration.table.properties"></span></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr
-                                *ngFor="let entry of (configuration | filterBy:['prefix']:filter | orderBy: (reverse ? '' : '-' ) + orderProp)">
+                            <tr *ngFor="let entry of (configuration | filterBy:['prefix']:filter | orderBy: (reverse ? '' : '-' ) + orderProp)">
                                 <td><span class="break">{{entry.prefix}}</span></td>
                                 <td>
                                     <div class="row" *ngFor="let key of keys(entry.properties)">
                                         <div class="col-4">{{key}}</div>
                                         <div class="col-8 text-right">
-                                            <span
-                                                class="badge badge-default text-wrap text-right">{{entry.properties[key] | json}}</span>
+                                            <span class="badge badge-default text-wrap text-right">{{entry.properties[key] | json}}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -55,7 +50,6 @@
                 </div>
             </div>
 
-
             <ng-container *ngFor="let key of keys(allConfiguration)">
                 <div class="page-section">
                     <h3><span>{{key}}</span></h3>
@@ -64,8 +58,7 @@
                             <thead>
                                 <tr>
                                     <th style="width: 20%"><span translate="configuration.table.prefix"></span></th>
-                                    <th class="text-right" style="width: 80%"><span
-                                            translate="configuration.table.properties"></span></th>
+                                    <th class="text-right" style="width: 80%"><span translate="configuration.table.properties"></span></th>
                                 </tr>
                             </thead>
                             <tbody>

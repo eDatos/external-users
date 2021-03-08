@@ -9,7 +9,7 @@ import { GenericModalService, ArteEventManager } from 'arte-ng/services';
 
 @Component({
     selector: 'app-user-mgmt-form',
-    templateUrl: './user-management-form.component.html'
+    templateUrl: './user-management-form.component.html',
 })
 export class UserMgmtFormComponent implements OnInit, OnDestroy {
     user: User;
@@ -29,7 +29,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         private eventManager: ArteEventManager,
         private route: ActivatedRoute,
         private router: Router
-    ) { }
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;

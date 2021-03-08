@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { HealthModalComponent } from './health-modal.component';
 
 import { HealthService } from './health.service';
-import { HealthModalComponent } from './health-modal.component';
 
 @Component({
     selector: 'app-health',
     templateUrl: './health.component.html',
-    styles: ['.table-responsive { margin-top: 1px; }']
+    styles: ['.table-responsive { margin-top: 1px; }'],
 })
 export class HealthCheckComponent implements OnInit {
     healthData: any;

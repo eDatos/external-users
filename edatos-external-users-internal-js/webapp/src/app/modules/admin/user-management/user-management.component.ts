@@ -1,20 +1,20 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-
-import { ArteEventManager } from 'arte-ng/services';
-
-import { UserFilter } from './user-search';
+import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { UserService } from '@app/core/service/user';
-import { LazyLoadEvent } from 'primeng/api';
-import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ResponseWrapper } from 'arte-ng/model';
+
+import { ArteEventManager } from 'arte-ng/services';
+import { LazyLoadEvent } from 'primeng/api';
+import { Subscription } from 'rxjs';
+
+import { UserFilter } from './user-search';
 
 @Component({
     selector: 'app-user-mgmt',
-    templateUrl: './user-management.component.html'
+    templateUrl: './user-management.component.html',
 })
 export class UserMgmtComponent implements OnInit, OnDestroy {
     private eventSubscriber: Subscription;
@@ -34,57 +34,57 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.login'
-            }
+                translatePath: 'userManagement.login',
+            },
         },
         {
             fieldName: 'nombre',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.nombre'
-            }
+                translatePath: 'userManagement.nombre',
+            },
         },
         {
             fieldName: 'apellido1',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.apellido1'
-            }
+                translatePath: 'userManagement.apellido1',
+            },
         },
         {
             fieldName: 'apellido2',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.apellido2'
-            }
+                translatePath: 'userManagement.apellido2',
+            },
         },
         {
             fieldName: 'email',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.email'
-            }
+                translatePath: 'userManagement.email',
+            },
         },
         {
             fieldName: 'language',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.language'
-            }
+                translatePath: 'userManagement.language',
+            },
         },
         {
             fieldName: 'roles',
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.rol'
-            }
-        }
-    ]
+                translatePath: 'userManagement.rol',
+            },
+        },
+    ];
 
     constructor(
         public permissionService: PermissionService,
@@ -130,7 +130,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
                 page: this.page - 1,
                 size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
                 sort: this.sort(),
-                query: this.filters.toQuery()
+                query: this.filters.toQuery(),
             })
             .subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers));
     }
@@ -144,7 +144,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     }
 
     loadData(e: LazyLoadEvent) {
-        this.page = (e.first / e.rows) + 1;
+        this.page = e.first / e.rows + 1;
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
             this.predicate = e.sortField;
@@ -152,14 +152,14 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         }
         this.transition();
     }
-    
+
     transition() {
         this.router.navigate(['/admin', 'user-management'], {
             queryParams: {
                 page: this.page,
                 size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
+            },
         });
         this.loadAll();
     }

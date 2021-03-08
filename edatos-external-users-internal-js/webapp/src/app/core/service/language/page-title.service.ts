@@ -1,7 +1,7 @@
-import { Injectable, RendererFactory2, Renderer2 } from '@angular/core';
+import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, ActivatedRouteSnapshot } from '@angular/router';
-import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { LANGUAGES } from './language.constants';
 
 @Injectable()
@@ -41,9 +41,8 @@ export class PageTitleService {
         });
     }
 
-    
     private get(routeSnapshot: ActivatedRouteSnapshot) {
-        let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'edatosExternalUsersApp';
+        let title: string = routeSnapshot.data && routeSnapshot.data['pageTitle'] ? routeSnapshot.data['pageTitle'] : 'app.name.complete';
         if (routeSnapshot.firstChild) {
             title = this.get(routeSnapshot.firstChild) || title;
         }

@@ -10,7 +10,7 @@ import { createRequestOption, ResponseUtils } from 'arte-ng/utils';
 export class UserService {
     private resourceUrl = 'api/usuarios';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     create(user: User): Observable<User> {
         return this.http.post(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, User)));

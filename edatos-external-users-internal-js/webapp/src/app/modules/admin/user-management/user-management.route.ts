@@ -1,4 +1,3 @@
-
 import { Routes } from '@angular/router';
 import { UserMgmtComponent } from './user-management.component';
 import { UserMgmtFormComponent } from './user-management-form.component';
@@ -7,14 +6,13 @@ import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
 import { USER_MANAGEMENT_ROLES } from '@app/core/service/auth';
 import { PagingParamsResolver } from 'arte-ng/services';
 
-
 export const userMgmtRoute: Routes = [
     {
         path: 'user-management',
         canActivate: [UserRouteAccessGuard],
         component: UserMgmtComponent,
         resolve: {
-            pagingParams: PagingParamsResolver
+            pagingParams: PagingParamsResolver,
         },
         data: {
             pageTitle: 'userManagement.home.title',
@@ -22,9 +20,9 @@ export const userMgmtRoute: Routes = [
             defaultPagingParams: {
                 page: '1',
                 sort: 'login,asc',
-                size: ITEMS_PER_PAGE
-            }
-        }
+                size: ITEMS_PER_PAGE,
+            },
+        },
     },
     {
         path: 'user-management/:login',
@@ -32,8 +30,8 @@ export const userMgmtRoute: Routes = [
         component: UserMgmtFormComponent,
         data: {
             pageTitle: 'userManagement.home.title',
-            roles: USER_MANAGEMENT_ROLES
-        }
+            roles: USER_MANAGEMENT_ROLES,
+        },
     },
     {
         path: 'user-management-new',
@@ -41,8 +39,8 @@ export const userMgmtRoute: Routes = [
         component: UserMgmtFormComponent,
         data: {
             pageTitle: 'userManagement.home.title',
-            roles: USER_MANAGEMENT_ROLES
-        }
+            roles: USER_MANAGEMENT_ROLES,
+        },
     },
     {
         path: 'user-management/:login/edit',
@@ -50,7 +48,7 @@ export const userMgmtRoute: Routes = [
         component: UserMgmtFormComponent,
         data: {
             roles: USER_MANAGEMENT_ROLES,
-            pageTitle: 'userManagement.home.title'
-        }
-    }
+            pageTitle: 'userManagement.home.title',
+        },
+    },
 ];

@@ -9,15 +9,7 @@ import { ArteDirectivesModule } from 'arte-ng/directives';
 
 @NgModule({
     declarations: [FilterComponent],
-    imports: [
-        CommonModule,
-        FilterRoutingModule,
-        ArteSpinnerModule,
-        ArteEntityListEmptyModule,
-        ArteTableModule,
-        SharedModule,
-        ArteDirectivesModule,
-    ],
+    imports: [CommonModule, FilterRoutingModule, ArteSpinnerModule, ArteEntityListEmptyModule, ArteTableModule, SharedModule, ArteDirectivesModule],
     providers: [FilterFilter],
 })
 export class FilterModule {}
