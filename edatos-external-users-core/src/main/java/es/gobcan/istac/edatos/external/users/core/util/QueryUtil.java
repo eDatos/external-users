@@ -16,7 +16,9 @@ import com.arte.libs.grammar.domain.QueryRequest;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.CategoryCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FamilyCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.FavoriteCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FilterCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.InstanceCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.NeedCriteriaProcessor;
@@ -31,9 +33,13 @@ public class QueryUtil {
     private QueryExprCompiler queryExprCompiler = new QueryExprCompiler();
 
     private final FilterCriteriaProcessor filterCriteriaProcessor;
+    private final CategoryCriteriaProcessor categoryCriteriaProcessor;
+    private final FavoriteCriteriaProcessor favoriteCriteriaProcessor;
 
-    public QueryUtil(FilterCriteriaProcessor filterCriteriaProcessor) {
+    public QueryUtil(FilterCriteriaProcessor filterCriteriaProcessor, CategoryCriteriaProcessor categoryCriteriaProcessor, FavoriteCriteriaProcessor favoriteCriteriaProcessor) {
         this.filterCriteriaProcessor = filterCriteriaProcessor;
+        this.categoryCriteriaProcessor = categoryCriteriaProcessor;
+        this.favoriteCriteriaProcessor = favoriteCriteriaProcessor;
     }
 
     public DetachedCriteria queryToUserCriteria(Pageable pageable, String query) {
@@ -149,6 +155,38 @@ public class QueryUtil {
 
     public DetachedCriteria queryToFilterSortCriteria(String query, Sort sort) {
         return queryToCriteria(sort, query, filterCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToCategoryCriteria(String query, Pageable pageable) {
+        try {
+            return queryToCriteria(pageable, query, categoryCriteriaProcessor);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
+                // Catches a query/sort parameter that isn't recognized.
+                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+            }
+            throw ex;
+        }
+    }
+
+    public DetachedCriteria queryToCategorySortCriteria(String query, Sort sort) {
+        return queryToCriteria(sort, query, categoryCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToFavoriteCriteria(String query, Pageable pageable) {
+        try {
+            return queryToCriteria(pageable, query, favoriteCriteriaProcessor);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
+                // Catches a query/sort parameter that isn't recognized.
+                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+            }
+            throw ex;
+        }
+    }
+
+    public DetachedCriteria queryToFavoriteSortCriteria(String query, Sort sort) {
+        return queryToCriteria(sort, query, favoriteCriteriaProcessor);
     }
 
     private String getQueryParameter(IllegalArgumentException ex) {
