@@ -22,6 +22,8 @@ public class ExternalUserAccountDto extends AbstractVersionedAndAuditingAndLogic
     private String phoneNumber;
     private String password;
 
+    private String organism;
+
     @Override
     public Long getId() {
         return id;
@@ -96,6 +98,14 @@ public class ExternalUserAccountDto extends AbstractVersionedAndAuditingAndLogic
         this.phoneNumber = phoneNumber;
     }
 
+    public String getOrganism() {
+        return organism;
+    }
+
+    public void setOrganism(String organism) {
+        this.organism = organism;
+    }
+
     public void updateFrom(ExternalUserAccountDto source) {
         this.id = source.getId();
         this.name = source.getName();
@@ -106,6 +116,7 @@ public class ExternalUserAccountDto extends AbstractVersionedAndAuditingAndLogic
         this.language = source.getLanguage();
         this.phoneNumber = source.getPhoneNumber();
         this.password = source.getPassword();
+        this.organism = source.getOrganism();
         this.setOptLock(source.getOptLock());
         this.setCreatedDate(source.getCreatedDate());
         this.setCreatedBy(source.getCreatedBy());

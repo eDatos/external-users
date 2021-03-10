@@ -19,6 +19,8 @@ public class ExternalUserDto implements Serializable {
     private String phoneNumber;
     private String password;
 
+    private String organism;
+
     public String getName() {
         return name;
     }
@@ -81,5 +83,13 @@ public class ExternalUserDto implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getOrganism() {
+        return organism;
+    }
+
+    public void setOrganism(String organism) {
+        this.organism = organism;
     }
 }

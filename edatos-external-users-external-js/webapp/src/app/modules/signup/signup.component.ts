@@ -12,7 +12,7 @@ type SignUp = Omit<User, 'id' | 'roles'>;
     selector: 'app-signup',
     templateUrl: './signup.component.html',
 })
-export class SignupFormComponent implements OnInit, OnDestroy {
+export class SignupFormComponent implements OnInit {
     user: User;
     isSaving: Boolean;
     usuarioValido = false;
@@ -82,9 +82,14 @@ export class SignupFormComponent implements OnInit, OnDestroy {
         return this.user.password !== this.confirmPassword;
     }
 
+    navigateToLogin() {
+        this.router.navigate(['login']);
+    }
+
     private onSaveSuccess(result) {
         console.log(result);
         this.isSaving = false;
+        this.navigateToLogin();
     }
 
     private onSaveError() {
@@ -93,9 +98,5 @@ export class SignupFormComponent implements OnInit, OnDestroy {
 
     public existeUsuario(): boolean {
         return !!this.user.id;
-    }
-
-    ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 }

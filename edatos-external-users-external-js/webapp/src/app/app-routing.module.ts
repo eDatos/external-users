@@ -32,6 +32,14 @@ const APP_ROUTES: Routes = [
         },
     },
     {
+        path: 'login',
+        loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: ALL_ALLOWED,
+        },
+    },
+    {
         path: '**',
         redirectTo: 'notfound',
     },
