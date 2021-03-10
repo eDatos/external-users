@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.siemac.edatos.core.common.dto.AuditableDto;
+import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
-import es.gobcan.istac.edatos.external.users.core.domain.InternationalStringEntity;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
 public class CategoryDto extends AuditableDto implements Identifiable {
@@ -16,14 +16,13 @@ public class CategoryDto extends AuditableDto implements Identifiable {
     private String nestedCode;
     private String uri;
     private String urn;
-    private InternationalStringEntity name;
-    private InternationalStringEntity description;
-    private InternationalStringEntity comment;
+    private InternationalStringDto name;
+    private InternationalStringDto description;
+    private InternationalStringDto comment;
     private Instant createdDate;
     private Instant updateDate;
     private Instant lastUpdated;
     private String uuid;
-    private Long version;
     private CategoryDto parent;
     private List<CategoryDto> children = new ArrayList<>();
 
@@ -79,27 +78,27 @@ public class CategoryDto extends AuditableDto implements Identifiable {
         this.urn = urn;
     }
 
-    public InternationalStringEntity getName() {
+    public InternationalStringDto getName() {
         return name;
     }
 
-    public void setName(InternationalStringEntity name) {
+    public void setName(InternationalStringDto name) {
         this.name = name;
     }
 
-    public InternationalStringEntity getDescription() {
+    public InternationalStringDto getDescription() {
         return description;
     }
 
-    public void setDescription(InternationalStringEntity description) {
+    public void setDescription(InternationalStringDto description) {
         this.description = description;
     }
 
-    public InternationalStringEntity getComment() {
+    public InternationalStringDto getComment() {
         return comment;
     }
 
-    public void setComment(InternationalStringEntity comment) {
+    public void setComment(InternationalStringDto comment) {
         this.comment = comment;
     }
 
@@ -126,14 +125,6 @@ public class CategoryDto extends AuditableDto implements Identifiable {
 
     public void setLastUpdated(Instant lastUpdated) {
         this.lastUpdated = lastUpdated;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public CategoryDto getParent() {

@@ -1,7 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,16 +10,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
+import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedEntity;
+
 @Entity
 @Table(name = "tb_localised_strings", uniqueConstraints = {@UniqueConstraint(columnNames = {"locale", "international_string_fk"})})
-public class LocalisedStringEntity implements Serializable {
+public class LocalisedStringEntity extends AbstractVersionedEntity {
 
     private static final long serialVersionUID = 5536465684062425199L;
 
@@ -41,10 +40,6 @@ public class LocalisedStringEntity implements Serializable {
 
     @Column(name = "IS_UNMODIFIABLE")
     private Boolean isUnmodifiable;
-
-    @Version
-    @Column(name = "VERSION", nullable = false)
-    private Long version;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "INTERNATIONAL_STRING_FK")
@@ -112,14 +107,6 @@ public class LocalisedStringEntity implements Serializable {
         this.isUnmodifiable = isUnmodifiable;
     }
 
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
     /**
      * Relation to InternationalString owner
      */
@@ -136,7 +123,7 @@ public class LocalisedStringEntity implements Serializable {
 
     /**
      * This method is used by equals and hashCode.
-     * 
+     *
      * @return {@link #getId}
      */
     public Object getKey() {

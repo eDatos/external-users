@@ -1,6 +1,8 @@
 package es.gobcan.istac.edatos.external.users.core.domain.vo;
 
-public class LocalisedStringVO {
+import java.io.Serializable;
+
+public class LocalisedStringVO implements Serializable {
 
     String label;
     String locale;

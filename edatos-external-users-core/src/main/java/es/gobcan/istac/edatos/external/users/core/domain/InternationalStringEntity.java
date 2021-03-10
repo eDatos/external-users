@@ -1,11 +1,9 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -14,12 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+
+import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedEntity;
 
 @Entity
 @Table(name = "tb_international_strings")
-public class InternationalStringEntity implements Serializable {
+public class InternationalStringEntity extends AbstractVersionedEntity {
 
     private static final long serialVersionUID = 4105632098240476963L;
 
@@ -28,13 +27,9 @@ public class InternationalStringEntity implements Serializable {
     @SequenceGenerator(name = "seq_tb_international_strings", sequenceName = "seq_tb_international_strings", allocationSize = 50, initialValue = 1)
     private Long id;
 
-    @Version
-    @Column(name = "VERSION", nullable = false)
-    private Long version;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "internationalString", fetch = FetchType.EAGER, orphanRemoval = true)
     @NotNull
-    private Set<LocalisedStringEntity> texts = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "internationalString", fetch = FetchType.EAGER, orphanRemoval = true)
+    private final Set<LocalisedStringEntity> texts = new HashSet<>();
 
     /**
      * Added explicitly to avoid that Sculptor generate UUID
@@ -52,14 +47,6 @@ public class InternationalStringEntity implements Serializable {
             throw new IllegalArgumentException("Not allowed to change the id property.");
         }
         this.id = id;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public Set<LocalisedStringEntity> getTexts() {
@@ -113,7 +100,7 @@ public class InternationalStringEntity implements Serializable {
 
     /**
      * This method is used by equals and hashCode.
-     * 
+     *
      * @return {@link #getId}
      */
     public Object getKey() {

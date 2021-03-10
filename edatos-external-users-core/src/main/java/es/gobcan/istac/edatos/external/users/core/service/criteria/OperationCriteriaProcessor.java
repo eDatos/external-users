@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service.criteria;
 
-import static org.hibernate.sql.JoinType.LEFT_OUTER_JOIN;
+import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
+import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
@@ -9,10 +10,9 @@ import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalItemEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.InternationalStringEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.LocalisedStringEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.OfficialityTypeEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.SurveyTypeEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
+
+import static org.hibernate.sql.JoinType.LEFT_OUTER_JOIN;
 
 public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
 
@@ -21,7 +21,6 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
     }
 
     public enum QueryProperty {
-        // @formatter:off
         ID,
         CODE,
         URN,
@@ -31,7 +30,6 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
         SECONDARY_SUBJECT_AREA_URN,
         DESCRIPTION,
         STATISTICAL_OPERATION_TYPE_ID,
-        OFFICIALITY_TYPE_ID,
         IS_INDICATORS_SYSTEM,
         PRODUCER_URN,
         INTERNAL_INVENTORY_DATE,
@@ -39,15 +37,14 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
         STATUS,
         PROC_STATUS,
         PUBLISHER_URN,
-        INVENTORY_DATE;
-        // @formatter:off
+        INVENTORY_DATE,
     }
 
     @Override
     public void registerProcessors() {
         //@formatter:off
-        
-        // When the ID is specified, a search by CODE must be performed. 
+
+        // When the ID is specified, a search by CODE must be performed.
         // In the internal and external API the search by ID correspond to a search by CODE.
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.ID).sortable()
@@ -70,7 +67,7 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.URN).sortable()
                 .withEntityProperty(OperationEntity.Properties.URN).build());
-        
+
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withAlias(OperationEntity.Properties.TITLE, "t", LEFT_OUTER_JOIN)
                 .withAlias("t." + InternationalStringEntity.Properties.TEXTS, "tl", LEFT_OUTER_JOIN)
@@ -82,14 +79,14 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.TITLE)
                 .withEntityProperty(OperationEntity.Properties.TITLE)
                 .build());
-        
+
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withAlias(OperationEntity.Properties.ACRONYM, "a", LEFT_OUTER_JOIN)
                 .withAlias("a." + InternationalStringEntity.Properties.TEXTS, "al", LEFT_OUTER_JOIN)
                 .withQueryProperty(QueryProperty.ACRONYM)
                 .withEntityProperty("al." + LocalisedStringEntity.Properties.LABEL)
                 .build());
-        
+
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withAlias(OperationEntity.Properties.SUBJECT_AREA, "sa", LEFT_OUTER_JOIN)
                 .withQueryProperty(QueryProperty.SUBJECT_AREA_URN)
@@ -109,18 +106,6 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withEntityProperty("dl." + LocalisedStringEntity.Properties.LABEL)
                 .build());
 
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.SURVEY_TYPE, "st", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.STATISTICAL_OPERATION_TYPE_ID)
-                .withEntityProperty("st." + SurveyTypeEntity.Properties.IDENTIFIER)
-                .build());
-
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.OFFICIALITY_TYPE, "ot", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.OFFICIALITY_TYPE_ID)
-                .withEntityProperty("ot." + OfficialityTypeEntity.Properties.IDENTIFIER)
-                .build());
-
         registerRestrictionProcessor(RestrictionProcessorBuilder.booleanRestrictionProcessor()
                 .withQueryProperty(QueryProperty.IS_INDICATORS_SYSTEM)
                 .withEntityProperty(OperationEntity.Properties.INDICATOR_SYSTEM)
@@ -134,7 +119,7 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
 
         registerRestrictionProcessor(
             RestrictionProcessorBuilder.instantRestrictionProcessor()
-                .withQueryProperty(QueryProperty.INTERNAL_INVENTORY_DATE) 
+                .withQueryProperty(QueryProperty.INTERNAL_INVENTORY_DATE)
                 .withEntityProperty(OperationEntity.Properties.INTERNAL_INVENTORY_DATE)
                 .build());
 
@@ -145,13 +130,13 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .build());
 
         registerRestrictionProcessor(
-            RestrictionProcessorBuilder.enumRestrictionProcessor(OperationEntity.StatusEnum.class)
+            RestrictionProcessorBuilder.enumRestrictionProcessor(Status.class)
                 .withQueryProperty(QueryProperty.STATUS)
                 .withEntityProperty(OperationEntity.Properties.STATUS)
                 .build());
-        
+
         registerRestrictionProcessor(
-            RestrictionProcessorBuilder.enumRestrictionProcessor(ProcStatusEnum.class)
+            RestrictionProcessorBuilder.enumRestrictionProcessor(ProcStatus.class)
                 .withQueryProperty(QueryProperty.PROC_STATUS)
                 .withEntityProperty(OperationEntity.Properties.PROC_STATUS)
                 .build());
@@ -164,7 +149,7 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
 
         registerRestrictionProcessor(
             RestrictionProcessorBuilder.instantRestrictionProcessor()
-                .withQueryProperty(QueryProperty.INVENTORY_DATE) 
+                .withQueryProperty(QueryProperty.INVENTORY_DATE)
                 .withEntityProperty(OperationEntity.Properties.INVENTORY_DATE)
                 .build());
 

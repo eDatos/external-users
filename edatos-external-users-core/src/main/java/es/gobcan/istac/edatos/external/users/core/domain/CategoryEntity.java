@@ -14,27 +14,36 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.hibernate.validator.constraints.Length;
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
+
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 
 /**
- * Categories are commonly known as 'topics'. They represent a standardized way to group together other
- * semantic related topics and statistical operations.
+ * Categories are commonly known as 'subjects' or 'areas'. They represent a standardized way to group together other
+ * semantic related subjects or statistical operations. In EDatos the categories are handled through the
+ * structural resources manager.
  * <p>
- * This class uses a subset of attributes from
+ * This class uses a subset of attributes extracted from
+ * <p>
  * {@code metamac-srm-core:org.siemac.metamac.srm.core.category.domain.CategoryMetamac}.
  */
 @Entity
 @Table(name = "tb_category")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
+@TypeDef(name = "json", typeClass = JsonStringType.class)
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
@@ -63,7 +72,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     private String uri;
 
     /**
-     * The unique and legigle identifier of the category. I.e.:
+     * The unique and legible identifier of the category. I.e.:
      * {@code urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:TEMAS_CANARIAS(01.000).050.050_010.050_010_040}
      */
     @NotNull
@@ -75,17 +84,17 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      * The category name. I.e.: "Forestry and hunting"
      */
     @NotNull
-    @JoinColumn(name = "name_fk")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private InternationalStringEntity name;
+    @Type(type = "json")
+    @Column(columnDefinition = "json", nullable = false)
+    private InternationalStringVO name;
 
-    @JoinColumn(name = "description_fk")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private InternationalStringEntity description;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private InternationalStringVO description;
 
-    @JoinColumn(name = "comment_fk")
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private InternationalStringEntity comment;
+    @Type(type = "json")
+    @Column(columnDefinition = "json")
+    private InternationalStringVO comment;
 
     private Instant updateDate;
 
@@ -98,7 +107,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @NotNull
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<CategoryEntity> children = new HashSet<>();
+    private final Set<CategoryEntity> children = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -141,27 +150,27 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.urn = urn;
     }
 
-    public InternationalStringEntity getName() {
+    public InternationalStringVO getName() {
         return name;
     }
 
-    public void setName(InternationalStringEntity name) {
+    public void setName(InternationalStringVO name) {
         this.name = name;
     }
 
-    public InternationalStringEntity getDescription() {
+    public InternationalStringVO getDescription() {
         return description;
     }
 
-    public void setDescription(InternationalStringEntity description) {
+    public void setDescription(InternationalStringVO description) {
         this.description = description;
     }
 
-    public InternationalStringEntity getComment() {
+    public InternationalStringVO getComment() {
         return comment;
     }
 
-    public void setComment(InternationalStringEntity comment) {
+    public void setComment(InternationalStringVO comment) {
         this.comment = comment;
     }
 
@@ -200,7 +209,8 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         for (CategoryEntity category : categories) {
             category.setParent(this);
         }
-        this.children = categories;
+        this.children.clear();
+        this.children.addAll(categories);
     }
 
     public void addChild(CategoryEntity category) {

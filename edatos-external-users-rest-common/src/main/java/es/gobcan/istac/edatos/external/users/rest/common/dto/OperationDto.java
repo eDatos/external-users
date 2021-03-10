@@ -7,9 +7,9 @@ import java.util.Set;
 import org.siemac.edatos.core.common.dto.AuditableDto;
 import org.siemac.edatos.core.common.dto.ExternalItemDto;
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
+import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
+import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity.StatusEnum;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
 public class OperationDto extends AuditableDto implements Identifiable {
@@ -21,29 +21,18 @@ public class OperationDto extends AuditableDto implements Identifiable {
     private Boolean indicatorSystem;
     private Instant internalInventoryDate;
     private Boolean currentlyActive;
-    private Boolean releaseCalendar;
-    private String releaseCalendarAccess;
     private Instant inventoryDate;
     private ExternalItemDto commonMetadata;
     private InternationalStringDto title;
     private InternationalStringDto acronym;
-    private ExternalItemDto subjectArea;
+    private CategoryDto subjectArea;
     private InternationalStringDto objective;
     private InternationalStringDto description;
-    private SurveyTypeDto surveyType;
-    private OfficialityTypeDto officialityType;
-    private ProcStatusEnum procStatus;
-    private StatusEnum status;
-    private InternationalStringDto relPolUsAc;
-    private InstanceBaseDto currentInstance;
-    private InstanceBaseDto currentInternalInstance;
-    private InternationalStringDto revPolicy;
-    private InternationalStringDto revPractice;
-    private InternationalStringDto specificLegalActs;
-    private InternationalStringDto specificDataSharing;
+    private ProcStatus procStatus;
+    private Status status;
     private InternationalStringDto comment;
     private InternationalStringDto notes;
-    private Set<ExternalItemDto> secondarySubjectAreas = new HashSet<>();
+    private Set<CategoryDto> secondarySubjectAreas = new HashSet<>();
     private Set<ExternalItemDto> producer = new HashSet<>();
     private Set<ExternalItemDto> regionalResponsible = new HashSet<>();
     private Set<ExternalItemDto> regionalContributor = new HashSet<>();
@@ -90,22 +79,6 @@ public class OperationDto extends AuditableDto implements Identifiable {
         this.currentlyActive = currentlyActive;
     }
 
-    public Boolean getReleaseCalendar() {
-        return releaseCalendar;
-    }
-
-    public void setReleaseCalendar(Boolean releaseCalendar) {
-        this.releaseCalendar = releaseCalendar;
-    }
-
-    public String getReleaseCalendarAccess() {
-        return releaseCalendarAccess;
-    }
-
-    public void setReleaseCalendarAccess(String releaseCalendarAccess) {
-        this.releaseCalendarAccess = releaseCalendarAccess;
-    }
-
     public Instant getInventoryDate() {
         return inventoryDate;
     }
@@ -138,11 +111,11 @@ public class OperationDto extends AuditableDto implements Identifiable {
         this.acronym = acronym;
     }
 
-    public ExternalItemDto getSubjectArea() {
+    public CategoryDto getSubjectArea() {
         return subjectArea;
     }
 
-    public void setSubjectArea(ExternalItemDto subjectArea) {
+    public void setSubjectArea(CategoryDto subjectArea) {
         this.subjectArea = subjectArea;
     }
 
@@ -162,92 +135,20 @@ public class OperationDto extends AuditableDto implements Identifiable {
         this.description = description;
     }
 
-    public SurveyTypeDto getSurveyType() {
-        return surveyType;
-    }
-
-    public void setSurveyType(SurveyTypeDto surveyType) {
-        this.surveyType = surveyType;
-    }
-
-    public OfficialityTypeDto getOfficialityType() {
-        return officialityType;
-    }
-
-    public void setOfficialityType(OfficialityTypeDto officialityType) {
-        this.officialityType = officialityType;
-    }
-
-    public ProcStatusEnum getProcStatus() {
+    public ProcStatus getProcStatus() {
         return procStatus;
     }
 
-    public void setProcStatus(ProcStatusEnum procStatus) {
+    public void setProcStatus(ProcStatus procStatus) {
         this.procStatus = procStatus;
     }
 
-    public StatusEnum getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public InternationalStringDto getRelPolUsAc() {
-        return relPolUsAc;
-    }
-
-    public void setRelPolUsAc(InternationalStringDto relPolUsAc) {
-        this.relPolUsAc = relPolUsAc;
-    }
-
-    public InstanceBaseDto getCurrentInstance() {
-        return currentInstance;
-    }
-
-    public void setCurrentInstance(InstanceBaseDto currentInstance) {
-        this.currentInstance = currentInstance;
-    }
-
-    public InstanceBaseDto getCurrentInternalInstance() {
-        return currentInternalInstance;
-    }
-
-    public void setCurrentInternalInstance(InstanceBaseDto currentInternalInstance) {
-        this.currentInternalInstance = currentInternalInstance;
-    }
-
-    public InternationalStringDto getRevPolicy() {
-        return revPolicy;
-    }
-
-    public void setRevPolicy(InternationalStringDto revPolicy) {
-        this.revPolicy = revPolicy;
-    }
-
-    public InternationalStringDto getRevPractice() {
-        return revPractice;
-    }
-
-    public void setRevPractice(InternationalStringDto revPractice) {
-        this.revPractice = revPractice;
-    }
-
-    public InternationalStringDto getSpecificLegalActs() {
-        return specificLegalActs;
-    }
-
-    public void setSpecificLegalActs(InternationalStringDto specificLegalActs) {
-        this.specificLegalActs = specificLegalActs;
-    }
-
-    public InternationalStringDto getSpecificDataSharing() {
-        return specificDataSharing;
-    }
-
-    public void setSpecificDataSharing(InternationalStringDto specificDataSharing) {
-        this.specificDataSharing = specificDataSharing;
     }
 
     public InternationalStringDto getComment() {
@@ -266,7 +167,7 @@ public class OperationDto extends AuditableDto implements Identifiable {
         this.notes = notes;
     }
 
-    public Set<ExternalItemDto> getSecondarySubjectAreas() {
+    public Set<CategoryDto> getSecondarySubjectAreas() {
         return secondarySubjectAreas;
     }
 
@@ -275,7 +176,7 @@ public class OperationDto extends AuditableDto implements Identifiable {
      * association.
      * It is added the collection {@link #getSecondarySubjectAreas}.
      */
-    public void addSecondarySubjectArea(ExternalItemDto secondarySubjectAreaElement) {
+    public void addSecondarySubjectArea(CategoryDto secondarySubjectAreaElement) {
         getSecondarySubjectAreas().add(secondarySubjectAreaElement);
     }
 
@@ -284,7 +185,7 @@ public class OperationDto extends AuditableDto implements Identifiable {
      * association.
      * It is removed from the collection {@link #getSecondarySubjectAreas}.
      */
-    public void removeSecondarySubjectArea(ExternalItemDto secondarySubjectAreaElement) {
+    public void removeSecondarySubjectArea(CategoryDto secondarySubjectAreaElement) {
         getSecondarySubjectAreas().remove(secondarySubjectAreaElement);
     }
 
