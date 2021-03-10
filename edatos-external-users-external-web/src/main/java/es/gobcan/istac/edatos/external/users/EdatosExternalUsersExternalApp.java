@@ -37,15 +37,6 @@ public class EdatosExternalUsersExternalApp {
         this.env = env;
     }
 
-    /**
-     * Initializes edatos_external_users.
-     * <p>
-     * Spring profiles can be configured with a program arguments
-     * --spring.profiles.active=your-active-profile
-     * <p>
-     * You can find more information on how profiles work with JHipster on <a href=
-     * "https://jhipster.github.io/profiles/">https://jhipster.github.io/profiles/</a>.
-     */
     @PostConstruct
     public void initApplication() {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());

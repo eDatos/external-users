@@ -30,9 +30,9 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     @Override
     public void update(String firstName, String apellido1, String apellido2, String email) {
         externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
-            user.setNombre(firstName);
-            user.setApellido1(apellido1);
-            user.setApellido2(apellido2);
+            user.setName(firstName);
+            user.setSurname1(apellido1);
+            user.setSurname2(apellido2);
             user.setEmail(email);
         });
     }

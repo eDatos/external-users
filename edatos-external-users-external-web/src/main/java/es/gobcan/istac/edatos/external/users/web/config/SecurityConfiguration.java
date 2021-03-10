@@ -1,19 +1,12 @@
 package es.gobcan.istac.edatos.external.users.web.config;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
+import es.gobcan.istac.edatos.external.users.web.security.filter.UsernamePasswordAuthenticationFilter;
 import es.gobcan.istac.edatos.external.users.web.security.jwt.JWTAuthenticationSuccessHandler;
 import es.gobcan.istac.edatos.external.users.web.security.jwt.JWTFilter;
 import es.gobcan.istac.edatos.external.users.web.security.jwt.TokenProvider;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
-import org.apache.commons.lang3.StringUtils;
-import org.ehcache.Cache;
-import org.ehcache.CacheManager;
-import org.ehcache.config.builders.CacheConfigurationBuilder;
-import org.ehcache.config.builders.CacheManagerBuilder;
-import org.ehcache.config.builders.ResourcePoolsBuilder;
-import org.ehcache.core.Ehcache;
-import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -33,7 +26,6 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.filter.CorsFilter;
 
 import javax.annotation.PostConstruct;
 
@@ -55,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final Environment env;
 
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, JHipsterProperties jHipsterProperties,
-                                 ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env) {
+            ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.tokenProvider = tokenProvider;
@@ -65,91 +57,36 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.env = env;
     }
 
-  /*  @PostConstruct
-    public void init() {
-        try {
-            authenticationManagerBuilder.authenticationProvider(casAuthenticationProvider());
-        } catch (Exception e) {
-            throw new BeanInitializationException("Configuración de seguridad fallida", e);
-        }
-    }
-
-    // ******************* CAS **********
-
-    @Bean
-    public ServiceProperties serviceProperties() {
-        ServiceProperties serviceProperties = new ServiceProperties();
-        serviceProperties.setService(StringUtils.removeEnd(applicationProperties.getCas().getService(), "/"));
-        serviceProperties.setSendRenew(false);
-        return serviceProperties;
-    }
-
-    // @Bean
-  public CasEhCacheBasedTicketCache statelessTicketCache() {
-        CasEhCacheBasedTicketCache statelessTicketCache = new CasEhCacheBasedTicketCache();
-        CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
-                .withCache("casTickets", CacheConfigurationBuilder.newCacheConfigurationBuilder(String.class, CasAuthenticationToken.class, ResourcePoolsBuilder.heap(10))).build();
-        cacheManager.init();
-
-        Cache<String, CasAuthenticationToken> cache = cacheManager.getCache("casTickets", String.class, CasAuthenticationToken.class);
-        statelessTicketCache.setCache((Ehcache<String, CasAuthenticationToken>) cache);
-
-        return statelessTicketCache;
-    }
-
-    @Bean
-    public CasAuthenticationProvider casAuthenticationProvider() {
-        CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
-        casAuthenticationProvider.setAuthenticationUserDetailsService(authenticationUserDetailsService());
-        casAuthenticationProvider.setServiceProperties(serviceProperties());
-        casAuthenticationProvider.setTicketValidator(casServiceTicketValidator());
-        casAuthenticationProvider.setKey("EDATOS_EXTERNAL_USERS_CAS");
-        return casAuthenticationProvider;
-    }
-
-    @Bean
-    public CasUserDetailsService authenticationUserDetailsService() {
-        return new CasUserDetailsService();
-    }
-
-    @Bean
-    public Cas30ServiceTicketValidator casServiceTicketValidator() {
-        return new Cas30ServiceTicketValidator(metadataProperties.getMetamacCasPrefix());
-    }*/
+    /*
+     * @PostConstruct
+     * public void init() {
+     * try {
+     * authenticationManagerBuilder.authenticationProvider(casAuthenticationProvider());
+     * } catch (Exception e) {
+     * throw new BeanInitializationException("Configuración de seguridad fallida", e);
+     * }
+     * }
+     */
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, applicationProperties, env);
     }
 
-  /*  @Bean
-    public CasAuthenticationFilter casAuthenticationFilter() throws Exception {
-        CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
-        casAuthenticationFilter.setAuthenticationManager(authenticationManager());
-        casAuthenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler());
-        return casAuthenticationFilter;
-    }
-
-    public SingleSignOutFilter singleSignOutFilter() {
-        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
-        singleSignOutFilter.setCasServerUrlPrefix(metadataProperties.getMetamacCasPrefix());
-        return singleSignOutFilter;
-    }*/
-
     @Bean
-    public SecurityContextLogoutHandler casLogoutHandler() {
+    public SecurityContextLogoutHandler logoutHandler() {
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.setClearAuthentication(true);
         logoutHandler.setInvalidateHttpSession(true);
         return logoutHandler;
     }
 
- /*   @Bean
-    public LogoutFilter requestCasGlobalLogoutFilter() {
-        LogoutFilter logoutFilter = new LogoutFilter(metadataProperties.getMetamacCasLogoutUrl(), casLogoutHandler());
+    @Bean
+    public LogoutFilter requestGlobalLogoutFilter() {
+        LogoutFilter logoutFilter = new LogoutFilter(metadataProperties.getMetamacCasLogoutUrl(), logoutHandler());
         logoutFilter.setLogoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"));
         return logoutFilter;
-    }*/
+    }
 
     @Bean
     public Http401UnauthorizedEntryPoint http401UnauthorizedEntryPoint() {
@@ -175,42 +112,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //@formatter:on
     }
 
+    /*
+     * @Override
+     * protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+     * auth.inMemoryAuthentication().withUser("user").password(passwordEncoder().encode("password")).roles("USER");
+     * }
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        JWTFilter customFilter = new JWTFilter(tokenProvider);
-        http.authorizeRequests()
-            .anyRequest().authenticated()
-            .and().httpBasic();
-      /*  http
-        	.addFilter(casAuthenticationFilter())
-            .addFilterBefore(corsFilter, CasAuthenticationFilter.class)
-            .addFilterBefore(customFilter, CasAuthenticationFilter.class)
-            .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
-	    	.addFilterBefore(requestCasGlobalLogoutFilter(), LogoutFilter.class)
-            .exceptionHandling()
-        	.authenticationEntryPoint(http401UnauthorizedEntryPoint())
-        .and()
-            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-        .and()
-
-            .headers()
-            .frameOptions().sameOrigin()
-        .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            .authorizeRequests()
-            .antMatchers("/api/activate").permitAll()
-            .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/profile-info").permitAll()
-            .antMatchers("/management/metrics").access("@secChecker.puedeConsultarMetrica(authentication)")
-            .antMatchers("/management/health").access("@secChecker.puedeConsultarSalud(authentication)")
-            .antMatchers("/management/env").access("@secChecker.puedeConsultarConfig(authentication)")
-            .antMatchers("/management/configprops").access("@secChecker.puedeConsultarConfig(authentication)")
-            .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/apis/operations-internal/**").permitAll()
-            .antMatchers("/**").authenticated();
-       */
+        // JWTFilter customFilter = new JWTFilter(tokenProvider);
+        // UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new UsernamePasswordAuthenticationFilter(tokenProvider, jHipsterProperties);
+        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().headers().frameOptions().sameOrigin().and().authorizeRequests().antMatchers("/**").permitAll();
+        /*
+         * .addFilter(usernamePasswordAuthenticationFilter)
+         * .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class)
+         * .exceptionHandling()
+         * .authenticationEntryPoint(http401UnauthorizedEntryPoint())
+         * .and()
+         * .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+         * .and()
+         * .headers()
+         * .frameOptions().sameOrigin()
+         * .and()
+         * .sessionManagement()
+         * .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+         * .and()
+         * .authorizeRequests()
+         * .antMatchers("/api/activate").permitAll()
+         * .antMatchers("/api/authenticate").permitAll()
+         * .antMatchers("/api/profile-info").permitAll()
+         * .antMatchers("/management/metrics").access("@secChecker.puedeConsultarMetrica(authentication)")
+         * .antMatchers("/management/health").access("@secChecker.puedeConsultarSalud(authentication)")
+         * .antMatchers("/management/env").access("@secChecker.puedeConsultarConfig(authentication)")
+         * .antMatchers("/management/configprops").access("@secChecker.puedeConsultarConfig(authentication)")
+         * .antMatchers("/v2/api-docs/**").permitAll()
+         * .antMatchers("/apis/operations-internal/**").permitAll()
+         * .antMatchers("/**").authenticated();
+         */
     }
 
     @Bean
