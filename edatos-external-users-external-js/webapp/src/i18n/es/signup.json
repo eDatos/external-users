@@ -8,10 +8,12 @@
             "surname1": "Primer apellido",
             "surname2": "Segundo apellido",
             "password": "Contraseña",
+            "confirmPassword": "Confirmar contraseña",
             "email": " Correo electrónico",
-            "gender": "Género",
+            "treatment": "Tratamiento",
             "language": "Idioma",
-            "phoneNumber": "Número teléfono"
+            "phoneNumber": "Número teléfono",
+            "organism": "Organismo"
         }
     }
 }

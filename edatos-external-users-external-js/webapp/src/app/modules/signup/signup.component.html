@@ -18,6 +18,39 @@
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.treatment"></label>
+                            <div class="col-md-8">
+                                <arte-autocomplete-enum
+                                    name="treatment"
+                                    [multiple]="false"
+                                    [(ngModel)]="user.treatment"
+                                    [suggestionsEnum]="treatmentEnum"
+                                    [translationPath]="'treatment.'"
+                                >
+                                </arte-autocomplete-enum>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.language"></label>
+                            <div class="col-md-8">
+                                <arte-autocomplete-enum
+                                    name="language"
+                                    [multiple]="false"
+                                    [(ngModel)]="user.language"
+                                    [suggestionsEnum]="languageEnum"
+                                    [translationPath]="'language.'"
+                                    required
+                                >
+                                </arte-autocomplete-enum>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
                             <label class="col-form-label col-md-4" translate="signup.form.name"></label>
                             <div class="col-md-8">
                                 <arte-input name="name" [(ngModel)]="user.name" [maxlength]="255" [required]="true"></arte-input>
@@ -87,37 +120,59 @@
                         </div>
                     </div>
 
+                    <div class="col-md-6"></div>
+
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="signup.form.gender"></label>
+                            <label class="col-form-label col-md-4" translate="signup.form.organism"></label>
                             <div class="col-md-8">
-                                <arte-autocomplete-enum
-                                    name="gender"
-                                    [multiple]="false"
-                                    [(ngModel)]="user.gender"
-                                    [suggestionsEnum]="genderEnum"
-                                    [translationPath]="'gender.'"
-                                    required
-                                >
-                                </arte-autocomplete-enum>
+                                <arte-input name="organism" [(ngModel)]="user.organism" [maxlength]="255"></arte-input>
                             </div>
+                        </div>
+
+                        <div *ngIf="(editForm.controls.organism?.touched || editForm.controls.organism?.dirty) && editForm.controls.organism?.invalid" class="entity-field-error">
+                            <small class="form-text text-danger"> </small>
+                            <ng-container *ngIf="editForm.controls.organism?.dirty">
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.organism?.errors.maxlength"
+                                    translate="entity.validation.maxlength"
+                                    [translateParams]="{ max: 255 }"
+                                >
+                                </small>
+                                <small class="form-text text-danger" *ngIf="editForm.controls.organism?.errors.organism" translate="global.messages.validate.organism.invalid">
+                                </small>
+                            </ng-container>
                         </div>
                     </div>
 
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="signup.form.language"></label>
+                            <label class="col-form-label col-md-4" translate="signup.form.phoneNumber"></label>
                             <div class="col-md-8">
-                                <arte-autocomplete-enum
-                                    name="language"
-                                    [multiple]="false"
-                                    [(ngModel)]="user.language"
-                                    [suggestionsEnum]="languageEnum"
-                                    [translationPath]="'language.'"
-                                    required
-                                >
-                                </arte-autocomplete-enum>
+                                <arte-input name="phoneNumber" [(ngModel)]="user.phoneNumber" [maxlength]="50" mask="(999) 999-9999" placeholder="(999) 999-9999"></arte-input>
                             </div>
+                        </div>
+                        <div
+                            *ngIf="(editForm.controls.phoneNumber?.touched || editForm.controls.phoneNumber?.dirty) && editForm.controls.phoneNumber?.invalid"
+                            class="entity-field-error"
+                        >
+                            <small class="form-text text-danger" *ngIf="editForm.controls.phoneNumber?.errors.required" translate="entity.validation.required"> </small>
+                            <ng-container *ngIf="editForm.controls.phoneNumber?.dirty">
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.phoneNumber?.errors.maxlength"
+                                    translate="entity.validation.maxlength"
+                                    [translateParams]="{ max: 10 }"
+                                >
+                                </small>
+                                <small
+                                    class="form-text text-danger"
+                                    *ngIf="editForm.controls.phoneNumber?.errors.phoneNumber"
+                                    translate="global.messages.validate.phoneNumber.invalid"
+                                >
+                                </small>
+                            </ng-container>
                         </div>
                     </div>
 
@@ -147,6 +202,85 @@
                                 </small>
                                 <small class="form-text text-danger" *ngIf="editForm.controls.email?.errors.email" translate="global.messages.validate.email.invalid"> </small>
                             </ng-container>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6"></div>
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.password"></label>
+                            <div class="col-md-8">
+                                <arte-input name="password" [(ngModel)]="user.password" [required]="true" [minlength]="8" [maxlength]="10"> </arte-input>
+                            </div>
+
+                            <div
+                                *ngIf="(editForm.controls.password?.touched || editForm.controls.password?.dirty) && editForm.controls.password?.invalid"
+                                class="entity-field-error"
+                            >
+                                <small class="form-text text-danger" *ngIf="editForm.controls.password?.errors.required" translate="entity.validation.required"> </small>
+                                <ng-container *ngIf="editForm.controls.password?.dirty">
+                                    <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.controls.password?.errors.maxlength"
+                                        translate="entity.validation.maxlength"
+                                        [translateParams]="{ max: 10 }"
+                                    >
+                                    </small>
+                                    <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.controls.password?.errors.minlength"
+                                        translate="entity.validation.minlength"
+                                        [translateParams]="{ requiredLength: 8}"
+                                    >
+                                    </small>
+                                    <small class="form-text text-danger" *ngIf="editForm.controls.password?.errors.password" translate="global.messages.validate.password.invalid">
+                                    </small>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.confirmPassword"></label>
+                            <div class="col-md-8">
+                                <arte-input name="confirmPassword" [(ngModel)]="confirmPassword" [required]="true" [minlength]="8" [maxlength]="10"> </arte-input>
+                            </div>
+
+                            <div
+                                *ngIf="(editForm.controls.confirmPassword?.touched || editForm.controls.confirmPassword?.dirty) && editForm.controls.confirmPassword?.invalid"
+                                class="entity-field-error"
+                            >
+                                <small class="form-text text-danger" *ngIf="editForm.controls.confirmPassword?.errors.required" translate="entity.validation.required"> </small>
+                                <ng-container *ngIf="editForm.controls.confirmPassword?.dirty">
+                                    <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.controls.confirmPassword?.errors.maxlength"
+                                        translate="entity.validation.maxlength"
+                                        [translateParams]="{ max: 10 }"
+                                    >
+                                    </small>
+                                    <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.controls.confirmPassword?.errors.minlength"
+                                        translate="entity.validation.minlength"
+                                        [translateParams]="{ requiredLength: 8}"
+                                    >
+                                    </small>
+                                    <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.controls.confirmPassword?.errors.passwordMismatch"
+                                        translate="global.messages.validate.confirmPassword.invalid"
+                                    >
+                                    </small>
+
+                                    <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.controls.confirmPassword?.errors.confirmPassword"
+                                        translate="global.messages.validate.confirmPassword.invalid"
+                                    >
+                                    </small>
+                                </ng-container>
+                            </div>
                         </div>
                     </div>
                 </div>

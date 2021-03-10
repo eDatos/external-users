@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { User, Role, Gender, Language } from '@app/core/model';
+import { User, Role, Treatment, Language } from '@app/core/model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '@app/core/service/user';
 import { Subscription } from 'rxjs';
@@ -20,7 +20,9 @@ export class SignupFormComponent implements OnInit, OnDestroy {
     paramLogin: string;
     public rolesEnum = Role;
     languageEnum = Language;
-    genderEnum = Gender;
+    treatmentEnum = Treatment;
+
+    confirmPassword: string;
 
     constructor(
         private userService: UserService,
@@ -45,7 +47,7 @@ export class SignupFormComponent implements OnInit, OnDestroy {
 
     save() {
         this.isSaving = true;
-        if (this.existeUsuario()) {
+        if (this.existeUsuario() || this.passwordDoNotMatch()) {
             this.usuarioValido = false;
         } else {
             this.userService.create(this.user).subscribe(
@@ -76,8 +78,13 @@ export class SignupFormComponent implements OnInit, OnDestroy {
         }
     }
 
+    private passwordDoNotMatch(): boolean {
+        return this.user.password !== this.confirmPassword;
+    }
+
     private onSaveSuccess(result) {
         console.log(result);
+        this.isSaving = false;
     }
 
     private onSaveError() {

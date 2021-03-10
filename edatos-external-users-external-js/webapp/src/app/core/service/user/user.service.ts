@@ -8,13 +8,12 @@ import { ResponseWrapper } from 'arte-ng/src/lib/model';
 
 @Injectable()
 export class UserService {
-    private resourceUrl = 'api/account/signup';
+    private resourceUrl = 'api/account';
 
     constructor(private http: HttpClient) {}
 
     create(user: User): Observable<User> {
-        console.log('fffffff');
-        return this.http.post(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, User)));
+        return this.http.post(`${this.resourceUrl}/signup`, user).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     buscarUsuarioPorEmail(email: string): Observable<User> {
