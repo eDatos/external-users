@@ -14,7 +14,7 @@ type SignUp = Omit<User, 'id' | 'roles'>;
 })
 export class SignupFormComponent implements OnInit {
     public user: User;
-    private isSaving: Boolean;
+    public isSaving: Boolean;
     public validUser = false;
     private paramLogin: string;
     public rolesEnum = Role;
