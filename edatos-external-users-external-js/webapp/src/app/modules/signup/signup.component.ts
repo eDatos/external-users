@@ -13,16 +13,15 @@ type SignUp = Omit<User, 'id' | 'roles'>;
     templateUrl: './signup.component.html',
 })
 export class SignupFormComponent implements OnInit {
-    user: User;
-    isSaving: Boolean;
-    usuarioValido = false;
-    private subscription: Subscription;
-    paramLogin: string;
+    public user: User;
+    private isSaving: Boolean;
+    public validUser = false;
+    private paramLogin: string;
     public rolesEnum = Role;
-    languageEnum = Language;
-    treatmentEnum = Treatment;
+    public languageEnum = Language;
+    public treatmentEnum = Treatment;
 
-    confirmPassword: string;
+    public confirmPassword: string;
 
     constructor(
         private userService: UserService,
@@ -47,8 +46,8 @@ export class SignupFormComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.existeUsuario() || this.passwordDoNotMatch()) {
-            this.usuarioValido = false;
+        if (this.userExists() || this.passwordDoNotMatch()) {
+            this.validUser = false;
         } else {
             this.userService.create(this.user).subscribe(
                 (response) => this.onSaveSuccess(response),
@@ -64,13 +63,13 @@ export class SignupFormComponent implements OnInit {
                     (usuario) => {
                         if (usuario) {
                             this.user = usuario;
-                            this.usuarioValido = true;
+                            this.validUser = true;
                         } else {
-                            this.usuarioValido = false;
+                            this.validUser = false;
                         }
                     },
                     (error) => {
-                        this.usuarioValido = false;
+                        this.validUser = false;
                         console.log(error);
                     }
                 );
@@ -96,7 +95,11 @@ export class SignupFormComponent implements OnInit {
         this.isSaving = false;
     }
 
-    public existeUsuario(): boolean {
+    public userExists(): boolean {
         return !!this.user.id;
+    }
+
+    public navigateToSignup() {
+        this.router.navigate(['login']);
     }
 }

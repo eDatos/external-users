@@ -20,7 +20,7 @@ export class User extends BaseAuditingEntity {
         surname1?: string,
         surname2?: string,
         email?: string,
-        oranisgm?: string,
+        organism?: string,
         password?: string,
         treatment?: any[],
         lenguage?: any[],
@@ -33,7 +33,7 @@ export class User extends BaseAuditingEntity {
         this.surname1 = surname1 ? surname1 : null;
         this.surname2 = surname2 ? surname2 : null;
         this.email = email ? email : null;
-        this.organism = oranisgm ? oranisgm : null;
+        this.organism = organism ? organism : null;
         this.password = password ? password : null;
         this.phoneNumber = phoneNumber ? phoneNumber : null;
         this.roles = roles ? roles : null;

@@ -19,9 +19,11 @@ export class LoginComponent implements OnInit {
     login() {
         this.navigateToSignup();
     }
-    private navigateTo() {}
+    private navigateTo() {
+        /* TODO EDATOS-3287 Still to be set up */
+    }
 
-    navigateToSignup() {
+    public navigateToSignup() {
         this.router.navigate(['signup']);
     }
 }
