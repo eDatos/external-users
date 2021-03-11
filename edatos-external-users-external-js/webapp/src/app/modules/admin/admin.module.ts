@@ -3,9 +3,6 @@ import { SharedModule } from '@app/shared';
 
 import {
     AuditsComponent,
-    UserMgmtComponent,
-    UserMgmtFormComponent,
-    UserMgmtDeleteDialogComponent,
     LogsComponent,
     MetricsMonitoringModalComponent,
     MetricsMonitoringComponent,
@@ -17,30 +14,14 @@ import {
     HealthService,
     MetricsService,
     LogsService,
-    AdminRoutingModule
+    AdminRoutingModule,
 } from '.';
-import { UserSearchComponent } from './user-management/user-search';
 
 @NgModule({
-    imports: [
-        SharedModule,
-        AdminRoutingModule
-    ],
-    declarations: [
-        AuditsComponent,
-        UserSearchComponent,
-        UserMgmtComponent,
-        UserMgmtFormComponent,
-        UserMgmtDeleteDialogComponent,
-        LogsComponent,
-        ConfigurationComponent,
-        HealthCheckComponent,
-        HealthModalComponent,
-        MetricsMonitoringComponent,
-        MetricsMonitoringModalComponent
-    ],
-    entryComponents: [UserMgmtFormComponent, UserMgmtDeleteDialogComponent, HealthModalComponent, MetricsMonitoringModalComponent],
+    imports: [SharedModule, AdminRoutingModule],
+    declarations: [AuditsComponent, LogsComponent, ConfigurationComponent, HealthCheckComponent, HealthModalComponent, MetricsMonitoringComponent, MetricsMonitoringModalComponent],
+    entryComponents: [HealthModalComponent, MetricsMonitoringModalComponent],
     providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {}

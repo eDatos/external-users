@@ -9,7 +9,7 @@ export const configurationRoute: Route = {
     component: ConfigurationComponent,
     data: {
         pageTitle: 'configuration.title',
-        roles: HERRAMIENTAS_ROLES
+        roles: HERRAMIENTAS_ROLES,
     },
-    canActivate: [UserRouteAccessGuard]
+    canActivate: [UserRouteAccessGuard],
 };

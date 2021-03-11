@@ -1,0 +1,16 @@
+{
+    "login": {
+        "home": {
+            "title": "Inicio de sesión"
+        },
+        "form": {
+            "username": "Usuario",
+            "password": "Contraseña"
+        },
+        "action": {
+            "forgottenPassword": "Pulse aquí para establecer una nueva",
+            "signup": "Registrar nueva cuenta",
+            "signin": "Iniciar sesión"
+        }
+    }
+}

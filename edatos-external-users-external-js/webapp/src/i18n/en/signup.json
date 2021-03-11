@@ -1,0 +1,19 @@
+{
+    "signup": {
+        "home": {
+            "title": "Sign up user"
+        },
+        "form": {
+            "name": "Name",
+            "surname1": "First surname",
+            "surname2": "Second surname",
+            "password": "Password",
+            "confirmPassword": "Confirm password",
+            "email": "Email",
+            "treatment": "Treatment",
+            "language": "Language",
+            "phoneNumber": "Phone number",
+            "organism": "Organism"
+        }
+    }
+}

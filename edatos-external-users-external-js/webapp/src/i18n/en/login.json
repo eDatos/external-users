@@ -1,0 +1,16 @@
+{
+    "login": {
+        "home": {
+            "title": "Login"
+        },
+        "form": {
+            "username": "Username",
+            "password": "Passowrd"
+        },
+        "action": {
+            "forgottenPassword": "Forgotten password",
+            "signup": "Sign up",
+            "signin": "Sign in"
+        }
+    }
+}
