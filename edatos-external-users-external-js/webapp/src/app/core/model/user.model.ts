@@ -10,7 +10,7 @@ export class User extends BaseAuditingEntity {
     public email?: string;
     public organism?: string;
     public treatment?: any[];
-    public lenguage?: any[];
+    public language?: any[];
     public phoneNumber?: string;
     public roles?: any[];
 
@@ -23,7 +23,7 @@ export class User extends BaseAuditingEntity {
         organism?: string,
         password?: string,
         treatment?: any[],
-        lenguage?: any[],
+        language?: any[],
         phoneNumber?: string,
         roles?: any[]
     ) {
@@ -38,7 +38,7 @@ export class User extends BaseAuditingEntity {
         this.phoneNumber = phoneNumber ? phoneNumber : null;
         this.roles = roles ? roles : null;
         this.treatment = treatment ? treatment : null;
-        this.lenguage = lenguage ? lenguage : null;
+        this.language = language ? language : null;
     }
 
     public hasRole(rol: Role): boolean {
