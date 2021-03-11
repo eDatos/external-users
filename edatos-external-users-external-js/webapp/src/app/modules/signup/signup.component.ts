@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User, Role, Treatment, Language } from '@app/core/model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '@app/core/service/user';
+import { AccountUserService } from '@app/core/service/user';
 import { Subscription } from 'rxjs';
 import { GenericModalService, ArteEventManager } from 'arte-ng/src/lib/services';
 
@@ -24,7 +24,7 @@ export class SignupFormComponent implements OnInit {
     public confirmPassword: string;
 
     constructor(
-        private userService: UserService,
+        private accountUserService: AccountUserService,
         private genericModalService: GenericModalService,
         private eventManager: ArteEventManager,
         private route: ActivatedRoute,
@@ -49,7 +49,7 @@ export class SignupFormComponent implements OnInit {
         if (this.userExists() || this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
-            this.userService.create(this.user).subscribe(
+            this.accountUserService.create(this.user).subscribe(
                 (response) => this.onSaveSuccess(response),
                 () => this.onSaveError()
             );
@@ -59,7 +59,7 @@ export class SignupFormComponent implements OnInit {
     validarUsuario(inputDirty = true) {
         if (inputDirty) {
             if (this.user.email) {
-                this.userService.buscarUsuarioPorEmail(this.user.email).subscribe(
+                this.accountUserService.buscarUsuarioPorEmail(this.user.email).subscribe(
                     (usuario) => {
                         if (usuario) {
                             this.user = usuario;

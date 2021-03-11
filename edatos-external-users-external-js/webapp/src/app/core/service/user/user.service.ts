@@ -7,7 +7,7 @@ import { createRequestOption, ResponseUtils } from 'arte-ng/src/lib/utils';
 import { ResponseWrapper } from 'arte-ng/src/lib/model';
 
 @Injectable()
-export class UserService {
+export class AccountUserService {
     private resourceUrl = 'api/account';
 
     constructor(private http: HttpClient) {}
