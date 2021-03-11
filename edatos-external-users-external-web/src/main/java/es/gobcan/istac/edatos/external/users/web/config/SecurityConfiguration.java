@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     /*
      * @PostConstruct
-     * public void init() {
+     * public void init() { // TODO EDATOS-3287 Still to be set up
      * try {
      * authenticationManagerBuilder.authenticationProvider(casAuthenticationProvider());
      * } catch (Exception e) {
@@ -112,43 +112,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //@formatter:on
     }
 
-    /*
-     * @Override
-     * protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-     * auth.inMemoryAuthentication().withUser("user").password(passwordEncoder().encode("password")).roles("USER");
-     * }
-     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // JWTFilter customFilter = new JWTFilter(tokenProvider);
+        // JWTFilter customFilter = new JWTFilter(tokenProvider); // TODO EDATOS-3287 Still to be set up
         // UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new UsernamePasswordAuthenticationFilter(tokenProvider, jHipsterProperties);
-        http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().headers().frameOptions().sameOrigin().and().authorizeRequests().antMatchers("/**").permitAll();
-        /*
-         * .addFilter(usernamePasswordAuthenticationFilter)
-         * .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class)
-         * .exceptionHandling()
-         * .authenticationEntryPoint(http401UnauthorizedEntryPoint())
-         * .and()
-         * .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-         * .and()
-         * .headers()
-         * .frameOptions().sameOrigin()
-         * .and()
-         * .sessionManagement()
-         * .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-         * .and()
-         * .authorizeRequests()
-         * .antMatchers("/api/activate").permitAll()
-         * .antMatchers("/api/authenticate").permitAll()
-         * .antMatchers("/api/profile-info").permitAll()
-         * .antMatchers("/management/metrics").access("@secChecker.puedeConsultarMetrica(authentication)")
-         * .antMatchers("/management/health").access("@secChecker.puedeConsultarSalud(authentication)")
-         * .antMatchers("/management/env").access("@secChecker.puedeConsultarConfig(authentication)")
-         * .antMatchers("/management/configprops").access("@secChecker.puedeConsultarConfig(authentication)")
-         * .antMatchers("/v2/api-docs/**").permitAll()
-         * .antMatchers("/apis/operations-internal/**").permitAll()
-         * .antMatchers("/**").authenticated();
-         */
+        // .addFilter(usernamePasswordAuthenticationFilter)
+        // .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class)
+        http.exceptionHandling().authenticationEntryPoint(http401UnauthorizedEntryPoint()).and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().headers()
+                .frameOptions().sameOrigin().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/authenticate").permitAll().antMatchers("/api/profile-info").permitAll().antMatchers("/account").permitAll().antMatchers("/login").permitAll()
+                .antMatchers("/v2/api-docs/**").permitAll().antMatchers("/apis/operations-internal/**").permitAll().antMatchers("/management/metrics")
+                .access("@secChecker.puedeConsultarMetrica(authentication)").antMatchers("/management/health").access("@secChecker.puedeConsultarSalud(authentication)").antMatchers("/management/env")
+                .access("@secChecker.puedeConsultarConfig(authentication)").antMatchers("/management/configprops").access("@secChecker.puedeConsultarConfig(authentication)").antMatchers("/**")
+                .authenticated();;
     }
 
     @Bean

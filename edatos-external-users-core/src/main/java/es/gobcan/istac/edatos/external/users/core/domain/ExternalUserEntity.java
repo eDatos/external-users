@@ -41,7 +41,6 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
     @Email
     private String email;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private Treatment treatment;
 

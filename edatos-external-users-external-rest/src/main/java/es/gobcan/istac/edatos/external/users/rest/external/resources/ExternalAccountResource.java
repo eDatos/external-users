@@ -10,6 +10,7 @@ import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
+import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.external.dto.ExternalUserAccountDto;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
@@ -33,7 +34,7 @@ public class ExternalAccountResource extends AbstractResource {
 
     private final ExternalUserRepository externalUserRepository;
 
-    // private final MailService mailService; // TODO pending confirmation by email
+    private final MailService mailService;
 
     private final ExternalUserService externalUserService;
 
@@ -41,10 +42,10 @@ public class ExternalAccountResource extends AbstractResource {
 
     private final AuditEventPublisher auditPublisher;
 
-    public ExternalAccountResource(ExternalUserRepository externalUserRepository, /* MailService mailService, */ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper,
+    public ExternalAccountResource(ExternalUserRepository externalUserRepository, MailService mailService, ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper,
             AuditEventPublisher auditPublisher) {
         this.externalUserRepository = externalUserRepository;
-        // this.mailService = mailService;
+        this.mailService = mailService;
         this.externalUserService = externalUserService;
         this.externalUserMapper = externalUserMapper;
         this.auditPublisher = auditPublisher;
@@ -59,7 +60,7 @@ public class ExternalAccountResource extends AbstractResource {
 
         ExternalUserEntity newExternalUser = externalUserMapper.toEntity(externalUserDto);
         newExternalUser = externalUserService.create(newExternalUser);
-        // mailService.sendCreationEmail(newExternalUser); // TODO quda pendiente para a versificaión de la creación de usuarios externos
+        mailService.sendCreationEmail(newExternalUser);
         ExternalUserAccountDto newExternalUserDto = externalUserMapper.toDto(newExternalUser);
 
         auditPublisher.publish(AuditConstants.USUARIO_CREACION, newExternalUserDto.getEmail());
