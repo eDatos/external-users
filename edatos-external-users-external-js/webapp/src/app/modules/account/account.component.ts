@@ -12,11 +12,11 @@ export class AccountComponent implements OnInit {
     isSaving: Boolean;
     account: any;
 
-    constructor(private userService: AccountUserService, private route: ActivatedRoute, private router: Router) {}
+    constructor(private accountUserService: AccountUserService, private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         this.isSaving = false;
-        this.userService
+        this.accountUserService
             .getLogueado()
             .toPromise()
             .then((account) => {
@@ -26,7 +26,7 @@ export class AccountComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.userService.update(this.account).subscribe(
+        this.accountUserService.update(this.account).subscribe(
             () => {
                 this.error = null;
                 this.success = 'OK';
