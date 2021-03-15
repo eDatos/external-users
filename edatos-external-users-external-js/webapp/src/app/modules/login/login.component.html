@@ -4,6 +4,20 @@
             <h2 class="page-header-title">
                 <span class="page-header-title-text" translate="login.home.title"></span>
             </h2>
+            <div class="panel-container-buttons">
+                <ng-container>
+                    <button type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
+                        <span class="fa fa-sign-in"></span>
+                        <span translate="login.action.signin"></span>
+                    </button>
+                </ng-container>
+                <ng-container>
+                    <button type="button" class="btn btn-default" (click)="navigateToSignup()" translate="login.action.signup">
+                        <span class="fa fa-user-plus"></span>
+                        <span translate="login.action.signup"></span>
+                    </button>
+                </ng-container>
+            </div>
         </div>
     </div>
     <div class="page-body">
@@ -80,20 +94,6 @@
                     </div>
                 </div>
             </fieldset>
-            <div class="panel-container-buttons">
-                <ng-container>
-                    <button type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
-                        <span class="fa fa-sign-in"></span>
-                        <span translate="login.action.signin"></span>
-                    </button>
-                </ng-container>
-                <ng-container>
-                    <button type="button" class="btn btn-default" (click)="navigateToSignup()" translate="login.action.signup">
-                        <span class="fa fa-user-plus"></span>
-                        <span translate="login.action.signup"></span>
-                    </button>
-                </ng-container>
-            </div>
         </form>
     </div>
 </div>
