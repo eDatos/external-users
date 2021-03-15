@@ -19,7 +19,17 @@
         </div>
     </div>
     <div class="page-body">
-        <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
+        <form
+            class="page-form"
+            id="edit-form"
+            name="editForm"
+            role="form"
+            novalidate
+            (ngSubmit)="save()"
+            #editForm="ngForm"
+            autocomplete="off"
+            [passwordMatch]="['password', 'confirmPassword']"
+        >
             <fieldset class="page-section" arteAutofocus>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6">
@@ -216,7 +226,7 @@
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="signup.form.password"></label>
                             <div class="col-md-8">
-                                <arte-input name="password" [(ngModel)]="user.password" [required]="true" [minlength]="8" [maxlength]="10"> </arte-input>
+                                <arte-input type="password" name="password" [(ngModel)]="user.password" [required]="true" [minlength]="8" [maxlength]="20"> </arte-input>
                             </div>
 
                             <div
@@ -229,7 +239,7 @@
                                         class="form-text text-danger"
                                         *ngIf="editForm.controls.password?.errors.maxlength"
                                         translate="entity.validation.maxlength"
-                                        [translateParams]="{ max: 10 }"
+                                        [translateParams]="{ max: 20 }"
                                     >
                                     </small>
                                     <small
@@ -249,7 +259,7 @@
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="signup.form.confirmPassword"></label>
                             <div class="col-md-8">
-                                <arte-input name="confirmPassword" [(ngModel)]="confirmPassword" [required]="true" [minlength]="8" [maxlength]="10"> </arte-input>
+                                <arte-input type="password" name="confirmPassword" [(ngModel)]="confirmPassword" [required]="true" [maxlength]="20"> </arte-input>
                             </div>
 
                             <div
@@ -262,20 +272,14 @@
                                         class="form-text text-danger"
                                         *ngIf="editForm.controls.confirmPassword?.errors.maxlength"
                                         translate="entity.validation.maxlength"
-                                        [translateParams]="{ max: 10 }"
+                                        [translateParams]="{ max: 20 }"
                                     >
+                                    </small>
                                     </small>
                                     <small
                                         class="form-text text-danger"
-                                        *ngIf="editForm.controls.confirmPassword?.errors.minlength"
-                                        translate="entity.validation.minlength"
-                                        [translateParams]="{ requiredLength: 8}"
-                                    >
-                                    </small>
-                                    <small
-                                        class="form-text text-danger"
-                                        *ngIf="editForm.controls.confirmPassword?.errors.passwordMismatch"
-                                        translate="global.messages.validate.confirmPassword.invalid"
+                                        *ngIf="editForm.controls.confirmPassword?.errors.passwordMatch"
+                                        translate="global.messages.validate.password.notMatch"
                                     >
                                     </small>
 
@@ -283,6 +287,12 @@
                                         class="form-text text-danger"
                                         *ngIf="editForm.controls.confirmPassword?.errors.confirmPassword"
                                         translate="global.messages.validate.confirmPassword.invalid"
+                                    >
+                                    </small>
+                                    <small
+                                        class="form-text text-danger"
+                                        *ngIf="editForm.passwordMatch?.errors.passwordMatch"
+                                        translate="global.messages.validation.passwordDoNotMatch.invalid"
                                     >
                                     </small>
                                 </ng-container>

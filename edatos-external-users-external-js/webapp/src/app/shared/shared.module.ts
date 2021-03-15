@@ -21,10 +21,13 @@ import { ListboxModule } from 'primeng/listbox';
 import { OrderListModule } from 'primeng/orderlist';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputMaskModule } from 'primeng/inputmask';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
-import {TooltipModule} from 'primeng/tooltip';
+import { TooltipModule } from 'primeng/tooltip';
 import { NgArrayPipesModule } from 'ngx-pipes';
+
+import { PasswordMatchValidatorDirective } from './directives';
 
 @NgModule({
     imports: [
@@ -42,21 +45,24 @@ import { NgArrayPipesModule } from 'ngx-pipes';
         OrderListModule,
         CheckboxModule,
         InputTextareaModule,
+        InputMaskModule,
         FileUploadModule,
         TranslateModule,
         TableModule,
         NgArrayPipesModule,
         FormsModule,
         TooltipModule,
-        ArteNgModule
+        ArteNgModule,
     ],
+    declarations: [PasswordMatchValidatorDirective],
     providers: [
         DatePipe,
-        { // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
+        {
+            // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
             provide: GenericModalService,
             useClass: GenericModalService,
-            deps: [ NgbModal ]
-        } // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
+            deps: [NgbModal],
+        }, // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
     ],
     exports: [
         FormsModule,
@@ -72,14 +78,16 @@ import { NgArrayPipesModule } from 'ngx-pipes';
         OrderListModule,
         CheckboxModule,
         InputTextareaModule,
+        InputMaskModule,
         FileUploadModule,
         TranslateModule,
         TableModule,
         TooltipModule,
         NgArrayPipesModule,
         ReactiveFormsModule,
-        ArteNgModule
+        ArteNgModule,
+        PasswordMatchValidatorDirective,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class SharedModule {}
