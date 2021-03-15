@@ -1,0 +1,44 @@
+<div class="page">
+    <div class="page-header">
+        <div class="page-header-top">
+            <h2 class="page-header-title">
+                <span class="page-header-title-text" translate="favorite.home.title"></span>
+            </h2>
+            <div>
+                <button class="btn btn-primary" [routerLink]="['../favorite', 'new']">
+                    <span class="fa fa-plus"></span>
+                    <span translate="favorite.home.createLabel"></span>
+                </button>
+            </div>
+        </div>
+        <!--        <ac-favorite-search [favorites]="favorites"></ac-favorite-search>-->
+    </div>
+    <div class="page-body">
+        <arte-spinner *ngIf="!favorites"></arte-spinner>
+        <ng-container *ngIf="favorites">
+            <ng-container *ngIf="favorites.length > 0;else emptyList">
+                <div class="page-table-container-fluid">
+                    <arte-table
+                        [columns]="columns"
+                        [value]="favorites"
+                        [rows]="itemsPerPage"
+                        [totalRecords]="totalItems"
+                        tableStyleClass="page-table table-has-pointer-rows"
+                        (onLazyLoad)="loadData($event)"
+                    >
+                        <ng-template pTemplate="body" let-favorite>
+                            <tr [routerLink]="['../favorite', favorite.id]">
+                                <td>{{favorite.login}}</td>
+                                <td>{{favorite.subjectArea.name.get(mainLanguage)}}</td>
+                                <!--TODO(EDATOS-3294): add operations-->
+                            </tr>
+                        </ng-template>
+                    </arte-table>
+                </div>
+            </ng-container>
+            <ng-template #emptyList>
+                <arte-entity-list-empty></arte-entity-list-empty>
+            </ng-template>
+        </ng-container>
+    </div>
+</div>
