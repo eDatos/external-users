@@ -134,7 +134,7 @@
                     <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="editForm.controls.email">
                         <div class="form-row">
                             <label class="form-label col-md-4" translate="signup.form.email" for="email"></label>
-                            <div class="col-md-8">
+                            <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input id="email" name="email" [(ngModel)]="user.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
                                 <div class="form-errors-messages" *hasErrors="let messages; let errors=errors">
                                     <ul>
@@ -150,7 +150,7 @@
                     <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="editForm.controls.password">
                         <div class="form-row">
                             <label class="form-label col-md-4" translate="signup.form.password" for="password"></label>
-                            <div class="col-md-8">
+                            <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input type="password" id="password" name="password" [(ngModel)]="user.password" [required]="true" [minlength]="8"> </arte-input>
                                 <div class="form-errors-messages" *hasErrors="let messages; let errors=errors">
                                     <ul>
@@ -164,7 +164,7 @@
                     <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="editForm.controls.confirmPassword">
                         <div class="form-row">
                             <label class="form-label col-md-4" translate="signup.form.confirmPassword" for="confirmPassword"></label>
-                            <div class="col-md-8">
+                            <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" [required]="true"> </arte-input>
                                 <div class="form-errors-messages" *hasErrors="let messages; let errors=errors">
                                     <ul>
