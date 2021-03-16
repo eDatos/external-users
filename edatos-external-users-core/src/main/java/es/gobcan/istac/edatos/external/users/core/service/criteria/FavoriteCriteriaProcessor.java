@@ -18,10 +18,12 @@ public class FavoriteCriteriaProcessor extends AbstractCriteriaProcessor {
 
     public static final String ENTITY_FIELD_ID = validateFieldExists("id");
     public static final String ENTITY_FIELD_USER = validateFieldExists("externalUser");
+    public static final String ENTITY_FIELD_CREATED_DATE = validateFieldExists("createdDate");
 
     public enum QueryProperty {
         ID,
         EMAIL,
+        CREATED_DATE,
     }
 
     public FavoriteCriteriaProcessor() {
@@ -73,6 +75,11 @@ public class FavoriteCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.EMAIL)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".email")
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .dateRestrictionProcessor()
+                .withQueryProperty(QueryProperty.CREATED_DATE).sortable()
+                .withEntityProperty(ENTITY_FIELD_CREATED_DATE)
                 .build());
         // @formatter:on
     }
