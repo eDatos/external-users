@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.common.resources;
+package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
-public class ProfileInfoResourceTest {
+public class ProfileInfoResourceIntTest {
 
     private static final String ENDPOINT_URL = "/api/profile-info";
 

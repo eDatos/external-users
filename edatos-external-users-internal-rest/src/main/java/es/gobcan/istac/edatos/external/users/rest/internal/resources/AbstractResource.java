@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.common.resources;
+package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
 import org.springframework.transaction.annotation.Transactional;
 

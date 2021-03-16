@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.common.resources;
+package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,14 +52,12 @@ public class FavoriteResource extends AbstractResource {
 
     @GetMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.canAccessFavorites(authentication)")
     public ResponseEntity<FavoriteDto> getFavoriteById(@PathVariable Long id) {
         return ResponseEntity.ok(favoriteMapper.toDto(favoriteService.find(id)));
     }
 
     @GetMapping
     @Timed
-    @PreAuthorize("@secChecker.canAccessFavorites(authentication)")
     public ResponseEntity<List<FavoriteDto>> getFavorites(Pageable pageable, @RequestParam(required = false) String query) {
         Page<FavoriteDto> result = favoriteService.find(query, pageable).map(favoriteMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
@@ -69,7 +66,6 @@ public class FavoriteResource extends AbstractResource {
 
     @PostMapping
     @Timed
-    @PreAuthorize("@secChecker.canCreateFavorites(authentication)")
     public ResponseEntity<FavoriteDto> createFavorite(@RequestBody FavoriteDto dto) throws URISyntaxException {
         if (dto != null && dto.getId() != null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
@@ -85,7 +81,6 @@ public class FavoriteResource extends AbstractResource {
 
     @PutMapping
     @Timed
-    @PreAuthorize("@secChecker.canUpdateFavorites(authentication)")
     public ResponseEntity<FavoriteDto> updateFavorite(@RequestBody FavoriteDto dto) {
         if (dto == null || dto.getId() == null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_REQUIRED, "id");
@@ -101,7 +96,6 @@ public class FavoriteResource extends AbstractResource {
 
     @DeleteMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.canDeleteFavorites(authentication)")
     public ResponseEntity<Void> deleteFavorite(@PathVariable Long id) {
         favoriteService.delete(favoriteService.find(id));
 

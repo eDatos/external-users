@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.common.resources;
+package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
 import java.time.Instant;
 
@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
-public class AuditResourceTest {
+public class AuditResourceIntTest {
 
     private static final String ENDPOINT_URL = "/management/audits";
 

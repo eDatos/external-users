@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.common.resources;
+package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.util.ArrayList;
 import java.util.Arrays;

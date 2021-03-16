@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.common.resources;
+package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,14 +52,12 @@ public class FilterResource extends AbstractResource {
 
     @GetMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.canAccessFilters(authentication)")
     public ResponseEntity<FilterDto> getFilterById(@PathVariable Long id) {
         return ResponseEntity.ok(filterMapper.toDto(filterService.find(id)));
     }
 
     @GetMapping
     @Timed
-    @PreAuthorize("@secChecker.canAccessFilters(authentication)")
     public ResponseEntity<List<FilterDto>> getFilters(Pageable pageable, @RequestParam(required = false) String query) {
         Page<FilterDto> result = filterService.find(query, pageable).map(filterMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
@@ -69,7 +66,6 @@ public class FilterResource extends AbstractResource {
 
     @PostMapping
     @Timed
-    @PreAuthorize("@secChecker.canCreateFilters(authentication)")
     public ResponseEntity<FilterDto> createFilter(@RequestBody FilterDto dto) throws URISyntaxException {
         if (dto != null && dto.getId() != null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
@@ -87,7 +83,6 @@ public class FilterResource extends AbstractResource {
 
     @PutMapping
     @Timed
-    @PreAuthorize("@secChecker.canUpdateFilters(authentication)")
     public ResponseEntity<FilterDto> updateFilter(@RequestBody FilterDto dto) {
         if (dto == null || dto.getId() == null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_REQUIRED, "id");
@@ -105,7 +100,6 @@ public class FilterResource extends AbstractResource {
 
     @DeleteMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.canDeleteFilters(authentication)")
     public ResponseEntity<Void> deleteFilter(@PathVariable Long id) {
         filterService.delete(filterService.find(id));
 
