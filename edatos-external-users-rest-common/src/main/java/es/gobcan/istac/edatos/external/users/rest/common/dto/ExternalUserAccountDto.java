@@ -1,11 +1,11 @@
-package es.gobcan.istac.edatos.external.users.rest.external.dto;
+package es.gobcan.istac.edatos.external.users.rest.common.dto;
+
+import java.io.Serializable;
 
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
-
-import java.io.Serializable;
 
 public class ExternalUserAccountDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable, Identifiable {
 

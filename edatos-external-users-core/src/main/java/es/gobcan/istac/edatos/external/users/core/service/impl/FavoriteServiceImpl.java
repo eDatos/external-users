@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
@@ -47,8 +47,8 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public List<FavoriteEntity> findAllByUser(UsuarioEntity user) {
-        return filterRepository.findAllByUserOrderByCreatedDate(user);
+    public List<FavoriteEntity> findAllByUser(ExternalUserEntity user) {
+        return filterRepository.findAllByExternalUserOrderByCreatedDate(user);
     }
 
     @Override

@@ -13,7 +13,7 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
     private Long id;
     private String name;
     private String resourceName;
-    private String login;
+    private String email;
     private String permalink;
     private Instant lastAccessDate;
     private String notes;
@@ -68,11 +68,11 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
         this.resourceName = resourceName;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

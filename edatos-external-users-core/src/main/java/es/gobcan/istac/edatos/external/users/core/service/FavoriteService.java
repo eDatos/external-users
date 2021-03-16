@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 
 public interface FavoriteService {
 
@@ -19,7 +19,7 @@ public interface FavoriteService {
 
     List<FavoriteEntity> findAll();
 
-    List<FavoriteEntity> findAllByUser(UsuarioEntity user);
+    List<FavoriteEntity> findAllByUser(ExternalUserEntity user);
 
     Page<FavoriteEntity> find(String query, Pageable pageable);
 

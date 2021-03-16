@@ -29,16 +29,15 @@ import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
-    // FIXME(EDATOS-3294): Test before commit what happens if generator name isn't set
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_favorite")
     @SequenceGenerator(name = "seq_tb_favorite", sequenceName = "seq_tb_favorite", allocationSize = 50, initialValue = 1)
     private Long id;
 
     @NotNull
-    @JoinColumn(name = "user_fk", nullable = false)
+    @JoinColumn(name = "external_user_fk", nullable = false)
     @ManyToOne(cascade = CascadeType.ALL, optional = false)
-    private UsuarioEntity user;
+    private ExternalUserEntity externalUser;
 
     @JoinColumn(name = "category_fk")
     @ManyToOne
@@ -57,12 +56,12 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
         this.id = id;
     }
 
-    public UsuarioEntity getUser() {
-        return user;
+    public ExternalUserEntity getExternalUser() {
+        return externalUser;
     }
 
-    public void setUser(UsuarioEntity user) {
-        this.user = user;
+    public void setExternalUser(ExternalUserEntity user) {
+        this.externalUser = user;
     }
 
     public CategoryEntity getCategory() {

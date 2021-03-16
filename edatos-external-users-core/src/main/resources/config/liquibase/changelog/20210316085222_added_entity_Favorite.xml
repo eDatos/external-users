@@ -19,13 +19,13 @@
             <column name="opt_lock" type="BIGINT"/>
             <column name="category_fk" type="BIGINT"/>
             <column name="operation_fk" type="BIGINT"/>
-            <column name="user_fk" type="BIGINT">
+            <column name="external_user_fk" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
     <changeSet author="arte" id="1615884742603-2">
-        <addForeignKeyConstraint baseColumnNames="user_fk" baseTableName="tb_favorite" constraintName="FK1si9uxwy5nkp4gsrmi8c0xdmy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_usuarios" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_favorite" constraintName="FKpj9683wyvqjq3fx69d0wk9nhd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
     </changeSet>
     <changeSet author="arte" id="1615884742603-3">
         <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_favorite" constraintName="FKers05xrmvmrgv0nbhs54ysmd4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>

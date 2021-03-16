@@ -8,7 +8,7 @@ import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifi
 public class FavoriteDto extends AbstractVersionedAndAuditingDto implements Serializable, Identifiable {
 
     private Long id;
-    private String login;
+    private String email;
     private OperationDto operation;
     private CategoryDto category;
 
@@ -22,12 +22,12 @@ public class FavoriteDto extends AbstractVersionedAndAuditingDto implements Seri
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public OperationDto getOperation() {

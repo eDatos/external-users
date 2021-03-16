@@ -1,9 +1,9 @@
-package es.gobcan.istac.edatos.external.users.rest.external.dto;
+package es.gobcan.istac.edatos.external.users.rest.common.dto;
+
+import java.io.Serializable;
 
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
-
-import java.io.Serializable;
 
 public class ExternalUserDto implements Serializable {
 

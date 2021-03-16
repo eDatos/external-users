@@ -23,8 +23,8 @@ import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserReposit
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
-import es.gobcan.istac.edatos.external.users.rest.external.dto.ExternalUserAccountDto;
-import es.gobcan.istac.edatos.external.users.rest.external.mapper.ExternalUserAccountMapper;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 
 @RestController
 @RequestMapping("/api")

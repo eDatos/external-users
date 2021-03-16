@@ -7,12 +7,12 @@ import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
-@Mapper(componentModel = "spring", uses = {GenericMapperResolver.class, UsuarioMapper.class})
+@Mapper(componentModel = "spring", uses = {GenericMapperResolver.class, ExternalUserAccountMapper.class})
 public interface FilterMapper extends EntityMapper<FilterDto, FilterEntity> {
 
     @Override
     @Mapping(target = "resourceName", ignore = true)
-    @Mapping(target = "login", source = "user.login")
+    @Mapping(target = "email", source = "externalUser.email")
     FilterDto toDto(FilterEntity entity);
 
     /**
@@ -31,6 +31,6 @@ public interface FilterMapper extends EntityMapper<FilterDto, FilterEntity> {
     @Override
     @Mapping(target = "name", defaultExpression = "java( dto.getResourceName() )")
     @Mapping(target = "lastAccessDate", defaultExpression = "java( java.time.Instant.now() )")
-    @Mapping(target = "user", source = "login")
+    @Mapping(target = "externalUser", source = "email")
     FilterEntity toEntity(FilterDto dto);
 }

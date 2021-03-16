@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.rest.internal.resources;
+package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,16 +13,17 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
-import es.gobcan.istac.edatos.external.users.core.repository.UsuarioRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FilterMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.TestUtil;
+import es.gobcan.istac.edatos.external.users.rest.internal.resources.FilterResource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -49,7 +50,7 @@ public class FilterResourceIntTest {
     private FilterRepository filterRepository;
 
     @Autowired
-    private UsuarioRepository userRepository;
+    private ExternalUserRepository externalUserRepository;
 
     @Autowired
     private FilterMapper filterMapper;
@@ -61,8 +62,8 @@ public class FilterResourceIntTest {
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     private MockMvc mockMvc;
-    private UsuarioEntity user1;
-    private UsuarioEntity user2;
+    private ExternalUserEntity user1;
+    private ExternalUserEntity user2;
     private FilterEntity filter1;
     private FilterEntity filter2;
 
@@ -77,26 +78,26 @@ public class FilterResourceIntTest {
 
     @Before
     public void populateDatabase() {
-        user1 = new UsuarioEntity();
-        user1.setLogin("user1");
-        user1.setGender(Gender.MALE);
+        user1 = new ExternalUserEntity();
+        user1.setEmail("user1@gmail.com");
+        user1.setTreatment(Treatment.LADY);
         user1.setLanguage(Language.CATALAN);
-        userRepository.saveAndFlush(user1);
-        user2 = new UsuarioEntity();
-        user2.setLogin("user2");
-        user2.setGender(Gender.FEMALE);
+        externalUserRepository.saveAndFlush(user1);
+        user2 = new ExternalUserEntity();
+        user2.setEmail("user2@gmail.com");
+        user2.setTreatment(Treatment.MISTER);
         user2.setLanguage(Language.CATALAN);
-        userRepository.saveAndFlush(user2);
+        externalUserRepository.saveAndFlush(user2);
 
         filter1 = new FilterEntity();
         filter1.setName("My filter 1");
         filter1.setPermalink(PERMALINK_1);
-        filter1.setUser(user1);
+        filter1.setExternalUser(user1);
         filterRepository.saveAndFlush(filter1);
         filter2 = new FilterEntity();
         filter2.setName("My filter 2");
         filter2.setPermalink(PERMALINK_2);
-        filter2.setUser(user1);
+        filter2.setExternalUser(user1);
         filterRepository.saveAndFlush(filter2);
     }
 
@@ -121,7 +122,7 @@ public class FilterResourceIntTest {
     @Test
     public void testCreateFilterFail() throws Exception {
         FilterDto dto = new FilterDto();
-        dto.setLogin(user2.getLogin());
+        dto.setEmail(user2.getEmail());
         dto.setPermalink(PERMALINK_1);
         this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                .content(TestUtil.convertObjectToJsonBytes(dto)))
@@ -132,7 +133,7 @@ public class FilterResourceIntTest {
     @Test
     public void testCreateFilterSucceeds() throws Exception {
         FilterDto dto = new FilterDto();
-        dto.setLogin(user2.getLogin());
+        dto.setEmail(user2.getEmail());
         dto.setPermalink(PERMALINK_1);
         dto.setResourceName("resource name");
         this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -188,7 +189,7 @@ public class FilterResourceIntTest {
 
     @Test
     public void testGetFilterByUserLogin() throws Exception {
-        this.mockMvc.perform(get(ENDPOINT_URL + "?query=LOGIN EQ 'user1'"))
+        this.mockMvc.perform(get(ENDPOINT_URL + "?query=EMAIL EQ 'user1@gmail.com'"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
@@ -198,10 +199,10 @@ public class FilterResourceIntTest {
         FilterEntity filter = new FilterEntity();
         filter.setName("User 2 filter");
         filter.setPermalink(PERMALINK_1);
-        filter.setUser(user2);
+        filter.setExternalUser(user2);
         filterRepository.saveAndFlush(filter);
 
-        this.mockMvc.perform(get(ENDPOINT_URL + "?query=LOGIN EQ 'user2'"))
+        this.mockMvc.perform(get(ENDPOINT_URL + "?query=EMAIL EQ 'user2@gmail.com'"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(1)))
@@ -210,7 +211,7 @@ public class FilterResourceIntTest {
 
     @Test
     public void testSortFiltersByUserLogin() throws Exception {
-        filter2.setUser(user2);
+        filter2.setExternalUser(user2);
         filterRepository.saveAndFlush(filter2);
 
         this.mockMvc.perform(get(ENDPOINT_URL + "?sort=login,desc"))

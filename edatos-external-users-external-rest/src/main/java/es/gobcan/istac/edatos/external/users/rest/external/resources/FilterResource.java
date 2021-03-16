@@ -75,7 +75,7 @@ public class FilterResource extends AbstractResource {
         entity = filterService.create(entity);
         FilterDto newDto = filterMapper.toDto(entity);
 
-        auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getLogin());
+        auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getEmail());
         return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId()))
                              .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString()))
                              .body(newDto);
@@ -92,7 +92,7 @@ public class FilterResource extends AbstractResource {
         entity = filterService.update(entity);
         FilterDto newDto = filterMapper.toDto(entity);
 
-        auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getLogin());
+        auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getEmail());
         return ResponseEntity.ok()
                              .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString()))
                              .body(newDto);

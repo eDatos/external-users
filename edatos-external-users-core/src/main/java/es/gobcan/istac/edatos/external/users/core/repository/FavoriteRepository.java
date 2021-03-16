@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> {
@@ -18,5 +18,5 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
 
     List<FavoriteEntity> findAll(DetachedCriteria criteria);
 
-    List<FavoriteEntity> findAllByUserOrderByCreatedDate(UsuarioEntity user);
+    List<FavoriteEntity> findAllByExternalUserOrderByCreatedDate(ExternalUserEntity user);
 }

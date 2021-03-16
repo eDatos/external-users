@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 
 @Repository
 public interface FilterRepository extends JpaRepository<FilterEntity, Long> {
@@ -18,5 +18,5 @@ public interface FilterRepository extends JpaRepository<FilterEntity, Long> {
 
     List<FilterEntity> findAll(DetachedCriteria criteria);
 
-    List<FilterEntity> findAllByUserOrderByCreatedDate(UsuarioEntity user);
+    List<FilterEntity> findAllByExternalUserOrderByCreatedDate(ExternalUserEntity user);
 }

@@ -28,15 +28,15 @@ import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVers
  * can be obtained though permalinks (i.e. {@link #dataset}) to save time and avoid server overload.
  */
 @Entity
-@Table(name = "tb_filter", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_fk", "permalink"})})
+@Table(name = "tb_filters", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "permalink"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class FilterEntity extends AbstractVersionedAndAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_filter")
-    @SequenceGenerator(name = "seq_tb_filter", sequenceName = "seq_tb_filter", allocationSize = 50, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_filters")
+    @SequenceGenerator(name = "seq_tb_filters", sequenceName = "seq_tb_filters", allocationSize = 50, initialValue = 1)
     private Long id;
 
     @NotNull
@@ -47,8 +47,8 @@ public class FilterEntity extends AbstractVersionedAndAuditingEntity implements 
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "user_fk", nullable = false)
-    private UsuarioEntity user;
+    @JoinColumn(name = "external_user_fk", nullable = false)
+    private ExternalUserEntity externalUser;
 
     @NotNull
     @Column(nullable = false)
@@ -70,12 +70,12 @@ public class FilterEntity extends AbstractVersionedAndAuditingEntity implements 
         this.id = id;
     }
 
-    public UsuarioEntity getUser() {
-        return user;
+    public ExternalUserEntity getExternalUser() {
+        return externalUser;
     }
 
-    public void setUser(UsuarioEntity user) {
-        this.user = user;
+    public void setExternalUser(ExternalUserEntity user) {
+        this.externalUser = user;
     }
 
     public String getName() {
