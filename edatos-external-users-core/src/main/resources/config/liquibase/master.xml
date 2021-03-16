@@ -26,5 +26,7 @@
 	<include file="config/liquibase/changelog/20210203100632_added_columns_Usuario.xml" relativeToChangelogFile="false" />
 	<include file="config/liquibase/changelog/20210208122755_added_entity_Filter.xml" relativeToChangelogFile="false" />
     <include file="config/liquibase/changelog/20210223122800_added_entity_ExternalUser.xml" relativeToChangelogFile="false" />
-
+	<include file="config/liquibase/changelog/20210316085221_added_entity_Category.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20210316085222_added_entity_Favorite.xml" relativeToChangelogFile="false" />
+	<include file="config/liquibase/changelog/20210316085224_deleted_unused_entities.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>
