@@ -1,9 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
-    <changeSet author="arte" id="1615884757093-20">
+    <changeSet author="arte" id="1615884741322-0">
         <createSequence incrementBy="50" sequenceName="seq_tb_category" startValue="1"/>
     </changeSet>
-    <changeSet author="arte" id="1615884757093-22">
+    <changeSet author="arte" id="1615884741322-1">
         <createTable tableName="tb_category">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tb_categoryPK"/>
@@ -39,10 +39,16 @@
             <column name="parent_fk" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1615884757093-38">
+    <changeSet author="arte" id="1615884741322-2">
         <addUniqueConstraint columnNames="uuid" constraintName="UC_TB_CATEGORYUUID_COL" tableName="tb_category"/>
     </changeSet>
-        <changeSet author="arte" id="1615884757093-53">
+    <changeSet author="arte" id="1615884741322-3">
         <addForeignKeyConstraint baseColumnNames="parent_fk" baseTableName="tb_category" constraintName="FKfpgkmf0r6rai1rfc3ivqboc91" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1615884741322-4">
+        <addForeignKeyConstraint baseColumnNames="subject_area_fk" baseTableName="tb_operations" constraintName="FKtp169e04q7ytpf5sx3iwevc4g" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1615884741322-5">
+        <addForeignKeyConstraint baseColumnNames="secondary_subject_area_fk" baseTableName="tb_secondary_areas" constraintName="FKl47gkh2q0ex3ivktdfmso8f73" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
     </changeSet>
 </databaseChangeLog>

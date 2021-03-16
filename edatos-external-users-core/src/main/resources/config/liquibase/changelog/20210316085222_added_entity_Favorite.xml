@@ -1,9 +1,9 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
-    <changeSet author="arte" id="1615884757093-21">
+    <changeSet author="arte" id="1615884742603-0">
         <createSequence incrementBy="50" sequenceName="seq_tb_favorite" startValue="1"/>
     </changeSet>
-    <changeSet author="arte" id="1615884757093-23">
+    <changeSet author="arte" id="1615884742603-1">
         <createTable tableName="tb_favorite">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tb_favoritePK"/>
@@ -24,13 +24,13 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1615884757093-48">
+    <changeSet author="arte" id="1615884742603-2">
         <addForeignKeyConstraint baseColumnNames="user_fk" baseTableName="tb_favorite" constraintName="FK1si9uxwy5nkp4gsrmi8c0xdmy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_usuarios" validate="true"/>
     </changeSet>
-    <changeSet author="arte" id="1615884757093-56">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_favorite" constraintName="FKofygq73agw6csd3h9l4i82fu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884757093-51">
+    <changeSet author="arte" id="1615884742603-3">
         <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_favorite" constraintName="FKers05xrmvmrgv0nbhs54ysmd4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1615884742603-4">
+        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_favorite" constraintName="FKofygq73agw6csd3h9l4i82fu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
     </changeSet>
 </databaseChangeLog>
