@@ -19,7 +19,9 @@
             <column name="email" type="varchar(255)">
                 <constraints unique="true" nullable="false"/>
             </column>
-            <column name="password" type="varchar(255)"/>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
@@ -66,13 +68,6 @@
                                  constraintName="fk_tb_externa_users_roles_tb_external_users_id"
                                  referencedColumnNames="id" referencedTableName="tb_external_users"/>
     </changeSet>
-
-    <changeSet author="arte" id="20210223122800-02">
-        <createIndex indexName="idx_ext_user_email" tableName="tb_external_users">
-            <column name="email" type="varchar(255)"/>
-        </createIndex>
-    </changeSet>
-
     <changeSet author="arte" id="20210223122800-03">
         <dropDefaultValue tableName="tb_usuarios" columnName="created_date" columnDataType="datetime"/>
     </changeSet>
