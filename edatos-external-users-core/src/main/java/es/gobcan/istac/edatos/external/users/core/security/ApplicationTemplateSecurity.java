@@ -15,6 +15,10 @@ public class ApplicationTemplateSecurity {
     private static final String ACL_APP_NAME = "GESTOR_OPERACIONES";
     private static final String SEPARATOR = "#";
 
+    public boolean canAccessCategory(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
     public boolean canAccessFilters(Authentication authentication) {
         return this.esAdmin(authentication);
     }
@@ -28,6 +32,22 @@ public class ApplicationTemplateSecurity {
     }
 
     public boolean canDeleteFilters(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
+    public boolean canAccessFavorites(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
+    public boolean canCreateFavorites(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
+    public boolean canUpdateFavorites(Authentication authentication) {
+        return this.esAdmin(authentication);
+    }
+
+    public boolean canDeleteFavorites(Authentication authentication) {
         return this.esAdmin(authentication);
     }
 

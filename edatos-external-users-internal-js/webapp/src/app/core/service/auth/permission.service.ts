@@ -5,9 +5,10 @@ import { Role } from '@app/core/model';
 export const USER_MANAGEMENT_ROLES = [Role.ADMINISTRADOR];
 export const HERRAMIENTAS_ROLES = [Role.ADMINISTRADOR];
 export const ADMINISTRACION_ROLES = [Role.ADMINISTRADOR];
-export const FAMILY_ROLES = [Role.ADMINISTRADOR];
+
 export const OPERATION_ROLES = [Role.ADMINISTRADOR];
 export const FILTER_ROLES = [Role.ADMINISTRADOR];
+export const FAVORITE_ROLES = [Role.ADMINISTRADOR];
 
 @Injectable()
 export class PermissionService {

@@ -1,6 +1,6 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface EntityMapper<D, E> {
 
@@ -8,7 +8,7 @@ public interface EntityMapper<D, E> {
 
     public E toEntity(D dto);
 
-    public List<E> toEntities(List<D> dtos);
+    public Collection<E> toEntities(Collection<D> dtos);
 
-    public List<D> toDtos(List<E> entities);
+    public Collection<D> toDtos(Collection<E> entities);
 }

@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 
 public interface FilterService {
 
@@ -19,7 +19,7 @@ public interface FilterService {
 
     List<FilterEntity> findAll();
 
-    List<FilterEntity> findAllByUser(UsuarioEntity user);
+    List<FilterEntity> findAllByUser(ExternalUserEntity user);
 
     Page<FilterEntity> find(String query, Pageable pageable);
 

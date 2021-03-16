@@ -5,16 +5,6 @@ import java.net.URISyntaxException;
 
 import javax.validation.Valid;
 
-import com.codahale.metrics.annotation.Timed;
-import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
-import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
-import es.gobcan.istac.edatos.external.users.core.service.MailService;
-import es.gobcan.istac.edatos.external.users.rest.external.dto.ExternalUserAccountDto;
-import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
-import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
-import es.gobcan.istac.edatos.external.users.rest.external.mapper.ExternalUserAccountMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.codahale.metrics.annotation.Timed;
+
+import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
-import es.gobcan.istac.edatos.external.users.rest.common.resources.AbstractResource;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
+import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
+import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 
 @RestController
 @RequestMapping("/api")

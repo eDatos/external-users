@@ -8,6 +8,8 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.siemac.edatos.core.common.exception.EDatosExceptionItem;
 import org.siemac.edatos.core.common.util.GeneratorUrnUtils;
+import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
+import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +24,6 @@ import es.gobcan.istac.edatos.external.users.core.util.CheckMandatoryMetadataUti
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 import es.gobcan.istac.edatos.external.users.core.util.StatisticalOperationsValidationUtils;
 import es.gobcan.istac.edatos.external.users.core.util.ValidationUtil;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
 
 @Service
 public class OperationServiceImpl implements OperationService {
@@ -89,9 +90,9 @@ public class OperationServiceImpl implements OperationService {
     public OperationEntity createOperation(OperationEntity operation) {
         // Fill metadata
         operation.setUrn(GeneratorUrnUtils.generateSiemacStatisticalOperationUrn(operation.getCode()));
-        operation.setProcStatus(ProcStatusEnum.DRAFT);
-        operation.setStatus(OperationEntity.StatusEnum.PLANNING);
-        operation.setCurrentlyActive(Boolean.FALSE);
+        //operation.setProcStatus(ProcStatus.DRAFT); TODO(EDATOS-3294): No need to set DRAFT procStatus because all the operations we use are already published
+        operation.setStatus(Status.PLANNING);
+        //operation.setCurrentlyActive(Boolean.FALSE);
 
         // Validations
         validateOperationCodeUnique(operation.getCode(), null);
@@ -103,21 +104,21 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public OperationEntity updateOperation(OperationEntity operation) {
-        // Validations
-        if (ProcStatusEnum.DRAFT.equals(operation.getProcStatus())) {
-            // We don't need to update the instances URN because we can't create instances in a draft operation
-            operation.setUrn(GeneratorUrnUtils.generateSiemacStatisticalOperationUrn(operation.getCode()));
-            validateOperationCodeUnique(operation.getCode(), operation.getId());
-            CheckMandatoryMetadataUtil.checkCreateOperation(operation);
-        }
-
-        if (ProcStatusEnum.INTERNALLY_PUBLISHED.equals(operation.getProcStatus())) {
-            CheckMandatoryMetadataUtil.checkOperationForPublishInternally(operation);
-        }
-
-        if (ProcStatusEnum.EXTERNALLY_PUBLISHED.equals(operation.getProcStatus())) {
-            CheckMandatoryMetadataUtil.checkOperationForPublishExternally(operation);
-        }
+        // Validations TODO(EDATOS-3294): No need to validate, the operation doesn't come from the user but from statistical-operations that already handles validation
+        //if (ProcStatusEnum.DRAFT.equals(operation.getProcStatus())) {
+        //    // We don't need to update the instances URN because we can't create instances in a draft operation
+        //    operation.setUrn(GeneratorUrnUtils.generateSiemacStatisticalOperationUrn(operation.getCode()));
+        //    validateOperationCodeUnique(operation.getCode(), operation.getId());
+        //    CheckMandatoryMetadataUtil.checkCreateOperation(operation);
+        //}
+        //
+        //if (ProcStatusEnum.INTERNALLY_PUBLISHED.equals(operation.getProcStatus())) {
+        //    CheckMandatoryMetadataUtil.checkOperationForPublishInternally(operation);
+        //}
+        //
+        //if (ProcStatusEnum.EXTERNALLY_PUBLISHED.equals(operation.getProcStatus())) {
+        //    CheckMandatoryMetadataUtil.checkOperationForPublishExternally(operation);
+        //}
 
         // Repository operation
         return operationRepository.save(operation);
@@ -128,13 +129,8 @@ public class OperationServiceImpl implements OperationService {
         // Retrieve
         OperationEntity operation = findOperationById(operationId);
 
-        // Check if ProcStatus is DRAFT
-        ValidationUtil.validateProcStatus(ProcStatusEnum.DRAFT, operation.getProcStatus());
-
-        // Remove related families
-        if (!operation.getFamilies().isEmpty()) {
-            operation.removeAllFamilies();
-        }
+        // Check if ProcStatus is DRAFT // TODO(EDATOS-3294): No need to set DRAFT procStatus
+        // ValidationUtil.validateProcStatus(ProcStatus.DRAFT, operation.getProcStatus());
 
         operationRepository.delete(operation);
     }
@@ -150,7 +146,7 @@ public class OperationServiceImpl implements OperationService {
         ValidationUtil.validateOperationProcStatusForPublishInternally(operation);
 
         // Change state
-        operation.setProcStatus(ProcStatusEnum.INTERNALLY_PUBLISHED);
+        operation.setProcStatus(ProcStatus.INTERNALLY_PUBLISHED);
 
         // Fill metadata
         operation.setInternalInventoryDate(Instant.now());
@@ -167,10 +163,10 @@ public class OperationServiceImpl implements OperationService {
         OperationEntity operation = findOperationById(id);
 
         // Check ProcStatus
-        ValidationUtil.validateProcStatus(ProcStatusEnum.INTERNALLY_PUBLISHED, operation.getProcStatus());
+        ValidationUtil.validateProcStatus(ProcStatus.INTERNALLY_PUBLISHED, operation.getProcStatus());
 
         // Change state
-        operation.setProcStatus(ProcStatusEnum.EXTERNALLY_PUBLISHED);
+        operation.setProcStatus(ProcStatus.EXTERNALLY_PUBLISHED);
 
         // Fill metadata
         operation.setInventoryDate(Instant.now());

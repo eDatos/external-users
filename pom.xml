@@ -56,8 +56,8 @@
 		<jcache.version>1.0.0</jcache.version>
 		<jhipster.server.version>1.1.8</jhipster.server.version>
 		<jjwt.version>0.7.0</jjwt.version>
-		<liquibase.version>3.10.2</liquibase.version>
-		<liquibase-hibernate5.version>3.10.2</liquibase-hibernate5.version>
+		<liquibase.version>4.3.1</liquibase.version>
+		<liquibase-hibernate5.version>4.3.1</liquibase-hibernate5.version>
 		<liquibase-slf4j.version>2.0.0</liquibase-slf4j.version>
 		<logstash-logback-encoder.version>4.9</logstash-logback-encoder.version>
 		<m2e.apt.activation>jdt_apt</m2e.apt.activation>

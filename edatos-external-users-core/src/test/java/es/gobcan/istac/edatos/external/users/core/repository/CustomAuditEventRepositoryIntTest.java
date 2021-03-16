@@ -1,7 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.Instant;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,9 +20,11 @@ import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.gobcan.istac.edatos.external.users.core.domain.AuditEventEntity;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersCoreTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventConverter;
+import es.gobcan.istac.edatos.external.users.core.domain.AuditEventEntity;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Test class for the CustomAuditEventRepository customAuditEventRepository class.

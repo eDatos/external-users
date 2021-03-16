@@ -35,7 +35,6 @@ import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.core.service.UsuarioService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.UsuarioDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.UsuarioMapper;
-import es.gobcan.istac.edatos.external.users.rest.common.resources.AbstractResource;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.vm.ManagedUserVM;
