@@ -53,8 +53,8 @@ spring:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
-# spring.jmx.default-domain y spring.hikari.pool-name evitan que al levantar dos aplicaciones con un spring boot similar al template
-# (con beans de jmx configurado) la primera registre sus beans impidiendo a las siguientes registrar los suyos
+    # spring.jmx.default-domain y spring.hikari.pool-name evitan que al levantar dos aplicaciones con un spring boot similar al template
+    # (con beans de jmx configurado) la primera registre sus beans impidiendo a las siguientes registrar los suyos
     jmx:
         default-domain: edatos_external_users
     hikari:
@@ -141,8 +141,8 @@ jhipster:
         core-pool-size: 2
         max-pool-size: 50
         queue-capacity: 10000
-    # By default CORS is disabled. Uncomment to enable.
-    #cors:
+        # By default CORS is disabled. Uncomment to enable.
+        #cors:
         #allowed-origins: "*"
         #allowed-methods: GET, PUT, POST, DELETE, OPTIONS
         #allowed-headers: "*"
@@ -204,6 +204,7 @@ application:
         metamacCasLoginUrlKey: metamac.security.cas_service_login_url
         metamacCasLogoutUrlKey: metamac.security.cas_service_logout_url
         metamacFaviconUrlKey: metamac.app.style.favicon.url
+        metamacHeaderUrlKey: metamac.api.style.header.url
     endpoint:
         # Required: Aplication URL
         app-url: FILL_APP_URL
