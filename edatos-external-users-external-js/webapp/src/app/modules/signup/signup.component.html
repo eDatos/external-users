@@ -170,7 +170,6 @@
                                     <ul>
                                         <li *ngFor="let m of messages">{{m}}</li>
                                         <li *ngIf="editForm.controls.confirmPassword?.errors.passwordMatch" translate="global.messages.validate.password.notMatch"></li>
-                                        <li *ngIf="editForm.passwordMatch?.errors.passwordMatch" translate="global.messages.validation.passwordDoNotMatch.invalid"></li>
                                     </ul>
                                 </div>
                             </div>
