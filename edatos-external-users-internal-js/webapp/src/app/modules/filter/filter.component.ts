@@ -10,7 +10,6 @@ import { LazyLoadEvent } from 'primeng/api';
 @Component({
     selector: 'app-filter',
     templateUrl: './filter.component.html',
-    styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
     filters: Filter[];

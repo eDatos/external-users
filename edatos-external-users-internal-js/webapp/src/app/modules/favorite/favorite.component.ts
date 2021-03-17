@@ -11,7 +11,6 @@ import { LazyLoadEvent } from 'primeng/api';
 @Component({
     selector: 'app-favorite',
     templateUrl: './favorite.component.html',
-    styleUrls: ['./favorite.component.scss'],
 })
 export class FavoriteComponent implements OnInit {
     public favorites: Favorite[];
