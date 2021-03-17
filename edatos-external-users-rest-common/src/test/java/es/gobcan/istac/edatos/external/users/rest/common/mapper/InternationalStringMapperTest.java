@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.siemac.edatos.common.test.EDatosBaseTest;
 import org.siemac.edatos.core.common.conf.ConfigurationService;
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 import org.siemac.edatos.core.common.exception.EDatosException;
@@ -19,7 +20,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.InternationalStringEnti
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.InternationalStringRepository;
 import es.gobcan.istac.edatos.external.users.mock.MetadataConfigurationServiceMockImpl;
-import es.gobcan.istac.edatos.external.users.util.EdatosExternalUsersBaseTest;
 import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsAsserts;
 import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks;
 
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.never;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
-public class InternationalStringMapperTest extends EdatosExternalUsersBaseTest {
+public class InternationalStringMapperTest extends EDatosBaseTest {
 
     @Autowired
     private InternationalStringMapper internationalStringMapper;
@@ -125,7 +125,7 @@ public class InternationalStringMapperTest extends EdatosExternalUsersBaseTest {
     }
 
     private void testInternationalStringDtoToEntity(InternationalStringDto internationalStringDto, InternationalStringEntity internationalString) throws Exception {
-        InternationalStringEntity result = internationalStringMapper.toEntity(internationalStringDto, internationalString, METADATA_NAME);
+        InternationalStringEntity result = internationalStringMapper.toEntity(internationalStringDto/*, internationalString, METADATA_NAME*/);
         StatisticalOperationsAsserts.assertEqualsInternationalString(result, internationalStringDto);
     }
 

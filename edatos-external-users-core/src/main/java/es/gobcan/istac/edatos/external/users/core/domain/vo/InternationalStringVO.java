@@ -1,11 +1,12 @@
 package es.gobcan.istac.edatos.external.users.core.domain.vo;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class InternationalStringVO {
+public class InternationalStringVO implements Serializable {
 
-    private Set<LocalisedStringVO> texts = new HashSet<>();
+    private final Set<LocalisedStringVO> texts = new HashSet<>();
 
     public InternationalStringVO() {
     }

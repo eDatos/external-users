@@ -1,18 +1,31 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ExternalUserRole;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
-import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionEntity;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.Set;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ExternalUserRole;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
+import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionEntity;
 
 @Entity
 @Table(name = "tb_external_users")
@@ -28,17 +41,22 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
 
     @NotNull
     @Size(max = 255)
+    @Column(nullable = false)
     private String name;
 
     @NotNull
     @Size(max = 255)
+    @Column(nullable = false)
     private String surname1;
 
     @Size(max = 255)
+    @NotNull
+    @Column(nullable = false)
     private String surname2;
 
     @NotNull
     @Email
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -46,6 +64,7 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Language language;
 
     @Size(max = 255)
@@ -56,6 +75,7 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
 
     @Size(min = 6)
     @NotNull
+    @Column(nullable = false)
     private String password;
 
     @ElementCollection(targetClass = ExternalUserRole.class)

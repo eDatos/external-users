@@ -25,9 +25,7 @@
 			<column name="locale" type="VARCHAR(255)">
 				<constraints nullable="false" />
 			</column>
-			<column name="version" type="BIGINT">
-				<constraints nullable="false" />
-			</column>
+			<column name="opt_lock" type="int8"/>
 			<column name="international_string_fk" type="BIGINT">
 				<constraints nullable="false" />
 			</column>

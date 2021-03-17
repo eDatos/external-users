@@ -3,20 +3,20 @@ package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.mapstruct.Mapper;
 import org.siemac.edatos.core.common.dto.ExternalItemDto;
 import org.siemac.edatos.core.common.enume.utils.TypeExternalArtefactsEnumUtils;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.siemac.edatos.core.common.util.CoreCommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalItemEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalItemRepository;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
 
-@Component
-public class ExternalItemMapper {
+@Mapper(componentModel = "spring")
+public abstract class ExternalItemMapper implements EntityMapper<ExternalItemDto, ExternalItemEntity> {
 
     @Autowired
     private InternationalStringMapper internationalStringMapper;
@@ -52,7 +52,7 @@ public class ExternalItemMapper {
         return target;
     }
 
-    public ExternalItemDto externalItemWithoutUrlsToDto(ExternalItemEntity source) {
+    private ExternalItemDto externalItemWithoutUrlsToDto(ExternalItemEntity source) {
         if (source == null) {
             return null;
         }
@@ -69,13 +69,13 @@ public class ExternalItemMapper {
         return target;
     }
 
-    public ExternalItemDto commonMetadataExternalItemDoToDto(ExternalItemEntity source, ExternalItemDto target) {
+    private ExternalItemDto commonMetadataExternalItemDoToDto(ExternalItemEntity source, ExternalItemDto target) {
         target.setUri(commonMetadataExternalApiUrlDoToDto(source.getUri()));
         target.setManagementAppUrl(commonMetadataInternalWebAppUrlDoToDto(source.getManagementAppUrl()));
         return target;
     }
 
-    public ExternalItemDto srmExternalItemDoToDto(ExternalItemEntity source, ExternalItemDto target) {
+    private ExternalItemDto srmExternalItemDoToDto(ExternalItemEntity source, ExternalItemDto target) {
         target.setUri(srmInternalApiUrlDoToDto(source.getUri()));
         target.setManagementAppUrl(srmInternalWebAppUrlDoToDto(source.getManagementAppUrl()));
         return target;
@@ -156,7 +156,7 @@ public class ExternalItemMapper {
         target.setUrn(source.getUrn());
         target.setUrnProvider(source.getUrnProvider());
         target.setType(source.getType());
-        target.setTitle(internationalStringMapper.toEntity(source.getTitle(), target.getTitle(), metadataName));
+        target.setTitle(internationalStringMapper.toEntity(source.getTitle()));
         return target;
     }
 
@@ -196,11 +196,11 @@ public class ExternalItemMapper {
         return CoreCommonUtil.externalItemUrlDtoToUrlDo(configurationService.retrieveCommonMetadataInternalWebApplicationUrlBase(), source);
     }
 
-    public String srmInternalApiUrlDtoToDo(String source) {
+    private String srmInternalApiUrlDtoToDo(String source) {
         return CoreCommonUtil.externalItemUrlDtoToUrlDo(configurationService.retrieveSrmInternalApiUrlBase(), source);
     }
 
-    public String srmInternalWebAppUrlDtoToDo(String source) {
+    private String srmInternalWebAppUrlDtoToDo(String source) {
         return CoreCommonUtil.externalItemUrlDtoToUrlDo(configurationService.retrieveSrmInternalWebApplicationUrlBase(), source);
     }
 }

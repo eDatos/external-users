@@ -18,7 +18,7 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
 
     public static final String ENTITY_FIELD_ID = validateFieldExists("id");
     public static final String ENTITY_FIELD_NAME = validateFieldExists("name");
-    public static final String ENTITY_FIELD_USER = validateFieldExists("user");
+    public static final String ENTITY_FIELD_USER = validateFieldExists("externalUser");
     public static final String ENTITY_FIELD_PERMALINK = validateFieldExists("permalink");
     public static final String ENTITY_FIELD_CREATED_DATE = validateFieldExists("createdDate");
     public static final String ENTITY_FIELD_LAST_MODIFIED_DATE = validateFieldExists("lastModifiedDate");
@@ -28,7 +28,7 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
     public enum QueryProperty {
         ID,
         NAME,
-        LOGIN,
+        EMAIL,
         PERMALINK,
         CREATED_DATE,
         LAST_MODIFIED_DATE,
@@ -87,15 +87,15 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.LOGIN)
+                .withQueryProperty(QueryProperty.EMAIL)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
-                .withEntityProperty(ENTITY_FIELD_USER + ".login")
+                .withEntityProperty(ENTITY_FIELD_USER + ".email")
                 .build());
         registerOrderProcessor(OrderProcessorBuilder
                 .orderProcessor()
-                .withQueryProperty(QueryProperty.LOGIN)
+                .withQueryProperty(QueryProperty.EMAIL)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
-                .withEntityProperty(ENTITY_FIELD_USER + ".login")
+                .withEntityProperty(ENTITY_FIELD_USER + ".email")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()

@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FilterService;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
@@ -47,8 +47,8 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public List<FilterEntity> findAllByUser(UsuarioEntity user) {
-        return filterRepository.findAllByUserOrderByCreatedDate(user);
+    public List<FilterEntity> findAllByUser(ExternalUserEntity user) {
+        return filterRepository.findAllByExternalUserOrderByCreatedDate(user);
     }
 
     @Override

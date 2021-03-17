@@ -1,15 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
-import static es.gobcan.istac.edatos.external.users.util.StatisticalOperationsAsserts.assertEqualsInternationalString;
-import static es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks.mockFamily;
-import static es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks.mockOperation;
-import static es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks.mockOperationForInternalPublishing;
-import static es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks.mockOperationWithDescription;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
+import org.siemac.edatos.common.test.EDatosBaseTest;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,40 +19,25 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.gobcan.istac.edatos.external.users.core.domain.FamilyEntity;
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersCoreTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ProcStatusEnum;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionParameters;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
-import es.gobcan.istac.edatos.external.users.EdatosExternalUsersCoreTestApp;
-import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsAsserts;
-import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks;
-import es.gobcan.istac.edatos.external.users.util.EdatosExternalUsersBaseTest;
+
+import static es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks.mockOperation;
+import static es.gobcan.istac.edatos.external.users.util.StatisticalOperationsMocks.mockOperationWithDescription;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersCoreTestApp.class)
-public class OperationServiceIntTest extends EdatosExternalUsersBaseTest {
-
-    @InjectMocks
-    @Resource
-    private FamilyService familyService;
+public class OperationServiceIntTest extends EDatosBaseTest {
 
     @InjectMocks
     @Resource
     private OperationService operationService;
 
-    @InjectMocks
-    @Resource
-    private CommonListService commonListService;
-
     @Autowired
     private EntityManager em;
-
-    @Before
-    public void initTest() {
-        createOfficialityTypes(em, "ESTUDIO", "OFICIAL");
-        createSurveyTypes(em, "COYUNTURAL", "ESTRUCTURAL", "OTRAS");
-    }
 
     @Before
     public void setup() {
@@ -131,31 +107,31 @@ public class OperationServiceIntTest extends EdatosExternalUsersBaseTest {
         assertEquals("urn:siemac:org.siemac.metamac.infomodel.statisticaloperations.Operation=" + operation.getCode(), operation.getUrn());
     }
 
-    @Test
-    @Transactional
-    public void testCreateOperationWithSpecificLegalActs() {
-        OperationEntity expected = mockOperation();
-        expected.setSpecificLegalActs(StatisticalOperationsMocks.mockInternationalString());
-
-        OperationEntity operation = operationService.createOperation(expected);
-
-        assertNotNull(operation);
-        assertEquals("urn:siemac:org.siemac.metamac.infomodel.statisticaloperations.Operation=" + operation.getCode(), operation.getUrn());
-        StatisticalOperationsAsserts.assertEqualsInternationalString(expected.getSpecificLegalActs(), operation.getSpecificLegalActs());
-    }
-
-    @Test
-    @Transactional
-    public void testCreateOperationWithSpecificDataSharing() {
-        OperationEntity expected = mockOperation();
-        expected.setSpecificDataSharing(StatisticalOperationsMocks.mockInternationalString());
-
-        OperationEntity operation = operationService.createOperation(expected);
-
-        assertNotNull(operation);
-        assertEquals("urn:siemac:org.siemac.metamac.infomodel.statisticaloperations.Operation=" + operation.getCode(), operation.getUrn());
-        StatisticalOperationsAsserts.assertEqualsInternationalString(expected.getSpecificDataSharing(), operation.getSpecificDataSharing());
-    }
+    //@Test
+    //@Transactional
+    //public void testCreateOperationWithSpecificLegalActs() {
+    //    OperationEntity expected = mockOperation();
+    //    expected.setSpecificLegalActs(StatisticalOperationsMocks.mockInternationalString());
+    //
+    //    OperationEntity operation = operationService.createOperation(expected);
+    //
+    //    assertNotNull(operation);
+    //    assertEquals("urn:siemac:org.siemac.metamac.infomodel.statisticaloperations.Operation=" + operation.getCode(), operation.getUrn());
+    //    StatisticalOperationsAsserts.assertEqualsInternationalString(expected.getSpecificLegalActs(), operation.getSpecificLegalActs());
+    //}
+    //
+    //@Test
+    //@Transactional
+    //public void testCreateOperationWithSpecificDataSharing() {
+    //    OperationEntity expected = mockOperation();
+    //    expected.setSpecificDataSharing(StatisticalOperationsMocks.mockInternationalString());
+    //
+    //    OperationEntity operation = operationService.createOperation(expected);
+    //
+    //    assertNotNull(operation);
+    //    assertEquals("urn:siemac:org.siemac.metamac.infomodel.statisticaloperations.Operation=" + operation.getCode(), operation.getUrn());
+    //    StatisticalOperationsAsserts.assertEqualsInternationalString(expected.getSpecificDataSharing(), operation.getSpecificDataSharing());
+    //}
 
     @Test
     @Transactional
@@ -179,24 +155,24 @@ public class OperationServiceIntTest extends EdatosExternalUsersBaseTest {
         assertEquals(null, operation.getDescription());
     }
 
-    @Test
-    @Transactional
-    public void testCreateOperationWithInvalidAccess() {
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_INVALID_URL, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
+    //@Test
+    //@Transactional
+    //public void testCreateOperationWithInvalidAccess() {
+    //    expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_INVALID_URL, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
+    //
+    //    OperationEntity operation = mockOperation();
+    //    operation.setReleaseCalendar(true);
+    //    operation.setReleaseCalendarAccess("invalidUrl");
+    //
+    //    operation = operationService.createOperation(operation);
+    //}
 
-        OperationEntity operation = mockOperation();
-        operation.setReleaseCalendar(true);
-        operation.setReleaseCalendarAccess("invalidUrl");
-
-        operation = operationService.createOperation(operation);
-    }
-
-    @Test
-    @Transactional
-    public void testSaveOperationWithFamilies() {
-        OperationEntity operation = operationService.createOperation(createOperationWithFamilies());
-        assertNotNull(operation);
-    }
+    //@Test
+    //@Transactional
+    //public void testSaveOperationWithFamilies() {
+    //    OperationEntity operation = operationService.createOperation(createOperationWithFamilies());
+    //    assertNotNull(operation);
+    //}
 
     @Test
     @Transactional
@@ -210,17 +186,17 @@ public class OperationServiceIntTest extends EdatosExternalUsersBaseTest {
         assertTrue(operationService.findAllOperations().size() < operations.size());
     }
 
-    @Test
-    @Transactional
-    public void testDeleteOperationWithType() {
-        int operationsNumberBefore = operationService.findAllOperations().size();
-        int operationsTypeBefore = commonListService.findAllSurveyTypes().size();
-
-        OperationEntity operation = operationService.createOperation(createOperationWithType());
-        operationService.deleteOperation(operation.getId());
-        assertTrue(operationService.findAllOperations().size() <= operationsNumberBefore);
-        assertTrue(commonListService.findAllSurveyTypes().size() == operationsTypeBefore);
-    }
+    //@Test
+    //@Transactional
+    //public void testDeleteOperationWithType() {
+    //    int operationsNumberBefore = operationService.findAllOperations().size();
+    //    int operationsTypeBefore = commonListService.findAllSurveyTypes().size();
+    //
+    //    OperationEntity operation = operationService.createOperation(createOperationWithType());
+    //    operationService.deleteOperation(operation.getId());
+    //    assertTrue(operationService.findAllOperations().size() <= operationsNumberBefore);
+    //    assertTrue(commonListService.findAllSurveyTypes().size() == operationsTypeBefore);
+    //}
 
     @Test
     @Transactional
@@ -271,50 +247,50 @@ public class OperationServiceIntTest extends EdatosExternalUsersBaseTest {
         assertEquals(null, operation.getDescription());
     }
 
-    @Test
-    @Transactional
-    public void testUpdateOperationWithIncorrectReleaseCalendarAccess() throws Exception {
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_INVALID_URL, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
+    //@Test
+    //@Transactional
+    //public void testUpdateOperationWithIncorrectReleaseCalendarAccess() throws Exception {
+    //    expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_INVALID_URL, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
+    //
+    //    OperationEntity operation = mockOperation();
+    //    operation = operationService.createOperation(operation);
+    //    assertNull(operation.getReleaseCalendarAccess());
+    //
+    //    operation.setReleaseCalendar(true);
+    //    operation.setReleaseCalendarAccess("incorrectUrl");
+    //
+    //    operationService.updateOperation(operation);
+    //}
 
-        OperationEntity operation = mockOperation();
-        operation = operationService.createOperation(operation);
-        assertNull(operation.getReleaseCalendarAccess());
+    //@Test
+    //@Transactional
+    //public void testUpdateOperationWithReleaseCalendarAccessAndWithoutReleaseCalendar() throws Exception {
+    //    expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_UNEXPECTED, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
+    //
+    //    OperationEntity operation = mockOperation();
+    //    operation = operationService.createOperation(operation);
+    //    assertNull(operation.getReleaseCalendarAccess());
+    //
+    //    operation.setReleaseCalendar(Boolean.FALSE);
+    //    operation.setReleaseCalendarAccess("http://tutu.com");
+    //
+    //    operationService.updateOperation(operation);
+    //}
 
-        operation.setReleaseCalendar(true);
-        operation.setReleaseCalendarAccess("incorrectUrl");
-
-        operationService.updateOperation(operation);
-    }
-
-    @Test
-    @Transactional
-    public void testUpdateOperationWithReleaseCalendarAccessAndWithoutReleaseCalendar() throws Exception {
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_UNEXPECTED, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
-
-        OperationEntity operation = mockOperation();
-        operation = operationService.createOperation(operation);
-        assertNull(operation.getReleaseCalendarAccess());
-
-        operation.setReleaseCalendar(Boolean.FALSE);
-        operation.setReleaseCalendarAccess("http://tutu.com");
-
-        operationService.updateOperation(operation);
-    }
-
-    @Test
-    @Transactional
-    public void testUpdateOperationWithReleaseCalendarAndWithoutReleaseCalendarAccess() throws Exception {
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
-
-        OperationEntity operation = mockOperation();
-        operation = operationService.createOperation(operation);
-        assertNull(operation.getReleaseCalendarAccess());
-
-        operation.setReleaseCalendar(Boolean.TRUE);
-        operation.setReleaseCalendarAccess(null);
-
-        operationService.updateOperation(operation);
-    }
+    //@Test
+    //@Transactional
+    //public void testUpdateOperationWithReleaseCalendarAndWithoutReleaseCalendarAccess() throws Exception {
+    //    expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_REQUIRED, ServiceExceptionParameters.OPERATION_RELEASE_CALENDAR_ACCESS));
+    //
+    //    OperationEntity operation = mockOperation();
+    //    operation = operationService.createOperation(operation);
+    //    assertNull(operation.getReleaseCalendarAccess());
+    //
+    //    operation.setReleaseCalendar(Boolean.TRUE);
+    //    operation.setReleaseCalendarAccess(null);
+    //
+    //    operationService.updateOperation(operation);
+    //}
 
     @Test
     @Transactional
@@ -329,70 +305,70 @@ public class OperationServiceIntTest extends EdatosExternalUsersBaseTest {
         assertEquals(null, operation.getDescription());
     }
 
-    @Test
-    @Transactional
-    public void testPublishInternallyOperation() {
-        // Create and Publish operation
-        OperationEntity operation = operationService
-                .createOperation(mockOperationForInternalPublishing(commonListService.findAllOfficialityTypes().get(0), commonListService.findAllSurveyTypes().get(0)));
-        int operationsBefore = operationService.findAllOperations().size();
+    //@Test
+    //@Transactional
+    //public void testPublishInternallyOperation() {
+    //    // Create and Publish operation
+    //    OperationEntity operation = operationService
+    //            .createOperation(mockOperationForInternalPublishing(commonListService.findAllOfficialityTypes().get(0), commonListService.findAllSurveyTypes().get(0)));
+    //    int operationsBefore = operationService.findAllOperations().size();
+    //
+    //    operation = operationService.publishInternallyOperation(operation.getId());
+    //
+    //    // Validations
+    //    assertNotNull(operation.getInternalInventoryDate());
+    //    assertTrue(ProcStatusEnum.INTERNALLY_PUBLISHED.equals(operation.getProcStatus()));
+    //
+    //    int operationsAfter = operationService.findAllOperations().size();
+    //    assertEquals(operationsBefore, operationsAfter);
+    //}
 
-        operation = operationService.publishInternallyOperation(operation.getId());
+    //@Test
+    //@Transactional
+    //public void testPublishExternallyOperation() {
+    //
+    //    // Create and Publish operation
+    //    OperationEntity operation = operationService
+    //            .createOperation(mockOperationForInternalPublishing(commonListService.findAllOfficialityTypes().get(0), commonListService.findAllSurveyTypes().get(0)));
+    //    int operationsBefore = operationService.findAllOperations().size();
+    //
+    //    operation = operationService.publishInternallyOperation(operation.getId());
+    //    operation = operationService.publishExternallyOperation(operation.getId());
+    //
+    //    // Validations
+    //    assertNotNull(operation.getInternalInventoryDate());
+    //    assertNotNull(operation.getInventoryDate());
+    //    assertTrue(ProcStatusEnum.EXTERNALLY_PUBLISHED.equals(operation.getProcStatus()));
+    //
+    //    // Check number of operations
+    //    int operationsAfter = operationService.findAllOperations().size();
+    //    assertEquals(operationsBefore, operationsAfter);
+    //
+    //    // Check that operation can't be internally published
+    //    try {
+    //        operationService.publishInternallyOperation(operation.getId());
+    //    } catch (EDatosException e) {
+    //        assertEquals(ServiceExceptionType.INVALID_PROC_STATUS.getCode(), e.getExceptionItems().get(0).getCode());
+    //    }
+    //}
 
-        // Validations
-        assertNotNull(operation.getInternalInventoryDate());
-        assertTrue(ProcStatusEnum.INTERNALLY_PUBLISHED.equals(operation.getProcStatus()));
-
-        int operationsAfter = operationService.findAllOperations().size();
-        assertEquals(operationsBefore, operationsAfter);
-    }
-
-    @Test
-    @Transactional
-    public void testPublishExternallyOperation() {
-
-        // Create and Publish operation
-        OperationEntity operation = operationService
-                .createOperation(mockOperationForInternalPublishing(commonListService.findAllOfficialityTypes().get(0), commonListService.findAllSurveyTypes().get(0)));
-        int operationsBefore = operationService.findAllOperations().size();
-
-        operation = operationService.publishInternallyOperation(operation.getId());
-        operation = operationService.publishExternallyOperation(operation.getId());
-
-        // Validations
-        assertNotNull(operation.getInternalInventoryDate());
-        assertNotNull(operation.getInventoryDate());
-        assertTrue(ProcStatusEnum.EXTERNALLY_PUBLISHED.equals(operation.getProcStatus()));
-
-        // Check number of operations
-        int operationsAfter = operationService.findAllOperations().size();
-        assertEquals(operationsBefore, operationsAfter);
-
-        // Check that operation can't be internally published
-        try {
-            operationService.publishInternallyOperation(operation.getId());
-        } catch (EDatosException e) {
-            assertEquals(ServiceExceptionType.INVALID_PROC_STATUS.getCode(), e.getExceptionItems().get(0).getCode());
-        }
-    }
-
-    private OperationEntity createOperationWithFamilies() {
-        OperationEntity operation = mockOperation();
-
-        // FAMILIES
-        for (int i = 0; i < 4; i++) {
-            FamilyEntity family = familyService.create(mockFamily());
-            operation.getFamilies().add(family);
-        }
-
-        return operation;
-    }
+    //private OperationEntity createOperationWithFamilies() {
+    //    OperationEntity operation = mockOperation();
+    //
+    //    // FAMILIES
+    //    for (int i = 0; i < 4; i++) {
+    //        FamilyEntity family = familyService.create(mockFamily());
+    //        operation.getFamilies().add(family);
+    //    }
+    //
+    //    return operation;
+    //}
 
     private OperationEntity createOperationWithType() {
         OperationEntity operation = mockOperation();
 
         // TYPE
-        operation.setSurveyType(commonListService.findAllSurveyTypes().get(0));
+        //operation.setSurveyType(commonListService.findAllSurveyTypes().get(0));
 
         return operation;
     }
