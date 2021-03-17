@@ -23,7 +23,6 @@ import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FilterMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.TestUtil;
-import es.gobcan.istac.edatos.external.users.rest.internal.resources.FilterResource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
@@ -36,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
-public class FilterResourceIntTest {
+public class FilterResourceExternalTest {
 
     private static final String ENDPOINT_URL = "/api/filters";
 

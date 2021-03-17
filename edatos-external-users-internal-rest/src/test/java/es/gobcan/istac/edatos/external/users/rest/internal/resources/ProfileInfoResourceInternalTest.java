@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
-public class ProfileInfoResourceIntTest {
+public class ProfileInfoResourceInternalTest {
 
     private static final String ENDPOINT_URL = "/api/profile-info";
 

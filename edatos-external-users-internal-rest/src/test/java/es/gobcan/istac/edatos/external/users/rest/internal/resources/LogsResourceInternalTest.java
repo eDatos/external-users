@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
-public class LogsResourceIntTest {
+public class LogsResourceInternalTest {
 
     private static final String ENDPOINT_URL = "/management/logs";
 
