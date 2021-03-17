@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersCoreTestApp.class)
 @Transactional
-public class CustomAuditEventRepositoryIntTest {
+public class CustomAuditEventRepositoryTest {
 
     @Autowired
     private PersistenceAuditEventRepository persistenceAuditEventRepository;

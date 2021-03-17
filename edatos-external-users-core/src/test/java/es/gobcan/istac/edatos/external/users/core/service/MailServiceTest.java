@@ -1,11 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-
 import java.io.ByteArrayOutputStream;
 
 import javax.mail.Multipart;
@@ -28,10 +22,14 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
+import es.gobcan.istac.edatos.external.users.EdatosExternalUsersCoreTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 import es.gobcan.istac.edatos.external.users.core.service.impl.MailServiceImpl;
-import es.gobcan.istac.edatos.external.users.EdatosExternalUsersCoreTestApp;
 import io.github.jhipster.config.JHipsterProperties;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersCoreTestApp.class)
