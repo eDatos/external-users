@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersCoreTestApp.class)
-public class OperationServiceIntTest extends EDatosBaseTest {
+public class OperationServiceTest extends EDatosBaseTest {
 
     @InjectMocks
     @Resource

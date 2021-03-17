@@ -35,7 +35,7 @@ import io.github.jhipster.config.JHipsterProperties;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersCoreTestApp.class)
-public class MailServiceIntTest {
+public class MailServiceTest {
 
     @Autowired
     private JHipsterProperties jHipsterProperties;
