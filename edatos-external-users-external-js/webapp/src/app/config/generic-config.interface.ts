@@ -3,7 +3,6 @@ export interface GenericConfig {
         appUrl: any;
     };
     metadata: {
-        navbarScriptUrl: string;
         defaultLanguage: string;
-    }
+    };
 }

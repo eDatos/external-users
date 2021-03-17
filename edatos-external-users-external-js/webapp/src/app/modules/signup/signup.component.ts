@@ -46,7 +46,7 @@ export class SignupFormComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.userExists() || this.passwordDoNotMatch()) {
+        if (this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
             this.accountUserService.create(this.user).subscribe(
@@ -93,10 +93,6 @@ export class SignupFormComponent implements OnInit {
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    public userExists(): boolean {
-        return !!this.user.id;
     }
 
     public navigateToSignup() {
