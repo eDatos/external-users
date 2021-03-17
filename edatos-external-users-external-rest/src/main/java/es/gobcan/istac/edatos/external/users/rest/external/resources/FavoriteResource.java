@@ -25,6 +25,7 @@ import com.codahale.metrics.annotation.Timed;
 import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FavoriteDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FavoriteMapper;
@@ -71,6 +72,17 @@ public class FavoriteResource extends AbstractResource {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
         }
 
+        if (dto != null) {
+            // FIXME(EDATOS-3294):
+            //  We need to validate the user creating the favorite it's doing it for himself.
+            //   1. How do we know when we are dealing with an internal or an external user? SecurityUtils was
+            //      meant to be used with CAS users, maybe we need to create a new class to handle external users.
+            //   2. Should this be handled in the controller? The service? The validator?
+            //   3. Should we assign automatically the user as the one making the request? Or should we check and
+            //      if they don't match, throw a message? Like 'you cannot create favorites for other users'.
+            dto.setEmail(SecurityUtils.getCurrentUserLogin());
+        }
+
         FavoriteEntity entity = favoriteMapper.toEntity(dto);
         entity = favoriteService.create(entity);
         FavoriteDto newDto = favoriteMapper.toDto(entity);
@@ -86,6 +98,9 @@ public class FavoriteResource extends AbstractResource {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_REQUIRED, "id");
         }
 
+        // FIXME(EDATOS-3294): same as the FIXME above
+        dto.setEmail(SecurityUtils.getCurrentUserLogin());
+
         FavoriteEntity entity = favoriteMapper.toEntity(dto);
         entity = favoriteService.update(entity);
         FavoriteDto newDto = favoriteMapper.toDto(entity);
@@ -97,7 +112,12 @@ public class FavoriteResource extends AbstractResource {
     @DeleteMapping("/{id}")
     @Timed
     public ResponseEntity<Void> deleteFavorite(@PathVariable Long id) {
-        favoriteService.delete(favoriteService.find(id));
+        FavoriteEntity favorite = favoriteService.find(id);
+
+        // FIXME(EDATOS-3294): same as the FIXME above
+        if (favorite != null && favorite.getExternalUser().getEmail().equals(SecurityUtils.getCurrentUserLogin())) {
+            favoriteService.delete(favorite);
+        }
 
         auditPublisher.publish(AuditConstants.FILTER_DELETION, id.toString());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
