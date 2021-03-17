@@ -50,7 +50,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
-public class UsuarioResourceIntTest {
+public class UsuarioResourceInternalTest {
 
     private static final String ENDPOINT_URL = "/api/usuarios";
 

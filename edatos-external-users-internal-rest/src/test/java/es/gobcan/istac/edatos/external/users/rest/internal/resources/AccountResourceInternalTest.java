@@ -46,7 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
-public class AccountResourceIntTest {
+public class AccountResourceInternalTest {
 
     private static final String ROL_ADMIN = "ADMINISTRADOR";
 
@@ -120,7 +120,7 @@ public class AccountResourceIntTest {
 
         restUserMockMvc.perform(get("/api/usuario").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$.login").value("test")).andExpect(jsonPath("$.nombre").value("john")).andExpect(jsonPath("$.apellido1").value("doe"))
-                .andExpect(jsonPath("$.email").value("john.doe@jhipster.com")).andExpect(jsonPath("$.roles[*]").value(AccountResourceIntTest.ROL_ADMIN));
+                .andExpect(jsonPath("$.email").value("john.doe@jhipster.com")).andExpect(jsonPath("$.roles[*]").value(AccountResourceInternalTest.ROL_ADMIN));
     }
 
     @Test

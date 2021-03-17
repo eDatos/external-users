@@ -46,7 +46,7 @@ public class DocumentoResource extends AbstractResource {
 
     @PostMapping
     @Timed
-    @PreAuthorize("@secChecker.puedeCrearDocumento(authentication)")
+    @PreAuthorize("@secChecker.canCreateDocument(authentication)")
     public ResponseEntity<DocumentoDto> create(@RequestBody DocumentoDto documentoDto, Long ficheroId) throws URISyntaxException {
         DocumentoEntity documento = documentoMapper.toEntity(documentoDto);
         DocumentoEntity result = documentoService.save(documento, ficheroId);
@@ -56,7 +56,7 @@ public class DocumentoResource extends AbstractResource {
 
     @PutMapping
     @Timed
-    @PreAuthorize("@secChecker.puedeModificarDocumento(authentication)")
+    @PreAuthorize("@secChecker.canUpdateDocument(authentication)")
     public ResponseEntity<DocumentoDto> update(@Valid @RequestBody DocumentoDto documentoDto) {
         if (documentoDto.getId() == null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.ID_FALTA, "An id is required")).body(null);
@@ -69,7 +69,7 @@ public class DocumentoResource extends AbstractResource {
 
     @GetMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.puedeConsultarDocumento(authentication)")
+    @PreAuthorize("@secChecker.canAccessDocument(authentication)")
     public ResponseEntity<DocumentoDto> get(@PathVariable Long id) {
         DocumentoEntity documento = documentoService.get(id);
         if (documento == null) {
@@ -81,7 +81,7 @@ public class DocumentoResource extends AbstractResource {
 
     @GetMapping(value = "/{id}/download", consumes = "*/*", produces = "*/*")
     @Timed
-    @PreAuthorize("@secChecker.puedeConsultarDocumento(authentication)")
+    @PreAuthorize("@secChecker.canAccessDocument(authentication)")
     public void download(@PathVariable Long id, HttpServletResponse response) {
         DocumentoEntity documento = documentoService.get(id);
         if (documento == null) {
@@ -93,7 +93,7 @@ public class DocumentoResource extends AbstractResource {
 
     @DeleteMapping("/{id}")
     @Timed
-    @PreAuthorize("@secChecker.puedeBorrarDocumento(authentication)")
+    @PreAuthorize("@secChecker.canDeleteDocument(authentication)")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         documentoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();

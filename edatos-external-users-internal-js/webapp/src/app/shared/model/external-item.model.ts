@@ -1,5 +1,11 @@
 import { InternationalString } from '@app/shared';
 
+/**
+ * See also org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum at
+ * https://git.arte-consultores.com/istac/edatos-core-common.
+ *
+ * Ref: https://git.arte-consultores.com/istac/edatos-core-common/blob/master/src/main/java/org/siemac/edatos/core/common/enume/TypeExternalArtefactsEnum.java
+ */
 enum TypeExternalArtefacts {
     AGENCY = 'structuralResources#agency',
     AGENCY_SCHEME = 'structuralResources#agencyScheme',

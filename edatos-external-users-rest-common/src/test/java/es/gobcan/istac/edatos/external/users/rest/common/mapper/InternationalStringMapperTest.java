@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,15 +8,12 @@ import org.mockito.MockitoAnnotations;
 import org.siemac.edatos.common.test.EDatosBaseTest;
 import org.siemac.edatos.core.common.conf.ConfigurationService;
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
-import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.domain.InternationalStringEntity;
-import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.InternationalStringRepository;
 import es.gobcan.istac.edatos.external.users.mock.MetadataConfigurationServiceMockImpl;
 import es.gobcan.istac.edatos.external.users.util.StatisticalOperationsAsserts;
@@ -32,17 +28,15 @@ public class InternationalStringMapperTest extends EDatosBaseTest {
     @Autowired
     private InternationalStringMapper internationalStringMapper;
 
-    private InternationalStringRepository repository = Mockito.mock(InternationalStringRepository.class);
+    private final InternationalStringRepository repository = Mockito.mock(InternationalStringRepository.class);
 
-    private ConfigurationService configurationService = new MetadataConfigurationServiceMockImpl();
+    private final ConfigurationService configurationService = new MetadataConfigurationServiceMockImpl();
 
     private static final String METADATA_NAME = "LOREM_IPSUM";
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        ReflectionTestUtils.setField(internationalStringMapper, "configurationService", configurationService);
-        ReflectionTestUtils.setField(internationalStringMapper, "internationalStringRepository", repository);
     }
 
     // ------------------------------------------------------------
@@ -67,14 +61,6 @@ public class InternationalStringMapperTest extends EDatosBaseTest {
     }
 
     @Test
-    public void testInternationalStringDto2DoWithDtoNullAndDoExists() throws Exception {
-        // NULL, EXISTS
-        InternationalStringEntity internationalString = StatisticalOperationsMocks.mockInternationalString();
-        testInternationalStringDtoToEntity(null, internationalString);
-        Mockito.verify(repository).delete(Mockito.any(InternationalStringEntity.class));
-    }
-
-    @Test
     public void testInternationalStringDto2DoWithDtoExistsAndDoNull() throws Exception {
         // EXISTS, NULL
         testInternationalStringDtoToEntity(StatisticalOperationsMocks.mockInternationalStringDto(), null);
@@ -86,41 +72,6 @@ public class InternationalStringMapperTest extends EDatosBaseTest {
         // EXISTS, EXISTS
         InternationalStringEntity internationalString = StatisticalOperationsMocks.mockInternationalString();
         testInternationalStringDtoToEntity(StatisticalOperationsMocks.mockInternationalStringDto(), internationalString);
-        Mockito.verify(repository, never()).delete(Mockito.any(InternationalStringEntity.class));
-    }
-
-    @Test
-    public void testInternationalStringDto2DoWithDtoExistsAndDoNullAndDtoWithoutLocalisedStrings() throws Exception {
-        // EXISTS, EXISTS
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_REQUIRED, METADATA_NAME));
-
-        InternationalStringDto internationalStringDto = StatisticalOperationsMocks.mockInternationalStringDto();
-        internationalStringDto.getTexts().clear();
-
-        testInternationalStringDtoToEntity(internationalStringDto, null);
-        Mockito.verify(repository, never()).delete(Mockito.any(InternationalStringEntity.class));
-    }
-
-    @Test
-    public void testInternationalStringDto2DoWithDtoNullAndWithoutLocaleInDefaultLanguage() throws Exception {
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_WITHOUT_DEFAULT_LANGUAGE, METADATA_NAME));
-        testInternationalStringDtoToEntity(StatisticalOperationsMocks.mockInternationalStringDto("rs", "text"), null);
-        Mockito.verify(repository, never()).delete(Mockito.any(InternationalStringEntity.class));
-    }
-
-    @Test
-    public void testInternationalStringDto2DoWithoutLocaleInDefaultLanguage() throws Exception {
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_WITHOUT_DEFAULT_LANGUAGE, METADATA_NAME));
-        testInternationalStringDtoToEntity(
-                StatisticalOperationsMocks.mockInternationalStringDto("rs", "text"), StatisticalOperationsMocks.mockInternationalString(configurationService.retrieveLanguageDefault(), "texto"));
-        Mockito.verify(repository, never()).delete(Mockito.any(InternationalStringEntity.class));
-    }
-
-    @Test
-    public void testInternationalStringDto2DoWithDtoMaximumLength() throws Exception {
-        expectedEDatosException(new EDatosException(ServiceExceptionType.METADATA_MAXIMUM_LENGTH, METADATA_NAME, "4000"));
-        testInternationalStringDtoToEntity(StatisticalOperationsMocks.mockInternationalStringDto("rs", RandomStringUtils.randomAlphabetic(4050)),
-                StatisticalOperationsMocks.mockInternationalString(configurationService.retrieveLanguageDefault(), "texto"));
         Mockito.verify(repository, never()).delete(Mockito.any(InternationalStringEntity.class));
     }
 

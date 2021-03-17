@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
 @Transactional
-public class AuditResourceIntTest {
+public class AuditResourceInternalTest {
 
     private static final String ENDPOINT_URL = "/management/audits";
 

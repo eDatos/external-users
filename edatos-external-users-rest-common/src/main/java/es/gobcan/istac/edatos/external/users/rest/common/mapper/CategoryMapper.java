@@ -12,18 +12,6 @@ public interface CategoryMapper extends EntityMapper<CategoryDto, CategoryEntity
     @Override
     CategoryDto toDto(CategoryEntity entity);
 
-    /**
-     * <code>defaultExpression</code> assigns a value in case the source is null. In
-     * this case, mapstruct will generate the next piece of code:
-     *
-     * <pre>
-     * if (dto.getName() != null) {
-     *     filterEntity.setName(dto.getName());
-     * } else {
-     *     filterEntity.setName(dto.getResourceName());
-     * }
-     * </pre>
-     */
     @Override
     CategoryEntity toEntity(CategoryDto dto);
 }

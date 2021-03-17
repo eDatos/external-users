@@ -88,13 +88,29 @@ public class QueryUtil {
     }
 
     private DetachedCriteria queryToCriteria(Pageable pageable, String query, AbstractCriteriaProcessor processor) {
-        String sortedQuery = pageableSortToQueryString(pageable);
-        return queryToCriteria(sortedQuery, query, processor);
+        try {
+            String sortedQuery = pageableSortToQueryString(pageable);
+            return queryToCriteria(sortedQuery, query, processor);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
+                // Catches a query/sort parameter that isn't recognized.
+                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+            }
+            throw ex;
+        }
     }
 
     private DetachedCriteria queryToCriteria(Sort sort, String query, AbstractCriteriaProcessor processor) {
-        String sortedQuery = sortToQueryString(sort);
-        return queryToCriteria(sortedQuery, query, processor);
+        try {
+            String sortedQuery = sortToQueryString(sort);
+            return queryToCriteria(sortedQuery, query, processor);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
+                // Catches a query/sort parameter that isn't recognized.
+                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+            }
+            throw ex;
+        }
     }
 
     private DetachedCriteria queryToCriteria(String sortedQuery, String query, AbstractCriteriaProcessor processor) {
@@ -115,15 +131,7 @@ public class QueryUtil {
     }
 
     public DetachedCriteria queryToFilterCriteria(String query, Pageable pageable) {
-        try {
-            return queryToCriteria(pageable, query, filterCriteriaProcessor);
-        } catch (IllegalArgumentException ex) {
-            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
-                // Catches a query/sort parameter that isn't recognized.
-                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
-            }
-            throw ex;
-        }
+        return queryToCriteria(pageable, query, filterCriteriaProcessor);
     }
 
     public DetachedCriteria queryToFilterSortCriteria(String query, Sort sort) {
@@ -131,15 +139,7 @@ public class QueryUtil {
     }
 
     public DetachedCriteria queryToCategoryCriteria(String query, Pageable pageable) {
-        try {
-            return queryToCriteria(pageable, query, categoryCriteriaProcessor);
-        } catch (IllegalArgumentException ex) {
-            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
-                // Catches a query/sort parameter that isn't recognized.
-                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
-            }
-            throw ex;
-        }
+        return queryToCriteria(pageable, query, categoryCriteriaProcessor);
     }
 
     public DetachedCriteria queryToCategorySortCriteria(String query, Sort sort) {
@@ -147,15 +147,7 @@ public class QueryUtil {
     }
 
     public DetachedCriteria queryToFavoriteCriteria(String query, Pageable pageable) {
-        try {
-            return queryToCriteria(pageable, query, favoriteCriteriaProcessor);
-        } catch (IllegalArgumentException ex) {
-            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
-                // Catches a query/sort parameter that isn't recognized.
-                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
-            }
-            throw ex;
-        }
+        return queryToCriteria(pageable, query, favoriteCriteriaProcessor);
     }
 
     public DetachedCriteria queryToFavoriteSortCriteria(String query, Sort sort) {
