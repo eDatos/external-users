@@ -12,59 +12,63 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
+import es.gobcan.istac.edatos.external.users.core.service.validator.FavoriteValidator;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
 
-    private final FavoriteRepository filterRepository;
-
+    private final FavoriteRepository favoriteRepository;
+    private final FavoriteValidator favoriteValidator;
     private final QueryUtil queryUtil;
 
-    public FavoriteServiceImpl(FavoriteRepository filterRepository, QueryUtil queryUtil) {
-        this.filterRepository = filterRepository;
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, FavoriteValidator favoriteValidator, QueryUtil queryUtil) {
+        this.favoriteRepository = favoriteRepository;
+        this.favoriteValidator = favoriteValidator;
         this.queryUtil = queryUtil;
     }
 
     @Override
-    public FavoriteEntity create(FavoriteEntity filter) {
-        return filterRepository.saveAndFlush(filter);
+    public FavoriteEntity create(FavoriteEntity favorite) {
+        favoriteValidator.validate(favorite);
+        return favoriteRepository.saveAndFlush(favorite);
     }
 
     @Override
-    public FavoriteEntity update(FavoriteEntity filter) {
-        return filterRepository.saveAndFlush(filter);
+    public FavoriteEntity update(FavoriteEntity favorite) {
+        favoriteValidator.validate(favorite);
+        return favoriteRepository.saveAndFlush(favorite);
     }
 
     @Override
     public FavoriteEntity find(Long id) {
-        return filterRepository.findOne(id);
+        return favoriteRepository.findOne(id);
     }
 
     @Override
     public List<FavoriteEntity> findAll() {
-        return filterRepository.findAll();
+        return favoriteRepository.findAll();
     }
 
     @Override
     public List<FavoriteEntity> findAllByUser(ExternalUserEntity user) {
-        return filterRepository.findAllByExternalUserOrderByCreatedDate(user);
+        return favoriteRepository.findAllByExternalUserOrderByCreatedDate(user);
     }
 
     @Override
     public Page<FavoriteEntity> find(String query, Pageable pageable) {
         DetachedCriteria criteria = queryUtil.queryToFavoriteCriteria(query, pageable);
-        return filterRepository.findAll(criteria, pageable);
+        return favoriteRepository.findAll(criteria, pageable);
     }
 
     @Override
     public List<FavoriteEntity> find(String query, Sort sort) {
         DetachedCriteria criteria = queryUtil.queryToFavoriteSortCriteria(query, sort);
-        return filterRepository.findAll(criteria);
+        return favoriteRepository.findAll(criteria);
     }
 
     @Override
-    public void delete(FavoriteEntity filter) {
-        filterRepository.delete(filter);
+    public void delete(FavoriteEntity favorite) {
+        favoriteRepository.delete(favorite);
     }
 }
