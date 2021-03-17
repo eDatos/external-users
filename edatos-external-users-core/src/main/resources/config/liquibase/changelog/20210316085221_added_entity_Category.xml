@@ -33,22 +33,16 @@
             <column name="urn" type="VARCHAR(4000)">
                 <constraints nullable="false"/>
             </column>
-            <column name="uuid" type="VARCHAR(36)">
-                <constraints nullable="false"/>
-            </column>
             <column name="parent_fk" type="BIGINT"/>
         </createTable>
     </changeSet>
     <changeSet author="arte" id="1615884741322-2">
-        <addUniqueConstraint columnNames="uuid" constraintName="UC_TB_CATEGORYUUID_COL" tableName="tb_category"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884741322-3">
         <addForeignKeyConstraint baseColumnNames="parent_fk" baseTableName="tb_category" constraintName="FKfpgkmf0r6rai1rfc3ivqboc91" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
     </changeSet>
-    <changeSet author="arte" id="1615884741322-4">
+    <changeSet author="arte" id="1615884741322-3">
         <addForeignKeyConstraint baseColumnNames="subject_area_fk" baseTableName="tb_operations" constraintName="FKtp169e04q7ytpf5sx3iwevc4g" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
     </changeSet>
-    <changeSet author="arte" id="1615884741322-5">
+    <changeSet author="arte" id="1615884741322-4">
         <addForeignKeyConstraint baseColumnNames="secondary_subject_area_fk" baseTableName="tb_secondary_areas" constraintName="FKl47gkh2q0ex3ivktdfmso8f73" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
     </changeSet>
 </databaseChangeLog>
