@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -10,12 +9,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
-import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionParameters;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
-import es.gobcan.istac.edatos.external.users.core.util.StatisticalOperationsValidationUtils;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -39,9 +36,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryEntity findCategoryByCode(String code) {
-        // Validations
-        StatisticalOperationsValidationUtils.checkParameterRequired(code, ServiceExceptionParameters.CODE, new ArrayList<>());
-
         CategoryEntity category = categoryRepository.findByCode(code);
         if (category == null) {
             throw new EDatosException(ServiceExceptionType.OPERATION_CODE_NOT_FOUND, code);
@@ -51,9 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryEntity findCategoryByUrn(String urn) {
-        // Validations
-        StatisticalOperationsValidationUtils.checkParameterRequired(urn, ServiceExceptionParameters.URN, new ArrayList<>());
-
         CategoryEntity category = categoryRepository.findByUrn(urn);
         if (category == null) {
             throw new EDatosException(ServiceExceptionType.OPERATION_NOT_FOUND, urn);
@@ -63,7 +54,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryEntity> findAllCategories() {
-        // Repository category
         return categoryRepository.findAll();
     }
 
@@ -80,23 +70,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryEntity createCategory(CategoryEntity category) {
-        // Fill metadata
-        //category.setUrn(GeneratorUrnUtils.generateSdmxCategoryUrn(/* TODO(EDATOS-3294): Data needed */);
-
-        // Validations
         validateCategoryCodeUnique(category.getCode(), null);
-        //CheckMandatoryMetadataUtil.checkCreateCategory(category);
-
-        // Repository category
         return categoryRepository.saveAndFlush(category);
     }
 
     @Override
     public CategoryEntity updateCategory(CategoryEntity category) {
-        // Validations
-        //category.setUrn(GeneratorUrnUtils.generateSdmxCategoryUrn(/* TODO(EDATOS-3294): Data needed */);
         validateCategoryCodeUnique(category.getCode(), category.getId());
-        //CheckMandatoryMetadataUtil.checkCreateCategory(category);
         return categoryRepository.saveAndFlush(category);
     }
 

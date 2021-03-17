@@ -1,40 +1,33 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.siemac.edatos.core.common.exception.EDatosException;
-import org.siemac.edatos.core.common.exception.EDatosExceptionItem;
 import org.siemac.edatos.core.common.util.GeneratorUrnUtils;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
-import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionParameters;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.OperationService;
-import es.gobcan.istac.edatos.external.users.core.util.CheckMandatoryMetadataUtil;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
-import es.gobcan.istac.edatos.external.users.core.util.StatisticalOperationsValidationUtils;
-import es.gobcan.istac.edatos.external.users.core.util.ValidationUtil;
 
 @Service
 public class OperationServiceImpl implements OperationService {
 
-    // TODO EDATOS-3124 Miguel Implement the modifications of the NeedServiceImpl.java in this class
+    private final OperationRepository operationRepository;
+    private final QueryUtil queryUtil;
 
-    @Autowired
-    private OperationRepository operationRepository;
-
-    @Autowired
-    private QueryUtil queryUtil;
+    public OperationServiceImpl(OperationRepository operationRepository, QueryUtil queryUtil) {
+        this.operationRepository = operationRepository;
+        this.queryUtil = queryUtil;
+    }
 
     @Override
     public OperationEntity findOperationById(Long id) {
@@ -47,9 +40,6 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public OperationEntity findOperationByCode(String code) {
-        // Validations
-        StatisticalOperationsValidationUtils.checkParameterRequired(code, ServiceExceptionParameters.CODE, new ArrayList<EDatosExceptionItem>());
-
         OperationEntity operation = operationRepository.findByCode(code);
         if (operation == null) {
             throw new EDatosException(ServiceExceptionType.OPERATION_CODE_NOT_FOUND, code);
@@ -59,9 +49,6 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public OperationEntity findOperationByUrn(String urn) {
-        // Validations
-        StatisticalOperationsValidationUtils.checkParameterRequired(urn, ServiceExceptionParameters.URN, new ArrayList<EDatosExceptionItem>());
-
         OperationEntity operation = operationRepository.findByUrn(urn);
         if (operation == null) {
             throw new EDatosException(ServiceExceptionType.OPERATION_NOT_FOUND, urn);
@@ -71,7 +58,6 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public List<OperationEntity> findAllOperations() {
-        // Repository operation
         return operationRepository.findAll();
     }
 
@@ -88,90 +74,36 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public OperationEntity createOperation(OperationEntity operation) {
-        // Fill metadata
         operation.setUrn(GeneratorUrnUtils.generateSiemacStatisticalOperationUrn(operation.getCode()));
-        //operation.setProcStatus(ProcStatus.DRAFT); TODO(EDATOS-3294): No need to set DRAFT procStatus because all the operations we use are already published
         operation.setStatus(Status.PLANNING);
-        //operation.setCurrentlyActive(Boolean.FALSE);
-
-        // Validations
         validateOperationCodeUnique(operation.getCode(), null);
-        CheckMandatoryMetadataUtil.checkCreateOperation(operation);
-
-        // Repository operation
         return operationRepository.save(operation);
     }
 
     @Override
     public OperationEntity updateOperation(OperationEntity operation) {
-        // Validations TODO(EDATOS-3294): No need to validate, the operation doesn't come from the user but from statistical-operations that already handles validation
-        //if (ProcStatusEnum.DRAFT.equals(operation.getProcStatus())) {
-        //    // We don't need to update the instances URN because we can't create instances in a draft operation
-        //    operation.setUrn(GeneratorUrnUtils.generateSiemacStatisticalOperationUrn(operation.getCode()));
-        //    validateOperationCodeUnique(operation.getCode(), operation.getId());
-        //    CheckMandatoryMetadataUtil.checkCreateOperation(operation);
-        //}
-        //
-        //if (ProcStatusEnum.INTERNALLY_PUBLISHED.equals(operation.getProcStatus())) {
-        //    CheckMandatoryMetadataUtil.checkOperationForPublishInternally(operation);
-        //}
-        //
-        //if (ProcStatusEnum.EXTERNALLY_PUBLISHED.equals(operation.getProcStatus())) {
-        //    CheckMandatoryMetadataUtil.checkOperationForPublishExternally(operation);
-        //}
-
-        // Repository operation
         return operationRepository.save(operation);
     }
 
     @Override
     public void deleteOperation(Long operationId) {
-        // Retrieve
         OperationEntity operation = findOperationById(operationId);
-
-        // Check if ProcStatus is DRAFT // TODO(EDATOS-3294): No need to set DRAFT procStatus
-        // ValidationUtil.validateProcStatus(ProcStatus.DRAFT, operation.getProcStatus());
-
         operationRepository.delete(operation);
     }
 
     @Override
     public OperationEntity publishInternallyOperation(Long id) {
-        // Validations
-
-        // Load entity
         OperationEntity operation = findOperationById(id);
-
-        // Check ProcStatus
-        ValidationUtil.validateOperationProcStatusForPublishInternally(operation);
-
-        // Change state
         operation.setProcStatus(ProcStatus.INTERNALLY_PUBLISHED);
-
-        // Fill metadata
         operation.setInternalInventoryDate(Instant.now());
-
-        // Repository operation
         return updateOperation(operation);
     }
 
     @Override
     public OperationEntity publishExternallyOperation(Long id) {
-        // Validations
-
-        // Load entity
         OperationEntity operation = findOperationById(id);
-
-        // Check ProcStatus
-        ValidationUtil.validateProcStatus(ProcStatus.INTERNALLY_PUBLISHED, operation.getProcStatus());
-
-        // Change state
         operation.setProcStatus(ProcStatus.EXTERNALLY_PUBLISHED);
-
-        // Fill metadata
         operation.setInventoryDate(Instant.now());
-
-        // Save
         return updateOperation(operation);
     }
 
