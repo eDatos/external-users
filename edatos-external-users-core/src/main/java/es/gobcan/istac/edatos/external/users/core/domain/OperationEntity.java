@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -75,9 +74,6 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
     private Instant inventoryDate;
 
     private Instant updateDate;
-
-    @Column(nullable = false, length = 36, unique = true)
-    private String uuid;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "common_metadata_fk")
@@ -227,19 +223,6 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
 
     public void setUpdateDate(Instant updateDate) {
         this.updateDate = updateDate;
-    }
-
-    /**
-     * This domain object doesn't have a natural key
-     * and this random generated identifier is the
-     * unique identifier for this domain object.
-     */
-    public String getUuid() {
-        // lazy init of UUID
-        if (uuid == null) {
-            uuid = java.util.UUID.randomUUID().toString();
-        }
-        return uuid;
     }
 
     public ExternalItemEntity getCommonMetadata() {
@@ -513,20 +496,6 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
      */
     public void removeAllUpdateFrequency() {
         getUpdateFrequency().clear();
-    }
-
-    @PrePersist
-    protected void prePersist() {
-        getUuid();
-    }
-
-    /**
-     * This method is used by equals and hashCode.
-     *
-     * @return {@link #getUuid}
-     */
-    public Object getKey() {
-        return getUuid();
     }
 
     public static final class Properties {

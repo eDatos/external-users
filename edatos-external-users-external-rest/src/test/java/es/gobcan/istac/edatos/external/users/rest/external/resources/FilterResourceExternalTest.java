@@ -39,8 +39,8 @@ public class FilterResourceExternalTest {
 
     private static final String ENDPOINT_URL = "/api/filters";
 
-    private static final String PERMALINK_1 = "https://www3.gobiernodecanarias.org/istac/statistical-visualizer/visualizer/data.html?permalink=1iehlgx1d7od76vr11r31d11j5o";
-    private static final String PERMALINK_2 = "https://www3.gobiernodecanarias.org/istac/statistical-visualizer/visualizer/data.html?permalink=vr0oanlyid8rvs613sya4ysbi";
+    private static final String PERMALINK_1 = "https://visualizer/data.html?permalink=1iehlgx1d7od76vr11r31d11j5o";
+    private static final String PERMALINK_2 = "https://visualizer/data.html?permalink=vr0oanlyid8rvs613sya4ysbi";
 
     @Autowired
     private FilterResource filterResource;
