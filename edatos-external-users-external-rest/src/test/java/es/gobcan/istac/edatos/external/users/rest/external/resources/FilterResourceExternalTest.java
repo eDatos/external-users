@@ -78,11 +78,19 @@ public class FilterResourceExternalTest {
     @Before
     public void populateDatabase() {
         user1 = new ExternalUserEntity();
+        user1.setName("Montserrat");
+        user1.setSurname1("Pons");
+        user1.setSurname2("Ferrer");
+        user1.setPassword("password1");
         user1.setEmail("user1@gmail.com");
         user1.setTreatment(Treatment.LADY);
         user1.setLanguage(Language.CATALAN);
         externalUserRepository.saveAndFlush(user1);
         user2 = new ExternalUserEntity();
+        user2.setName("Mateo");
+        user2.setSurname1("González");
+        user2.setSurname2("Hernández");
+        user2.setPassword("12345678");
         user2.setEmail("user2@gmail.com");
         user2.setTreatment(Treatment.MISTER);
         user2.setLanguage(Language.CATALAN);
@@ -213,11 +221,11 @@ public class FilterResourceExternalTest {
         filter2.setExternalUser(user2);
         filterRepository.saveAndFlush(filter2);
 
-        this.mockMvc.perform(get(ENDPOINT_URL + "?sort=login,desc"))
+        this.mockMvc.perform(get(ENDPOINT_URL + "?sort=email,desc"))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].login", is("user2")))
-                    .andExpect(jsonPath("$[1].login", is("user1")));
+                    .andExpect(jsonPath("$[0].email", is("user2@gmail.com")))
+                    .andExpect(jsonPath("$[1].email", is("user1@gmail.com")));
     }
 }
