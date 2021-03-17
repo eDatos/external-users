@@ -118,8 +118,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .frameOptions().sameOrigin().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/api/activate").permitAll()
                 .antMatchers("/api/authenticate").permitAll().antMatchers("/api/profile-info").permitAll().antMatchers("/account").permitAll().antMatchers("/login").permitAll()
                 .antMatchers("/v2/api-docs/**").permitAll().antMatchers("/apis/operations-internal/**").permitAll().antMatchers("/management/metrics")
-                .access("@secChecker.puedeConsultarMetrica(authentication)").antMatchers("/management/health").access("@secChecker.puedeConsultarSalud(authentication)").antMatchers("/management/env")
-                .access("@secChecker.puedeConsultarConfig(authentication)").antMatchers("/management/configprops").access("@secChecker.puedeConsultarConfig(authentication)").antMatchers("/**")
+                .access("@secChecker.canAccessMetrics(authentication)").antMatchers("/management/health").access("@secChecker.canAccessHealth(authentication)").antMatchers("/management/env")
+                .access("@secChecker.canAccessConfig(authentication)").antMatchers("/management/configprops").access("@secChecker.canAccessConfig(authentication)").antMatchers("/**")
                 .authenticated();;
     }
 

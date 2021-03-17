@@ -36,7 +36,7 @@ public class FicheroResource extends AbstractResource {
 
     @PostMapping
     @Timed
-    @PreAuthorize("@secChecker.puedeCrearDocumento(authentication)")
+    @PreAuthorize("@secChecker.canCreateDocument(authentication)")
     public ResponseEntity<FicheroDto> create(@RequestParam("file") MultipartFile file) throws URISyntaxException {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.FICHERO_VACIO, "El fichero subido está vacío")).body(null);

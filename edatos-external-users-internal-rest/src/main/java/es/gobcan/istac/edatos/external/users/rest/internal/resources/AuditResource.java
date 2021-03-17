@@ -34,7 +34,7 @@ public class AuditResource extends AbstractResource {
     }
 
     @GetMapping
-    @PreAuthorize("@secChecker.puedeConsultarAuditoria(authentication)")
+    @PreAuthorize("@secChecker.canAccessAudit(authentication)")
     public ResponseEntity<List<AuditEvent>> find(Pageable pageable) {
         Page<AuditEvent> page = auditEventService.find(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, BASE_URL);
@@ -42,7 +42,7 @@ public class AuditResource extends AbstractResource {
     }
 
     @GetMapping(params = {"fromDate", "toDate"})
-    @PreAuthorize("@secChecker.puedeConsultarAuditoria(authentication)")
+    @PreAuthorize("@secChecker.canAccessAudit(authentication)")
     public ResponseEntity<List<AuditEvent>> findByDates(@RequestParam(value = "fromDate") LocalDate fromDate, @RequestParam(value = "toDate") LocalDate toDate, Pageable pageable) {
 
         Page<AuditEvent> page = auditEventService.findByDates(fromDate.atStartOfDay(ZoneId.systemDefault()).toInstant(), toDate.atStartOfDay(ZoneId.systemDefault()).plusDays(1).toInstant(), pageable);
@@ -51,7 +51,7 @@ public class AuditResource extends AbstractResource {
     }
 
     @GetMapping("/{id:.+}")
-    @PreAuthorize("@secChecker.puedeConsultarAuditoria(authentication)")
+    @PreAuthorize("@secChecker.canAccessAudit(authentication)")
     public ResponseEntity<AuditEvent> get(@PathVariable Long id) {
         return ResponseUtil.wrapOrNotFound(auditEventService.get(id));
     }

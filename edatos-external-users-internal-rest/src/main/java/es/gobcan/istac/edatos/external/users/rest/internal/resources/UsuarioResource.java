@@ -66,7 +66,7 @@ public class UsuarioResource extends AbstractResource {
 
     @PostMapping("/usuarios")
     @Timed
-    @PreAuthorize("@secChecker.puedeCrearUsuario(authentication)")
+    @PreAuthorize("@secChecker.canCreateUser(authentication)")
     public ResponseEntity<UsuarioDto> create(@Valid @RequestBody ManagedUserVM managedUserVM) throws URISyntaxException {
         if (managedUserVM.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.ID_EXISTE, ErrorMessagesConstants.ID_EXISTE)).body(null);
@@ -88,7 +88,7 @@ public class UsuarioResource extends AbstractResource {
 
     @PutMapping("/usuarios")
     @Timed
-    @PreAuthorize("@secChecker.puedeModificarUsuario(authentication, #managedUserVM?.login)")
+    @PreAuthorize("@secChecker.canUpdateUser(authentication, #managedUserVM?.login)")
     public ResponseEntity<UsuarioDto> update(@Valid @RequestBody ManagedUserVM managedUserVM) {
         Optional<UsuarioEntity> usuarioExistente = userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase());
 
@@ -107,7 +107,7 @@ public class UsuarioResource extends AbstractResource {
 
     @GetMapping("/usuarios")
     @Timed
-    @PreAuthorize("@secChecker.puedeConsultarUsuario(authentication)")
+    @PreAuthorize("@secChecker.canAccessUser(authentication)")
     public ResponseEntity<List<UsuarioDto>> find(Pageable pageable, Boolean includeDeleted, String query) {
         Page<UsuarioDto> page = usuarioService.find(pageable, includeDeleted, query).map(usuarioMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/usuarios");
@@ -116,7 +116,7 @@ public class UsuarioResource extends AbstractResource {
 
     @GetMapping("/usuarios/{login:" + Constants.LOGIN_REGEX + "}")
     @Timed
-    @PreAuthorize("@secChecker.puedeConsultarUsuario(authentication)")
+    @PreAuthorize("@secChecker.canAccessUser(authentication)")
     public ResponseEntity<UsuarioDto> get(@PathVariable String login, Boolean includeDeleted) {
         return ResponseUtil.wrapOrNotFound(usuarioService.getUsuarioWithAuthoritiesByLogin(login, includeDeleted).map(usuarioMapper::toDto));
     }

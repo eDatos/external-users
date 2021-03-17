@@ -16,103 +16,103 @@ public class ApplicationTemplateSecurity {
     private static final String SEPARATOR = "#";
 
     public boolean canAccessCategory(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canAccessFilters(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canCreateFilters(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canUpdateFilters(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canDeleteFilters(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canAccessFavorites(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canCreateFavorites(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canUpdateFavorites(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
     public boolean canDeleteFavorites(Authentication authentication) {
-        return this.esAdmin(authentication);
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeConsultarAuditoria(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canAccessAudit(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeConsultarLogs(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canAccessLogs(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeModificarLogs(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canUpdateLogs(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeConsultarUsuario(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canAccessUser(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeCrearUsuario(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canCreateUser(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeModificarUsuario(Authentication authentication, String login) {
+    public boolean canUpdateUser(Authentication authentication, String login) {
         String userLogin = SecurityUtils.getCurrentUserLogin();
-        return this.esAdmin(authentication) || (StringUtils.isNotBlank(userLogin) && StringUtils.isNotBlank(login) && userLogin.equals(login));
+        return this.isAdmin(authentication) || (StringUtils.isNotBlank(userLogin) && StringUtils.isNotBlank(login) && userLogin.equals(login));
     }
 
-    public boolean puedeBorrarUsuario(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canDeleteUser(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeConsultarDocumento(Authentication authentication) {
-        return this.esUsuario(authentication);
+    public boolean canAccessDocument(Authentication authentication) {
+        return this.isUser(authentication);
     }
 
-    public boolean puedeCrearDocumento(Authentication authentication) {
-        return this.esUsuario(authentication);
+    public boolean canCreateDocument(Authentication authentication) {
+        return this.isUser(authentication);
     }
 
-    public boolean puedeModificarDocumento(Authentication authentication) {
-        return this.esUsuario(authentication);
+    public boolean canUpdateDocument(Authentication authentication) {
+        return this.isUser(authentication);
     }
 
-    public boolean puedeBorrarDocumento(Authentication authentication) {
-        return this.esUsuario(authentication);
+    public boolean canDeleteDocument(Authentication authentication) {
+        return this.isUser(authentication);
     }
 
-    public boolean puedeConsultarMetrica(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canAccessMetrics(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeConsultarSalud(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canAccessHealth(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    public boolean puedeConsultarConfig(Authentication authentication) {
-        return this.esAdmin(authentication);
+    public boolean canAccessConfig(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
-    private boolean esAdmin(Authentication authentication) {
+    private boolean isAdmin(Authentication authentication) {
         return this.hasRole(authentication, Role.ADMINISTRADOR);
     }
 
-    private boolean esUsuario(Authentication authentication) {
+    private boolean isUser(Authentication authentication) {
         return this.hasRole(authentication, Role.ANY_ROLE_ALLOWED);
     }
 
