@@ -359,6 +359,9 @@
         "new": {
             "title": "Create a new filter"
         },
+        "details": {
+            "title": "Filter {{filterId}}"
+        },
         "lastAccessDate": {
             "label": ""
         },

@@ -358,6 +358,7 @@
         }
     },
     "filter": {
+        "name": "Filtro",
         "home": {
             "createLabel": "Crear filtro",
             "title": "Filtros"
@@ -365,14 +366,10 @@
         "new": {
             "title": "Crear un nuevo filtro"
         },
-        "lastAccessDate": {
-            "label": "Fecha de último acceso"
-        },
-        "login": {
-            "label": "Usuario"
-        },
-        "name": {
-            "label": "Nombre"
+        "entity": {
+            "lastAccessDate": "Fecha de último acceso",
+            "login": "Usuario",
+            "name": "Nombre"
         }
     },
     "global": {

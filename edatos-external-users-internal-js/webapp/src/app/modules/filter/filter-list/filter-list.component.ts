@@ -21,7 +21,7 @@ export class FilterListComponent implements OnInit {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.name.label',
+                translatePath: 'filter.entity.name',
             },
         },
         {
@@ -29,7 +29,7 @@ export class FilterListComponent implements OnInit {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.login.label',
+                translatePath: 'filter.entity.login',
             },
         },
         {
@@ -37,7 +37,7 @@ export class FilterListComponent implements OnInit {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.lastAccessDate.label',
+                translatePath: 'filter.entity.lastAccessDate',
             },
         },
     ];
