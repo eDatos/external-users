@@ -362,6 +362,9 @@
             "createLabel": "Crear filtro",
             "title": "Filtros"
         },
+        "new": {
+            "title": "Crear un nuevo filtro"
+        },
         "lastAccessDate": {
             "label": "Fecha de último acceso"
         },

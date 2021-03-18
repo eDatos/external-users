@@ -24,6 +24,15 @@ export const FILTER_ROUTES: Routes = [
         },
         canActivate: [UserRouteAccessGuard],
     },
+    {
+        path: 'new',
+        component: FilterListComponent,
+        data: {
+            roles: FILTER_ROLES,
+            pageTitle: 'filter.new.title',
+        },
+        canActivate: [UserRouteAccessGuard],
+    },
 ];
 
 @NgModule({
