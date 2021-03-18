@@ -3,6 +3,7 @@ package es.gobcan.istac.edatos.external.users.rest.external.resources;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
@@ -30,6 +31,7 @@ import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FilterMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping(FilterResource.BASE_URL)
@@ -53,7 +55,8 @@ public class FilterResource extends AbstractResource {
     @GetMapping("/{id}")
     @Timed
     public ResponseEntity<FilterDto> getFilterById(@PathVariable Long id) {
-        return ResponseEntity.ok(filterMapper.toDto(filterService.find(id)));
+        FilterDto filterDto = filterMapper.toDto(filterService.find(id));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(filterDto));
     }
 
     @GetMapping

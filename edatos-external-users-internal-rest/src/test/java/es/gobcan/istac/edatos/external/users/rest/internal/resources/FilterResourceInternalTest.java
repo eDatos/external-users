@@ -229,4 +229,10 @@ public class FilterResourceInternalTest {
                     .andExpect(jsonPath("$[0].email", is("user2@gmail.com")))
                     .andExpect(jsonPath("$[1].email", is("user1@gmail.com")));
     }
+
+    @Test
+    public void testIfTheFilterDoesntExists404IsReturned() throws Exception {
+        this.mockMvc.perform(get(ENDPOINT_URL + "/1"))
+                    .andExpect(status().isNotFound());
+    }
 }
