@@ -12,10 +12,10 @@ import { LazyLoadEvent } from 'primeng/api';
     templateUrl: './filter.component.html',
 })
 export class FilterComponent implements OnInit {
-    filters: Filter[];
-    totalItems: number;
-    itemsPerPage: number;
-    columns: any = [
+    public filters: Filter[];
+    public totalItems: number;
+    public itemsPerPage: number;
+    public columns: any = [
         {
             fieldName: 'name',
             sortable: true,
@@ -54,7 +54,7 @@ export class FilterComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
+    public ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe((params) => {
             this.filterSearch.fromQueryParams(params).subscribe(() =>
                 this.filterService
@@ -69,7 +69,7 @@ export class FilterComponent implements OnInit {
         });
     }
 
-    transition() {
+    public transition() {
         const transitionParams = {
             page: this.page,
             size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
@@ -82,7 +82,7 @@ export class FilterComponent implements OnInit {
         this.router.navigate(['/filter'], { replaceUrl: true, queryParams });
     }
 
-    loadData(e: LazyLoadEvent) {
+    public loadData(e: LazyLoadEvent) {
         this.page = e.first / e.rows + 1;
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
@@ -92,7 +92,7 @@ export class FilterComponent implements OnInit {
         this.transition();
     }
 
-    sort() {
+    public sort() {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
             result.push('id');
@@ -100,7 +100,7 @@ export class FilterComponent implements OnInit {
         return result;
     }
 
-    clear() {
+    public clear() {
         this.page = 0;
         this.router.navigate([
             '/filter',
@@ -111,7 +111,7 @@ export class FilterComponent implements OnInit {
         ]);
     }
 
-    onSuccess(rw: ResponseWrapper) {
+    public onSuccess(rw: ResponseWrapper) {
         this.totalItems = parseInt(rw.headers.get('X-Total-Count'), 10);
         this.filters = rw.json;
     }
