@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping(CategoryResource.BASE_URL)
@@ -37,7 +40,9 @@ public class CategoryResource extends AbstractResource {
     @GetMapping("/{id}")
     @Timed
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
-        return ResponseEntity.ok(categoryMapper.toDto(categoryService.findCategoryById(id)));
+        CategoryEntity category = categoryService.findCategoryById(id);
+        CategoryDto categoryDto = categoryMapper.toDto(category);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(categoryDto));
     }
 
     @GetMapping

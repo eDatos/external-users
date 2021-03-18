@@ -53,7 +53,7 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, length = 255)
+    @Column(unique = true, nullable = false)
     private String code;
 
     @NotNull
