@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { ITEMS_PER_PAGE } from '@app/app.constants';
 import { UserRouteAccessGuard } from '@app/core/guard';
 import { FILTER_ROLES } from '@app/core/service';
-import { FilterComponent } from '@app/modules/filter/filter.component';
+import { FilterListComponent } from '@app/modules/filter/filter-list/filter-list.component';
 import { PagingParamsResolver } from 'arte-ng/services';
 
 export const FILTER_ROUTES: Routes = [
     {
         path: '',
-        component: FilterComponent,
+        component: FilterListComponent,
         resolve: {
             pagingParams: PagingParamsResolver,
         },

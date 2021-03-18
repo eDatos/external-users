@@ -8,10 +8,10 @@ import { ResponseWrapper } from 'arte-ng/model';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
-    selector: 'app-filter',
-    templateUrl: './filter.component.html',
+    selector: 'app-filter-list',
+    templateUrl: './filter-list.component.html',
 })
-export class FilterComponent implements OnInit {
+export class FilterListComponent implements OnInit {
     public filters: Filter[];
     public totalItems: number;
     public itemsPerPage: number;
