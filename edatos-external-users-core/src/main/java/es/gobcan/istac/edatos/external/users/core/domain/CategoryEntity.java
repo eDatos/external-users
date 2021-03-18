@@ -55,7 +55,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      * The code of the category. For example: 060, or 060_010_030.
      */
     @NotNull
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String code;
 
     /**

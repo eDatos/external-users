@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
-import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.service.OperationService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.OperationDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.OperationMapper;
-import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -43,10 +41,6 @@ public class OperationResource extends AbstractResource {
     @Timed
     public ResponseEntity<OperationDto> get(@PathVariable Long id) {
         OperationEntity operation = operationService.findOperationById(id);
-        if (operation == null) {
-            // TODO EDATOS-3124 Miguel I10n this message? message.properties instead constant
-            return ResponseEntity.notFound().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.ENTIDAD_NO_ENCONTRADA, "Entity requested was not found")).build();
-        }
         OperationDto operationDto = operationMapper.toDto(operation);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operationDto));
     }

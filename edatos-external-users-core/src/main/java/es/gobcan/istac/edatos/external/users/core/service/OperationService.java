@@ -12,10 +12,6 @@ public interface OperationService {
 
     OperationEntity findOperationById(Long id);
 
-    OperationEntity findOperationByCode(String code);
-
-    OperationEntity findOperationByUrn(String urn);
-
     List<OperationEntity> findAllOperations();
 
     Page<OperationEntity> find(String query, Pageable pageable);
@@ -27,9 +23,5 @@ public interface OperationService {
     OperationEntity updateOperation(OperationEntity operation);
 
     void deleteOperation(Long operationId);
-
-    OperationEntity publishInternallyOperation(Long id);
-
-    OperationEntity publishExternallyOperation(Long id);
 
 }
