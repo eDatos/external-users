@@ -116,7 +116,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class)
         http.exceptionHandling().authenticationEntryPoint(http401UnauthorizedEntryPoint()).and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().headers()
                 .frameOptions().sameOrigin().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/api/activate").permitAll()
-                .antMatchers("/api/authenticate").permitAll().antMatchers("/api/profile-info").permitAll().antMatchers("/account").permitAll().antMatchers("/login").permitAll()
+                .antMatchers("/api/authenticate").permitAll().antMatchers("/api/profile-info").permitAll().antMatchers("/api/account/**").permitAll().antMatchers("/login").permitAll()
                 .antMatchers("/v2/api-docs/**").permitAll().antMatchers("/apis/operations-internal/**").permitAll().antMatchers("/**").authenticated();
     }
 
