@@ -1,6 +1,6 @@
 {
     "global": {
-        "title": "eDatos External Users",
+        "title": "EDatos External Users",
         "yes": "Sí",
         "no": "No",
         "browsehappy": "Está usando un navegador <strong>no actualizado</strong>. Por favor, <a href=\"http://browsehappy.com/?locale=en\">actualice su navegador</a> para mejorar su experiencia.",
@@ -43,9 +43,6 @@
                     "invalid": "Su correo electrónico no es válido.",
                     "minlength": "Se requiere que su correo electrónico tenga al menos 5 caracteres",
                     "maxlength": "Su correo electrónico no puede tener más de 50 caracteres"
-                },
-                "password": {
-                    "notMatch": "Asegúrese de que sus contraseñas coninciden"
                 }
             }
         },

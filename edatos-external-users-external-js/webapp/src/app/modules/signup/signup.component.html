@@ -136,11 +136,8 @@
                             <label class="form-label col-md-4" translate="signup.form.email" for="email"></label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input id="email" name="email" [(ngModel)]="user.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
-                                <div class="form-errors-messages" *hasErrors="let messages; let errors=errors">
-                                    <ul>
-                                        <li *ngFor="let m of messages">{{m}}</li>
-                                        <li *ngIf="errors.email" translate="global.messages.validate.email.invalid"></li>
-                                    </ul>
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <li *ngFor="let m of messages">{{m}}</li>
                                 </div>
                             </div>
                         </div>
@@ -152,10 +149,9 @@
                             <label class="form-label col-md-4" translate="signup.form.password" for="password"></label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input type="password" id="password" name="password" [(ngModel)]="user.password" [required]="true" [minlength]="8"> </arte-input>
-                                <div class="form-errors-messages" *hasErrors="let messages; let errors=errors">
+                                <div class="form-errors-messages" *hasErrors="let messages">
                                     <ul>
                                         <li *ngFor="let m of messages">{{m}}</li>
-                                        <li *ngIf="editForm.controls.password?.errors.password" translate="global.messages.validate.password.invalid"></li>
                                     </ul>
                                 </div>
                             </div>
@@ -166,10 +162,9 @@
                             <label class="form-label col-md-4" translate="signup.form.confirmPassword" for="confirmPassword"></label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input type="password" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" [required]="true"> </arte-input>
-                                <div class="form-errors-messages" *hasErrors="let messages; let errors=errors">
+                                <div class="form-errors-messages" *hasErrors="let messages">
                                     <ul>
                                         <li *ngFor="let m of messages">{{m}}</li>
-                                        <li *ngIf="editForm.controls.confirmPassword?.errors.passwordMatch" translate="global.messages.validate.password.notMatch"></li>
                                     </ul>
                                 </div>
                             </div>
