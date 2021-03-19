@@ -4,24 +4,29 @@
             <h2 class="page-header-title">
                 <span class="page-header-title-text" [ngSwitch]="true">
                     <ng-container *ngSwitchCase="!inEditMode">{{ ('filter.name' | translate) + ' ' + filter.id }}</ng-container>
-                    <ng-container *ngSwitchCase="inEditMode && !filter.id">{{ 'filter.new.title' | translate }}</ng-container>
-                    <ng-container *ngSwitchCase="inEditMode && filter.id">{{ 'filter.edit.title' | translate }}</ng-container>
+                    <ng-container *ngSwitchCase="inEditMode && !filter.id">{{ 'filter.form.new' | translate }}</ng-container>
+                    <ng-container *ngSwitchCase="inEditMode && filter.id">{{ 'filter.form.edit' | translate }}</ng-container>
                 </span>
             </h2>
 
             <button class="btn btn-dark mr-2" routerLink="..">
                 <span class="fa fa-arrow-left"></span>
-                <span translate="filter.new.goBack"></span>
+                <span translate="filter.form.goBack"></span>
+            </button>
+
+            <button *ngIf="inEditMode && filter.id" class="btn btn-warning mr-2" (click)="toggleEditMode()">
+                <span class="fa fa-times"></span>
+                <span translate="filter.form.cancel"></span>
             </button>
 
             <button *ngIf="!inEditMode" class="btn btn-primary mr-2" (click)="toggleEditMode()">
                 <span class="fa fa-pencil-square-o"></span>
-                <span translate="filter.edit.title"></span>
+                <span translate="filter.form.edit"></span>
             </button>
 
             <button *ngIf="inEditMode" class="btn btn-primary" (click)="submit()">
                 <span class="fa fa-save"></span>
-                <span translate="filter.new.save"></span>
+                <span translate="filter.form.save"></span>
             </button>
         </div>
     </div>

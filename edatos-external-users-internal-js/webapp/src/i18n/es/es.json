@@ -363,14 +363,6 @@
             "createLabel": "Crear filtro",
             "title": "Filtros"
         },
-        "edit": {
-            "title": "Editar filtro"
-        },
-        "new": {
-            "title": "Crear un nuevo filtro",
-            "save": "Guardar filtro",
-            "goBack": "Volver"
-        },
         "entity": {
             "lastAccessDate": "Fecha de último acceso",
             "email": "Email",
@@ -379,7 +371,12 @@
             "notes": "Notas"
         },
         "form": {
-            "legend": "Detalles del filtro"
+            "legend": "Detalles del filtro",
+            "new": "Crear un nuevo filtro",
+            "save": "Guardar filtro",
+            "edit": "Editar filtro",
+            "cancel": "Cancelar",
+            "goBack": "Volver al listado"
         }
     },
     "global": {
