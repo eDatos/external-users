@@ -9,6 +9,8 @@
         <link rel="manifest" href="manifest.webmanifest" />
     </head>
     <body>
+        <div th:utext="${headerHtml}"></div>
+
         <script th:inline="javascript">
             /*<![CDATA[*/
             window.CONFIGURATION = {};
@@ -20,7 +22,8 @@
             window.CONFIGURATION.metadata.defaultLanguage = /*[[${@metadataProperties.defaultLanguage}]]*/ 'es';
             /*]]>*/
         </script>
-        <div th:utext="${headerHtml}"></div>
+
         <app-root></app-root>
+        <div th:utext="${footerHtml}"></div>
     </body>
 </html>
