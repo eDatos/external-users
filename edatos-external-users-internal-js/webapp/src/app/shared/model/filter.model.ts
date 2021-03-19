@@ -5,7 +5,7 @@ export class Filter extends BaseVersionedAndAuditingEntity {
         public id?: number,
         public name?: string,
         public resourceName?: string,
-        public login?: string,
+        public email?: string,
         public permalink?: string,
         public lastAccessDate?: Date,
         public notes?: string

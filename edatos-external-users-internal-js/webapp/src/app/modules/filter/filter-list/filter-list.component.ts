@@ -25,11 +25,11 @@ export class FilterListComponent implements OnInit {
             },
         },
         {
-            fieldName: 'login',
+            fieldName: 'email',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.entity.login',
+                translatePath: 'filter.entity.email',
             },
         },
         {
