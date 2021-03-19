@@ -364,12 +364,19 @@
             "title": "Filtros"
         },
         "new": {
-            "title": "Crear un nuevo filtro"
+            "title": "Crear un nuevo filtro",
+            "save": "Guardar filtro",
+            "goBack": "Descartar"
         },
         "entity": {
             "lastAccessDate": "Fecha de último acceso",
-            "login": "Usuario",
-            "name": "Nombre"
+            "email": "Email",
+            "name": "Nombre",
+            "permalink": "Permalink",
+            "notes": "Notas"
+        },
+        "form": {
+            "legend": "Detalles del filtro"
         }
     },
     "global": {

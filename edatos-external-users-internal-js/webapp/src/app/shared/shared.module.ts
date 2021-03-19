@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ArteInputModule, ArteOrderListModule, ArteTableModule, ArteAutocompleteModule, ArteSpinnerModule, ArteEntityListEmptyModule } from 'arte-ng';
+import { FormcontrolStatusService } from 'arte-ng/directives';
 import { GenericModalService } from 'arte-ng/services';
 
 import { CommonModule } from '@angular/common';
@@ -56,6 +57,7 @@ import { NgArrayPipesModule } from 'ngx-pipes';
         ArteEntityListEmptyModule,
     ],
     providers: [
+        FormcontrolStatusService,
         DatePipe,
         {
             // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor

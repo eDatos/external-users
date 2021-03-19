@@ -6,9 +6,10 @@ import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { SharedModule } from '@app/shared';
 import { ArteEntityListEmptyModule, ArteSpinnerModule, ArteTableModule } from 'arte-ng';
 import { ArteDirectivesModule } from 'arte-ng/directives';
+import { FilterFormComponent } from './filter-form/filter-form.component';
 
 @NgModule({
-    declarations: [FilterListComponent],
+    declarations: [FilterListComponent, FilterFormComponent],
     imports: [CommonModule, FilterRoutingModule, ArteSpinnerModule, ArteEntityListEmptyModule, ArteTableModule, SharedModule, ArteDirectivesModule],
     providers: [FilterFilter],
 })
