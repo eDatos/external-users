@@ -1,10 +1,10 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
@@ -19,12 +19,14 @@ public abstract class ExternalUserAccountMapper implements EntityMapper<External
     @Autowired
     private ExternalUserRepository externalUserRepository;
 
-    @Autowired
-    PasswordEncoder passwordEncoder;
-
     @Override
-    @Mapping(target = "password", expression = "java( passwordEncoder.encode(dto.getPassword()) )")
+    @Mapping(target = "password", source = "password", qualifiedByName = "encodePassword")
     public abstract ExternalUserEntity toEntity(ExternalUserAccountDto dto);
+
+    @Named("encodePassword")
+    public String encodePassword(String unencryptedPassword) {
+        return SecurityUtils.passwordEncoder(unencryptedPassword);
+    }
 
     public ExternalUserEntity getUserFromEmail(String email) {
         return externalUserRepository.findOneByEmail(email).orElse(null);
