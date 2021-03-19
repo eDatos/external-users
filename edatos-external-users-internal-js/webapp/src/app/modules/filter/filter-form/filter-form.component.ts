@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Filter } from '@app/shared';
+import { Filter, FilterService } from '@app/shared';
 import * as _ from 'lodash';
 
 @Component({
@@ -9,28 +9,39 @@ import * as _ from 'lodash';
     templateUrl: './filter-form.component.html',
 })
 export class FilterFormComponent implements OnInit {
-    public inEditionMode = false;
+    public inEditMode = false;
     public filter: Filter;
 
-    constructor(private activatedRoute: ActivatedRoute, private titleService: Title) {
+    constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private titleService: Title) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
+
         this.activatedRoute.url.subscribe((segments) => {
-            this.inEditionMode = _.last(segments)?.path === 'edit';
+            const lastUrlSegment = _.last(segments)?.path;
+            this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
+            console.log(this.inEditMode);
         });
     }
 
-    public ngOnInit(): void {
-        if (this.inEditionMode) {
+    public ngOnInit() {
+        if (!this.inEditMode) {
             this.titleService.setTitle(this.titleService.getTitle() + ' ' + this.filter.id);
         }
     }
 
-    public submit(): void {
-        console.log('Filter submitted', this.filter);
+    public toggleEditMode(): void {
+        this.inEditMode = !this.inEditMode;
+        console.log(this.inEditMode);
     }
 
-    // FIXME(EDATOS-3280): Remove if not used
-    // private toggleEditionMode(segments: UrlSegment[]): void {
-    //     this.inEditionMode = !this.inEditionMode;
-    // }
+    public submit(): void {
+        if (this.filter.id == null) {
+            this.filterService.save(this.filter).subscribe(this.done);
+        } else {
+            this.filterService.update(this.filter).subscribe(this.done);
+        }
+    }
+
+    private done(filter: Filter) {
+        this.filter = filter;
+    }
 }

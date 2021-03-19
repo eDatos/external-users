@@ -47,18 +47,6 @@ export const FILTER_ROUTES: Routes = [
         },
         canActivate: [UserRouteAccessGuard],
     },
-    {
-        path: ':id/edit',
-        component: FilterFormComponent,
-        resolve: {
-            filter: FilterResolver,
-        },
-        data: {
-            roles: FILTER_ROLES,
-            pageTitle: 'filter.name',
-        },
-        canActivate: [UserRouteAccessGuard],
-    },
 ];
 
 @NgModule({

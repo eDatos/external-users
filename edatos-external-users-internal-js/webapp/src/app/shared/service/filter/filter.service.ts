@@ -10,16 +10,24 @@ import { map } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class FilterService {
-    resourceUrl = 'api/filters';
+    public readonly resourceUrl = 'api/filters';
 
     constructor(private http: HttpClient) {}
 
-    get(id: number): Observable<Filter> {
+    public get(id: number): Observable<Filter> {
         return this.http.get<Filter>(`${this.resourceUrl}/${id}`);
     }
 
-    find(req?: any): Observable<ResponseWrapper> {
+    public find(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, { ...options, observe: 'response' }).pipe(map((res) => ResponseUtils.convertToResponseWrapper(res, Filter)));
+    }
+
+    public save(filter: Filter): Observable<Filter> {
+        return this.http.post<Filter>(this.resourceUrl, filter);
+    }
+
+    public update(filter: Filter): Observable<Filter> {
+        return this.http.put<Filter>(this.resourceUrl, filter);
     }
 }

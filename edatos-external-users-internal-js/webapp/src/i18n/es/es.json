@@ -363,10 +363,13 @@
             "createLabel": "Crear filtro",
             "title": "Filtros"
         },
+        "edit": {
+            "title": "Editar filtro"
+        },
         "new": {
             "title": "Crear un nuevo filtro",
             "save": "Guardar filtro",
-            "goBack": "Descartar"
+            "goBack": "Volver"
         },
         "entity": {
             "lastAccessDate": "Fecha de último acceso",
