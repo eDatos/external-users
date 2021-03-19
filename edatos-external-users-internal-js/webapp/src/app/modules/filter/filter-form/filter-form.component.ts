@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Filter, FilterService } from '@app/shared';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-filter-form',
@@ -9,6 +10,7 @@ import { Filter, FilterService } from '@app/shared';
 })
 export class FilterFormComponent implements OnInit {
     public inEditMode = false;
+    public isSaving = false;
     public filter: Filter;
 
     constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private titleService: Title, private router: Router) {
@@ -31,15 +33,26 @@ export class FilterFormComponent implements OnInit {
     }
 
     public submit(): void {
+        this.toggleIsSaving();
         if (this.filter.id == null) {
-            this.filterService.save(this.filter).subscribe((filter) => {
-                this.router.navigate([`../${filter.id}`], { relativeTo: this.activatedRoute });
-            });
+            this.filterService
+                .save(this.filter)
+                .pipe(finalize(() => this.toggleIsSaving()))
+                .subscribe((filter) => {
+                    this.router.navigate([`../${filter.id}`], { relativeTo: this.activatedRoute });
+                });
         } else {
-            this.filterService.update(this.filter).subscribe((filter) => {
-                this.filter = filter;
-                this.toggleEditMode();
-            });
+            this.filterService
+                .update(this.filter)
+                .pipe(finalize(() => this.toggleIsSaving()))
+                .subscribe((filter) => {
+                    this.filter = filter;
+                    this.toggleEditMode();
+                });
         }
+    }
+
+    private toggleIsSaving() {
+        this.isSaving = !this.isSaving;
     }
 }
