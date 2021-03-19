@@ -3,13 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { ITEMS_PER_PAGE } from '@app/app.constants';
 import { UserRouteAccessGuard } from '@app/core/guard';
 import { FILTER_ROLES } from '@app/core/service';
-import { FilterComponent } from '@app/modules/filter/filter.component';
+import { FilterFormComponent } from '@app/modules/filter/filter-form/filter-form.component';
+import { FilterListComponent } from '@app/modules/filter/filter-list/filter-list.component';
+import { FilterResolver } from '@app/modules/filter/filter.resolver';
 import { PagingParamsResolver } from 'arte-ng/services';
 
 export const FILTER_ROUTES: Routes = [
     {
         path: '',
-        component: FilterComponent,
+        component: FilterListComponent,
         resolve: {
             pagingParams: PagingParamsResolver,
         },
@@ -21,6 +23,27 @@ export const FILTER_ROUTES: Routes = [
                 sort: 'created_date,desc',
                 size: ITEMS_PER_PAGE,
             },
+        },
+        canActivate: [UserRouteAccessGuard],
+    },
+    {
+        path: 'new',
+        component: FilterFormComponent,
+        data: {
+            roles: FILTER_ROLES,
+            pageTitle: 'filter.new.title',
+        },
+        canActivate: [UserRouteAccessGuard],
+    },
+    {
+        path: ':id',
+        component: FilterFormComponent,
+        resolve: {
+            filter: FilterResolver,
+        },
+        data: {
+            roles: FILTER_ROLES,
+            pageTitle: 'filter.name',
         },
         canActivate: [UserRouteAccessGuard],
     },

@@ -358,18 +358,25 @@
         }
     },
     "filter": {
+        "name": "Filtro",
         "home": {
             "createLabel": "Crear filtro",
             "title": "Filtros"
         },
-        "lastAccessDate": {
-            "label": "Fecha de último acceso"
+        "entity": {
+            "lastAccessDate": "Fecha de último acceso",
+            "email": "Email",
+            "name": "Nombre",
+            "permalink": "Permalink",
+            "notes": "Notas"
         },
-        "login": {
-            "label": "Usuario"
-        },
-        "name": {
-            "label": "Nombre"
+        "form": {
+            "legend": "Detalles del filtro",
+            "new": "Crear un nuevo filtro",
+            "save": "Guardar filtro",
+            "edit": "Editar filtro",
+            "cancel": "Cancelar",
+            "goBack": "Volver al listado"
         }
     },
     "global": {
