@@ -5,7 +5,7 @@
                 <span class="page-header-title-text" [ngSwitch]="true">
                     <ng-container *ngSwitchCase="!inEditMode">{{ ('filter.name' | translate) + ' ' + filter.id }}</ng-container>
                     <ng-container *ngSwitchCase="inEditMode && !filter.id">{{ 'filter.form.new' | translate }}</ng-container>
-                    <ng-container *ngSwitchCase="inEditMode && filter.id">{{ 'filter.form.edit' | translate }}</ng-container>
+                    <ng-container *ngSwitchDefault>{{ 'filter.form.edit' | translate }}</ng-container>
                 </span>
             </h2>
 
