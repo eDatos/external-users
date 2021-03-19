@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Filter, FilterService } from '@app/shared';
 import * as _ from 'lodash';
 
@@ -12,7 +12,7 @@ export class FilterFormComponent implements OnInit {
     public inEditMode = false;
     public filter: Filter;
 
-    constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private titleService: Title) {
+    constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private titleService: Title, private router: Router) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
 
         this.activatedRoute.url.subscribe((segments) => {
@@ -33,13 +33,14 @@ export class FilterFormComponent implements OnInit {
 
     public submit(): void {
         if (this.filter.id == null) {
-            this.filterService.save(this.filter).subscribe(this.done);
+            this.filterService.save(this.filter).subscribe((filter) => {
+                this.router.navigate([`../${filter.id}`], { relativeTo: this.activatedRoute });
+            });
         } else {
-            this.filterService.update(this.filter).subscribe(this.done);
+            this.filterService.update(this.filter).subscribe((filter) => {
+                this.filter = filter;
+                this.toggleEditMode();
+            });
         }
-    }
-
-    private done(filter: Filter) {
-        this.filter = filter;
     }
 }
