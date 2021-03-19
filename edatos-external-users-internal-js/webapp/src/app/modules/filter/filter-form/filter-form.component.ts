@@ -18,7 +18,6 @@ export class FilterFormComponent implements OnInit {
         this.activatedRoute.url.subscribe((segments) => {
             const lastUrlSegment = _.last(segments)?.path;
             this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
-            console.log(this.inEditMode);
         });
     }
 
@@ -30,7 +29,6 @@ export class FilterFormComponent implements OnInit {
 
     public toggleEditMode(): void {
         this.inEditMode = !this.inEditMode;
-        console.log(this.inEditMode);
     }
 
     public submit(): void {
