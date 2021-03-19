@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Filter, FilterService } from '@app/shared';
-import * as _ from 'lodash';
 
 @Component({
     selector: 'app-filter-form',
@@ -16,7 +15,7 @@ export class FilterFormComponent implements OnInit {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
 
         this.activatedRoute.url.subscribe((segments) => {
-            const lastUrlSegment = _.last(segments)?.path;
+            const lastUrlSegment = segments[segments.length - 1].path;
             this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
         });
     }
