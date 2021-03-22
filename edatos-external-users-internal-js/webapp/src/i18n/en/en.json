@@ -92,7 +92,8 @@
                 "not-valid": "",
                 "number": "",
                 "pattern": "",
-                "required": ""
+                "required": "",
+                "email": "Not a valid email"
             }
         },
         "input": {

@@ -98,7 +98,8 @@
                 "not-valid": "El valor de este campo no es válido",
                 "number": "Este campo debe ser un número.",
                 "pattern": "Este campo debe seguir el patrón {{pattern}}.",
-                "required": "Este campo es obligatorio."
+                "required": "Este campo es obligatorio.",
+                "email": "Este campo no contiene un email válido"
             }
         },
         "input": {
