@@ -30,7 +30,6 @@ import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcS
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
@@ -43,7 +42,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
 @Entity
 @Table(name = "tb_operations", uniqueConstraints = {@UniqueConstraint(columnNames = {"code"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
-@TypeDef(name = "json", typeClass = JsonStringType.class)
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class OperationEntity extends AbstractVersionedAndAuditingEntity {
 
@@ -80,28 +78,28 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
     private ExternalItemEntity commonMetadata;
 
     @NotNull
-    @Type(type = "json")
-    @Column(columnDefinition = "json", nullable = false)
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO title;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private InternationalStringVO acronym;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private InternationalStringVO objective;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private InternationalStringVO description;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private InternationalStringVO comment;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private InternationalStringVO notes;
 
     @Column(nullable = false)
