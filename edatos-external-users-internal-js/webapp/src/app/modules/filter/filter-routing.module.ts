@@ -31,7 +31,7 @@ export const FILTER_ROUTES: Routes = [
         component: FilterFormComponent,
         data: {
             roles: FILTER_ROLES,
-            pageTitle: 'filter.new.title',
+            pageTitle: 'filter.form.new',
         },
         canActivate: [UserRouteAccessGuard],
     },
