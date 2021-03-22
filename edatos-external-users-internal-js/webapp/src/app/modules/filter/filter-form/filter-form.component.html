@@ -15,7 +15,7 @@
             </button>
 
             <button *ngIf="inEditMode && filter.id" class="btn btn-warning mr-2 d-flex align-items-center" (click)="cancel()" [disabled]="isSaving || isLoading">
-                <span *ngIf="isLoading" class="spinner-grow spinner-grow-sm fa" role="status" aria-hidden="true"></span>
+                <arte-spinner class="spinner-btn mr-1" *ngIf="isLoading" aria-hidden="true"></arte-spinner>
                 <span *ngIf="!isLoading" class="fa fa-times"></span>
                 <span translate="filter.form.cancel"></span>
             </button>
@@ -26,7 +26,7 @@
             </button>
 
             <button *ngIf="inEditMode" class="btn btn-primary d-flex align-items-center" type="button" (click)="submit()" [disabled]="isSaving || isLoading || !filterForm.form.valid">
-                <span *ngIf="isSaving" class="spinner-grow spinner-grow-sm fa" role="status" aria-hidden="true"></span>
+                <arte-spinner class="spinner-btn mr-1" *ngIf="isSaving" aria-hidden="true"></arte-spinner>
                 <span *ngIf="!isSaving" class="fa fa-save"></span>
                 <span translate="filter.form.save"></span>
             </button>
