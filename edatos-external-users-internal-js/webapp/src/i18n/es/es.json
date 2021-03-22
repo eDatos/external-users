@@ -380,6 +380,30 @@
             "goBack": "Volver al listado"
         }
     },
+    "favorite": {
+        "name": "Favorito",
+        "home": {
+            "createLabel": "Crear favorito",
+            "title": "Favoritos"
+        },
+        "entity": {
+            "email": "Email"
+        },
+        "form": {
+            "legend": "Detalles del favorito",
+            "new": "Crear un nuevo favorito",
+            "save": "Guardar favorito",
+            "edit": "Editar favorito",
+            "cancel": "Cancelar",
+            "goBack": "Volver al listado"
+        }
+    },
+    "category": {
+        "name": "Tema"
+    },
+    "operation": {
+        "name": "Operación estadística"
+    },
     "global": {
         "alerts": {
             "title": {
@@ -575,50 +599,6 @@
         },
         "title": "Métricas de aplicación",
         "updating": "Actualizando..."
-    },
-    "operation": {
-        "acronym": {
-            "label": "Acrónimo",
-            "placeholder": "Acrónimo"
-        },
-        "code": {
-            "label": "Código",
-            "placeholder": "Código"
-        },
-        "creationDate": {
-            "label": "Fecha de creación"
-        },
-        "delete": {
-            "question": "¿Está seguro de que desea eliminar la operación <strong>{{title}}</strong>?"
-        },
-        "description": {
-            "label": "Descripción",
-            "placeholder": "Descripción"
-        },
-        "home": {
-            "createLabel": "Añadir nueva operación",
-            "title": "Operaciones estadísticas"
-        },
-        "internalInventoryDate": {
-            "label": "Fecha de publicación interna"
-        },
-        "inventoryDate": {
-            "label": "Fecha de publicación externa"
-        },
-        "section": {
-            "contentDescriptors": "Descriptores de contenido",
-            "diffusionDescriptors": "Descriptores de difusión",
-            "identifiers": "Identificadores",
-            "productionDescriptors": "Descriptores de producción"
-        },
-        "title": {
-            "label": "Título",
-            "placeholder": "Título"
-        },
-        "urn": {
-            "label": "URN",
-            "placeholder": "URN"
-        }
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"

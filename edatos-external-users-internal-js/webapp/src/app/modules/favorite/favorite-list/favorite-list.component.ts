@@ -9,20 +9,20 @@ import { ResponseWrapper } from 'arte-ng/model';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
-    selector: 'app-favorite',
-    templateUrl: './favorite.component.html',
+    selector: 'app-favorite-list',
+    templateUrl: './favorite-list.component.html',
 })
-export class FavoriteComponent implements OnInit {
+export class FavoriteListComponent implements OnInit {
     public favorites: Favorite[];
     public totalItems: number;
     public itemsPerPage: number;
     public columns: any = [
         {
-            fieldName: 'login',
+            fieldName: 'email',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'favorite.login.label',
+                translatePath: 'favorite.entity.email',
             },
         },
         {
@@ -30,7 +30,7 @@ export class FavoriteComponent implements OnInit {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'favorite.subjectArea.label',
+                translatePath: 'category.name',
             },
         },
     ];
