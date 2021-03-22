@@ -28,8 +28,8 @@
                     >
                         <ng-template pTemplate="body" let-favorite>
                             <tr [routerLink]="['../favorite', favorite.id]">
-                                <td>{{favorite.login}}</td>
-                                <td>{{favorite.subjectArea.name.get(mainLanguage)}}</td>
+                                <td>{{favorite.email}}</td>
+                                <td>{{getLocalisedString(favorite.category.name)}}</td>
                                 <!--TODO(EDATOS-3294): add operations-->
                             </tr>
                         </ng-template>

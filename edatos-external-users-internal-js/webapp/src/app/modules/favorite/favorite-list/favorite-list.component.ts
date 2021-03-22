@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { FavoriteFilter } from '@app/modules/favorite/favorite-search/favorite-search';
+import { InternationalString } from '@app/shared';
 import { Favorite } from '@app/shared/model/favorite.model';
 import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -34,7 +35,7 @@ export class FavoriteListComponent implements OnInit {
             },
         },
     ];
-    public mainLanguage: string;
+    private mainLanguageCode: string;
     private page: any;
     private reverse: boolean;
     private predicate: any;
@@ -52,7 +53,7 @@ export class FavoriteListComponent implements OnInit {
             this.predicate = data['pagingParams'].predicate;
             this.itemsPerPage = data['pagingParams'].itemsPerPage;
         });
-        this.mainLanguage = this.translateService.getDefaultLang();
+        this.mainLanguageCode = this.translateService.getDefaultLang();
     }
 
     public ngOnInit(): void {
@@ -110,6 +111,10 @@ export class FavoriteListComponent implements OnInit {
                 sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
             },
         ]);
+    }
+
+    public getLocalisedString(internationalString: InternationalString): string | undefined {
+        return internationalString.texts.find((localisedString) => localisedString.locale === this.mainLanguageCode).label;
     }
 
     private onSuccess(response: ResponseWrapper) {

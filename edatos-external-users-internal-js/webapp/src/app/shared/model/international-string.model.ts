@@ -5,8 +5,4 @@ export class InternationalString extends BaseVersionedEntity implements BaseEnti
     constructor(public id?: number, public texts?: LocalisedString[]) {
         super();
     }
-
-    public get(localeLabel: string): LocalisedString | undefined {
-        return this.texts.find((locale) => locale.label === localeLabel);
-    }
 }
