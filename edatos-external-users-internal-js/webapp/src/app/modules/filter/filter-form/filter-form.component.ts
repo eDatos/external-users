@@ -11,11 +11,11 @@ import { finalize } from 'rxjs/operators';
 export class FilterFormComponent implements OnInit {
     public inEditMode = false;
     public isSaving = false;
+    public isLoading = false;
     public filter: Filter;
 
     constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private titleService: Title, private router: Router) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
-
         this.activatedRoute.url.subscribe((segments) => {
             const lastUrlSegment = segments[segments.length - 1].path;
             this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
@@ -30,6 +30,14 @@ export class FilterFormComponent implements OnInit {
 
     public toggleEditMode(): void {
         this.inEditMode = !this.inEditMode;
+    }
+
+    public cancel(): void {
+        this.updateData();
+    }
+
+    public edit(): void {
+        this.toggleEditMode();
     }
 
     public submit(): void {
@@ -52,7 +60,24 @@ export class FilterFormComponent implements OnInit {
         }
     }
 
-    private toggleIsSaving() {
+    private toggleIsSaving(): void {
         this.isSaving = !this.isSaving;
+    }
+
+    private updateData(): void {
+        this.showSpinner();
+        this.filterService.get(this.filter.id).subscribe((filter) => {
+            this.filter = filter;
+            this.hideSpinner();
+            this.toggleEditMode();
+        });
+    }
+
+    private showSpinner(): void {
+        this.isLoading = true;
+    }
+
+    private hideSpinner(): void {
+        this.isLoading = false;
     }
 }
