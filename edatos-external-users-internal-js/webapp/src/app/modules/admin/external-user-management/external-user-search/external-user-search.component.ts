@@ -12,15 +12,14 @@ import { ArteEventManager } from 'arte-ng/services';
 })
 export class ExternalUserSearchComponent implements OnInit, OnDestroy {
     private filterChangesSubject: Subject<any> = new Subject<any>();
-    subscription: Subscription;
+    public subscription: Subscription;
 
     @Input()
     public filters: ExternalUserFilter;
-    public rolEnum = Role;
 
     constructor(private eventManager: ArteEventManager) {}
 
-    ngOnInit() {
+    public ngOnInit() {
         this.subscription = this.filterChangesSubject.pipe(debounceTime(300)).subscribe(() =>
             this.eventManager.broadcast({
                 name: 'userSearch',
@@ -29,7 +28,7 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
         );
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.eventManager.destroy(this.subscription);
     }
 

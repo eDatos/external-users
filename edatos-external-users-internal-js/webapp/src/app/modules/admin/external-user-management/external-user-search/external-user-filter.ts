@@ -1,16 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { EntityFilter, BaseEntityFilter } from 'arte-ng/model';
-import { Role } from '@app/core/model';
 
 export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter {
     public name?: string;
     public includeDeleted: boolean;
-    public rol: Role;
-    public allRoles: string[];
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
-        this.allRoles = Object.keys(Role);
     }
 
     protected registerParameters() {
