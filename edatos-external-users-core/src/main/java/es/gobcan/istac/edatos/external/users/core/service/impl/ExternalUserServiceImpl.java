@@ -83,7 +83,7 @@ public class ExternalUserServiceImpl implements ExternalUserService {
             queryBuilder.append(query);
         }
         String finalQuery = getFinalQuery(includeDeleted, queryBuilder);
-        return queryUtil.queryToUserCriteria(pageable, finalQuery);
+        return queryUtil.queryToUserExternalUserCriteria(pageable, finalQuery);
     }
 
     private String getFinalQuery(Boolean includeDeleted, StringBuilder queryBuilder) {

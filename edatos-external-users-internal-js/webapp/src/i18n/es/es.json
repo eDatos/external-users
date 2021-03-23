@@ -665,7 +665,9 @@
         "rol": "Rol",
         "roles": "Roles",
         "status": {
-            "deleted": "Eliminado"
+            "name": "Estado",
+            "deleted": "Eliminado",
+            "active": "Activo"
         },
         "updated": "Se ha actualizado el usuario {{ param }}"
     }

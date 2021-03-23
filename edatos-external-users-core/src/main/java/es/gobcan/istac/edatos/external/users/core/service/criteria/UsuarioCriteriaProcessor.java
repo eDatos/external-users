@@ -15,7 +15,7 @@ import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.converter.CriterionConverter;
 
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
@@ -28,20 +28,28 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
     private static final String TABLE_FIELD_APELLIDO1 = "apellido1";
     private static final String TABLE_FIELD_APELLIDO2 = "apellido2";
 
-    private static final String ENTITY_FIELD_LOGIN = "login";
-    private static final String ENTITY_FIELD_NOMBRE = "nombre";
-    private static final String ENTITY_FIELD_APELLIDO1 = "apellido1";
-    private static final String ENTITY_FIELD_APELLIDO2 = "apellido2";
+    private static final String ENTITY_FIELD_NAME = "name";
+    private static final String ENTITY_FIELD_SURNAME1 = "surname1";
+    private static final String ENTITY_FIELD_SURNAME2 = "surname2";
     private static final String ENTITY_FIELD_EMAIL = "email";
     private static final String ENTITY_FIELD_DELETION_DATE = "deletionDate";
     private static final String ENTITY_FIELD_LANGUAGE = "language";
-
-    public UsuarioCriteriaProcessor() {
-        super(UsuarioEntity.class);
-    }
+    private static final String ENTITY_FIELD_TREATMENT = "treatment";
 
     public enum QueryProperty {
-        LOGIN, NOMBRE, APELLIDO1, APELLIDO2, ROLE, EMAIL, USUARIO, DELETION_DATE, LANGUAGE
+        NAME,
+        SURNAME1,
+        SURNAME2,
+        ROLE,
+        EMAIL,
+        USER,
+        DELETION_DATE,
+        LANGUAGE,
+        TREATMENT,
+    }
+
+    public UsuarioCriteriaProcessor() {
+        super(ExternalUserEntity.class);
     }
 
     @Override
@@ -52,19 +60,16 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withCriterionConverter(new RolCriterionBuilder())
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.LOGIN).sortable()
-                .withEntityProperty(ENTITY_FIELD_LOGIN).build());
+                .withQueryProperty(QueryProperty.NAME).sortable()
+                .withEntityProperty(ENTITY_FIELD_NAME).build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.NOMBRE).sortable()
-                .withEntityProperty(ENTITY_FIELD_NOMBRE).build());
+                .withQueryProperty(QueryProperty.SURNAME1).sortable()
+                .withEntityProperty(ENTITY_FIELD_SURNAME1).build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.APELLIDO1).sortable()
-                .withEntityProperty(ENTITY_FIELD_APELLIDO1).build());
+                .withQueryProperty(QueryProperty.SURNAME2).sortable()
+                .withEntityProperty(ENTITY_FIELD_SURNAME2).build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.APELLIDO2).sortable()
-                .withEntityProperty(ENTITY_FIELD_APELLIDO2).build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.USUARIO)
+                .withQueryProperty(QueryProperty.USER)
                 .withCriterionConverter(new SqlCriterionBuilder())
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.dateRestrictionProcessor()
@@ -74,6 +79,10 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
         registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.LANGUAGE)
                 .withEntityProperty(ENTITY_FIELD_LANGUAGE)
+                .build());
+        registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
+                .withQueryProperty(QueryProperty.TREATMENT)
+                .withEntityProperty(ENTITY_FIELD_TREATMENT)
                 .build());
         registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.EMAIL)
@@ -86,7 +95,7 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
 
         @Override
         public Criterion convertToCriterion(QueryPropertyRestriction property, CriteriaProcessorContext context) {
-            if (QueryProperty.USUARIO.name().equalsIgnoreCase(property.getLeftExpression())) {
+            if (QueryProperty.USER.name().equalsIgnoreCase(property.getLeftExpression())) {
                 List<String> fields = new ArrayList<>(Arrays.asList(TABLE_FIELD_LOGIN, TABLE_FIELD_NOMBRE, TABLE_FIELD_APELLIDO1, TABLE_FIELD_APELLIDO2));
                 return CriteriaUtil.buildAccentAndCaseInsensitiveCriterion(property, fields);
             }

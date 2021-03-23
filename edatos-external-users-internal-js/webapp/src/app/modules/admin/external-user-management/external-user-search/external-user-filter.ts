@@ -20,11 +20,6 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
             clearFilter: () => (this.name = null),
         });
         this.registerParam({
-            paramName: 'rol',
-            updateFilterFromParam: (param) => (this.rol = this.convertParamToRole(param)),
-            clearFilter: () => (this.rol = null),
-        });
-        this.registerParam({
             paramName: 'includeDeleted',
             updateFilterFromParam: (param) => {
                 this.includeDeleted = param === 'true';
@@ -33,22 +28,14 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         });
     }
 
-    getCriterias() {
+    public getCriterias() {
         const criterias = [];
         if (this.name) {
             criterias.push(`USUARIO ILIKE '%${this.escapeSingleQuotes(this.name)}%'`);
-        }
-        if (this.rol) {
-            criterias.push(`ROLE EQ '${this.rol}'`);
         }
         if (!this.includeDeleted) {
             criterias.push(`DELETION_DATE IS_NULL`);
         }
         return criterias;
-    }
-
-    private convertParamToRole(param: any): Role {
-        const currentKey = this.allRoles.find((key) => key === param);
-        return currentKey ? Role[currentKey] : undefined;
     }
 }

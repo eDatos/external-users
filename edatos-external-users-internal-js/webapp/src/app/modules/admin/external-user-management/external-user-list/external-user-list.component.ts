@@ -33,7 +33,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.name',
+                translatePath: 'externalUserManagement.name',
             },
         },
         {
@@ -41,7 +41,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.surname1',
+                translatePath: 'externalUserManagement.surname1',
             },
         },
         {
@@ -49,7 +49,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.surname2',
+                translatePath: 'externalUserManagement.surname2',
             },
         },
         {
@@ -57,7 +57,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.email',
+                translatePath: 'externalUserManagement.email',
             },
         },
         {
@@ -65,14 +65,21 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.language',
+                translatePath: 'externalUserManagement.language',
             },
         },
         {
-            fieldName: 'roles',
+            fieldName: 'treatment',
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.rol',
+                translatePath: 'externalUserManagement.treatment',
+            },
+        },
+        {
+            fieldName: 'status',
+            header: {
+                handler: 'translate',
+                translatePath: 'externalUserManagement.status.name',
             },
         },
     ];

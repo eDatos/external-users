@@ -15,11 +15,11 @@ export const externalUsersManagementRoutes: Routes = [
             pagingParams: PagingParamsResolver,
         },
         data: {
-            pageTitle: 'userManagement.home.title',
+            pageTitle: 'externalUserManagement.home.title',
             roles: USER_MANAGEMENT_ROLES,
             defaultPagingParams: {
                 page: '1',
-                sort: 'login,asc',
+                sort: 'name,asc',
                 size: ITEMS_PER_PAGE,
             },
         },
@@ -29,7 +29,7 @@ export const externalUsersManagementRoutes: Routes = [
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
-            pageTitle: 'userManagement.home.title',
+            pageTitle: 'externalUserManagement.home.title',
             roles: USER_MANAGEMENT_ROLES,
         },
     },
@@ -38,7 +38,7 @@ export const externalUsersManagementRoutes: Routes = [
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
-            pageTitle: 'userManagement.home.title',
+            pageTitle: 'externalUserManagement.home.title',
             roles: USER_MANAGEMENT_ROLES,
         },
     },
@@ -48,7 +48,7 @@ export const externalUsersManagementRoutes: Routes = [
         component: ExternalUserFormComponent,
         data: {
             roles: USER_MANAGEMENT_ROLES,
-            pageTitle: 'userManagement.home.title',
+            pageTitle: 'externalUserManagement.home.title',
         },
     },
 ];
