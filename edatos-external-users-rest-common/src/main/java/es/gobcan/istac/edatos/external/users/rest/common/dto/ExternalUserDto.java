@@ -4,8 +4,9 @@ import java.io.Serializable;
 
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionDto;
 
-public class ExternalUserDto implements Serializable {
+public class ExternalUserDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private String email;

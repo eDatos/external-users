@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.security;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -71,9 +70,8 @@ public class ApplicationTemplateSecurity {
         return this.isAdmin(authentication);
     }
 
-    public boolean canUpdateUser(Authentication authentication, String login) {
-        String userLogin = SecurityUtils.getCurrentUserLogin();
-        return this.isAdmin(authentication) || (StringUtils.isNotBlank(userLogin) && StringUtils.isNotBlank(login) && userLogin.equals(login));
+    public boolean canUpdateUser(Authentication authentication) {
+        return this.isAdmin(authentication);
     }
 
     public boolean canDeleteUser(Authentication authentication) {

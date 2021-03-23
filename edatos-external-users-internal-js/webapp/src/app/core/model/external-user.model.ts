@@ -1,8 +1,8 @@
 import { Language } from '@app/core/model/language.model';
 import { Treatment } from '@app/core/model/treatment.model';
-import { BaseAuditingEntity } from 'arte-ng/model';
+import { BaseVersionedAndAuditingWithDeletionEntity } from 'arte-ng/model';
 
-export class ExternalUser extends BaseAuditingEntity {
+export class ExternalUser extends BaseVersionedAndAuditingWithDeletionEntity {
     constructor(
         public id?: any,
         public name?: string,

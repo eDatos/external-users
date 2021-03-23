@@ -1,15 +1,14 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
+import java.util.Optional;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 
 @Repository
 public interface ExternalUserRepository extends JpaRepository<ExternalUserEntity, Long> {
@@ -19,4 +18,6 @@ public interface ExternalUserRepository extends JpaRepository<ExternalUserEntity
     Optional<ExternalUserEntity> findOneByEmailAndDeletionDateIsNull(String login);
 
     Optional<ExternalUserEntity> findOneByEmailAndDeletionDateIsNotNull(String login);
+
+    Page<ExternalUserEntity> findAll(DetachedCriteria criteria, Pageable pageable);
 }
