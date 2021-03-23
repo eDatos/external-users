@@ -25,7 +25,7 @@ export const externalUsersManagementRoutes: Routes = [
         },
     },
     {
-        path: 'user-management/:login',
+        path: 'user-management/:id',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
@@ -43,7 +43,7 @@ export const externalUsersManagementRoutes: Routes = [
         },
     },
     {
-        path: 'user-management/:login/edit',
+        path: 'user-management/:id/edit',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {

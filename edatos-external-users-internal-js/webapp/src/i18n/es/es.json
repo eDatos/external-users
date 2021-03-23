@@ -603,7 +603,7 @@
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"
     },
-    "userManagement": {
+    "externalUserManagement": {
         "activado": "Activado",
         "surname1": "Primer apellido",
         "surname2": "Segundo apellido",
@@ -639,6 +639,10 @@
             }
         },
         "treatment": "Tratamiento",
+        "treatmentEnum": {
+            "LADY": "Señora",
+            "MISTER": "Señor"
+        },
         "home": {
             "createLabel": "Añadir nuevo usuario",
             "createOrEditLabel": "Crear o editar un usuario",
@@ -646,6 +650,10 @@
             "title": "Usuarios"
         },
         "language": "Idioma",
+        "languageEnum" : {
+            "SPANISH": "Español",
+            "CATALAN": "Catalán"
+        },
         "login": "Nombre de usuario",
         "name": "Nombre",
         "permissions": "Permisos",

@@ -20,9 +20,9 @@ export class ExternalUserService {
         return this.http.put(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, ExternalUser)));
     }
 
-    public get(login: string, includeDeleted = true): Observable<ExternalUser> {
+    public get(id: number, includeDeleted = true): Observable<ExternalUser> {
         const options = createRequestOption({ includeDeleted });
-        return this.http.get(`${this.resourceUrl}/${login}`, options).pipe(map((res) => ResponseUtils.convert(res, ExternalUser)));
+        return this.http.get(`${this.resourceUrl}/${id}`, options).pipe(map((res) => ResponseUtils.convert(res, ExternalUser)));
     }
 
     public find(req?: any): Observable<ResponseWrapper> {
@@ -30,11 +30,11 @@ export class ExternalUserService {
         return this.http.get(this.resourceUrl, { ...options, observe: 'response' }).pipe(map((res) => ResponseUtils.convertToResponseWrapper(res, ExternalUser)));
     }
 
-    public delete(login: string): Observable<ExternalUser> {
-        return this.http.delete(`${this.resourceUrl}/${login}`).pipe(map((res) => ResponseUtils.convert(res, ExternalUser)));
+    public delete(id: string): Observable<ExternalUser> {
+        return this.http.delete(`${this.resourceUrl}/${id}`).pipe(map((res) => ResponseUtils.convert(res, ExternalUser)));
     }
 
-    public restore(login: string): Observable<ExternalUser> {
-        return this.http.put(`${this.resourceUrl}/${login}/restore`, null).pipe(map((res) => ResponseUtils.convert(res, ExternalUser)));
+    public restore(id: string): Observable<ExternalUser> {
+        return this.http.put(`${this.resourceUrl}/${id}/restore`, null).pipe(map((res) => ResponseUtils.convert(res, ExternalUser)));
     }
 }

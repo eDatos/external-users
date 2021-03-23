@@ -1,29 +1,30 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExternalUserDeleteDialogComponent } from '../external-user-delete-dialog.component';
-import { Subscription } from 'rxjs';
-import { User, Role, Treatment, Language } from '@app/core/model';
-import { UserService } from '@app/core/service/user';
+import { ExternalUser, Language, Role, Treatment } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
-import { GenericModalService, ArteEventManager } from 'arte-ng/services';
+import { ExternalUserService } from '@app/core/service/user';
+import { ArteEventManager, GenericModalService } from 'arte-ng/services';
+import { Subscription } from 'rxjs';
+import { ExternalUserDeleteDialogComponent } from '../external-user-delete-dialog.component';
 
 @Component({
     selector: 'app-external-user-form',
     templateUrl: './external-user-form.component.html',
 })
 export class ExternalUserFormComponent implements OnInit, OnDestroy {
-    public user: User;
+    public externalUser: ExternalUser;
     public isSaving: boolean;
-    public usuarioValido = false;
-    private subscription: Subscription;
-    public paramLogin: string;
+    public userId: number;
     public eventSubscriber: Subscription;
+
     public rolesEnum = Role;
     public languageEnum = Language;
     public treatmentEnum = Treatment;
 
+    private subscription: Subscription;
+
     constructor(
-        private userService: UserService,
+        private externalUserService: ExternalUserService,
         public permissionService: PermissionService,
         private genericModalService: GenericModalService,
         private eventManager: ArteEventManager,
@@ -35,11 +36,12 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.isSaving = false;
 
         this.subscription = this.route.params.subscribe((params) => {
-            this.paramLogin = params['login'];
-            this.load(this.paramLogin);
+            this.userId = params['id'];
+            this.load(this.userId);
         });
+
         this.eventSubscriber = this.eventManager.subscribe(ExternalUserDeleteDialogComponent.EVENT_NAME, (response) => {
-            this.user = Object.assign(new User(), response.content);
+            this.externalUser = Object.assign(new ExternalUser(), response.content);
         });
     }
 
@@ -48,88 +50,63 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         return lastPath === 'edit' || lastPath === 'user-management-new';
     }
 
-    public load(login) {
-        if (login) {
-            this.userService.get(login).subscribe((user) => {
-                this.user = user;
-                this.userService.buscarUsuarioEnLdap(this.user.login).subscribe((usuarioLdap) => {
-                    if (!!usuarioLdap) {
-                        this.usuarioValido = true;
-                    }
-                });
+    public load(id: number) {
+        if (id) {
+            this.externalUserService.get(id).subscribe((user) => {
+                this.externalUser = user;
             });
         } else {
-            this.user = new User();
+            this.externalUser = new ExternalUser();
         }
     }
 
     public clear() {
-        // const with arrays: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const
-        const returnPath = ['/admin', 'user-management'];
-        if (this.paramLogin) {
-            returnPath.push(this.paramLogin);
+        const returnPath: (string | number)[] = ['/admin', 'user-management'];
+        if (this.userId) {
+            returnPath.push(this.userId);
         }
         this.router.navigate(returnPath);
     }
 
     public save() {
+        this.externalUser.password = 'MIPASS';
         this.isSaving = true;
-        if (this.existeUsuario()) {
-            this.userService.update(this.user).subscribe(
+        if (this.externalUserExists()) {
+            this.externalUserService.update(this.externalUser).subscribe(
                 (response) => this.onSaveSuccess(response),
                 () => this.onSaveError()
             );
         } else {
-            this.userService.create(this.user).subscribe(
+            this.externalUserService.create(this.externalUser).subscribe(
                 (response) => this.onSaveSuccess(response),
                 () => this.onSaveError()
             );
         }
     }
 
-    public validarUsuario(inputDirty = true) {
-        if (inputDirty) {
-            if (this.user.login) {
-                this.userService.buscarUsuarioEnLdap(this.user.login).subscribe(
-                    (usuario) => {
-                        if (usuario) {
-                            this.user = usuario;
-                            this.usuarioValido = true;
-                        } else {
-                            this.usuarioValido = false;
-                        }
-                    },
-                    (error) => {
-                        this.usuarioValido = false;
-                    }
-                );
-            }
-        }
-    }
-
     public delete() {
-        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.user });
+        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser });
     }
 
     public restore() {
-        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.user });
+        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser });
+    }
+
+    public externalUserExists(): boolean {
+        return !!this.externalUser.id;
+    }
+
+    public ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
     private onSaveSuccess(result) {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.isSaving = false;
-        this.router.navigate(['/admin', 'user-management', this.user.login]);
+        this.router.navigate(['/admin', 'user-management', this.externalUser.id]);
     }
 
     private onSaveError() {
         this.isSaving = false;
-    }
-
-    public existeUsuario(): boolean {
-        return !!this.user.id;
-    }
-
-    public ngOnDestroy() {
-        this.subscription.unsubscribe();
     }
 }
