@@ -5,10 +5,10 @@ import { UserService } from '@app/core/service/user';
 import { ArteEventManager } from 'arte-ng/services';
 
 @Component({
-    selector: 'app-user-mgmt-delete-dialog',
-    templateUrl: './user-management-delete-dialog.component.html',
+    selector: 'app-external-user-delete-dialog',
+    templateUrl: './external-user-delete-dialog.component.html',
 })
-export class UserMgmtDeleteDialogComponent {
+export class ExternalUserDeleteDialogComponent {
     public static EVENT_NAME = 'UserModified';
 
     user: User;
@@ -32,7 +32,7 @@ export class UserMgmtDeleteDialogComponent {
     private confirmDelete(login) {
         this.userService.delete(login).subscribe((response) => {
             this.eventManager.broadcast({
-                name: UserMgmtDeleteDialogComponent.EVENT_NAME,
+                name: ExternalUserDeleteDialogComponent.EVENT_NAME,
                 content: response,
             });
             this.activeModal.dismiss('deleted');
@@ -42,7 +42,7 @@ export class UserMgmtDeleteDialogComponent {
     private confirmRestore(login) {
         this.userService.restore(login).subscribe((response) => {
             this.eventManager.broadcast({
-                name: UserMgmtDeleteDialogComponent.EVENT_NAME,
+                name: ExternalUserDeleteDialogComponent.EVENT_NAME,
                 content: response,
             });
             this.activeModal.dismiss('restored');

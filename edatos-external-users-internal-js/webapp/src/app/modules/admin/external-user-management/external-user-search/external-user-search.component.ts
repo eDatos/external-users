@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
 import { Subject, Subscription } from 'rxjs';
-import { UserFilter } from './user-filter.model';
+import { ExternalUserFilter } from './external-user-filter';
 import { debounceTime } from 'rxjs/operators';
 import { Role } from '@app/core/model';
 import { ArteEventManager } from 'arte-ng/services';
 
 @Component({
-    selector: 'ac-user-search',
-    templateUrl: 'user-search.component.html',
+    selector: 'app-external-user-search',
+    templateUrl: 'external-user-search.component.html',
 })
-export class UserSearchComponent implements OnInit, OnDestroy {
+export class ExternalUserSearchComponent implements OnInit, OnDestroy {
     private filterChangesSubject: Subject<any> = new Subject<any>();
     subscription: Subscription;
 
     @Input()
-    public filters: UserFilter;
+    public filters: ExternalUserFilter;
     public rolEnum = Role;
 
     constructor(private eventManager: ArteEventManager) {}

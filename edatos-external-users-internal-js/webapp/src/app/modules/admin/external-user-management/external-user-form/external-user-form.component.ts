@@ -1,17 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExternalUserDeleteDialogComponent } from '../external-user-delete-dialog.component';
 import { Subscription } from 'rxjs';
-import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.component';
 import { User, Role, Treatment, Language } from '@app/core/model';
 import { UserService } from '@app/core/service/user';
 import { PermissionService } from '@app/core/service/auth';
 import { GenericModalService, ArteEventManager } from 'arte-ng/services';
 
 @Component({
-    selector: 'app-user-mgmt-form',
-    templateUrl: './user-management-form.component.html',
+    selector: 'app-external-user-form',
+    templateUrl: './external-user-form.component.html',
 })
-export class UserMgmtFormComponent implements OnInit, OnDestroy {
+export class ExternalUserFormComponent implements OnInit, OnDestroy {
     public user: User;
     public isSaving: boolean;
     public usuarioValido = false;
@@ -38,7 +38,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
             this.paramLogin = params['login'];
             this.load(this.paramLogin);
         });
-        this.eventSubscriber = this.eventManager.subscribe(UserMgmtDeleteDialogComponent.EVENT_NAME, (response) => {
+        this.eventSubscriber = this.eventManager.subscribe(ExternalUserDeleteDialogComponent.EVENT_NAME, (response) => {
             this.user = Object.assign(new User(), response.content);
         });
     }
@@ -108,11 +108,11 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
     }
 
     public delete() {
-        this.genericModalService.open(UserMgmtDeleteDialogComponent as Component, { user: this.user });
+        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.user });
     }
 
     public restore() {
-        this.genericModalService.open(UserMgmtDeleteDialogComponent as Component, { user: this.user });
+        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.user });
     }
 
     private onSaveSuccess(result) {
