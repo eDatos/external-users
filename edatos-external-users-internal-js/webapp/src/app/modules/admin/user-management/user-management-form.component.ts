@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UserMgmtDeleteDialogComponent } from './user-management-delete-dialog.component';
-import { User, Role, Gender, Language } from '@app/core/model';
+import { User, Role, Treatment, Language } from '@app/core/model';
 import { UserService } from '@app/core/service/user';
 import { PermissionService } from '@app/core/service/auth';
 import { GenericModalService, ArteEventManager } from 'arte-ng/services';
@@ -12,15 +12,15 @@ import { GenericModalService, ArteEventManager } from 'arte-ng/services';
     templateUrl: './user-management-form.component.html',
 })
 export class UserMgmtFormComponent implements OnInit, OnDestroy {
-    user: User;
-    isSaving: Boolean;
-    usuarioValido = false;
+    public user: User;
+    public isSaving: boolean;
+    public usuarioValido = false;
     private subscription: Subscription;
-    paramLogin: string;
-    eventSubscriber: Subscription;
+    public paramLogin: string;
+    public eventSubscriber: Subscription;
     public rolesEnum = Role;
-    languageEnum = Language;
-    genderEnum = Gender;
+    public languageEnum = Language;
+    public treatmentEnum = Treatment;
 
     constructor(
         private userService: UserService,
@@ -31,7 +31,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         private router: Router
     ) {}
 
-    ngOnInit() {
+    public ngOnInit() {
         this.isSaving = false;
 
         this.subscription = this.route.params.subscribe((params) => {
@@ -43,12 +43,12 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         });
     }
 
-    isEditMode(): Boolean {
+    public isEditMode(): boolean {
         const lastPath = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
         return lastPath === 'edit' || lastPath === 'user-management-new';
     }
 
-    load(login) {
+    public load(login) {
         if (login) {
             this.userService.get(login).subscribe((user) => {
                 this.user = user;
@@ -63,7 +63,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    clear() {
+    public clear() {
         // const with arrays: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const
         const returnPath = ['/admin', 'user-management'];
         if (this.paramLogin) {
@@ -72,7 +72,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         this.router.navigate(returnPath);
     }
 
-    save() {
+    public save() {
         this.isSaving = true;
         if (this.existeUsuario()) {
             this.userService.update(this.user).subscribe(
@@ -87,7 +87,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    validarUsuario(inputDirty = true) {
+    public validarUsuario(inputDirty = true) {
         if (inputDirty) {
             if (this.user.login) {
                 this.userService.buscarUsuarioEnLdap(this.user.login).subscribe(
@@ -107,11 +107,11 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    delete() {
+    public delete() {
         this.genericModalService.open(UserMgmtDeleteDialogComponent as Component, { user: this.user });
     }
 
-    restore() {
+    public restore() {
         this.genericModalService.open(UserMgmtDeleteDialogComponent as Component, { user: this.user });
     }
 
@@ -129,7 +129,7 @@ export class UserMgmtFormComponent implements OnInit, OnDestroy {
         return !!this.user.id;
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.subscription.unsubscribe();
     }
 }

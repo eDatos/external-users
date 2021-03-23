@@ -30,35 +30,27 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
 
     public columns = [
         {
-            fieldName: 'login',
+            fieldName: 'name',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.login',
+                translatePath: 'userManagement.name',
             },
         },
         {
-            fieldName: 'nombre',
+            fieldName: 'surname1',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.nombre',
+                translatePath: 'userManagement.surname1',
             },
         },
         {
-            fieldName: 'apellido1',
+            fieldName: 'surname2',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.apellido1',
-            },
-        },
-        {
-            fieldName: 'apellido2',
-            sortable: true,
-            header: {
-                handler: 'translate',
-                translatePath: 'userManagement.apellido2',
+                translatePath: 'userManagement.surname2',
             },
         },
         {
