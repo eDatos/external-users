@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { ExternalUser } from '@app/core/model';
+import { ExternalUserService } from '@app/core/service/user';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { User } from '@app/core/model/user.model';
-import { UserService } from '@app/core/service/user';
 import { ArteEventManager } from 'arte-ng/services';
 
 @Component({
@@ -11,26 +11,26 @@ import { ArteEventManager } from 'arte-ng/services';
 export class ExternalUserDeleteDialogComponent {
     public static EVENT_NAME = 'UserModified';
 
-    user: User;
+    public user: ExternalUser;
 
-    constructor(private userService: UserService, public activeModal: NgbActiveModal, private eventManager: ArteEventManager) {}
+    constructor(private externalUserService: ExternalUserService, public activeModal: NgbActiveModal, private eventManager: ArteEventManager) {}
 
-    clear() {
+    public clear() {
         this.activeModal.dismiss('cancel');
     }
 
-    confirmAction(login) {
-        if (this.user.login === login) {
+    public confirmAction(id) {
+        if (this.user.id === id) {
             if (this.user.deletionDate) {
-                this.confirmRestore(login);
+                this.confirmRestore(id);
             } else {
-                this.confirmDelete(login);
+                this.confirmDelete(id);
             }
         }
     }
 
-    private confirmDelete(login) {
-        this.userService.delete(login).subscribe((response) => {
+    private confirmDelete(id) {
+        this.externalUserService.delete(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: ExternalUserDeleteDialogComponent.EVENT_NAME,
                 content: response,
@@ -39,8 +39,8 @@ export class ExternalUserDeleteDialogComponent {
         });
     }
 
-    private confirmRestore(login) {
-        this.userService.restore(login).subscribe((response) => {
+    private confirmRestore(id) {
+        this.externalUserService.restore(id).subscribe((response) => {
             this.eventManager.broadcast({
                 name: ExternalUserDeleteDialogComponent.EVENT_NAME,
                 content: response,

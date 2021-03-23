@@ -609,10 +609,10 @@
         "surname2": "Segundo apellido",
         "created": "Se ha creado el usuario {{ param }}",
         "deactivate": {
-            "question": "¿Seguro que desea eliminar el usuario <strong>{{ login }}</strong>?"
+            "question": "¿Seguro que desea eliminar el usuario <strong>{{ email }}</strong>?"
         },
         "delete": {
-            "question": "¿Seguro que quieres eliminar el usuario {{ login }}?"
+            "question": "¿Seguro que quieres eliminar el usuario {{ email }}?"
         },
         "deleted": "Se ha eliminado el usuario {{ param }}",
         "deletionDate": "Fecha de borrado",
@@ -660,7 +660,7 @@
         "personalData": "Datos personales",
         "profiles": "Roles",
         "restore": {
-            "question": "¿Seguro que quieres restaurar el usuario {{ login }}?"
+            "question": "¿Seguro que quieres restaurar el usuario {{ email }}?"
         },
         "rol": "Rol",
         "roles": "Roles",
