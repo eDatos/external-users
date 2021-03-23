@@ -7,7 +7,7 @@ import { LoginService, PermissionService, Principal, ProfileService } from '@app
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['navbar.component.scss']
+    styleUrls: ['navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
     inProduction: boolean;
@@ -51,7 +51,8 @@ export class NavbarComponent implements OnInit {
     }
 
     public correctlyLogged(): boolean {
-        return Boolean(this.principal.correctlyLogged());
+        //return Boolean(this.principal.correctlyLogged());
+        return true;
     }
 
     public puedeNavegarAdministracion(): boolean {
