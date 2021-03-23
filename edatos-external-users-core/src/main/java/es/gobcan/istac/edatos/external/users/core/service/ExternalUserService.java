@@ -1,9 +1,9 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-
-import java.util.Optional;
 
 public interface ExternalUserService {
 
@@ -17,4 +17,7 @@ public interface ExternalUserService {
 
     ExternalUserEntity recover(String email);
 
+    ExternalUserEntity find(Long id);
+
+    Page<ExternalUserEntity> find(Pageable pageable, Boolean includeDeleted, String query);
 }
