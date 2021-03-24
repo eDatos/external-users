@@ -174,18 +174,6 @@ public class UsuarioResourceInternalTest {
     }
 
     @Test
-    @Ignore("this test was deactivated because the criteria processor used in this case was renamed to be used with external users - see EDATOS-3278")
-    public void getAllUsers() throws Exception {
-        // Initialize the database
-        userRepository.save(newUser);
-
-        // Get all the users
-        restUserMockMvc.perform(get("/api/usuarios?sort=id,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN_NEW_USER))).andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
-                .andExpect(jsonPath("$.[*].apellido1").value(hasItem(DEFAULT_PRIMER_APELLIDO))).andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
-    }
-
-    @Test
     public void getUser() throws Exception {
         // Initialize the database
         userRepository.save(newUser);

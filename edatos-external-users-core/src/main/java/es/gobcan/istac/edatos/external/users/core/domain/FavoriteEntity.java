@@ -45,7 +45,7 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
     @Override
     public Long getId() {
-        return null;
+        return id;
     }
 
     public void setId(Long id) {
