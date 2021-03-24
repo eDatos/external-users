@@ -15,7 +15,7 @@ export class FavoriteService {
     constructor(private http: HttpClient) {}
 
     public get(id: number): Observable<Favorite> {
-        return this.http.get<Favorite>(`${this.resourceUrl}/${id}`);
+        return this.http.get<Favorite>(`${this.resourceUrl}/${id}`).pipe(this.convertToFavorite());
     }
 
     public find(req?: any): Observable<ResponseWrapper> {
@@ -24,10 +24,14 @@ export class FavoriteService {
     }
 
     public save(filter: Favorite): Observable<Favorite> {
-        return this.http.post<Favorite>(this.resourceUrl, filter);
+        return this.http.post<Favorite>(this.resourceUrl, filter).pipe(this.convertToFavorite());
     }
 
     public update(filter: Favorite): Observable<Favorite> {
-        return this.http.put<Favorite>(this.resourceUrl, filter);
+        return this.http.put<Favorite>(this.resourceUrl, filter).pipe(this.convertToFavorite());
+    }
+
+    private convertToFavorite() {
+        return map((favorite) => ResponseUtils.convert(favorite, Favorite));
     }
 }
