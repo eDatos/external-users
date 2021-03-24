@@ -47,7 +47,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public isEditMode(): boolean {
         const lastPath = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
-        return lastPath === 'edit' || lastPath === 'user-management-new';
+        return lastPath === 'edit' || lastPath === 'new';
     }
 
     public load(id: number) {
@@ -61,7 +61,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public clear() {
-        const returnPath: (string | number)[] = ['/admin', 'user-management'];
+        const returnPath: (string | number)[] = ['/admin', 'external-users'];
         if (this.userId) {
             returnPath.push(this.userId);
         }
@@ -104,7 +104,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.externalUser = result;
         this.isSaving = false;
-        this.router.navigate(['/admin', 'user-management', this.externalUser.id]);
+        this.router.navigate(['/admin', 'external-users', this.externalUser.id]);
     }
 
     private onSaveError() {

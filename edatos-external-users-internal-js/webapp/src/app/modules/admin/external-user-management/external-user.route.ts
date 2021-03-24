@@ -6,9 +6,9 @@ import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
 import { USER_MANAGEMENT_ROLES } from '@app/core/service/auth';
 import { PagingParamsResolver } from 'arte-ng/services';
 
-export const externalUsersManagementRoutes: Routes = [
+export const externalUsersRoutes: Routes = [
     {
-        path: 'user-management',
+        path: 'external-users',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserListComponent,
         resolve: {
@@ -25,7 +25,7 @@ export const externalUsersManagementRoutes: Routes = [
         },
     },
     {
-        path: 'user-management/:id',
+        path: 'external-users/:id',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
@@ -34,7 +34,7 @@ export const externalUsersManagementRoutes: Routes = [
         },
     },
     {
-        path: 'user-management-new',
+        path: 'external-users/new',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
@@ -43,7 +43,7 @@ export const externalUsersManagementRoutes: Routes = [
         },
     },
     {
-        path: 'user-management/:id/edit',
+        path: 'external-users/:id/edit',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
