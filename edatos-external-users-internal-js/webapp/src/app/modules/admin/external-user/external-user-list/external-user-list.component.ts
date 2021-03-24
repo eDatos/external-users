@@ -33,7 +33,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.name',
+                translatePath: 'externalUser.name',
             },
         },
         {
@@ -41,7 +41,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.surname1',
+                translatePath: 'externalUser.surname1',
             },
         },
         {
@@ -49,7 +49,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.surname2',
+                translatePath: 'externalUser.surname2',
             },
         },
         {
@@ -57,7 +57,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.email',
+                translatePath: 'externalUser.email',
             },
         },
         {
@@ -65,21 +65,21 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.language',
+                translatePath: 'externalUser.language',
             },
         },
         {
             fieldName: 'treatment',
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.treatment',
+                translatePath: 'externalUser.treatment',
             },
         },
         {
             fieldName: 'status',
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.status.name',
+                translatePath: 'externalUser.status.name',
             },
         },
     ];

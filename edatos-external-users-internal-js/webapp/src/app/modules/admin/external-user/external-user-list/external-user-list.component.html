@@ -2,11 +2,11 @@
     <div class="page-header has-filters">
         <div class="page-header-top">
             <h2 class="page-header-title">
-                <span class="page-header-title-text" translate="externalUserManagement.home.title"></span>
+                <span class="page-header-title-text" translate="externalUser.home.title"></span>
             </h2>
             <button *ngIf="permissionService.puedeNavegarUserManagement()" class="btn btn-primary" [routerLink]="['../external-users/new']">
                 <span class="btn-icon fa fa-plus"></span>
-                <span translate="externalUserManagement.home.createLabel"></span>
+                <span translate="externalUser.home.createLabel"></span>
             </button>
         </div>
         <app-external-user-search [filters]="filters"></app-external-user-search>
@@ -35,11 +35,11 @@
                                 <td>{{user.surname1}}</td>
                                 <td>{{user.surname2}}</td>
                                 <td>{{user.email}}</td>
-                                <td>{{ 'externalUserManagement.languageEnum.' + user.language | translate }}</td>
-                                <td>{{ 'externalUserManagement.treatmentEnum.' + user.treatment | translate }}</td>
+                                <td>{{ 'externalUser.languageEnum.' + user.language | translate }}</td>
+                                <td>{{ 'externalUser.treatmentEnum.' + user.treatment | translate }}</td>
                                 <td>
-                                    <span class="badge badge-danger ml-1" *ngIf="user.deletionDate">{{ 'externalUserManagement.status.deleted' | translate }}</span>
-                                    <span class="badge badge-info ml-1" *ngIf="!user.deletionDate">{{ 'externalUserManagement.status.active' | translate }}</span>
+                                    <span class="badge badge-danger ml-1" *ngIf="user.deletionDate">{{ 'externalUser.status.deleted' | translate }}</span>
+                                    <span class="badge badge-info ml-1" *ngIf="!user.deletionDate">{{ 'externalUser.status.active' | translate }}</span>
                                 </td>
                             </tr>
                         </ng-template>
