@@ -11,9 +11,13 @@ Navbar
     vertical-align: text-bottom;
 }
 
-
-.app-navbar {
-    background-color: $main-dark;
+.navbar {
+    position: fixed;
+    top: $primary-navbar-height;
+    z-index: $secondary-navbar-zindex;
+    width: 100%;
+    height: $secondary-navbar-height;
+    background-color: $istac-blue;
     padding-left: $page-padding-left;
     padding-right: $page-padding-right;
     .dropdown-item.active,
@@ -52,7 +56,7 @@ Logo styles
 @include media-breakpoint-down(sm) {
     $page-padding-left: 15px;
     $page-padding-right: 15px;
-    .app-navbar {
+    .navbar {
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
     }
