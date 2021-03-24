@@ -1,14 +1,19 @@
 package es.gobcan.istac.edatos.external.users.web.config;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
+import es.gobcan.istac.edatos.external.users.web.security.LoginPasswordAuthenticationProvider;
+import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthenticationFilter;
+import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthorizationFilter;
 import es.gobcan.istac.edatos.external.users.web.security.jwt.JWTAuthenticationSuccessHandler;
 import es.gobcan.istac.edatos.external.users.web.security.jwt.TokenProvider;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -94,6 +99,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        return new LoginPasswordAuthenticationProvider();
+    }
+
+    @Bean
+    public ObjectMapper mapper() {
+        return new ObjectMapper();
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //@formatter:off
@@ -110,14 +125,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // JWTFilter customFilter = new JWTFilter(tokenProvider); // TODO EDATOS-3287 Still to be set up
-        // UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new UsernamePasswordAuthenticationFilter(tokenProvider, jHipsterProperties);
-        // .addFilter(usernamePasswordAuthenticationFilter)
-        // .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class)
-        http.exceptionHandling().authenticationEntryPoint(http401UnauthorizedEntryPoint()).and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and().headers()
-                .frameOptions().sameOrigin().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests().antMatchers("/api/activate").permitAll()
-                .antMatchers("/api/authenticate").permitAll().antMatchers("/api/profile-info").permitAll().antMatchers("/api/account/**").permitAll().antMatchers("/login").permitAll()
-                .antMatchers("/v2/api-docs/**").permitAll().antMatchers("/apis/operations-internal/**").permitAll().antMatchers("/**").authenticated();
+        //@formatter:off
+        // .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class) // TODO EDATOS-3287 Still to be set up
+        http
+            .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper()))
+            .addFilter(new JWTAuthorizationFilter(authenticationManager(), jHipsterProperties))
+            .exceptionHandling()
+            .authenticationEntryPoint(http401UnauthorizedEntryPoint())
+        .and()
+            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+        .and()
+            .headers().frameOptions().sameOrigin()
+        .and()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+            .authorizeRequests()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/profile-info").permitAll()
+                .antMatchers("/api/account/**").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/v2/api-docs/**").permitAll()
+                .antMatchers("/apis/operations-internal/**").permitAll()
+                .antMatchers("/**").authenticated();
+        //@formatter:on
     }
 
     @Bean

@@ -2,11 +2,25 @@ package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collection;
+import java.util.Collections;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ExternalUserRole;
+import es.gobcan.istac.edatos.external.users.core.service.LoginService;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.LoginDto;
+import io.github.jhipster.config.JHipsterProperties;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +73,7 @@ public class ExternalAccountResource extends AbstractResource {
         }
 
         ExternalUserEntity newExternalUser = externalUserMapper.toEntity(externalUserDto);
-        newExternalUser = externalUserService.create(newExternalUser);
+        externalUserService.create(newExternalUser);
         mailService.sendCreationEmail(newExternalUser);
         ExternalUserAccountDto newExternalUserDto = externalUserMapper.toDto(newExternalUser);
 
@@ -67,5 +81,4 @@ public class ExternalAccountResource extends AbstractResource {
         return ResponseEntity.created(new URI("/api/account/signup/" + newExternalUserDto.getEmail())).headers(HeaderUtil.createAlert("userManagement.created", newExternalUserDto.getEmail()))
                 .body(newExternalUserDto);
     }
-
 }

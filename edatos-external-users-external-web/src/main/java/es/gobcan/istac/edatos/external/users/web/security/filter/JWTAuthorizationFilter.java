@@ -22,7 +22,6 @@ import org.springframework.util.StringUtils;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
-    public static final long EXPIRATION_TIME = 900_000; // 15 mins
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String JHI_AUTHENTICATIONTOKEN = "authenticationtoken";
 
