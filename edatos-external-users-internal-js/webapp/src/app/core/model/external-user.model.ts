@@ -18,4 +18,8 @@ export class ExternalUser extends BaseVersionedAndAuditingWithDeletionEntity {
     ) {
         super();
     }
+
+    public getFullName(): string {
+        return `${this.name} ${this.surname1} ${this.surname2}`;
+    }
 }

@@ -1,9 +1,9 @@
-<div class="page" *ngIf="user">
+<div class="page" *ngIf="externalUser">
     <div class="page-header page-header-top">
         <button
             *ngIf="!isEditMode()"
             type="button"
-            routerLink="/admin/user-management"
+            routerLink="/admin/external-users"
             class="btn btn-secondary btn-frameless back-arrow"
             [attr.aria-label]="'entity.action.back' | translate"
         >
@@ -14,13 +14,13 @@
                 <i class="fa fa-fw fa-user" aria-hidden="true"></i>
             </span>
             <div class="page-header-title-text">
-                <span *ngIf="!user.id" translate="userManagement.home.createLabel"></span>
-                <span *ngIf="user.id" title="{{user.login}}">{{user.login}}</span>
+                <span *ngIf="!externalUser.id" translate="externalUser.home.createLabel"></span>
+                <span *ngIf="externalUser.id" [title]="externalUser.getFullName()">{{externalUser.getFullName()}}</span>
             </div>
         </h2>
         <div class="page-header-btns">
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button *ngIf="!isEditMode() && !user.deletionDate" class="btn btn-secondary" [routerLink]="['/admin', 'user-management', user.login, 'edit']" type="button">
+                <button *ngIf="!isEditMode() && !externalUser.deletionDate" class="btn btn-secondary" [routerLink]="['/admin', 'external-users', externalUser.id, 'edit']" type="button">
                     <span class="fa fa-pencil"></span>
                     <span translate="entity.action.edit"></span>
                 </button>
@@ -38,15 +38,15 @@
                 </button>
             </ng-container>
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button *ngIf="!isEditMode() && user.deletionDate" type="button" class="btn btn-warning" (click)="restore()">
-                    <span class="fa fa-repeat"></span>
-                    <span translate="entity.action.recuperar"></span>
+                <button *ngIf="!isEditMode() && externalUser.deletionDate" type="button" class="btn btn-warning" (click)="restore()">
+                    <span class="fa fa-undo"></span>
+                    <span translate="entity.action.restore"></span>
                 </button>
             </ng-container>
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button *ngIf="!isEditMode() && !user.deletionDate" type="button" class="btn btn-danger" (click)="delete()">
+                <button *ngIf="!isEditMode() && !externalUser.deletionDate" type="button" class="btn btn-danger" (click)="delete()">
                     <span class="fa fa-remove"></span>
-                    <span translate="entity.action.eliminar"></span>
+                    <span translate="entity.action.deactivate"></span>
                 </button>
             </ng-container>
         </div>
@@ -55,48 +55,13 @@
     <div class="page-body">
         <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
             <fieldset class="page-section" [disabled]="!isEditMode()" arteAutofocus>
-                <h3 translate="userManagement.personalData"></h3>
+                <h3 translate="externalUser.personalData"></h3>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="userManagement.login"></label>
+                            <label class="col-form-label col-md-4" translate="externalUser.name"></label>
                             <div class="col-md-8">
-                                <arte-input
-                                    [disabled]="user.id"
-                                    [name]="'login'"
-                                    [(ngModel)]="user.login"
-                                    [required]="true"
-                                    [minlength]="1"
-                                    [maxlength]="255"
-                                    [pattern]="'^[_\'.@A-Za-z0-9-]*$'"
-                                    (blur)="validarUsuario(editForm.controls.login?.dirty)"
-                                >
-                                </arte-input>
-                            </div>
-                        </div>
-
-                        <div *ngIf="editForm.controls.login?.touched || editForm.controls.login?.dirty" class="entity-field-error">
-                            <ng-container *ngIf="editForm.controls.login?.invalid">
-                                <small class="form-text text-danger" *ngIf="editForm.controls.login?.errors.required" translate="entity.validation.required"> </small>
-                                <small
-                                    class="form-text text-danger"
-                                    *ngIf="editForm.controls.login?.errors.maxlength"
-                                    translate="entity.validation.maxlength"
-                                    [translateParams]="{ max: 255 }"
-                                >
-                                </small>
-                            </ng-container>
-                            <ng-container>
-                                <small class="form-text text-warning" *ngIf="!usuarioValido" translate="error.userManagement.usuario-ldap-no-encontrado"> </small>
-                            </ng-container>
-                        </div>
-                    </div>
-
-                    <div class="form-group form-group-inline col-md-6">
-                        <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="userManagement.nombre"></label>
-                            <div class="col-md-8">
-                                <arte-input name="nombre" [(ngModel)]="user.nombre" [maxlength]="255"></arte-input>
+                                <arte-input name="nombre" [(ngModel)]="externalUser.name" [maxlength]="255"></arte-input>
                             </div>
                         </div>
 
@@ -113,16 +78,16 @@
 
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="userManagement.apellido1"></label>
+                            <label class="col-form-label col-md-4" translate="externalUser.surname1"></label>
                             <div class="col-md-8">
-                                <arte-input name="apellido1" [(ngModel)]="user.apellido1" [maxlength]="255"></arte-input>
+                                <arte-input name="surname1" [(ngModel)]="externalUser.surname1" [maxlength]="255"></arte-input>
                             </div>
                         </div>
 
-                        <div *ngIf="editForm.controls.apellido1?.dirty && editForm.controls.apellido1?.invalid" class="entity-field-error">
+                        <div *ngIf="editForm.controls.surname1?.dirty && editForm.controls.surname1?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
-                                *ngIf="editForm.controls.apellido1?.errors.maxlength"
+                                *ngIf="editForm.controls.surname1?.errors.maxlength"
                                 translate="entity.validation.maxlength"
                                 [translateParams]="{ max: 255 }"
                             >
@@ -132,16 +97,16 @@
 
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="userManagement.apellido2"></label>
+                            <label class="col-form-label col-md-4" translate="externalUser.surname2"></label>
                             <div class="col-md-8">
-                                <arte-input name="apellido2" [(ngModel)]="user.apellido2" [maxlength]="255"></arte-input>
+                                <arte-input name="surname2" [(ngModel)]="externalUser.surname2" [maxlength]="255"></arte-input>
                             </div>
                         </div>
 
-                        <div *ngIf="editForm.controls.apellido2?.dirty && editForm.controls.apellido2?.invalid" class="entity-field-error">
+                        <div *ngIf="editForm.controls.surname2?.dirty && editForm.controls.surname2?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
-                                *ngIf="editForm.controls.apellido2?.errors.maxlength"
+                                *ngIf="editForm.controls.surname2?.errors.maxlength"
                                 translate="entity.validation.maxlength"
                                 [translateParams]="{ max: 255 }"
                             >
@@ -151,14 +116,14 @@
 
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="userManagement.gender"></label>
+                            <label class="col-form-label col-md-4" translate="externalUser.treatment"></label>
                             <div class="col-md-8">
                                 <arte-autocomplete-enum
-                                    name="gender"
+                                    name="treatment"
                                     [multiple]="false"
-                                    [(ngModel)]="user.gender"
+                                    [(ngModel)]="externalUser.treatment"
                                     [suggestionsEnum]="treatmentEnum"
-                                    [translationPath]="'edatosExternalUsersApp.genderEnum.'"
+                                    [translationPath]="'externalUser.treatmentEnum.'"
                                     [disabled]="!isEditMode()"
                                     required
                                 >
@@ -169,14 +134,14 @@
 
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="userManagement.language"></label>
+                            <label class="col-form-label col-md-4" translate="externalUser.language"></label>
                             <div class="col-md-8">
                                 <arte-autocomplete-enum
                                     name="language"
                                     [multiple]="false"
-                                    [(ngModel)]="user.language"
+                                    [(ngModel)]="externalUser.language"
                                     [suggestionsEnum]="languageEnum"
-                                    [translationPath]="'edatosExternalUsersApp.languageEnum.'"
+                                    [translationPath]="'externalUser.languageEnum.'"
                                     [disabled]="!isEditMode()"
                                     required
                                 >
@@ -187,9 +152,9 @@
 
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="col-form-label col-md-4" translate="userManagement.email"></label>
+                            <label class="col-form-label col-md-4" translate="externalUser.email"></label>
                             <div class="col-md-8">
-                                <arte-input name="email" [(ngModel)]="user.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
+                                <arte-input name="email" [(ngModel)]="externalUser.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
                             </div>
                         </div>
                         <div *ngIf="(editForm.controls.email?.touched || editForm.controls.email?.dirty) && editForm.controls.email?.invalid" class="entity-field-error">
@@ -215,31 +180,8 @@
                     </div>
                 </div>
             </fieldset>
-
-            <fieldset class="page-section" [disabled]="!isEditMode()">
-                <h3 translate="userManagement.permissions"></h3>
-                <div class="row">
-                    <div class="form-group form-group-inline col-md-6">
-                        <div class="form-row">
-                            <label class="col-form-label col-md-4" for="role" translate="userManagement.roles"></label>
-                            <div class="col-md-8">
-                                <arte-autocomplete-enum
-                                    name="role"
-                                    [multiple]="true"
-                                    [(ngModel)]="user.roles"
-                                    [suggestionsEnum]="rolesEnum"
-                                    [translationPath]="'edatosExternalUsersApp.rolesEnum.'"
-                                    [disabled]="!isEditMode()"
-                                    required
-                                >
-                                </arte-autocomplete-enum>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
             <div class="page-section">
-                <arte-audit-info [entity]="user" *ngIf="existeUsuario()"></arte-audit-info>
+                <arte-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></arte-audit-info>
             </div>
         </form>
     </div>

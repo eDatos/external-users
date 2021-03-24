@@ -39,7 +39,7 @@ public class QueryUtil {
         this.favoriteCriteriaProcessor = favoriteCriteriaProcessor;
     }
 
-    public DetachedCriteria queryToUserCriteria(Pageable pageable, String query) {
+    public DetachedCriteria queryToUserExternalUserCriteria(Pageable pageable, String query) {
         return queryToCriteria(pageable, query, new UsuarioCriteriaProcessor());
     }
 

@@ -89,6 +89,7 @@
             "error-messages": {
                 "ZonedDateTimelocal": "Este campo debe ser una fecha y hora.",
                 "datetimelocal": "Este campo debe ser una fecha y hora.",
+                "email": "Este campo no contiene un email válido",
                 "max": "Este campo no puede ser mayor que {{max}}.",
                 "maxbytes": "Este campo no puede tener más de {{max}} bytes.",
                 "maxlength": "Este campo no puede superar más de {{max}} caracteres.",
@@ -98,8 +99,7 @@
                 "not-valid": "El valor de este campo no es válido",
                 "number": "Este campo debe ser un número.",
                 "pattern": "Este campo debe seguir el patrón {{pattern}}.",
-                "required": "Este campo es obligatorio.",
-                "email": "Este campo no contiene un email válido"
+                "required": "Este campo es obligatorio."
             }
         },
         "input": {
@@ -145,6 +145,9 @@
         },
         "title": "Auditoría"
     },
+    "category": {
+        "name": "Tema"
+    },
     "configuration": {
         "filter": "Filtro (por prefijo)",
         "spring": "Spring configuration",
@@ -189,6 +192,7 @@
             "close": "Cerrar",
             "confirm": "Confirmar",
             "crear": "Crear",
+            "deactivate": "Desactivar",
             "delete": "Eliminar",
             "edit": "Editar",
             "eliminar": "Eliminar",
@@ -314,6 +318,71 @@
         },
         "usuario-existe": "El nombre de usuario introducido ya está siendo usado"
     },
+    "externalUser": {
+        "activado": "Activado",
+        "created": "Se ha creado el usuario {{ param }}",
+        "deactivate": {
+            "question": "¿Seguro que desea eliminar el usuario <strong>{{ email }}</strong>?"
+        },
+        "deleted": "Se ha eliminado el usuario {{ param }}",
+        "deletionDate": "Fecha de borrado",
+        "desactivado": "Desactivado",
+        "detail": {
+            "title": "Usuario"
+        },
+        "email": "Email",
+        "filters": {
+            "name": {
+                "label": "Usuario",
+                "placeholder": "Introduzca nombre, usuario o apellidos"
+            },
+            "rolEnum": {
+                "label": "Rol"
+            },
+            "rolLong": {
+                "label": "Búsqueda por rol (ac-autocomplete-long-list)",
+                "placeholder": "Introduzca rol (ac-autocomplete-long-list)"
+            },
+            "rolShort": {
+                "label": "Búsqueda por rol (ac-autocomplete-short-list)",
+                "placeholder": "Introduzca rol (ac-autocomplete-short-list)"
+            }
+        },
+        "home": {
+            "createLabel": "Añadir nuevo usuario",
+            "createOrEditLabel": "Crear o editar un usuario",
+            "includeDeleted": "Incluir eliminados",
+            "title": "Usuarios"
+        },
+        "language": "Idioma",
+        "languageEnum": {
+            "CATALAN": "Catalán",
+            "SPANISH": "Español"
+        },
+        "login": "Nombre de usuario",
+        "name": "Nombre",
+        "permissions": "Permisos",
+        "personalData": "Datos personales",
+        "profiles": "Roles",
+        "restore": {
+            "question": "¿Seguro que desea restaurar el usuario {{ email }}?"
+        },
+        "rol": "Rol",
+        "roles": "Roles",
+        "status": {
+            "active": "Activo",
+            "deleted": "Eliminado",
+            "name": "Estado"
+        },
+        "surname1": "Primer apellido",
+        "surname2": "Segundo apellido",
+        "treatment": "Tratamiento",
+        "treatmentEnum": {
+            "LADY": "Señora",
+            "MISTER": "Señor"
+        },
+        "updated": "Se ha actualizado el usuario {{ param }}"
+    },
     "family": {
         "acronym": {
             "label": "Acrónimo",
@@ -358,51 +427,45 @@
             "placeholder": "URN"
         }
     },
-    "filter": {
-        "name": "Filtro",
-        "home": {
-            "createLabel": "Crear filtro",
-            "title": "Filtros"
-        },
-        "entity": {
-            "lastAccessDate": "Fecha de último acceso",
-            "email": "Email",
-            "name": "Nombre",
-            "permalink": "Permalink",
-            "notes": "Notas"
-        },
-        "form": {
-            "legend": "Detalles del filtro",
-            "new": "Crear un nuevo filtro",
-            "save": "Guardar filtro",
-            "edit": "Editar filtro",
-            "cancel": "Cancelar",
-            "goBack": "Volver al listado"
-        }
-    },
     "favorite": {
-        "name": "Favorito",
-        "home": {
-            "createLabel": "Crear favorito",
-            "title": "Favoritos"
-        },
         "entity": {
             "email": "Email"
         },
         "form": {
+            "cancel": "Cancelar",
+            "edit": "Editar favorito",
+            "goBack": "Volver al listado",
             "legend": "Detalles del favorito",
             "new": "Crear un nuevo favorito",
-            "save": "Guardar favorito",
-            "edit": "Editar favorito",
+            "save": "Guardar favorito"
+        },
+        "home": {
+            "createLabel": "Crear favorito",
+            "title": "Favoritos"
+        },
+        "name": "Favorito"
+    },
+    "filter": {
+        "entity": {
+            "email": "Email",
+            "lastAccessDate": "Fecha de último acceso",
+            "name": "Nombre",
+            "notes": "Notas",
+            "permalink": "Permalink"
+        },
+        "form": {
             "cancel": "Cancelar",
-            "goBack": "Volver al listado"
-        }
-    },
-    "category": {
-        "name": "Tema"
-    },
-    "operation": {
-        "name": "Operación estadística"
+            "edit": "Editar filtro",
+            "goBack": "Volver al listado",
+            "legend": "Detalles del filtro",
+            "new": "Crear un nuevo filtro",
+            "save": "Guardar filtro"
+        },
+        "home": {
+            "createLabel": "Crear filtro",
+            "title": "Filtros"
+        },
+        "name": "Filtro"
     },
     "global": {
         "alerts": {
@@ -600,65 +663,10 @@
         "title": "Métricas de aplicación",
         "updating": "Actualizando..."
     },
+    "operation": {
+        "name": "Operación estadística"
+    },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"
-    },
-    "userManagement": {
-        "activado": "Activado",
-        "surname1": "Primer apellido",
-        "surname2": "Segundo apellido",
-        "created": "Se ha creado el usuario {{ param }}",
-        "deactivate": {
-            "question": "¿Seguro que desea eliminar el usuario <strong>{{ login }}</strong>?"
-        },
-        "delete": {
-            "question": "¿Seguro que quieres eliminar el usuario {{ login }}?"
-        },
-        "deleted": "Se ha eliminado el usuario {{ param }}",
-        "deletionDate": "Fecha de borrado",
-        "desactivado": "Desactivado",
-        "detail": {
-            "title": "Usuario"
-        },
-        "email": "Email",
-        "filters": {
-            "name": {
-                "label": "Usuario",
-                "placeholder": "Introduzca nombre, usuario o apellidos"
-            },
-            "rolEnum": {
-                "label": "Rol"
-            },
-            "rolLong": {
-                "label": "Búsqueda por rol (ac-autocomplete-long-list)",
-                "placeholder": "Introduzca rol (ac-autocomplete-long-list)"
-            },
-            "rolShort": {
-                "label": "Búsqueda por rol (ac-autocomplete-short-list)",
-                "placeholder": "Introduzca rol (ac-autocomplete-short-list)"
-            }
-        },
-        "treatment": "Tratamiento",
-        "home": {
-            "createLabel": "Añadir nuevo usuario",
-            "createOrEditLabel": "Crear o editar un usuario",
-            "includeDeleted": "Incluir eliminados",
-            "title": "Usuarios"
-        },
-        "language": "Idioma",
-        "login": "Nombre de usuario",
-        "name": "Nombre",
-        "permissions": "Permisos",
-        "personalData": "Datos personales",
-        "profiles": "Roles",
-        "restore": {
-            "question": "¿Seguro que quieres restaurar el usuario {{ login }}?"
-        },
-        "rol": "Rol",
-        "roles": "Roles",
-        "status": {
-            "deleted": "Eliminado"
-        },
-        "updated": "Se ha actualizado el usuario {{ param }}"
     }
 }

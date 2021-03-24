@@ -4,8 +4,6 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Optional;
 
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -82,7 +80,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             queryBuilder.append(query);
         }
         String finalQuery = getFinalQuery(includeDeleted, queryBuilder);
-        return queryUtil.queryToUserCriteria(pageable, finalQuery);
+        return queryUtil.queryToUserExternalUserCriteria(pageable, finalQuery);
     }
 
     private String getFinalQuery(Boolean includeDeleted, StringBuilder queryBuilder) {

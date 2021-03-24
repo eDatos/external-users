@@ -24,13 +24,12 @@
         "detail": {
             "title": "Usuario"
         },
-        "login": "Nombre de usuario",
-        "nombre": "Nombre",
-        "apellido1": "Primer apellido",
-        "apellido2": "Segundo apellido",
+        "name": "Nombre",
+        "surname1": "Primer apellido",
+        "surname2": "Segundo apellido",
         "email": "Email",
-        "activado": "Activado",
-        "desactivado": "Desactivado",
+        "activated": "Activado",
+        "deactivated": "Desactivado",
         "profiles": "Roles",
         "roles": "Roles",
         "rol": "Rol",

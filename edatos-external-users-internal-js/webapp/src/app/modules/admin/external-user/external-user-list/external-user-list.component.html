@@ -2,14 +2,14 @@
     <div class="page-header has-filters">
         <div class="page-header-top">
             <h2 class="page-header-title">
-                <span class="page-header-title-text" translate="userManagement.home.title"></span>
+                <span class="page-header-title-text" translate="externalUser.home.title"></span>
             </h2>
-            <button *ngIf="permissionService.puedeNavegarUserManagement()" class="btn btn-primary" [routerLink]="['../user-management-new']">
+            <button *ngIf="permissionService.puedeNavegarUserManagement()" class="btn btn-primary" [routerLink]="['../external-users/new']">
                 <span class="btn-icon fa fa-plus"></span>
-                <span translate="userManagement.home.createLabel"></span>
+                <span translate="externalUser.home.createLabel"></span>
             </button>
         </div>
-        <ac-user-search [filters]="filters"></ac-user-search>
+        <app-external-user-search [filters]="filters"></app-external-user-search>
     </div>
     <div class="page-body">
         <ng-container *ngIf="users">
@@ -30,18 +30,16 @@
                         }"
                     >
                         <ng-template pTemplate="body" let-user>
-                            <tr [ngClass]="{'entity-deleted': !isActivo(user) }" [routerLink]="['../user-management', user.login]">
-                                <td>
-                                    {{user.login}}
-                                    <span class="badge badge-danger ml-1" *ngIf="user.deletionDate">{{ "userManagement.status.deleted" | translate }}</span>
-                                </td>
-                                <td>{{user.nombre}}</td>
-                                <td>{{user.apellido1}}</td>
-                                <td>{{user.apellido2}}</td>
+                            <tr [ngClass]="{'entity-deleted': !isActivo(user) }" [routerLink]="['../external-users', user.id]">
+                                <td>{{user.name}}</td>
+                                <td>{{user.surname1}}</td>
+                                <td>{{user.surname2}}</td>
                                 <td>{{user.email}}</td>
-                                <td>{{ "edatosExternalUsersApp.languageEnum." + user.language | translate }}</td>
+                                <td>{{ 'externalUser.languageEnum.' + user.language | translate }}</td>
+                                <td>{{ 'externalUser.treatmentEnum.' + user.treatment | translate }}</td>
                                 <td>
-                                    <span *ngFor="let rol of user.roles" class="badge badge-info" translate="edatosExternalUsersApp.rolesEnum.{{rol}}"></span>
+                                    <span class="badge badge-danger ml-1" *ngIf="user.deletionDate">{{ 'externalUser.status.deleted' | translate }}</span>
+                                    <span class="badge badge-info ml-1" *ngIf="!user.deletionDate">{{ 'externalUser.status.active' | translate }}</span>
                                 </td>
                             </tr>
                         </ng-template>

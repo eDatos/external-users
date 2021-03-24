@@ -55,18 +55,18 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     }
 
     @Override
-    public ExternalUserEntity delete(String email) {
-        ExternalUserEntity usuario = externalUserRepository.findOneByEmailAndDeletionDateIsNull(email)
-                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build());
+    public ExternalUserEntity delete(Long id) {
+        ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id)
+                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build()); // TODO(EDATOS-3278): Replace with EDatosException
         usuario.setDeletionDate(Instant.now());
         usuario.setDeletedBy(SecurityUtils.getCurrentUserLogin());
         return externalUserRepository.saveAndFlush(usuario);
     }
 
     @Override
-    public ExternalUserEntity recover(String email) {
-        ExternalUserEntity usuario = externalUserRepository.findOneByEmailAndDeletionDateIsNotNull(email)
-                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.ENTIDAD_NO_ENCONTRADA, email).build());
+    public ExternalUserEntity recover(Long id) {
+        ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNotNull(id)
+                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.ENTIDAD_NO_ENCONTRADA, id.toString()).build());
         usuario.setDeletionDate(null);
         usuario.setDeletedBy(null);
         return externalUserRepository.saveAndFlush(usuario);
@@ -89,7 +89,7 @@ public class ExternalUserServiceImpl implements ExternalUserService {
             queryBuilder.append(query);
         }
         String finalQuery = getFinalQuery(includeDeleted, queryBuilder);
-        return queryUtil.queryToUserCriteria(pageable, finalQuery);
+        return queryUtil.queryToUserExternalUserCriteria(pageable, finalQuery);
     }
 
     private String getFinalQuery(Boolean includeDeleted, StringBuilder queryBuilder) {

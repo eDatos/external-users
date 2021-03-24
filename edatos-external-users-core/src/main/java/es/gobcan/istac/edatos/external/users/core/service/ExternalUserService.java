@@ -13,9 +13,9 @@ public interface ExternalUserService {
 
     ExternalUserEntity update(ExternalUserEntity user);
 
-    ExternalUserEntity delete(String email);
+    ExternalUserEntity delete(Long id);
 
-    ExternalUserEntity recover(String email);
+    ExternalUserEntity recover(Long id);
 
     ExternalUserEntity find(Long id);
 
