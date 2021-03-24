@@ -102,6 +102,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     private onSaveSuccess(result) {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
+        this.externalUser = result;
         this.isSaving = false;
         this.router.navigate(['/admin', 'user-management', this.externalUser.id]);
     }
