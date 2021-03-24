@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { ExternalUserFormComponent } from '@app/modules/admin/external-user-management/external-user-form/external-user-form.component';
-import { ExternalUserListComponent } from '@app/modules/admin/external-user-management/external-user-list/external-user-list.component';
+import { ExternalUserFormComponent } from '@app/modules/admin/external-user/external-user-form/external-user-form.component';
+import { ExternalUserListComponent } from '@app/modules/admin/external-user/external-user-list/external-user-list.component';
 import { ITEMS_PER_PAGE } from '@app/app.constants';
 import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
 import { USER_MANAGEMENT_ROLES } from '@app/core/service/auth';

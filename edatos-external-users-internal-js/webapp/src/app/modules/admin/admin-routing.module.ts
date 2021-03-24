@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { externalUsersRoutes } from './external-user-management/external-user.route';
+import { externalUsersRoutes } from './external-user/external-user.route';
 import { auditsRoute } from './audits/audits.route';
 import { configurationRoute } from './configuration/configuration.route';
 import { healthRoute } from './health/health.route';
