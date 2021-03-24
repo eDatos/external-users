@@ -611,9 +611,6 @@
         "deactivate": {
             "question": "¿Seguro que desea eliminar el usuario <strong>{{ email }}</strong>?"
         },
-        "delete": {
-            "question": "¿Seguro que quieres eliminar el usuario {{ email }}?"
-        },
         "deleted": "Se ha eliminado el usuario {{ param }}",
         "deletionDate": "Fecha de borrado",
         "desactivado": "Desactivado",
@@ -660,7 +657,7 @@
         "personalData": "Datos personales",
         "profiles": "Roles",
         "restore": {
-            "question": "¿Seguro que quieres restaurar el usuario {{ email }}?"
+            "question": "¿Seguro que desea restaurar el usuario {{ email }}?"
         },
         "rol": "Rol",
         "roles": "Roles",

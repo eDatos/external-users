@@ -85,11 +85,11 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public delete() {
-        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser });
+        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser }, { container: '.app' });
     }
 
     public restore() {
-        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser });
+        this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser }, { container: '.app' });
     }
 
     public externalUserExists(): boolean {
