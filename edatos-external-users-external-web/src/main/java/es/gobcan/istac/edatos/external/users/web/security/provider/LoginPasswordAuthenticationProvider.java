@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.web.security;
+package es.gobcan.istac.edatos.external.users.web.security.provider;
 
 import java.util.*;
 
@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 
 public class LoginPasswordAuthenticationProvider implements AuthenticationProvider {
 

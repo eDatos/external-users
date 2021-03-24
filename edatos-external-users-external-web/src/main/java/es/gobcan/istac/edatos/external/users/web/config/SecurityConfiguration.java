@@ -1,11 +1,10 @@
 package es.gobcan.istac.edatos.external.users.web.config;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
-import es.gobcan.istac.edatos.external.users.web.security.LoginPasswordAuthenticationProvider;
+import es.gobcan.istac.edatos.external.users.web.security.provider.LoginPasswordAuthenticationProvider;
 import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthenticationFilter;
 import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthorizationFilter;
-import es.gobcan.istac.edatos.external.users.web.security.jwt.JWTAuthenticationSuccessHandler;
-import es.gobcan.istac.edatos.external.users.web.security.jwt.TokenProvider;
+import es.gobcan.istac.edatos.external.users.web.security.provider.TokenProvider;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -24,7 +23,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
@@ -56,22 +54,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.applicationProperties = applicationProperties;
         this.metadataProperties = metadataProperties;
         this.env = env;
-    }
-
-    /*
-     * @PostConstruct
-     * public void init() { // TODO EDATOS-3287 Still to be set up
-     * try {
-     * authenticationManagerBuilder.authenticationProvider(casAuthenticationProvider());
-     * } catch (Exception e) {
-     * throw new BeanInitializationException("Configuración de seguridad fallida", e);
-     * }
-     * }
-     */
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, applicationProperties, env);
     }
 
     @Bean
@@ -128,7 +110,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //@formatter:off
         // .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class) // TODO EDATOS-3287 Still to be set up
         http
-            .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper()))
+            .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, applicationProperties, env))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), jHipsterProperties))
             .exceptionHandling()
             .authenticationEntryPoint(http401UnauthorizedEntryPoint())
