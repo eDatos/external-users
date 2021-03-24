@@ -205,6 +205,7 @@ application:
         metamacCasLogoutUrlKey: metamac.security.cas_service_logout_url
         metamacFaviconUrlKey: metamac.app.style.favicon.url
         metamacHeaderUrlKey: metamac.api.style.header.url
+        metamacFooterUrlKey: metamac.api.style.footer.url
     endpoint:
         # Required: Aplication URL
         app-url: FILL_APP_URL

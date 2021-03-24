@@ -43,6 +43,7 @@ public class DefaultController {
         model.put("endpoint", applicationProperties.getEndpoint());
         model.put("faviconUrl", this.faviconUrl);
         model.put("headerHtml", renderHeaderHtml());
+        model.put("footerHtml", renderFooterHtml());
 
         Map<String, Object> flashMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {
@@ -55,6 +56,12 @@ public class DefaultController {
         RestTemplate plantilla = new RestTemplate();
         String headerHtml = plantilla.getForObject(metadataService.retrieveAppStyleHeaderUrl(), String.class);
         return headerHtml;
+    }
+
+    public String renderFooterHtml() throws Exception {
+        RestTemplate plantilla = new RestTemplate();
+        String footerHtml = plantilla.getForObject(metadataService.retrieveAppStyleFooterUrl(), String.class);
+        return footerHtml;
     }
 
 }

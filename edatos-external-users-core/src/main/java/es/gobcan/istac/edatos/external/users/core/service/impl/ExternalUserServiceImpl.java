@@ -34,11 +34,11 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     }
 
     @Override
-    public void update(String firstName, String apellido1, String apellido2, String email) {
+    public void update(String firstName, String surname1, String surname2, String email) {
         externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
             user.setName(firstName);
-            user.setSurname1(apellido1);
-            user.setSurname2(apellido2);
+            user.setSurname1(surname1);
+            user.setSurname2(surname2);
             user.setEmail(email);
         });
     }
@@ -51,7 +51,7 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     @Override
     public ExternalUserEntity delete(Long id) {
         ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id)
-            .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build()); // TODO(EDATOS-3278): Replace with EDatosException
+                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build()); // TODO(EDATOS-3278): Replace with EDatosException
         usuario.setDeletionDate(Instant.now());
         usuario.setDeletedBy(SecurityUtils.getCurrentUserLogin());
         return externalUserRepository.saveAndFlush(usuario);
@@ -60,7 +60,7 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     @Override
     public ExternalUserEntity recover(Long id) {
         ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNotNull(id)
-            .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.ENTIDAD_NO_ENCONTRADA, id.toString()).build());
+                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.ENTIDAD_NO_ENCONTRADA, id.toString()).build());
         usuario.setDeletionDate(null);
         usuario.setDeletedBy(null);
         return externalUserRepository.saveAndFlush(usuario);

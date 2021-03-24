@@ -1,0 +1,8 @@
+{
+    "entity": {
+        "validation": {
+            "passwordMatch": "Asegúrese de que sus contraseñas coninciden",
+            "email": "Su correo electrónico no es válido."
+        }
+    }
+}
