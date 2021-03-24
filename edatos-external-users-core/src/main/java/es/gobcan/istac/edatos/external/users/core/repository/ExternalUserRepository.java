@@ -15,9 +15,13 @@ public interface ExternalUserRepository extends JpaRepository<ExternalUserEntity
 
     Optional<ExternalUserEntity> findOneByEmail(String email);
 
-    Optional<ExternalUserEntity> findOneByEmailAndDeletionDateIsNull(String login);
+    Optional<ExternalUserEntity> findOneByEmailAndDeletionDateIsNull(String email);
 
-    Optional<ExternalUserEntity> findOneByEmailAndDeletionDateIsNotNull(String login);
+    Optional<ExternalUserEntity> findOneByEmailAndDeletionDateIsNotNull(String email);
+
+    Optional<ExternalUserEntity> findOneByIdAndDeletionDateIsNull(Long id);
+
+    Optional<ExternalUserEntity> findOneByIdAndDeletionDateIsNotNull(Long id);
 
     Page<ExternalUserEntity> findAll(DetachedCriteria criteria, Pageable pageable);
 }

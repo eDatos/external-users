@@ -66,6 +66,10 @@ public class ApplicationTemplateSecurity {
         return this.isAdmin(authentication);
     }
 
+    public boolean canModifyUserStatus(Authentication authentication) {
+        return this.isAdmin(authentication);
+    }
+
     public boolean canCreateUser(Authentication authentication) {
         return this.isAdmin(authentication);
     }
