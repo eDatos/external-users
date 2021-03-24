@@ -4,7 +4,7 @@ import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ExternalUser, User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
-import { ExternalUserFilter } from '@app/modules/admin/external-user-management/external-user-search/external-user-filter';
+import { ExternalUserFilter } from '@app/modules/admin/external-user/external-user-search/external-user-filter';
 import { ResponseWrapper } from 'arte-ng/model';
 
 import { ArteEventManager } from 'arte-ng/services';
