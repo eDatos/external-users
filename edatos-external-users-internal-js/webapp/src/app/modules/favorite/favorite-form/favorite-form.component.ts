@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getLocalisedLabel } from '@app/core/utils/international-string-utils';
 import { Favorite, FavoriteService } from '@app/shared';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
@@ -15,7 +14,6 @@ export class FavoriteFormComponent implements OnInit {
     public isSaving = false;
     public isLoading = false;
     public favorite: Favorite;
-    public getLocalisedLabel = getLocalisedLabel;
     public mainLanguageCode: string;
 
     constructor(

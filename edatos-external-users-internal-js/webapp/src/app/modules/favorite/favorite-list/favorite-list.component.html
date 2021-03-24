@@ -29,7 +29,7 @@
                         <ng-template pTemplate="body" let-favorite>
                             <tr [routerLink]="[favorite.id]">
                                 <td>{{favorite.email}}</td>
-                                <td>{{getLocalisedLabel(favorite.getName(), this.mainLanguageCode)}}</td>
+                                <td>{{favorite.getLocalisedName(mainLanguageCode)}}</td>
                                 <!--TODO(EDATOS-3294): add operations-->
                             </tr>
                         </ng-template>

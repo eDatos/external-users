@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
-import { getLocalisedLabel } from '@app/core/utils/international-string-utils';
 import { FavoriteFilter } from '@app/modules/favorite/favorite-search/favorite-search';
 import { Favorite } from '@app/shared/model/favorite.model';
 import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
@@ -36,7 +35,6 @@ export class FavoriteListComponent implements OnInit {
         },
     ];
     public mainLanguageCode: string;
-    public getLocalisedLabel = getLocalisedLabel;
     private page: any;
     private reverse: boolean;
     private predicate: any;

@@ -3,13 +3,9 @@
         <div class="page-header-top">
             <h2 class="page-header-title">
                 <span class="page-header-title-text" [ngSwitch]="true">
-                    <ng-container *ngSwitchCase="!inEditMode">
-                        {{ ('favorite.name' | translate) + ': ' + getLocalisedLabel(this.favorite.getName(), this.mainLanguageCode) }}
-                    </ng-container>
+                    <ng-container *ngSwitchCase="!inEditMode"> {{ ('favorite.name' | translate) + ': ' + favorite.getLocalisedName(mainLanguageCode) }} </ng-container>
                     <ng-container *ngSwitchCase="inEditMode && !favorite.id"> {{ 'favorite.form.new' | translate }} </ng-container>
-                    <ng-container *ngSwitchDefault>
-                        {{ ('favorite.form.edit' | translate) + ': ' + getLocalisedLabel(this.favorite.getName(), this.mainLanguageCode) }}
-                    </ng-container>
+                    <ng-container *ngSwitchDefault> {{ ('favorite.form.edit' | translate) + ': ' + favorite.getLocalisedName(mainLanguageCode) }} </ng-container>
                 </span>
             </h2>
 
