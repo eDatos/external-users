@@ -23,13 +23,13 @@ Navbar
     .dropdown-item.active,
     .dropdown-item.active:focus,
     .dropdown-item.active:hover {
-        background-color: $main-dark;
+        background-color: $istac-blue-dark;
     }
     ul.navbar-nav {
         .nav-item {
             white-space: nowrap;
             &.active {
-                background: $grey-dark;
+                background: $istac-blue-dark;
             }
         }
     }
