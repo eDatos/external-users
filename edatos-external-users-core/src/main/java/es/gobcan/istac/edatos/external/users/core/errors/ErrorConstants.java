@@ -15,7 +15,7 @@ public final class ErrorConstants {
     public static final String USUARIO_EXISTE = "error.usuario-existe";
     public static final String USUARIO_LDAP_NO_ENCONTRADO = "error.userManagement.usuario-ldap-no-encontrado";
     public static final String USUARIO_NO_VALIDO = "error.userManagement.usuario-no-valido";
-    public static final String USUARIO_EMAIL_EN_USO = "error.userManagement.emailEnUso";
+    public static final String USUARIO_EMAIL_EN_USO = "error.userManagement.email-en-uso";
 
     /**********
      * FILE
@@ -35,8 +35,8 @@ public final class ErrorConstants {
     /**********
      * LOGIN
      *********/
-    public static final String LOGIN_USUARIO_NO_EXISTE = "error.login.userNotExists";
-    public static final String LOGIN_USUARIO_DESACTIVADO = "error.login.userDisabled";
+    public static final String LOGIN_USUARIO_NO_EXISTE = "error.login.user-not-exists";
+    public static final String LOGIN_USUARIO_DESACTIVADO = "error.login.user-disabled";
     public static final String LOGIN_VACIO = "error.login.void";
     public static final String LOGIN_FALLIDO = "error.login.failed";
 

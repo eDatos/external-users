@@ -27,7 +27,8 @@
         "id-existe": "Un nuevo {{0}} no puede tener previamente un ID",
         "entidad-no-encontrada": "Resultado de {{0}} no encontrado",
         "userManagement": {
-            "usuario-ldap-no-encontrado": "No se ha encontrado el usuario especificado"
+            "usuario-ldap-no-encontrado": "No se ha encontrado el usuario especificado",
+            "email-en-uso": "Este correo electrónico ya existe."
         },
         "file-empty": "El fichero está vacío",
         "rol": {
@@ -38,6 +39,12 @@
             "maxFileSize": "No pueden adjuntarse ficheros de más de {{0}} MB.",
             "empty": "Fichero vacío.",
             "notFound": "Fichero no encontrado."
+        },
+        "login": {
+            "user-not-exists": "No se encuentra el usuario. Por favor, registre una nueva cuenta para poder iniciar sesión en la aplicación.",
+            "user-disabled": "El usuario se encuentra desactivado.",
+            "void": "El campo no puede ser vacío.",
+            "failed": "El usuario y/o contraseña no son correctos."
         }
     }
 }
