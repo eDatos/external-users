@@ -117,7 +117,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
         this.searchSubscription = this.eventManager.subscribe('userSearch', (response) => {
             this.page = 1;
             const queryParams = Object.assign({}, this.filters.toUrl(this.activatedRoute.snapshot.queryParams));
-            this.router.navigate(['/admin', 'user-management'], { queryParams });
+            this.router.navigate(['/admin', 'external-users'], { queryParams });
             this.loadAll();
         });
     }
@@ -152,7 +152,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
     }
 
     public transition() {
-        this.router.navigate(['/admin', 'user-management'], {
+        this.router.navigate(['/admin', 'external-users'], {
             queryParams: {
                 page: this.page,
                 size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
