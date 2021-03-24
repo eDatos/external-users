@@ -20,7 +20,7 @@ import es.gobcan.istac.edatos.external.users.core.service.criteria.CategoryCrite
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FavoriteCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FilterCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.OperationCriteriaProcessor;
-import es.gobcan.istac.edatos.external.users.core.service.criteria.UsuarioCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.ExternalUserCriteriaProcessor;
 
 @Component
 public class QueryUtil {
@@ -40,7 +40,7 @@ public class QueryUtil {
     }
 
     public DetachedCriteria queryToUserExternalUserCriteria(Pageable pageable, String query) {
-        return queryToCriteria(pageable, query, new UsuarioCriteriaProcessor());
+        return queryToCriteria(pageable, query, new ExternalUserCriteriaProcessor());
     }
 
     public String queryIncludingDeleted(String query) {

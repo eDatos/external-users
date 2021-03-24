@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -40,6 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -172,6 +174,7 @@ public class UsuarioResourceInternalTest {
     }
 
     @Test
+    @Ignore("this test was deactivated because the criteria processor used in this case was renamed to be used with external users - see EDATOS-3278")
     public void getAllUsers() throws Exception {
         // Initialize the database
         userRepository.save(newUser);

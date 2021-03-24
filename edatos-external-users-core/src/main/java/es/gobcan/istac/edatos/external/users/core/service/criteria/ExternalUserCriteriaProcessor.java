@@ -3,10 +3,8 @@ package es.gobcan.istac.edatos.external.users.core.service.criteria;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import org.hibernate.criterion.Criterion;
-import org.hibernate.criterion.Restrictions;
 
 import com.arte.libs.grammar.domain.QueryPropertyRestriction;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
@@ -16,17 +14,16 @@ import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.converter.CriterionConverter;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.util.CriteriaUtil;
 
-public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
+public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
 
-    private static final String TABLE_FIELD_LOGIN = "login";
-    private static final String TABLE_FIELD_NOMBRE = "nombre";
-    private static final String TABLE_FIELD_APELLIDO1 = "apellido1";
-    private static final String TABLE_FIELD_APELLIDO2 = "apellido2";
+    private static final String TABLE_FIELD_EMAIL = "email";
+    private static final String TABLE_FIELD_NAME = "name";
+    private static final String TABLE_FIELD_SURNAME1 = "surname1";
+    private static final String TABLE_FIELD_SURNAME2 = "surname2";
 
     private static final String ENTITY_FIELD_NAME = "name";
     private static final String ENTITY_FIELD_SURNAME1 = "surname1";
@@ -40,25 +37,20 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
         NAME,
         SURNAME1,
         SURNAME2,
-        ROLE,
         EMAIL,
-        USER,
-        DELETION_DATE,
         LANGUAGE,
         TREATMENT,
+        DELETION_DATE,
+        QUERY,
     }
 
-    public UsuarioCriteriaProcessor() {
+    public ExternalUserCriteriaProcessor() {
         super(ExternalUserEntity.class);
     }
 
     @Override
     public void registerProcessors() {
         //@formatter:off
-        registerRestrictionProcessor(RestrictionProcessorBuilder.enumRestrictionProcessor(Role.class)
-                .withQueryProperty(QueryProperty.ROLE)
-                .withCriterionConverter(new RolCriterionBuilder())
-                .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.NAME).sortable()
                 .withEntityProperty(ENTITY_FIELD_NAME).build());
@@ -69,7 +61,7 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.SURNAME2).sortable()
                 .withEntityProperty(ENTITY_FIELD_SURNAME2).build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.USER)
+                .withQueryProperty(QueryProperty.QUERY)
                 .withCriterionConverter(new SqlCriterionBuilder())
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.dateRestrictionProcessor()
@@ -95,33 +87,12 @@ public class UsuarioCriteriaProcessor extends AbstractCriteriaProcessor {
 
         @Override
         public Criterion convertToCriterion(QueryPropertyRestriction property, CriteriaProcessorContext context) {
-            if (QueryProperty.USER.name().equalsIgnoreCase(property.getLeftExpression())) {
-                List<String> fields = new ArrayList<>(Arrays.asList(TABLE_FIELD_LOGIN, TABLE_FIELD_NOMBRE, TABLE_FIELD_APELLIDO1, TABLE_FIELD_APELLIDO2));
+            if (QueryProperty.QUERY.name().equalsIgnoreCase(property.getLeftExpression())) {
+                List<String> fields = new ArrayList<>(Arrays.asList(TABLE_FIELD_EMAIL, TABLE_FIELD_NAME, TABLE_FIELD_SURNAME1, TABLE_FIELD_SURNAME2));
                 return CriteriaUtil.buildAccentAndCaseInsensitiveCriterion(property, fields);
             }
             throw new CustomParameterizedExceptionBuilder().message(String.format("Parámetro de búsqueda no soportado: '%s'", property))
                     .code(ErrorConstants.QUERY_NO_SOPORTADA, property.getLeftExpression(), property.getOperationType().name()).build();
-        }
-    }
-
-    private static class RolCriterionBuilder implements CriterionConverter {
-
-        @Override
-        public Criterion convertToCriterion(QueryPropertyRestriction property, CriteriaProcessorContext context) {
-            if ("EQ".equals(property.getOperationType().name())) {
-                return buildUsersByRole(property);
-            }
-            throw new CustomParameterizedExceptionBuilder().message(String.format("Parámetro de búsqueda no soportado: '%s'", property))
-                    .code(ErrorConstants.QUERY_NO_SOPORTADA, property.getLeftExpression(), property.getOperationType().name()).build();
-        }
-
-        private Criterion buildUsersByRole(QueryPropertyRestriction property) {
-            String query = "{alias}.id in (select ur.usuario_fk from tb_usuarios_roles ur";
-            if (!Objects.equals(property.getRightValue(), Role.ANY_ROLE_ALLOWED.name())) {
-                query += " where rol = (" + property.getRightExpression() + ")";
-            }
-            query += ")";
-            return Restrictions.sqlRestriction(query);
         }
     }
 }

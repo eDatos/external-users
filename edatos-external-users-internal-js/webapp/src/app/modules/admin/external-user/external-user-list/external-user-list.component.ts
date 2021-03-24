@@ -4,7 +4,7 @@ import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ExternalUser, User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
-import { ExternalUserFilter } from '@app/modules/admin/external-user-management/external-user-search/external-user-filter';
+import { ExternalUserFilter } from '@app/modules/admin/external-user/external-user-search/external-user-filter';
 import { ResponseWrapper } from 'arte-ng/model';
 
 import { ArteEventManager } from 'arte-ng/services';
@@ -33,7 +33,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.name',
+                translatePath: 'externalUser.name',
             },
         },
         {
@@ -41,7 +41,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.surname1',
+                translatePath: 'externalUser.surname1',
             },
         },
         {
@@ -49,7 +49,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.surname2',
+                translatePath: 'externalUser.surname2',
             },
         },
         {
@@ -57,7 +57,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.email',
+                translatePath: 'externalUser.email',
             },
         },
         {
@@ -65,21 +65,21 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.language',
+                translatePath: 'externalUser.language',
             },
         },
         {
             fieldName: 'treatment',
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.treatment',
+                translatePath: 'externalUser.treatment',
             },
         },
         {
             fieldName: 'status',
             header: {
                 handler: 'translate',
-                translatePath: 'externalUserManagement.status.name',
+                translatePath: 'externalUser.status.name',
             },
         },
     ];
@@ -117,7 +117,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
         this.searchSubscription = this.eventManager.subscribe('userSearch', (response) => {
             this.page = 1;
             const queryParams = Object.assign({}, this.filters.toUrl(this.activatedRoute.snapshot.queryParams));
-            this.router.navigate(['/admin', 'user-management'], { queryParams });
+            this.router.navigate(['/admin', 'external-users'], { queryParams });
             this.loadAll();
         });
     }
@@ -152,7 +152,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
     }
 
     public transition() {
-        this.router.navigate(['/admin', 'user-management'], {
+        this.router.navigate(['/admin', 'external-users'], {
             queryParams: {
                 page: this.page,
                 size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
@@ -169,7 +169,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
 
     private processUrlParams(): void {
         this.filters.includeDeleted = this.activatedRoute.snapshot.queryParams.hasOwnProperty('includeDeleted');
-        this.filters.name = this.activatedRoute.snapshot.queryParams.name;
+        this.filters.query = this.activatedRoute.snapshot.queryParams.query;
     }
 
     public isActivo(user: User): boolean {
