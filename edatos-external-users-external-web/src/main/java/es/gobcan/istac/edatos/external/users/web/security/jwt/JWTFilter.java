@@ -4,39 +4,38 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * Filters incoming requests and installs a Spring Security principal if a
  * header corresponding to a valid user is found.
  */
-public class JWTFilter extends GenericFilterBean {
+public class JWTFilter extends BasicAuthenticationFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+
     private TokenProvider tokenProvider;
 
-    public JWTFilter(TokenProvider tokenProvider) {
+    public JWTFilter(TokenProvider tokenProvider, AuthenticationManager authManager) {
+        super(authManager);
         this.tokenProvider = tokenProvider;
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+    public void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws IOException, ServletException {
         String jwt = resolveToken(httpServletRequest);
 
         if (StringUtils.hasText(jwt)) {
@@ -44,12 +43,12 @@ public class JWTFilter extends GenericFilterBean {
             if (jwtClaims != null) {
                 Authentication authentication = this.tokenProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                renewTicketIfNecessary(servletResponse, jwtClaims, authentication);
+                renewTicketIfNecessary(httpServletResponse, jwtClaims, authentication);
             }
 
         }
 
-        filterChain.doFilter(servletRequest, servletResponse);
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 
     /**
@@ -74,16 +73,9 @@ public class JWTFilter extends GenericFilterBean {
 
     private String resolveToken(HttpServletRequest request) {
         // Header
-        String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
-        }
-        // Cookie
-        if (request.getCookies() != null) {
-            Optional<Cookie> tokenCookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals(JWTAuthenticationSuccessHandler.JHI_AUTHENTICATIONTOKEN)).findFirst();
-            if (tokenCookie.isPresent()) {
-                return tokenCookie.get().getValue();
-            }
         }
 
         return null;

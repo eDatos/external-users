@@ -15,6 +15,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
+import es.gobcan.istac.edatos.external.users.core.service.validator.ExternalUserValidator;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
 @Service
@@ -28,8 +29,12 @@ public class ExternalUserServiceImpl implements ExternalUserService {
         this.queryUtil = queryUtil;
     }
 
+    @Autowired
+    private ExternalUserValidator externalUserValidator;
+
     @Override
     public ExternalUserEntity create(ExternalUserEntity user) {
+        externalUserValidator.checkEmailEnUso(user);
         return externalUserRepository.saveAndFlush(user);
     }
 
