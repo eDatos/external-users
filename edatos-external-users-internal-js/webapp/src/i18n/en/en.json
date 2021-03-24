@@ -317,7 +317,7 @@
         },
         "usuario-existe": "The username entered is already in use"
     },
-    "externalUserManagement": {
+    "externalUser": {
         "activado": "Activated",
         "created": "User {{ param }}has been created",
         "deactivate": {

@@ -15,7 +15,7 @@ export const externalUsersRoutes: Routes = [
             pagingParams: PagingParamsResolver,
         },
         data: {
-            pageTitle: 'externalUserManagement.home.title',
+            pageTitle: 'externalUser.home.title',
             roles: USER_MANAGEMENT_ROLES,
             defaultPagingParams: {
                 page: '1',
@@ -29,7 +29,7 @@ export const externalUsersRoutes: Routes = [
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
-            pageTitle: 'externalUserManagement.home.title',
+            pageTitle: 'externalUser.home.title',
             roles: USER_MANAGEMENT_ROLES,
         },
     },
@@ -38,7 +38,7 @@ export const externalUsersRoutes: Routes = [
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
-            pageTitle: 'externalUserManagement.home.title',
+            pageTitle: 'externalUser.home.title',
             roles: USER_MANAGEMENT_ROLES,
         },
     },
@@ -48,7 +48,7 @@ export const externalUsersRoutes: Routes = [
         component: ExternalUserFormComponent,
         data: {
             roles: USER_MANAGEMENT_ROLES,
-            pageTitle: 'externalUserManagement.home.title',
+            pageTitle: 'externalUser.home.title',
         },
     },
 ];
