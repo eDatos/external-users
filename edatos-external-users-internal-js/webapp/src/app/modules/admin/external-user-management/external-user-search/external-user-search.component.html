@@ -1,0 +1,26 @@
+<div class="page-filters">
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <label translate="externalUserManagement.filters.name.label"></label>
+            <arte-input
+                [name]="'filter'"
+                [attr.aria-label]="'externalUserManagement.filters.name.placeholder' | translate"
+                [placeholder]="'externalUserManagement.filters.name.placeholder'"
+                [(ngModel)]="filters.name"
+                (keyup)="filter()"
+            ></arte-input>
+        </div>
+        <div class="form-group col-md-3 ac-ui-unfluid">
+            <label translate="externalUserManagement.home.includeDeleted"></label>
+            <div>
+                <arte-tri-input-switch [(ngModel)]="filters.includeDeleted" (onChange)="filter()" [required]="true"></arte-tri-input-switch>
+            </div>
+        </div>
+    </div>
+    <div class="page-filters-btns">
+        <button class="btn" (click)="resetFilters();">
+            <i class="btn-icon fa fa-times"></i>
+            <span translate="entity.action.filtersReset"></span>
+        </button>
+    </div>
+</div>

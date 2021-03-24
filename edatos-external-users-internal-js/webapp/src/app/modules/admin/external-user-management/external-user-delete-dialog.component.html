@@ -1,12 +1,12 @@
-<form name="deleteForm" (ngSubmit)="confirmAction(user.login)">
+<form name="deleteForm" (ngSubmit)="confirmAction(user.id)">
     <div class="modal-header">
         <h4 *ngIf="!user.deletionDate" class="modal-title" translate="entity.eliminar.title"></h4>
         <h4 *ngIf="user.deletionDate" class="modal-title" translate="entity.restore.title"></h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>
     <div class="modal-body">
-        <p *ngIf="!user.deletionDate" translate="userManagement.deactivate.question" [translateParams]="{login: user.login}"></p>
-        <p *ngIf="user.deletionDate" translate="userManagement.restore.question" [translateParams]="{login: user.login}"></p>
+        <p *ngIf="!user.deletionDate" [innerHTML]="'externalUserManagement.deactivate.question' | translate:{email: user.email}"></p>
+        <p *ngIf="user.deletionDate" [innerHTML]="'externalUserManagement.restore.question' | translate:{email: user.email}"></p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
@@ -18,7 +18,7 @@
             <span translate="entity.action.eliminar"></span>
         </button>
         <button *ngIf="user.deletionDate" type="submit" class="btn btn-warning">
-            <span class="fa fa-remove"></span>&nbsp;
+            <span class="fa fa-undo"></span>&nbsp;
             <span translate="entity.action.restore"></span>
         </button>
     </div>

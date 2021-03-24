@@ -1,22 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
-import { User } from '@app/core/model';
+import { ExternalUser, User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
-import { UserService } from '@app/core/service/user';
+import { ExternalUserService } from '@app/core/service/user';
+import { ExternalUserFilter } from '@app/modules/admin/external-user-management/external-user-search/external-user-filter';
 import { ResponseWrapper } from 'arte-ng/model';
 
 import { ArteEventManager } from 'arte-ng/services';
 import { LazyLoadEvent } from 'primeng/api';
 import { Subscription } from 'rxjs';
 
-import { UserFilter } from './user-search';
-
 @Component({
-    selector: 'app-user-mgmt',
-    templateUrl: './user-management.component.html',
+    selector: 'app-external-user-list',
+    templateUrl: './external-user-list.component.html',
 })
-export class UserMgmtComponent implements OnInit, OnDestroy {
+export class ExternalUserListComponent implements OnInit, OnDestroy {
     private eventSubscriber: Subscription;
     private searchSubscription: Subscription;
 
@@ -25,8 +24,8 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     public page: any;
     public predicate: any;
     public reverse: any;
-    public filters: UserFilter;
-    public users: User[];
+    public filters: ExternalUserFilter;
+    public users: ExternalUser[];
 
     public columns = [
         {
@@ -34,7 +33,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.name',
+                translatePath: 'externalUserManagement.name',
             },
         },
         {
@@ -42,7 +41,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.surname1',
+                translatePath: 'externalUserManagement.surname1',
             },
         },
         {
@@ -50,7 +49,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.surname2',
+                translatePath: 'externalUserManagement.surname2',
             },
         },
         {
@@ -58,7 +57,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.email',
+                translatePath: 'externalUserManagement.email',
             },
         },
         {
@@ -66,26 +65,33 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.language',
+                translatePath: 'externalUserManagement.language',
             },
         },
         {
-            fieldName: 'roles',
+            fieldName: 'treatment',
             header: {
                 handler: 'translate',
-                translatePath: 'userManagement.rol',
+                translatePath: 'externalUserManagement.treatment',
+            },
+        },
+        {
+            fieldName: 'status',
+            header: {
+                handler: 'translate',
+                translatePath: 'externalUserManagement.status.name',
             },
         },
     ];
 
     constructor(
         public permissionService: PermissionService,
-        private userService: UserService,
+        private userService: ExternalUserService,
         private eventManager: ArteEventManager,
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) {
-        this.filters = new UserFilter();
+        this.filters = new ExternalUserFilter();
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
@@ -95,18 +101,18 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         });
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.processUrlParams();
         this.loadAll();
         this.registerChangeInUsers();
     }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.eventManager.destroy(this.eventSubscriber);
         this.eventManager.destroy(this.searchSubscription);
     }
 
-    registerChangeInUsers() {
+    public registerChangeInUsers() {
         this.eventSubscriber = this.eventManager.subscribe('userListModification', (response) => this.loadAll());
         this.searchSubscription = this.eventManager.subscribe('userSearch', (response) => {
             this.page = 1;
@@ -116,7 +122,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         });
     }
 
-    loadAll() {
+    public loadAll() {
         this.userService
             .find({
                 page: this.page - 1,
@@ -127,7 +133,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
             .subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers));
     }
 
-    sort() {
+    public sort() {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
             result.push('id');
@@ -135,7 +141,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         return result;
     }
 
-    loadData(e: LazyLoadEvent) {
+    public loadData(e: LazyLoadEvent) {
         this.page = e.first / e.rows + 1;
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
@@ -145,7 +151,7 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
         this.transition();
     }
 
-    transition() {
+    public transition() {
         this.router.navigate(['/admin', 'user-management'], {
             queryParams: {
                 page: this.page,
@@ -164,7 +170,6 @@ export class UserMgmtComponent implements OnInit, OnDestroy {
     private processUrlParams(): void {
         this.filters.includeDeleted = this.activatedRoute.snapshot.queryParams.hasOwnProperty('includeDeleted');
         this.filters.name = this.activatedRoute.snapshot.queryParams.name;
-        this.filters.rol = this.activatedRoute.snapshot.queryParams.rol;
     }
 
     public isActivo(user: User): boolean {
