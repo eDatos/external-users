@@ -46,7 +46,7 @@
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
                 <button *ngIf="!isEditMode() && !externalUser.deletionDate" type="button" class="btn btn-danger" (click)="delete()">
                     <span class="fa fa-remove"></span>
-                    <span translate="entity.action.eliminar"></span>
+                    <span translate="entity.action.deactivate"></span>
                 </button>
             </ng-container>
         </div>
