@@ -1,0 +1,24 @@
+{
+    "filter": {
+        "entity": {
+            "email": "Email",
+            "lastAccessDate": "Fecha de último acceso",
+            "name": "Nombre",
+            "notes": "Notas",
+            "permalink": "Permalink"
+        },
+        "form": {
+            "cancel": "Cancelar",
+            "edit": "Editar filtro",
+            "goBack": "Volver al listado",
+            "legend": "Detalles del filtro",
+            "new": "Crear un nuevo filtro",
+            "save": "Guardar filtro"
+        },
+        "home": {
+            "createLabel": "Crear filtro",
+            "title": "Filtros"
+        },
+        "name": "Filtro"
+    }
+}

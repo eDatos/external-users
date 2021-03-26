@@ -11,7 +11,6 @@ Navbar
     vertical-align: text-bottom;
 }
 
-
 .app-navbar {
     background-color: $main-dark;
     padding-left: $page-padding-left;
@@ -52,7 +51,7 @@ Logo styles
 @include media-breakpoint-down(sm) {
     $page-padding-left: 15px;
     $page-padding-right: 15px;
-    .app-navbar {
+    .navbar {
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
     }
