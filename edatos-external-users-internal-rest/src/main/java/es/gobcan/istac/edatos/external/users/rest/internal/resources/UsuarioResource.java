@@ -88,7 +88,7 @@ public class UsuarioResource extends AbstractResource {
 
     @PutMapping("/usuarios")
     @Timed
-    @PreAuthorize("@secChecker.canUpdateUser(authentication, #managedUserVM?.login)")
+    @PreAuthorize("@secChecker.canUpdateUser(authentication)")
     public ResponseEntity<UsuarioDto> update(@Valid @RequestBody ManagedUserVM managedUserVM) {
         Optional<UsuarioEntity> usuarioExistente = userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase());
 

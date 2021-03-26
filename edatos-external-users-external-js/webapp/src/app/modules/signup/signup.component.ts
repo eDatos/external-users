@@ -86,7 +86,6 @@ export class SignupFormComponent implements OnInit {
     }
 
     private onSaveSuccess(result) {
-        console.log(result);
         this.isSaving = false;
         this.navigateToLogin();
     }

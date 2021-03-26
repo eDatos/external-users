@@ -25,7 +25,6 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.validator.constraints.Length;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
@@ -42,7 +41,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
 @Entity
 @Table(name = "tb_category")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
-@TypeDef(name = "json", typeClass = JsonStringType.class)
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
@@ -84,16 +82,16 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      * The category name. I.e.: "Forestry and hunting"
      */
     @NotNull
-    @Type(type = "json")
-    @Column(columnDefinition = "json", nullable = false)
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private InternationalStringVO description;
 
-    @Type(type = "json")
-    @Column(columnDefinition = "json")
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
     private InternationalStringVO comment;
 
     private Instant updateDate;

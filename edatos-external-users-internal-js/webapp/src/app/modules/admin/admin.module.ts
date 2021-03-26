@@ -1,27 +1,30 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ExternalUserService } from '@app/core/service';
+
 import { SharedModule } from '@app/shared';
 import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteTriInputSwitchModule } from 'arte-ng';
 import { ArteDirectivesModule } from 'arte-ng/directives';
 
 import {
-    AuditsComponent,
-    UserMgmtComponent,
-    UserMgmtFormComponent,
-    UserMgmtDeleteDialogComponent,
-    LogsComponent,
-    MetricsMonitoringModalComponent,
-    MetricsMonitoringComponent,
-    HealthModalComponent,
-    HealthCheckComponent,
-    ConfigurationComponent,
-    AuditsService,
-    ConfigurationService,
-    HealthService,
-    MetricsService,
-    LogsService,
     AdminRoutingModule,
+    AuditsComponent,
+    AuditsService,
+    ConfigurationComponent,
+    ConfigurationService,
+    ExternalUserDeleteDialogComponent,
+    ExternalUserFormComponent,
+    ExternalUserListComponent,
+    ExternalUserSearchComponent,
+    HealthCheckComponent,
+    HealthModalComponent,
+    HealthService,
+    LogsComponent,
+    LogsService,
+    MetricsMonitoringComponent,
+    MetricsMonitoringModalComponent,
+    MetricsService,
 } from '.';
-import { UserSearchComponent } from './user-management/user-search';
+
 
 @NgModule({
     imports: [
@@ -36,10 +39,10 @@ import { UserSearchComponent } from './user-management/user-search';
     ],
     declarations: [
         AuditsComponent,
-        UserSearchComponent,
-        UserMgmtComponent,
-        UserMgmtFormComponent,
-        UserMgmtDeleteDialogComponent,
+        ExternalUserSearchComponent,
+        ExternalUserListComponent,
+        ExternalUserFormComponent,
+        ExternalUserDeleteDialogComponent,
         LogsComponent,
         ConfigurationComponent,
         HealthCheckComponent,
@@ -47,8 +50,14 @@ import { UserSearchComponent } from './user-management/user-search';
         MetricsMonitoringComponent,
         MetricsMonitoringModalComponent,
     ],
-    entryComponents: [UserMgmtFormComponent, UserMgmtDeleteDialogComponent, HealthModalComponent, MetricsMonitoringModalComponent],
-    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService],
+    entryComponents: [
+        ExternalUserFormComponent,
+        ExternalUserDeleteDialogComponent,
+        HealthModalComponent,
+        MetricsMonitoringModalComponent
+    ],
+    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService, ExternalUserService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AdminModule {}
+export class AdminModule {
+}

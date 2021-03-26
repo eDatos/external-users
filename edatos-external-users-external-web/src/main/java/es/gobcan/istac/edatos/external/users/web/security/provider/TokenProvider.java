@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.web.security.jwt;
+package es.gobcan.istac.edatos.external.users.web.security.provider;
 
 import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
 import io.github.jhipster.config.JHipsterProperties;

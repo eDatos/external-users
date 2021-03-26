@@ -6,7 +6,7 @@ import { TOKEN_AUTH_NAME } from '@app/app.constants';
 
 @Injectable()
 export class AuthServerProvider {
-    constructor(private $localStorage: LocalStorageService, private $sessionStorage: SessionStorageService, private cookieService: CookieService) { }
+    constructor(private $localStorage: LocalStorageService, private $sessionStorage: SessionStorageService, private cookieService: CookieService) {}
 
     getToken() {
         const token = this.$localStorage.retrieve(TOKEN_AUTH_NAME) || this.$sessionStorage.retrieve(TOKEN_AUTH_NAME);

@@ -6,7 +6,7 @@
             </h2>
             <div class="panel-container-buttons">
                 <ng-container>
-                    <button type="submit" [disabled]="editForm.form.invalid" class="btn btn-primary">
+                    <button type="submit" [disabled]="editForm.form.invalid" (click)="login()" class="btn btn-primary">
                         <span class="fa fa-sign-in"></span>
                         <span translate="login.action.signin"></span>
                     </button>
@@ -40,7 +40,9 @@
                                 >
                                 </arte-input>
                                 <div class="form-errors-messages" *hasErrors="let messages">
-                                    <span *ngFor="let m of messages">{{m}}</span>
+                                    <ul>
+                                        <li *ngFor="let m of messages">{{m}}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

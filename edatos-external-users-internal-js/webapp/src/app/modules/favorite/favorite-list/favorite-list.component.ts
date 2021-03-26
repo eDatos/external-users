@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
+import { getLocalisedLabel } from '@app/core/utils/international-string-utils';
 import { FavoriteFilter } from '@app/modules/favorite/favorite-search/favorite-search';
 import { Favorite } from '@app/shared/model/favorite.model';
 import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
@@ -9,20 +10,20 @@ import { ResponseWrapper } from 'arte-ng/model';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
-    selector: 'app-favorite',
-    templateUrl: './favorite.component.html',
+    selector: 'app-favorite-list',
+    templateUrl: './favorite-list.component.html',
 })
-export class FavoriteComponent implements OnInit {
+export class FavoriteListComponent implements OnInit {
     public favorites: Favorite[];
     public totalItems: number;
     public itemsPerPage: number;
     public columns: any = [
         {
-            fieldName: 'login',
+            fieldName: 'email',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'favorite.login.label',
+                translatePath: 'favorite.entity.email',
             },
         },
         {
@@ -30,11 +31,12 @@ export class FavoriteComponent implements OnInit {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'favorite.subjectArea.label',
+                translatePath: 'category.name',
             },
         },
     ];
-    public mainLanguage: string;
+    public mainLanguageCode: string;
+    public getLocalisedLabel = getLocalisedLabel;
     private page: any;
     private reverse: boolean;
     private predicate: any;
@@ -52,7 +54,7 @@ export class FavoriteComponent implements OnInit {
             this.predicate = data['pagingParams'].predicate;
             this.itemsPerPage = data['pagingParams'].itemsPerPage;
         });
-        this.mainLanguage = this.translateService.getDefaultLang();
+        this.mainLanguageCode = this.translateService.getDefaultLang();
     }
 
     public ngOnInit(): void {

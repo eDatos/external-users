@@ -28,7 +28,16 @@ public final class SecurityUtils {
     }
 
     public static String passwordEncoder(String password) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        return passwordEncoder.encode(password);
+        return newPasswordEncoder().encode(password);
     }
+
+    public static Boolean passwordEncoderMatches(String password, String userPassword) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(password, userPassword);
+    }
+
+    private static PasswordEncoder newPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Credentials } from '@app/core/model';
 import { Router } from '@angular/router';
+import { Credentials, User } from '@app/core/model';
+import { TOKEN_AUTH_NAME } from '@app/app.constants';
 import { AccountUserService } from '@app/core/service/user';
+import { Principal } from '@app/core/service';
 
 @Component({
     selector: 'app-login',
@@ -10,20 +12,22 @@ import { AccountUserService } from '@app/core/service/user';
 export class LoginComponent implements OnInit {
     credentials: Credentials;
 
-    constructor(private accountUserService: AccountUserService, private router: Router) {
+    constructor(private accountUserService: AccountUserService, private router: Router, private principal: Principal) {
         this.credentials = new Credentials();
     }
 
     ngOnInit() {}
 
     login() {
-        this.navigateToSignup();
+        this.accountUserService.login(this.credentials).subscribe((foo: any) => {
+            this.principal.identity().then(() => this.navigateToUserManadgment());
+        });
     }
-    private navigateTo() {
-        /* TODO EDATOS-3287 Still to be set up */
+    private navigateToFilter() {
+        this.router.navigate(['filter']);
     }
 
-    public navigateToSignup() {
-        this.router.navigate(['signup']);
+    public navigateToUserManadgment() {
+        this.router.navigate(['account-management']);
     }
 }
