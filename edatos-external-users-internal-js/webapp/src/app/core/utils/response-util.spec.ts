@@ -3,41 +3,47 @@ import { Category, Favorite, InternationalString } from '@app/shared';
 import { convert, ResponseWrapper } from './response-utils';
 
 describe('ResponseUtils', () => {
-    const favoritePlainObject: Favorite = ({
-        id: 5,
-        optLock: 1,
-        createdDate: '2021-03-24T12:15:59Z',
-        createdBy: 'asdasdasdasdsda',
-        email: 'qwer@qwer.com',
-        category: {
-            id: 1,
+    let favoritePlainObject;
+    let httpResponse: HttpResponse<Favorite>;
+    let httpResponseList: HttpResponse<Favorite[]>;
+
+    beforeEach(() => {
+        favoritePlainObject = {
+            id: 5,
             optLock: 1,
-            createdDate: '2021-03-22T15:17:19Z',
-            createdBy: 'system',
-            code: 'sdfs',
-            uri: 'sdf',
-            urn: 'fsd',
-            name: {
-                texts: [
-                    {
-                        label: 'ejemplo',
-                        locale: 'es',
-                    },
-                ],
+            createdDate: '2021-03-24T12:15:59Z',
+            createdBy: 'asdasdasdasdsda',
+            email: 'qwer@qwer.com',
+            category: {
+                id: 1,
+                optLock: 1,
+                createdDate: '2021-03-22T15:17:19Z',
+                createdBy: 'system',
+                code: 'sdfs',
+                uri: 'sdf',
+                urn: 'fsd',
+                name: {
+                    texts: [
+                        {
+                            label: 'ejemplo',
+                            locale: 'es',
+                        },
+                    ],
+                },
             },
-        },
-    } as unknown) as Favorite;
+        };
 
-    const httpResponse = new HttpResponse({
-        body: favoritePlainObject,
-        headers: new HttpHeaders({ 'Test-Header': 'OK' }),
-        status: 200,
-    });
+        httpResponse = new HttpResponse({
+            body: favoritePlainObject,
+            headers: new HttpHeaders({ 'Test-Header': 'OK' }),
+            status: 200,
+        });
 
-    const httpResponseList = new HttpResponse({
-        body: [favoritePlainObject, favoritePlainObject],
-        headers: new HttpHeaders({ 'Test-Header': 'OK' }),
-        status: 200,
+        httpResponseList = new HttpResponse({
+            body: [favoritePlainObject, favoritePlainObject],
+            headers: new HttpHeaders({ 'Test-Header': 'OK' }),
+            status: 200,
+        });
     });
 
     it('should convert a plain json object into a class instance', () => {
