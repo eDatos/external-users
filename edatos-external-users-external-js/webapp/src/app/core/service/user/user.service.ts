@@ -21,11 +21,11 @@ export class AccountUserService {
     }
 
     getLogueado(): Observable<User> {
-        return this.http.get(`api/usuario`).pipe(map((res) => ResponseUtils.convert(res, User)));
+        return this.http.get(`${this.resourceUrl}/me`).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     update(user: User): Observable<User> {
-        return this.http.put(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, User)));
+        return this.http.put(`${this.resourceUrl}/update`, user).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     login(credentials: Credentials): Observable<User> {

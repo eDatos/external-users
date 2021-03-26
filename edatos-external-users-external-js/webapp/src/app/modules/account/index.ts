@@ -1,2 +1,1 @@
-export * from './account.component';
-export * from './account-routing.module';
+export * from './management/account-management.component';

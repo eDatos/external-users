@@ -51,7 +51,7 @@ Logo styles
 @include media-breakpoint-down(sm) {
     $page-padding-left: 15px;
     $page-padding-right: 15px;
-    .navbar {
+    .app-navbar {
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
     }
