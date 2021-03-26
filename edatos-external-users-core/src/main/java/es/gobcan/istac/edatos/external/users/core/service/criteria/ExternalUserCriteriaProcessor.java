@@ -68,6 +68,10 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.DELETION_DATE)
                 .withEntityProperty(ENTITY_FIELD_DELETION_DATE)
                 .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
+                .withQueryProperty(QueryProperty.EMAIL).sortable()
+                .withEntityProperty(ENTITY_FIELD_EMAIL)
+                .build());
         registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.LANGUAGE)
                 .withEntityProperty(ENTITY_FIELD_LANGUAGE)
@@ -75,10 +79,6 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
         registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.TREATMENT)
                 .withEntityProperty(ENTITY_FIELD_TREATMENT)
-                .build());
-        registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
-                .withQueryProperty(QueryProperty.EMAIL)
-                .withEntityProperty(ENTITY_FIELD_EMAIL)
                 .build());
         //@formatter:on
     }
