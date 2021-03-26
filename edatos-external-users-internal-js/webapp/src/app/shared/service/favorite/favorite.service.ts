@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { mapPlainToClass, mapPlainToResponseWrapper } from '@app/core/utils/response-utils';
+import { mapPlainToClass, ResponseWrapper } from '@app/core/utils/response-utils';
 import { Favorite } from '@app/shared/model/favorite.model';
-import { ResponseWrapper } from 'arte-ng/model';
 import { createRequestOption } from 'arte-ng/utils';
 import { Observable } from 'rxjs';
 
@@ -18,11 +17,14 @@ export class FavoriteService {
         return this.http.get<Favorite>(`${this.resourceUrl}/${id}`).pipe(mapPlainToClass(Favorite));
     }
 
-    public find(req?: any): Observable<ResponseWrapper> {
+    public find(req?: any): Observable<ResponseWrapper<Favorite[]>> {
         const options = createRequestOption(req);
-        return this.http
-            .get<Favorite>(this.resourceUrl, { ...options, observe: 'response' })
-            .pipe(mapPlainToResponseWrapper(Favorite));
+        return (
+            this.http
+                .get<Favorite[]>(this.resourceUrl, { ...options, observe: 'response' })
+                // @ts-ignore
+                .pipe(mapPlainToClass(Favorite))
+        );
     }
 
     public save(filter: Favorite): Observable<Favorite> {
