@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -32,7 +31,7 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
     @NotNull
     @JoinColumn(name = "external_user_fk", nullable = false)
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     private ExternalUserEntity externalUser;
 
     @JoinColumn(name = "category_fk")
