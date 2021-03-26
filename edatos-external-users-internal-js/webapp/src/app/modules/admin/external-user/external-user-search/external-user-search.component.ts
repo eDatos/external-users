@@ -1,10 +1,9 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ArteEventManager } from 'arte-ng/services';
 
 import { Subject, Subscription } from 'rxjs';
-import { ExternalUserFilter } from './external-user-filter';
 import { debounceTime } from 'rxjs/operators';
-import { Role } from '@app/core/model';
-import { ArteEventManager } from 'arte-ng/services';
+import { ExternalUserFilter } from './external-user-filter';
 
 @Component({
     selector: 'app-external-user-search',

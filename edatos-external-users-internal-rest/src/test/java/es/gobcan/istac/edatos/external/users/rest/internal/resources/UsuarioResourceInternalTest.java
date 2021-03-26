@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -40,6 +41,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -169,17 +171,6 @@ public class UsuarioResourceInternalTest {
         // Validate the User in the database
         List<UsuarioEntity> userList = userRepository.findAll();
         assertThat(userList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    public void getAllUsers() throws Exception {
-        // Initialize the database
-        userRepository.save(newUser);
-
-        // Get all the users
-        restUserMockMvc.perform(get("/api/usuarios?sort=id,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN_NEW_USER))).andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
-                .andExpect(jsonPath("$.[*].apellido1").value(hasItem(DEFAULT_PRIMER_APELLIDO))).andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)));
     }
 
     @Test

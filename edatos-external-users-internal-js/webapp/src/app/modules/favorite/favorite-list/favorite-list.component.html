@@ -27,9 +27,9 @@
                         (onLazyLoad)="loadData($event)"
                     >
                         <ng-template pTemplate="body" let-favorite>
-                            <tr [routerLink]="['../favorite', favorite.id]">
+                            <tr [routerLink]="[favorite.id]">
                                 <td>{{favorite.email}}</td>
-                                <td>{{getLocalisedString(favorite.category.name)}}</td>
+                                <td>{{getLocalisedLabel(favorite.getName(), this.mainLanguageCode)}}</td>
                                 <!--TODO(EDATOS-3294): add operations-->
                             </tr>
                         </ng-template>

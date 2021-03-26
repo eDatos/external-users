@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { EntityFilter, BaseEntityFilter } from 'arte-ng/model';
 
 export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter {
-    public name?: string;
+    public query?: string;
     public includeDeleted: boolean;
 
     constructor(public datePipe?: DatePipe) {
@@ -11,9 +11,9 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
 
     protected registerParameters() {
         this.registerParam({
-            paramName: 'name',
-            updateFilterFromParam: (param) => (this.name = param),
-            clearFilter: () => (this.name = null),
+            paramName: 'query',
+            updateFilterFromParam: (param) => (this.query = param),
+            clearFilter: () => (this.query = null),
         });
         this.registerParam({
             paramName: 'includeDeleted',
@@ -26,8 +26,8 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
 
     public getCriterias() {
         const criterias = [];
-        if (this.name) {
-            criterias.push(`USUARIO ILIKE '%${this.escapeSingleQuotes(this.name)}%'`);
+        if (this.query) {
+            criterias.push(`QUERY ILIKE '%${this.escapeSingleQuotes(this.query)}%'`);
         }
         if (!this.includeDeleted) {
             criterias.push(`DELETION_DATE IS_NULL`);

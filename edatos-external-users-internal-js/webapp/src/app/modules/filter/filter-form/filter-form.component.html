@@ -3,9 +3,9 @@
         <div class="page-header-top">
             <h2 class="page-header-title">
                 <span class="page-header-title-text" [ngSwitch]="true">
-                    <ng-container *ngSwitchCase="!inEditMode">{{ ('filter.name' | translate) + ' ' + filter.id }}</ng-container>
+                    <ng-container *ngSwitchCase="!inEditMode">{{ ('filter.name' | translate) + ': ' + filter.name }}</ng-container>
                     <ng-container *ngSwitchCase="inEditMode && !filter.id">{{ 'filter.form.new' | translate }}</ng-container>
-                    <ng-container *ngSwitchDefault>{{ ('filter.form.edit' | translate) + ' ' + filter.id  }}</ng-container>
+                    <ng-container *ngSwitchDefault>{{ ('filter.form.edit' | translate) + ': ' + filter.name }}</ng-container>
                 </span>
             </h2>
 
@@ -25,7 +25,13 @@
                 <span translate="filter.form.edit"></span>
             </button>
 
-            <button *ngIf="inEditMode" class="btn btn-primary d-flex align-items-center" type="button" (click)="submit()" [disabled]="isSaving || isLoading || !filterForm.form.valid">
+            <button
+                *ngIf="inEditMode"
+                class="btn btn-primary d-flex align-items-center"
+                type="button"
+                (click)="submit()"
+                [disabled]="isSaving || isLoading || !filterForm.form.valid"
+            >
                 <arte-spinner class="spinner-btn" *ngIf="isSaving" aria-hidden="true"></arte-spinner>
                 <span *ngIf="!isSaving" class="fa fa-save"></span>
                 <span translate="filter.form.save"></span>

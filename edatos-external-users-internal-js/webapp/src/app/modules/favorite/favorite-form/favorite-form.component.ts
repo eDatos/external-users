@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { getLocalisedLabel } from '@app/core/utils/international-string-utils';
 import { Favorite, FavoriteService } from '@app/shared';
+import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -13,13 +15,22 @@ export class FavoriteFormComponent implements OnInit {
     public isSaving = false;
     public isLoading = false;
     public favorite: Favorite;
+    public getLocalisedLabel = getLocalisedLabel;
+    public mainLanguageCode: string;
 
-    constructor(private favoriteService: FavoriteService, private activatedRoute: ActivatedRoute, private titleService: Title, private router: Router) {
+    constructor(
+        private favoriteService: FavoriteService,
+        private activatedRoute: ActivatedRoute,
+        private titleService: Title,
+        private router: Router,
+        private translateService: TranslateService
+    ) {
         this.favorite = this.activatedRoute.snapshot.data['favorite'] ?? new Favorite();
         this.activatedRoute.url.subscribe((segments) => {
             const lastUrlSegment = segments[segments.length - 1].path;
             this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
         });
+        this.mainLanguageCode = this.translateService.getDefaultLang();
     }
 
     public ngOnInit() {
