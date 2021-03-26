@@ -44,7 +44,6 @@ export class Principal {
         }
 
         const token: string = this.authServerProvider.getToken();
-        console.log('token', token);
         if (token) {
             this.userIdentity = UserAccount.fromJwt(token);
             this.authenticated = true;
@@ -54,7 +53,6 @@ export class Principal {
         }
 
         this.authenticationState.next(this.userIdentity);
-        console.log('userIdentity', this.userIdentity);
         return Promise.resolve(this.userIdentity);
     }
 

@@ -11,7 +11,6 @@ export class AuthServerProvider {
     getToken() {
         const token = this.$localStorage.retrieve(TOKEN_AUTH_NAME) || this.$sessionStorage.retrieve(TOKEN_AUTH_NAME);
         if (!token) {
-            console.log('cookie service', this.cookieService.get(TOKEN_AUTH_NAME));
             return this.cookieService.get(TOKEN_AUTH_NAME);
         }
         return token;
