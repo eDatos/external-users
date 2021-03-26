@@ -12,7 +12,7 @@ const APP_ROUTES: Routes = [
     },
     {
         path: 'account',
-        loadChildren: () => import('./modules/account/account.module').then((m) => m.AccountModule),
+        loadChildren: () => import('./modules/account/register/account.module').then((m) => m.AccountModule),
         canLoad: [UserRouteAccessGuard],
     },
     {
@@ -26,7 +26,6 @@ const APP_ROUTES: Routes = [
     {
         path: 'signup',
         loadChildren: () => import('./modules/signup/signup.module').then((m) => m.SignupModule),
-        canLoad: [UserRouteAccessGuard],
         data: {
             roles: ALL_ALLOWED,
         },
@@ -34,11 +33,34 @@ const APP_ROUTES: Routes = [
     {
         path: 'login',
         loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule),
-        canLoad: [UserRouteAccessGuard],
         data: {
             roles: ALL_ALLOWED,
         },
     },
+    {
+        path: 'account-management',
+        loadChildren: () => import('./modules/account/management/account-management.module').then((m) => m.AccountManagementModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: USER,
+        },
+    },
+    /*  {
+        path: 'filter',
+        loadChildren: () => import('./modules/filter/filter.module').then((m) => m.FilterModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: USER,
+        },
+    },
+    {
+        path: 'favorite',
+        loadChildren: () => import('./modules/favorite/favorite.module').then((m) => m.FavoriteModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: USER,
+        },
+    },*/
     {
         path: '**',
         redirectTo: 'notfound',

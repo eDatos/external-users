@@ -1,9 +1,13 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
+import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+
+import java.util.HashSet;
 
 public interface ExternalUserService {
 
@@ -20,4 +24,6 @@ public interface ExternalUserService {
     ExternalUserEntity find(Long id);
 
     Page<ExternalUserEntity> find(Pageable pageable, Boolean includeDeleted, String query);
+
+    ExternalUserEntity getUsuarioWithAuthorities();
 }

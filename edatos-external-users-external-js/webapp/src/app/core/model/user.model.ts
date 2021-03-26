@@ -1,5 +1,6 @@
 import { BaseAuditingEntity } from 'arte-ng/src/lib/model';
 import { Role } from './rol.model';
+import * as jwtDecode from 'jwt-decode';
 
 export class User extends BaseAuditingEntity {
     public id?: any;
@@ -43,5 +44,26 @@ export class User extends BaseAuditingEntity {
 
     public hasRole(rol: Role): boolean {
         return this.roles.some((userRol) => userRol.app == Role.USER && userRol.role == rol);
+    }
+}
+
+export interface RoleUserAccount {
+    app: string;
+    role: string;
+}
+export class UserAccount {
+    constructor(public login: string, public roles: RoleUserAccount[]) {}
+
+    public static fromJwt(token: string) {
+        const payload: { sub: string; auth: string; exp: string } = jwtDecode(token);
+        const roles = payload.auth.split(',').map((appRole) => {
+            const [app, role] = appRole.split('#', 2);
+            return { app, role } as RoleUserAccount;
+        });
+        return new UserAccount(payload.sub, roles);
+    }
+
+    public hasRole(rol: Role): boolean {
+        return this.roles.some((userRol) => userRol.role == rol);
     }
 }

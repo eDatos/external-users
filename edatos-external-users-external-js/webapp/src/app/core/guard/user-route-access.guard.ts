@@ -9,42 +9,41 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
     public static AUTH_REDIRECT = 'authRedirect';
     private static ROLES = 'roles';
 
-    constructor(private router: Router, private principal: Principal, private loginService: LoginService) { }
+    constructor(private router: Router, private principal: Principal, private loginService: LoginService) {}
 
     canActivate(route: ActivatedRouteSnapshot): boolean | Promise<boolean> {
+        console.log('route', route);
+        debugger;
         const roles = this.rolesFromRouteSnapshot(route);
         return this.checkRoles(roles, route.data);
     }
 
     canLoad(route: Route): true | Promise<boolean> {
+        console.log('route', route);
         const roles = route.data ? route.data.roles : [];
         return this.checkRoles(roles, route.data);
     }
 
-    checkLogin(roles: Role[]): Promise<boolean> {
-     /*   return this.principal.identity().then((account) => {    // TODO EDATOS-3266
-            if (!!account) {
-                return this.noPermissionRequired(roles) || this.principal.hasRoles(roles);
-            } else {
-                // User is not logged in, redirect to CAS
-                this.loginService.loginInCas();
-                return false;
-            }
+    checkLogin(): Promise<boolean> {
+        return this.principal.identity().then((account) => {
+            return !!account;
         });
-        */
-       return Promise.resolve(true);
     }
 
     private checkRoles(roles, routeData: Data): true | Promise<boolean> {
-  /*      return this.checkLogin(roles).then((canActivate) => {   // TODO EDATOS-3266
-            if (!canActivate) {
+        return this.checkLogin().then((isLogged) => {
+            if (!isLogged) {
+                this.router.navigate(['login']);
+                return false;
+            }
+
+            if (!this.noPermissionRequired(roles) && !this.principal.hasRoles(roles)) {
                 this.redirect(routeData);
                 return false;
             }
+
             return true;
-        })
-        */
-       return true;
+        });
     }
 
     private noPermissionRequired(roles: Role[]) {
