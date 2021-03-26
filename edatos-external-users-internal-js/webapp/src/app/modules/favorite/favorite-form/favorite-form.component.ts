@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExternalUserService } from '@app/core/service';
 import { Favorite, FavoriteService } from '@app/shared';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
@@ -15,13 +16,15 @@ export class FavoriteFormComponent implements OnInit {
     public isLoading = false;
     public favorite: Favorite;
     public mainLanguageCode: string;
+    public externalUserEmailsList: string[];
 
     constructor(
         private favoriteService: FavoriteService,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
         private router: Router,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private externalUserService: ExternalUserService
     ) {
         this.favorite = this.activatedRoute.snapshot.data['favorite'] ?? new Favorite();
         this.activatedRoute.url.subscribe((segments) => {
@@ -67,6 +70,19 @@ export class FavoriteFormComponent implements OnInit {
                     this.toggleEditMode();
                 });
         }
+    }
+
+    public updateExternalUserSuggestions(event) {
+        this.externalUserService.find({ query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` }).subscribe((results) => {
+            this.externalUserEmailsList = results.body.map((user) => user.email);
+        });
+    }
+
+    public externalUserTemplate(t): string {
+        if (t instanceof Object && '_ITEM_TEMPLATE_FIELD_' in t) {
+            return t['_ITEM_TEMPLATE_FIELD_'];
+        }
+        return t;
     }
 
     private toggleIsSaving(): void {
