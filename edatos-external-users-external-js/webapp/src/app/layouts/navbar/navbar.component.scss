@@ -11,13 +11,8 @@ Navbar
     vertical-align: text-bottom;
 }
 
-.navbar {
-    position: fixed;
-    top: $primary-navbar-height;
-    z-index: $secondary-navbar-zindex;
-    width: 100%;
-    height: $secondary-navbar-height;
-    background-color: $istac-blue;
+.app-navbar {
+    background-color: $main-dark;
     padding-left: $page-padding-left;
     padding-right: $page-padding-right;
     .dropdown-item.active,

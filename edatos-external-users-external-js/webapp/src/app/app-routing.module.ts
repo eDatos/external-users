@@ -11,19 +11,6 @@ const APP_ROUTES: Routes = [
         redirectTo: DEFAULT_PATH,
     },
     {
-        path: 'account',
-        loadChildren: () => import('./modules/account/register/account.module').then((m) => m.AccountModule),
-        canLoad: [UserRouteAccessGuard],
-    },
-    {
-        path: 'admin',
-        loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule),
-        canLoad: [UserRouteAccessGuard],
-        data: {
-            roles: HERRAMIENTAS_ROLES,
-        },
-    },
-    {
         path: 'signup',
         loadChildren: () => import('./modules/signup/signup.module').then((m) => m.SignupModule),
         data: {
