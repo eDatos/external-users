@@ -76,15 +76,6 @@ public class ExternalAccountResource extends AbstractResource {
 
     @GetMapping("/usuario")
     @Timed
-    @PreAuthorize("@secCheckerExternal.canAccessUser(authentication)")
-    public ResponseEntity<List<ExternalUserAccountDto>> find(Pageable pageable, Boolean includeDeleted, String query) {
-        Page<ExternalUserAccountDto> page = externalUserService.find(pageable, includeDeleted, query).map(externalUserMapper::toDto);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/usuarios");
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
-    }
-
-    @GetMapping("/usuario")
-    @Timed
     public ResponseEntity<ExternalUserAccountDto> getAccount() {
         ExternalUserEntity databaseUser = externalUserService.getUsuarioWithAuthorities();
         return new ResponseEntity<>(databaseUser != null ? externalUserMapper.toDto(databaseUser) : null, HttpStatus.OK);
