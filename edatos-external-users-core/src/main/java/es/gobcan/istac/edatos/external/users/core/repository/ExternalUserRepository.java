@@ -32,4 +32,6 @@ public interface ExternalUserRepository extends JpaRepository<ExternalUserEntity
     Boolean existsByEmailIgnoreCase(String email);
 
     Boolean existsByEmailIgnoreCaseAndDeletionDateIsNull(String email);
+
+    Optional<ExternalUserEntity> findOneWithRolesByEmail(String email);
 }

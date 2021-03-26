@@ -1,20 +1,22 @@
 package es.gobcan.istac.edatos.external.users.web.security.filter;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Optional;
 
-import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
-import io.github.jhipster.config.JHipsterProperties;
+import es.gobcan.istac.edatos.external.users.web.security.provider.TokenProvider;
 import io.jsonwebtoken.*;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -24,39 +26,53 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String JHI_AUTHENTICATIONTOKEN = "authenticationtoken";
+    public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    private JHipsterProperties jHipsterProperties;
+    private final TokenProvider tokenProvider;
 
-    public JWTAuthorizationFilter(AuthenticationManager authManager, JHipsterProperties jHipsterProperties) {
+    public JWTAuthorizationFilter(AuthenticationManager authManager, TokenProvider tokenProvider) {
         super(authManager);
-        this.jHipsterProperties = jHipsterProperties;
+        this.tokenProvider = tokenProvider;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        String header = req.getHeader(JHI_AUTHENTICATIONTOKEN);
+        String jwt = resolveToken(req);
 
-        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
-            chain.doFilter(req, res);
-            return;
+        if (StringUtils.hasText(jwt)) {
+            Jws<Claims> jwtClaims = this.tokenProvider.validateToken(jwt);
+            if (jwtClaims != null) {
+                Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                renewTicketIfNecessary(res, jwtClaims, authentication);
+            }
+
         }
-
-        UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         chain.doFilter(req, res);
     }
 
-    // Reads the JWT from the Authorization header, and then uses JWT to validate the token
-    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        String bearerToken = request.getHeader(JHI_AUTHENTICATIONTOKEN);
+    private void renewTicketIfNecessary(ServletResponse servletResponse, Jws<Claims> jwtClaims, Authentication authentication) {
 
-        if (bearerToken != null) {
-            if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-                new UsernamePasswordAuthenticationToken(bearerToken.substring(7, bearerToken.length()), null, new ArrayList<>());
+        if (tokenProvider.checkRenewTicketIsRequired(jwtClaims)) {
+            String renewedJwt = tokenProvider.createToken(authentication, false);
+            HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+            httpServletResponse.addHeader(JHI_AUTHENTICATIONTOKEN, renewedJwt);
+            logger.debug("Renewed token JWT: " + renewedJwt);
+        }
+    }
+
+    private String resolveToken(HttpServletRequest request) {
+        // Header
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
+            return bearerToken.substring(7, bearerToken.length());
+        }
+        // Cookie
+        if (request.getCookies() != null) {
+            Optional<Cookie> tokenCookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals(JHI_AUTHENTICATIONTOKEN)).findFirst();
+            if (tokenCookie.isPresent()) {
+                return tokenCookie.get().getValue();
             }
-
-            return null;
         }
 
         return null;

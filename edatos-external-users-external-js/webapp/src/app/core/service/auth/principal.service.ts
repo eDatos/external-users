@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Role } from '@app/core/model';
+import { Role, UserAccount } from '@app/core/model';
 import { Subject, Observable } from 'rxjs';
 import { AuthServerProvider } from './auth-jwt.service';
 
 @Injectable()
 export class Principal {
     [x: string]: any;
-    private userIdentity: Role;
+    private userIdentity: UserAccount;
     private authenticated = false;
     private authenticationState = new Subject<any>();
 
-    constructor(private authServerProvider: AuthServerProvider) { }
+    constructor(private authServerProvider: AuthServerProvider) {}
 
     authenticate(identity) {
         this.userIdentity = identity;
@@ -23,11 +23,6 @@ export class Principal {
     }
 
     rolesRutaMatchesRolesUsuario(rolesRuta: Role[]) {
-        rolesRuta = rolesRuta || [];
-     /*   if (rolesRuta.length === 0) { // TODO EDATOS-3266
-            return true;
-        }
-*/
         return true;
     }
 
@@ -43,7 +38,27 @@ export class Principal {
         return this.authenticationState.asObservable();
     }
 
- /*   public correctlyLogged(): boolean {
+    identity(): Promise<UserAccount> {
+        if (this.userIdentity) {
+            return Promise.resolve(this.userIdentity);
+        }
+
+        const token: string = this.authServerProvider.getToken();
+        console.log('token', token);
+        if (token) {
+            this.userIdentity = UserAccount.fromJwt(token);
+            this.authenticated = true;
+        } else {
+            this.userIdentity = null;
+            this.authenticated = false;
+        }
+
+        this.authenticationState.next(this.userIdentity);
+        console.log('userIdentity', this.userIdentity);
+        return Promise.resolve(this.userIdentity);
+    }
+
+    public correctlyLogged(): boolean {
         return Boolean(this.userIdentity && this.userIdentity.roles.length !== 0);
-    }*/
+    }
 }

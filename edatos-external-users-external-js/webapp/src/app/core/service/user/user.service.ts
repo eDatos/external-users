@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '@app/core/model';
+import { Credentials, User } from '@app/core/model';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { createRequestOption, ResponseUtils } from 'arte-ng/src/lib/utils';
@@ -21,11 +21,15 @@ export class AccountUserService {
     }
 
     getLogueado(): Observable<User> {
-        return this.http.get('api/usuario').pipe(map((res) => ResponseUtils.convert(res, User)));
+        return this.http.get(`api/usuario`).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     update(user: User): Observable<User> {
         return this.http.put(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, User)));
+    }
+
+    login(credentials: Credentials): Observable<User> {
+        return this.http.post(`api/login`, credentials).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     /* 

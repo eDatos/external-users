@@ -2,29 +2,20 @@ package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ExternalUserRole;
-import es.gobcan.istac.edatos.external.users.core.service.LoginService;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.LoginDto;
-import io.github.jhipster.config.JHipsterProperties;
-import org.apache.commons.lang.StringUtils;
+import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.UsuarioDto;
+import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import com.codahale.metrics.annotation.Timed;
 
@@ -44,6 +35,7 @@ import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAcco
 @RequestMapping("/api")
 public class ExternalAccountResource extends AbstractResource {
 
+    public static final String BASE_URL = "/api/external-users";
     private static final String ENTITY_NAME = "userManagement";
 
     private final ExternalUserRepository externalUserRepository;
@@ -81,4 +73,21 @@ public class ExternalAccountResource extends AbstractResource {
         return ResponseEntity.created(new URI("/api/account/signup/" + newExternalUserDto.getEmail())).headers(HeaderUtil.createAlert("userManagement.created", newExternalUserDto.getEmail()))
                 .body(newExternalUserDto);
     }
+
+    @GetMapping("/usuario")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canAccessUser(authentication)")
+    public ResponseEntity<List<ExternalUserAccountDto>> find(Pageable pageable, Boolean includeDeleted, String query) {
+        Page<ExternalUserAccountDto> page = externalUserService.find(pageable, includeDeleted, query).map(externalUserMapper::toDto);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/usuarios");
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    @GetMapping("/usuario")
+    @Timed
+    public ResponseEntity<ExternalUserAccountDto> getAccount() {
+        ExternalUserEntity databaseUser = externalUserService.getUsuarioWithAuthorities();
+        return new ResponseEntity<>(databaseUser != null ? externalUserMapper.toDto(databaseUser) : null, HttpStatus.OK);
+    }
+
 }

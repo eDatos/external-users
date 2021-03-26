@@ -1,7 +1,9 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.time.Instant;
+import java.util.HashSet;
 
+import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -57,7 +59,8 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     @Override
     public ExternalUserEntity delete(Long id) {
         ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id)
-                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build()); // TODO(EDATOS-3278): Replace with EDatosException
+                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build()); // TODO(EDATOS-3278): Replace with
+                                                                                                                                                           // EDatosException
         usuario.setDeletionDate(Instant.now());
         usuario.setDeletedBy(SecurityUtils.getCurrentUserLogin());
         return externalUserRepository.saveAndFlush(usuario);
@@ -98,5 +101,15 @@ public class ExternalUserServiceImpl implements ExternalUserService {
             finalQuery = queryUtil.queryIncludingDeleted(finalQuery);
         }
         return finalQuery;
+    }
+
+    @Override
+    public ExternalUserEntity getUsuarioWithAuthorities() {
+        ExternalUserEntity returnValue = externalUserRepository.findOneWithRolesByEmail(SecurityUtils.getCurrentUserLogin()).orElse(new ExternalUserEntity());
+        if (returnValue.getDeletionDate() != null) {
+            returnValue.setRoles(new HashSet<>());
+        }
+
+        return returnValue;
     }
 }

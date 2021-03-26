@@ -111,7 +111,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class) // TODO EDATOS-3287 Still to be set up
         http
             .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, applicationProperties, env))
-            .addFilter(new JWTAuthorizationFilter(authenticationManager(), jHipsterProperties))
+            .addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenProvider))
             .exceptionHandling()
             .authenticationEntryPoint(http401UnauthorizedEntryPoint())
         .and()
