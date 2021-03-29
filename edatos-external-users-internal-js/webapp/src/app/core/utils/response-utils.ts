@@ -3,6 +3,11 @@ import { plainToClass, Type } from 'class-transformer';
 
 export class ResponseWrapper<T> {
     constructor(public headers: HttpHeaders, public body: T, public status: number) {}
+
+    public totalCount(): number | null {
+        const val = this.headers.get('X-Total-Count');
+        return val == null ? null : parseInt(val, 10);
+    }
 }
 
 /**

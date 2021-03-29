@@ -113,7 +113,7 @@ export class FavoriteListComponent implements OnInit {
     }
 
     private onSuccess(response: ResponseWrapper<Favorite[]>) {
-        this.totalItems = parseInt(response.headers.get('X-Total-Count'), 10);
+        this.totalItems = response.totalCount();
         this.favorites = response.body;
     }
 }
