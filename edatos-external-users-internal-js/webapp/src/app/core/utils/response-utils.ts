@@ -1,5 +1,5 @@
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
-import { plainToClass } from 'class-transformer';
+import { plainToClass, Type } from 'class-transformer';
 
 export class ResponseWrapper<T> {
     constructor(public headers: HttpHeaders, public body: T, public status: number) {}
@@ -7,9 +7,11 @@ export class ResponseWrapper<T> {
 
 /**
  * Converts a plain object into an instance of a class,
- * The class has to mark with `@Type` its fields that are meant to be instantiated with data
- * from the plain object. For more info about this, please refer to
- * {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
+ * The class has to mark with {@link Type} the fields that are meant to be instantiated with data
+ * from the plain object.
+ *
+ * @see Type
+ * @see {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
  *
  * @param clazz the constructor of the class.
  * @param plain the object to be converted.
@@ -17,7 +19,7 @@ export class ResponseWrapper<T> {
  * nested fields to an arbitrary level if they were annotated in the class with `@Type`.
  *
  * @example
- * ```
+ * ```typescript
  * class MySubclass {
  *     anotherKey: number;
  * }
@@ -45,9 +47,11 @@ export function convert<T>(clazz: { new (): T }, plain: T): T;
 
 /**
  * Converts every plain object from the array into an instance of a class,.
- * The class has to mark with `@Type` its fields that are meant to be instantiated with data
- * from the plain object. For more info about this, please refer to
- * {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
+ * The class has to mark with {@link Type} the fields that are meant to be instantiated with data
+ * from the plain object.
+ *
+ * @see Type
+ * @see {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
  *
  * @param clazz the constructor of the class.
  * @param arrayOfPlains the array of objects to be converted.
@@ -57,50 +61,66 @@ export function convert<T>(clazz: { new (): T }, plain: T): T;
 export function convert<T>(clazz: { new (): T }, arrayOfPlains: T[]): T[];
 
 /**
- * Converts a plain object that is contained in the HttpResponse into an instance of a class, and returns
- * the converted object wrapped in a ResponseWrapper.
- * The class to which the object is going to be converted has to mark with `@Type` the fields that are meant to be
- * instantiated, otherwise only the main object will be instantiated.
- * For more info about this, please refer to
- * {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
-
+ * Converts a plain object that is contained in the {@link HttpResponse} into an instance of a class, and returns
+ * the converted object wrapped in a {@link ResponseWrapper}.
+ *
+ * This function is meant to be used with the HttpClient, when the request does come in the form of a
+ * HttpResponse and not the body directly (for example, when the request is made with `{observe: 'response'}`.
+ *
+ * The class to which the object is going to be converted has to mark with
+ * {@link Type} the fields that are meant to be instantiated, otherwise only the main object will be instantiated.
+ *
  * @param clazz the constructor of the class.
  * @param response the response provided by the HttpClient.
  * @return a ResponseWrapper containing the instantiated objects.
  *
- * @remarks This function is meant to be used with the HttpClient, when the request does come
- * in the form of a HttpResponse and not the body directly (for example, when the request
- * is made with `{observe: 'response'}`. See the example below.
+ * @see Type
+ * @see ResponseWrapper
+ * @see {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
  *
  * @example
- * ```
+ * ```typescript
  * public find(id: number): Observable<ResponseWrapper<Favorite>> {
  *     return this.http
  *         .get<Favorite>(`${this.resourceUrl}/${id}`, { observe: 'response' })
  *         .pipe(map((httpResponse: HttpResponse<Favorite>) => convert(Favorite, httpResponse)));
  * }
  * ```
+ *
+ * If you would like to get only the result (without the wrapper), you can map it though
+ * the pipe:
+ *
+ * @example
+ * ```typescript
+ * pipe(
+ *     map((httpResponse: HttpResponse<Favorite>) => convert(Favorite, httpResponse)),
+ *     map((wrapper: ResponseWrapper<Favorite>) => wrapper.body)
+ * );
+ * ```
  */
 export function convert<T>(clazz: { new (): T }, response: HttpResponse<T>): ResponseWrapper<T>;
 
 /**
  * Converts an array of plain objects that are contained in the HttpResponse into instances of a class, and returns
- * the array of converted objects wrapped in a ResponseWrapper.
- * The class to which the objects are going to be converted has to mark with `@Type` the fields that are meant to be
- * instantiated, otherwise only the main object will be instantiated.
- * For more info about this, please refer to
- * {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
+ * the array of converted objects wrapped in a {@link ResponseWrapper}.
+ *
+ * This function is meant to be used with the HttpClient, when the request does come
+ * in the form of a {@link HttpResponse} and not the body directly (for example, when the request
+ * is made with `{observe: 'response'}`.
+ *
+ * The class to which the object is going to be converted has to mark with
+ * {@link Type} the fields that are meant to be instantiated, otherwise only the main object will be instantiated.
 
  * @param clazz the constructor of the class.
  * @param response the response provided by the HttpClient.
  * @return a ResponseWrapper containing the array of instantiated objects.
  *
- * @remarks This function is meant to be used with the HttpClient, when the request does come
- * in the form of a HttpResponse and not the body directly (for example, when the request
- * is made with `{observe: 'response'}`. See the example below.
+ * @see ResponseWrapper
+ * @see Type
+ * @see {@link https://github.com/typestack/class-transformer#working-with-nested-objects}.
  *
  * @example
- * ```
+ * ```typescript
  * public findAll(): Observable<ResponseWrapper<Favorite[]>> {
  *     return this.http
  *         .get<Favorite[]>(this.resourceUrl, { observe: 'response' })
