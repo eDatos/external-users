@@ -52,10 +52,11 @@
                                     name="email"
                                     [(ngModel)]="favorite.email"
                                     (completeMethod)="updateExternalUserSuggestions($event)"
-                                    [suggestions]="externalUserEmailsList"
-                                    [itemTemplate]="externalUserTemplate"
+                                    (onSelect)="setEmail($event)"
+                                    [suggestions]="externalUserList"
                                     [required]="true"
                                     [minLength]="1"
+                                    [itemTemplate]="emailTemplate"
                                 ></arte-autocomplete-long-list>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <span *ngFor="let m of messages">{{m}}</span>
