@@ -9,6 +9,6 @@ export class InternationalString extends BaseVersionedEntity implements BaseEnti
     public texts?: LocalisedString[];
 
     public getLocalisedLabel(locale: string): string {
-        return this.texts.find((localisedString) => localisedString.locale === locale).label;
+        return this.texts?.find((localisedString) => localisedString.locale === locale)?.label;
     }
 }
