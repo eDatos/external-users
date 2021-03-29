@@ -28,7 +28,7 @@
                     >
                         <ng-template pTemplate="body" let-favorite>
                             <tr [routerLink]="[favorite.id]">
-                                <td>{{favorite.email}}</td>
+                                <td>{{favorite.externalUser.email}}</td>
                                 <td>{{favorite.getLocalisedName(mainLanguageCode)}}</td>
                                 <!--TODO(EDATOS-3294): add operations-->
                             </tr>
