@@ -7,7 +7,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
-public class ExternalUserAccountBasicDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable, Identifiable {
+public class ExternalUserAccountBaseDto extends AbstractVersionedAndAuditingAndLogicalDeletionDto implements Serializable, Identifiable {
 
     private static final long serialVersionUID = 1L;
     private Long id;
@@ -97,7 +97,7 @@ public class ExternalUserAccountBasicDto extends AbstractVersionedAndAuditingAnd
         this.organism = organism;
     }
 
-    public void updateFrom(ExternalUserAccountBasicDto source) {
+    public void updateFrom(ExternalUserAccountBaseDto source) {
         this.id = source.getId();
         this.name = source.getName();
         this.surname1 = source.getSurname1();
@@ -114,6 +114,6 @@ public class ExternalUserAccountBasicDto extends AbstractVersionedAndAuditingAnd
 
     @Override
     public String toString() {
-        return "ExternalUserAccountDto [id=" + id + ", email=" + email + ", name=" + name + "]";
+        return "ExternalUserAccountBaseDto [id=" + id + ", email=" + email + ", name=" + name + "]";
     }
 }
