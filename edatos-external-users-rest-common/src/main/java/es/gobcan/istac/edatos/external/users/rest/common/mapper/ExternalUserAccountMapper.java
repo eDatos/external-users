@@ -3,12 +3,13 @@ package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ExternalUserRole;
 import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
 import org.mapstruct.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBasicDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
 import java.util.HashSet;
@@ -31,7 +32,7 @@ public abstract class ExternalUserAccountMapper implements EntityMapper<External
     }
 
     @AfterMapping
-    public void setRoles(ExternalUserAccountDto dto, @MappingTarget ExternalUserEntity entity) {
+    public void setRoles(ExternalUserAccountBasicDto dto, @MappingTarget ExternalUserEntity entity) {
         Set<ExternalUserRole> roles = new HashSet<>();
         roles.add(ExternalUserRole.USER);
         roles.stream().collect(Collectors.toSet());
@@ -46,4 +47,7 @@ public abstract class ExternalUserAccountMapper implements EntityMapper<External
         return externalUserRepository.findOneByEmail(email).orElse(null);
     }
 
+    public abstract ExternalUserAccountBasicDto toBasicDto(ExternalUserEntity entity);
+
+    public abstract ExternalUserEntity basicDtoToEntity(ExternalUserAccountBasicDto dto);
 }

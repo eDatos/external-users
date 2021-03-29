@@ -1,22 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Language, Treatment } from '@app/core/model';
 import { AccountUserService } from '@app/core/service/user';
 
 @Component({
-    selector: 'ac-account',
-    templateUrl: './account.component.html',
+    selector: 'ac-account-management',
+    templateUrl: './account-management.component.html',
 })
-export class AccountComponent implements OnInit {
+export class AccountManagementComponent implements OnInit {
     error: string;
     success: string;
-    isSaving: Boolean;
-    account: any;
+    public isSaving: Boolean;
+    public account: any;
 
-    constructor(private accountUserService: AccountUserService, private route: ActivatedRoute, private router: Router) {}
+    public languageEnum = Language;
+    public treatmentEnum = Treatment;
+
+    constructor(private userService: AccountUserService, private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         this.isSaving = false;
-        this.accountUserService
+        this.userService
             .getLogueado()
             .toPromise()
             .then((account) => {
@@ -26,12 +30,12 @@ export class AccountComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.accountUserService.update(this.account).subscribe(
+        this.userService.update(this.account).subscribe(
             () => {
                 this.error = null;
                 this.success = 'OK';
                 this.isSaving = false;
-                this.router.navigate(['account']);
+                this.router.navigate(['account-management']);
             },
             () => {
                 this.success = null;
@@ -42,8 +46,7 @@ export class AccountComponent implements OnInit {
     }
 
     clear() {
-        // const with arrays: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const
-        const returnPath = ['account'];
+        const returnPath = ['account-management'];
         this.router.navigate(returnPath);
     }
 

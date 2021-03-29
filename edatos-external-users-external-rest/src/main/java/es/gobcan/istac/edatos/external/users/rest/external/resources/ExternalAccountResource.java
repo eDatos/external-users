@@ -2,16 +2,12 @@ package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.UsuarioDto;
-import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +24,7 @@ import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserReposit
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBasicDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 
 @RestController
@@ -74,11 +70,29 @@ public class ExternalAccountResource extends AbstractResource {
                 .body(newExternalUserDto);
     }
 
-    @GetMapping("/usuario")
+    @GetMapping("/account/me")
     @Timed
-    public ResponseEntity<ExternalUserAccountDto> getAccount() {
+    @PreAuthorize("@secCheckerExternal.canUpdateUser(authentication)")
+    public ResponseEntity<ExternalUserAccountBasicDto> getAccount() {
         ExternalUserEntity databaseUser = externalUserService.getUsuarioWithAuthorities();
         return new ResponseEntity<>(databaseUser != null ? externalUserMapper.toDto(databaseUser) : null, HttpStatus.OK);
+    }
+
+    @PutMapping("/account/update")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canUpdateUser(authentication)")
+    public ResponseEntity<ExternalUserAccountBasicDto> update(@Valid @RequestBody ExternalUserAccountBasicDto userDto) {
+        Optional<ExternalUserEntity> existingUser = externalUserRepository.findOneByEmail(userDto.getEmail().toLowerCase());
+
+        if (existingUser.isPresent() && (!existingUser.get().getId().equals(userDto.getId()))) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
+        }
+
+        ExternalUserEntity user = externalUserService.update(externalUserMapper.basicDtoToEntity(userDto));
+        Optional<ExternalUserAccountBasicDto> updatedUser = Optional.ofNullable(externalUserMapper.toDto(user));
+
+        auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, userDto.getEmail());
+        return ResponseUtil.wrapOrNotFound(updatedUser);
     }
 
 }
