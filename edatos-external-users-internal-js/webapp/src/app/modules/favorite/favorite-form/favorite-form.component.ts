@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { getLocalisedLabel } from '@app/core/utils/international-string-utils';
+import { ExternalUserService } from '@app/core/service';
 import { Favorite, FavoriteService } from '@app/shared';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
@@ -15,15 +15,16 @@ export class FavoriteFormComponent implements OnInit {
     public isSaving = false;
     public isLoading = false;
     public favorite: Favorite;
-    public getLocalisedLabel = getLocalisedLabel;
     public mainLanguageCode: string;
+    public externalUserList: string[];
 
     constructor(
         private favoriteService: FavoriteService,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
         private router: Router,
-        private translateService: TranslateService
+        private translateService: TranslateService,
+        private externalUserService: ExternalUserService
     ) {
         this.favorite = this.activatedRoute.snapshot.data['favorite'] ?? new Favorite();
         this.activatedRoute.url.subscribe((segments) => {
@@ -69,6 +70,27 @@ export class FavoriteFormComponent implements OnInit {
                     this.toggleEditMode();
                 });
         }
+    }
+
+    public updateExternalUserSuggestions(event) {
+        this.externalUserService.find({ query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` }).subscribe((results) => {
+            this.externalUserList = results.body.map((user) => user.email);
+        });
+    }
+
+    public setEmail(email) {
+        if (email instanceof Object && '_ITEM_TEMPLATE_FIELD_' in email) {
+            this.favorite.email = email['_ITEM_TEMPLATE_FIELD_'];
+        } else {
+            this.favorite.email = email;
+        }
+    }
+
+    public emailTemplate(obj) {
+        if (obj instanceof Object && '_ITEM_TEMPLATE_FIELD_' in obj) {
+            return obj['_ITEM_TEMPLATE_FIELD_'];
+        }
+        return obj;
     }
 
     private toggleIsSaving(): void {

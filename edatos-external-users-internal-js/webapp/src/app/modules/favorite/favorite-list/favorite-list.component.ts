@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
-import { getLocalisedLabel } from '@app/core/utils/international-string-utils';
+import { ResponseWrapper } from '@app/core/utils/response-utils';
 import { FavoriteFilter } from '@app/modules/favorite/favorite-search/favorite-search';
 import { Favorite } from '@app/shared/model/favorite.model';
 import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ResponseWrapper } from 'arte-ng/model';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -36,7 +35,6 @@ export class FavoriteListComponent implements OnInit {
         },
     ];
     public mainLanguageCode: string;
-    public getLocalisedLabel = getLocalisedLabel;
     private page: any;
     private reverse: boolean;
     private predicate: any;
@@ -114,8 +112,8 @@ export class FavoriteListComponent implements OnInit {
         ]);
     }
 
-    private onSuccess(response: ResponseWrapper) {
-        this.totalItems = parseInt(response.headers.get('X-Total-Count'), 10);
-        this.favorites = response.json;
+    private onSuccess(response: ResponseWrapper<Favorite[]>) {
+        this.totalItems = response.totalCount();
+        this.favorites = response.body;
     }
 }

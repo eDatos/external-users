@@ -3,13 +3,9 @@
         <div class="page-header-top">
             <h2 class="page-header-title">
                 <span class="page-header-title-text" [ngSwitch]="true">
-                    <ng-container *ngSwitchCase="!inEditMode">
-                        {{ ('favorite.name' | translate) + ': ' + getLocalisedLabel(this.favorite.getName(), this.mainLanguageCode) }}
-                    </ng-container>
+                    <ng-container *ngSwitchCase="!inEditMode"> {{ ('favorite.name' | translate) + ': ' + favorite.getLocalisedName(mainLanguageCode) }} </ng-container>
                     <ng-container *ngSwitchCase="inEditMode && !favorite.id"> {{ 'favorite.form.new' | translate }} </ng-container>
-                    <ng-container *ngSwitchDefault>
-                        {{ ('favorite.form.edit' | translate) + ': ' + getLocalisedLabel(this.favorite.getName(), this.mainLanguageCode) }}
-                    </ng-container>
+                    <ng-container *ngSwitchDefault> {{ ('favorite.form.edit' | translate) + ': ' + favorite.getLocalisedName(mainLanguageCode) }} </ng-container>
                 </span>
             </h2>
 
@@ -51,7 +47,17 @@
                         <div class="form-row">
                             <label class="form-label col-md-4" for="email">{{ "favorite.entity.email" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
-                                <arte-input id="email" name="email" [(ngModel)]="favorite.email" [email]="true" [maxlength]="255" [required]="true"></arte-input>
+                                <arte-autocomplete-long-list
+                                    id="email"
+                                    name="email"
+                                    [(ngModel)]="favorite.email"
+                                    (completeMethod)="updateExternalUserSuggestions($event)"
+                                    (onSelect)="setEmail($event)"
+                                    [suggestions]="externalUserList"
+                                    [required]="true"
+                                    [minLength]="1"
+                                    [itemTemplate]="emailTemplate"
+                                ></arte-autocomplete-long-list>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <span *ngFor="let m of messages">{{m}}</span>
                                 </div>

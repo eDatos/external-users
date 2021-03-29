@@ -5,7 +5,6 @@ import { ExternalUser, User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
 import { ExternalUserFilter } from '@app/modules/admin/external-user/external-user-search/external-user-filter';
-import { ResponseWrapper } from 'arte-ng/model';
 
 import { ArteEventManager } from 'arte-ng/services';
 import { LazyLoadEvent } from 'primeng/api';
@@ -130,7 +129,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
                 sort: this.sort(),
                 query: this.filters.toQuery(),
             })
-            .subscribe((res: ResponseWrapper) => this.onSuccess(res.json, res.headers));
+            .subscribe((res) => this.onSuccess(res.body, res.headers));
     }
 
     public sort() {

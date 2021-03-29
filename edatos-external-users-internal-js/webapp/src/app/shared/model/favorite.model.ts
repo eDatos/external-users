@@ -1,12 +1,19 @@
-import { Category, InternationalString, Operation } from '@app/shared';
+import { Category } from './category.model';
+import { Operation } from './operation.model';
 import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
+import { Type } from 'class-transformer';
 
 export class Favorite extends BaseVersionedAndAuditingEntity {
-    constructor(public id?: number, public email?: string, public category?: Category, public operation?: Operation) {
-        super();
-    }
+    public id?: number;
+    public email?: string;
 
-    public getName(): InternationalString {
-        return this.category.name || this.operation.title;
+    @Type(() => Category)
+    public category?: Category;
+
+    @Type(() => Operation)
+    public operation?: Operation;
+
+    public getLocalisedName(languageCode: string): string {
+        return (this.category.name || this.operation.title)?.getLocalisedLabel(languageCode);
     }
 }
