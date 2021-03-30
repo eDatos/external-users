@@ -85,7 +85,7 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withEntityProperty(OperationEntity.Properties.PROC_STATUS)
                 .build());
 
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
+        registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
                 .withQueryProperty(QueryProperty.CATEGORY_ID)
                 .withAlias(OperationEntity.Properties.CATEGORY, OperationEntity.Properties.CATEGORY)
                 .withEntityProperty(OperationEntity.Properties.CATEGORY + ".id")
