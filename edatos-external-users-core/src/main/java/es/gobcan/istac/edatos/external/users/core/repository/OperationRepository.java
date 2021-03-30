@@ -11,13 +11,5 @@ import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 @Repository
 public interface OperationRepository extends JpaRepository<OperationEntity, Long> {
 
-    public OperationEntity findByCode(String code);
-
-    public OperationEntity findByUrn(String urn);
-
-    public Page<OperationEntity> findAll(DetachedCriteria criteria, Pageable pageable);
-
-    public boolean existsByCode(String code);
-
-    public boolean existsByCodeAndIdNot(String code, Long id);
+    Page<OperationEntity> findAll(DetachedCriteria criteria, Pageable pageable);
 }
