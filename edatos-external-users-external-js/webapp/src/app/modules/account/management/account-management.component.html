@@ -19,7 +19,7 @@
                 <span translate="entity.action.cancel"></span>
             </button>
             <ng-container>
-                <button type="button" class="btn btn-default" (click)="openChangePasswordModal()" translate="login.action.signup">
+                <button *ngIf="!isEditMode()" type="button" class="btn btn-default" (click)="navigateToChangePassword()" translate="login.action.signup">
                     <span class="fa fa-unlock"></span>
                     <span translate="entity.action.change-password"></span>
                 </button>

@@ -11,9 +11,10 @@ import { LoginService, PermissionService, Principal, ProfileService } from '@app
 })
 export class NavbarComponent implements OnInit {
     inProduction: boolean;
-    isNavbarCollapsed: boolean;
-    modalRef: NgbModalRef;
-    version: string;
+    public isCorrectlyLogged: boolean;
+    public isNavbarCollapsed: boolean;
+    private modalRef: NgbModalRef;
+    public version: string;
 
     constructor(
         private loginService: LoginService,
@@ -30,14 +31,13 @@ export class NavbarComponent implements OnInit {
         this.profileService.getProfileInfo().subscribe((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
         });
+        this.principal.isCorrectlyLogged().subscribe((correctyLogged) => {
+            this.isCorrectlyLogged = correctyLogged;
+        });
     }
 
     collapseNavbar() {
         this.isNavbarCollapsed = true;
-    }
-
-    isAuthenticated() {
-        return this.principal.isAuthenticated();
     }
 
     logout() {
@@ -48,10 +48,6 @@ export class NavbarComponent implements OnInit {
 
     toggleNavbar() {
         this.isNavbarCollapsed = !this.isNavbarCollapsed;
-    }
-
-    public correctlyLogged(): boolean {
-        return Boolean(this.principal.correctlyLogged());
     }
 
     public puedeNavegarAdministracion(): boolean {

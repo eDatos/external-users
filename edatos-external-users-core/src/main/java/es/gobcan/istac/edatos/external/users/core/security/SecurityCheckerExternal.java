@@ -49,18 +49,6 @@ public class SecurityCheckerExternal {
         return this.isExternalUser(authentication);
     }
 
-    public boolean canAccessAudit(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
-    public boolean canAccessLogs(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
-    public boolean canUpdateLogs(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
     public boolean canAccessUser(Authentication authentication) {
         return this.isExternalUser(authentication);
     }
@@ -78,34 +66,6 @@ public class SecurityCheckerExternal {
     }
 
     public boolean canDeleteUser(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
-    public boolean canAccessDocument(Authentication authentication) {
-        return this.isAnyUser(authentication);
-    }
-
-    public boolean canCreateDocument(Authentication authentication) {
-        return this.isAnyUser(authentication);
-    }
-
-    public boolean canUpdateDocument(Authentication authentication) {
-        return this.isAnyUser(authentication);
-    }
-
-    public boolean canDeleteDocument(Authentication authentication) {
-        return this.isAnyUser(authentication);
-    }
-
-    public boolean canAccessMetrics(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
-    public boolean canAccessHealth(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
-    public boolean canAccessConfig(Authentication authentication) {
         return this.isExternalUser(authentication);
     }
 
