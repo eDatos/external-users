@@ -75,7 +75,8 @@
             "crear": "Crear",
             "modificar": "Modificar",
             "publishInternally": "Publicar internamente",
-            "publishExternally": "Publicar externamente"
+            "publishExternally": "Publicar externamente",
+            "change-password": "Cambiar contraseña"
         },
         "delete": {
             "title": "Confirmar operación de borrado"

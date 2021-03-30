@@ -19,7 +19,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
-        <ul class="navbar-nav ml-auto">
+        <ul *ngIf="correctlyLogged()" class="navbar-nav ml-auto">
             <li>
                 <a class="nav-link btn" routerLink="favorite" routerLinkActive="active">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -33,7 +33,7 @@
                 </a>
             </li>
 
-            <li *ngIf="correctlyLogged()">
+            <li>
                 <a class="nav-link btn" id="myAccount" (click)="myAccount()" [title]="'global.menu.account.myAccount' | translate">
                     <i class="fa fa-fw fa-user" aria-hidden="true"></i>
                     <b class="caret"></b>
