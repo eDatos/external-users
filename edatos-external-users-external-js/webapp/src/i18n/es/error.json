@@ -28,7 +28,8 @@
         "entidad-no-encontrada": "Resultado de {{0}} no encontrado",
         "userManagement": {
             "usuario-ldap-no-encontrado": "No se ha encontrado el usuario especificado",
-            "email-en-uso": "Este correo electrónico ya existe."
+            "email-en-uso": "Este correo electrónico ya existe.",
+            "passwordNotMatch": "La contraseña introducida no es la del usuario autenticado."
         },
         "file-empty": "El fichero está vacío",
         "rol": {

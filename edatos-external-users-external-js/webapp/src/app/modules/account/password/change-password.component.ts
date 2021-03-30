@@ -9,17 +9,14 @@ import { Router } from '@angular/router';
     templateUrl: './change-password.component.html',
 })
 export class ChangePasswordComponent implements OnInit {
-    readonly passwordMinLength: string;
-    public isSaving: boolean;
+    public isSaving: boolean = false;
 
     public account: any;
     public password: string;
-
+    public oldPassword: string;
     public confirmPassword: string;
 
-    constructor(private userService: AccountUserService, private principal: Principal, private router: Router) {
-        this.isSaving = false;
-    }
+    constructor(private userService: AccountUserService, private principal: Principal, private router: Router) {}
 
     ngOnInit() {
         this.principal.identity().then((account) => {
@@ -32,16 +29,15 @@ export class ChangePasswordComponent implements OnInit {
         this.router.navigate(returnPath);
     }
 
-    changePassword() {
-        this.isSaving = true;
+    save() {
         if (this.password !== this.confirmPassword) {
-            this.isSaving = false;
-        } else {
-            this.userService.changeCurrentUserPassword(this.password).subscribe(
-                (res) => this.onSaveSuccess(res),
-                (error) => this.onSaveError(error)
-            );
+            return;
         }
+        this.isSaving = true;
+        this.userService.changeCurrentUserPassword(this.password).subscribe(
+            (res) => this.onSaveSuccess(res),
+            (error) => this.onSaveError(error)
+        );
     }
 
     private onSaveSuccess(result: User): void {

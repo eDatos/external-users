@@ -15,4 +15,6 @@ public interface MailService {
 
     void sendCreationEmail(ExternalUserEntity user);
 
+    void sendCreationEmailChangePassword(ExternalUserEntity user);
+
 }

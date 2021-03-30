@@ -108,4 +108,11 @@ public class MailServiceImpl implements MailService {
         sendFromTemplate(user, "creationExternalUserAccount", "email.creation.title");
     }
 
+    @Override
+    @Async
+    public void sendCreationEmailChangePassword(ExternalUserEntity user) {
+        log.debug("Sending creation email to '{}'", user.getEmail());
+        sendFromTemplate(user, "changePasswordExternalUserAccount", "email.creation.title");
+    }
+
 }
