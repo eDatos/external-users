@@ -6,13 +6,15 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
@@ -24,8 +26,11 @@ import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
-import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
+import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
+import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
 @RequestMapping("/api")
