@@ -1,8 +1,8 @@
 import { ExternalUser } from '@app/core/model';
-import { Category } from './category.model';
-import { Operation } from './operation.model';
 import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
+import { Category } from './category.model';
+import { Operation } from './operation.model';
 
 export class Favorite extends BaseVersionedAndAuditingEntity {
     public id?: number;
@@ -17,6 +17,6 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
     public operation?: Operation;
 
     public getLocalisedName(languageCode: string): string {
-        return (this.category.name || this.operation.title)?.getLocalisedLabel(languageCode);
+        return (this.category.name || this.operation.name)?.getLocalisedLabel(languageCode);
     }
 }
