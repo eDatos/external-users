@@ -22,14 +22,14 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
     public abstract FavoriteDto toDto(FavoriteEntity entity);
 
     @Override
-    @Mapping(target = "externalUser", source = "externalUser.email", qualifiedByName = "externalUserFromEmail")
+    @Mapping(target = "externalUser", source = "externalUser.email", qualifiedByName = "externalUserFromId")
     public abstract FavoriteEntity toEntity(FavoriteDto dto);
 
-    @Named("externalUserFromEmail")
-    public ExternalUserEntity externalUserFromEmail(String email) {
-        if (email == null) {
+    @Named("externalUserFromId")
+    public ExternalUserEntity externalUserFromId(Long id) {
+        if (id == null) {
             return null;
         }
-        return externalUserRepository.findOneByEmail(email).orElse(null);
+        return externalUserRepository.findOne(id);
     }
 }
