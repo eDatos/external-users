@@ -51,8 +51,7 @@ export class NavbarComponent implements OnInit {
     }
 
     public correctlyLogged(): boolean {
-        //return Boolean(this.principal.correctlyLogged());
-        return true;
+        return Boolean(this.principal.correctlyLogged());
     }
 
     public puedeNavegarAdministracion(): boolean {

@@ -32,6 +32,10 @@ export class AccountUserService {
         return this.http.post(`api/login`, credentials).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
+    changeCurrentUserPassword(newPassword: string): Observable<User> {
+        return this.http.post(`${this.resourceUrl}/change-password`, newPassword).pipe(map((res) => ResponseUtils.convert(res, User)));
+    }
+
     /* 
     get(login: string, includeDeleted = true): Observable<User> {
         const options = createRequestOption({ includeDeleted });

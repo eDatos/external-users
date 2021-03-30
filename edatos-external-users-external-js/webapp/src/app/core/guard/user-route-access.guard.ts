@@ -12,14 +12,11 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
     constructor(private router: Router, private principal: Principal, private loginService: LoginService) {}
 
     canActivate(route: ActivatedRouteSnapshot): boolean | Promise<boolean> {
-        console.log('route', route);
-        debugger;
         const roles = this.rolesFromRouteSnapshot(route);
         return this.checkRoles(roles, route.data);
     }
 
     canLoad(route: Route): true | Promise<boolean> {
-        console.log('route', route);
         const roles = route.data ? route.data.roles : [];
         return this.checkRoles(roles, route.data);
     }

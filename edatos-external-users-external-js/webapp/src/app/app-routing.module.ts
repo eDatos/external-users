@@ -32,6 +32,14 @@ const APP_ROUTES: Routes = [
             roles: USER,
         },
     },
+    {
+        path: 'account-management/change-password',
+        loadChildren: () => import('./modules/account/password/change-password.module').then((m) => m.ChangePasswordModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: USER,
+        },
+    },
     /*  {
         path: 'filter',
         loadChildren: () => import('./modules/filter/filter.module').then((m) => m.FilterModule),
