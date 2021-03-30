@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.util;
 
+import static org.junit.Assert.fail;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.siemac.edatos.common.test.utils.ConfigurationMockConstants;
 import org.siemac.edatos.core.common.constants.CoreCommonConstants;
@@ -16,8 +18,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.LocalisedStringEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
-
-import static org.junit.Assert.fail;
 
 public final class StatisticalOperationsMocks {
 
@@ -80,7 +80,7 @@ public final class StatisticalOperationsMocks {
         title_en.setLocale("en");
         title.addText(title_es);
         title.addText(title_en);
-        operation.setTitle(title);
+        operation.setName(title);
 
         // ACRONYM
         InternationalStringVO acronym = new InternationalStringVO();
@@ -92,16 +92,6 @@ public final class StatisticalOperationsMocks {
         acronym_en.setLocale("en");
         acronym.addText(acronym_es);
         acronym.addText(acronym_en);
-        operation.setAcronym(acronym);
-
-        // CURRENTLY_ACTIVE
-        operation.setCurrentlyActive(false);
-
-        // SUBJECT_AREA
-        //operation.setSubjectArea(mockExternalItem("HEALTH", "/uri/test/category", "URN:CATEGORY:HEALTH", "URN:CATEGORY:HEALTH:provider", TypeExternalArtefactsEnum.CATEGORY));
-
-        // INDICATOR_SYSTEM
-        operation.setIndicatorSystem(false);
 
         return operation;
     }

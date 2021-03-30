@@ -17,136 +17,20 @@
             <column name="last_modified_by" type="VARCHAR(50)"/>
             <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="opt_lock" type="BIGINT"/>
-            <column name="acronym" type="JSON"/>
             <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="comment" type="JSON"/>
-            <column name="currently_active" type="BOOLEAN">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="description" type="JSON"/>
-            <column name="indicator_system" type="BOOLEAN">
-                <constraints nullable="false"/>
-            </column>
-            <column name="internal_inventory_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
-            <column name="inventory_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
-            <column name="notes" type="JSON"/>
-            <column name="objective" type="JSON"/>
             <column name="proc_status" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="status" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="title" type="JSON">
+            <column name="name" type="JSON">
                 <constraints nullable="false"/>
             </column>
-            <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
-            <column name="urn" type="VARCHAR(4000)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="common_metadata_fk" type="BIGINT"/>
-            <column name="subject_area_fk" type="BIGINT"/>
+            <column name="category_fk" type="BIGINT"/>
         </createTable>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-2">
-        <createTable tableName="tb_ei_producers">
-            <column name="operation_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="producer_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-3">
-        <createTable tableName="tb_ei_publishers">
-            <column name="operation_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="publisher_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-4">
-        <createTable tableName="tb_ei_reg_contributors">
-            <column name="operation_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="regional_contributor_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-5">
-        <createTable tableName="tb_ei_reg_responsibles">
-            <column name="operation_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="regional_responsible_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-6">
-        <createTable tableName="tb_ei_update_frequency">
-            <column name="operation_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="update_frequency_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-7">
-        <createTable tableName="tb_secondary_areas">
-            <column name="operation_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-            <column name="secondary_subject_area_fk" type="BIGINT">
-                <constraints nullable="false" primaryKey="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-8">
-        <addUniqueConstraint columnNames="code" constraintName="UKco64l4qvtdjgaae1ysykfftt4" tableName="tb_operations"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-9">
-        <addForeignKeyConstraint baseColumnNames="common_metadata_fk" baseTableName="tb_operations" constraintName="FKrkhf7llp83fn6mj44pjpla4t8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-10">
-        <addForeignKeyConstraint baseColumnNames="producer_fk" baseTableName="tb_ei_producers" constraintName="FK7a8hdbwmrna65tms192prvew6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-11">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_secondary_areas" constraintName="FKae67oeyjpq2lxpttseb32p5q6" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-12">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_ei_reg_contributors" constraintName="FKc2ag13v8qwvn4uggmm30k9fy3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-13">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_ei_reg_responsibles" constraintName="FKf9f21a5cek6xxdl8v9h7vll26" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-14">
-        <addForeignKeyConstraint baseColumnNames="publisher_fk" baseTableName="tb_ei_publishers" constraintName="FKja6mdrgi6sqte1kejq5qmgty8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-15">
-        <addForeignKeyConstraint baseColumnNames="update_frequency_fk" baseTableName="tb_ei_update_frequency" constraintName="FKld7m2tgryl7i7t8pyjjyal5rt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-16">
-        <addForeignKeyConstraint baseColumnNames="regional_responsible_fk" baseTableName="tb_ei_reg_responsibles" constraintName="FKlye3rj2ynicnhyommr61gog7n" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-17">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_ei_update_frequency" constraintName="FKnyj3kvunykhjfb380on294mv1" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-18">
-        <addForeignKeyConstraint baseColumnNames="regional_contributor_fk" baseTableName="tb_ei_reg_contributors" constraintName="FKoa2hfwliavc7ovijlt9n38de5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-19">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_ei_publishers" constraintName="FKt6rhdpjof16ou99ypf1bpttry" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739891-20">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_ei_producers" constraintName="FKtcgmdykirn4m61uyl5425yfse" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
     </changeSet>
 </databaseChangeLog>
