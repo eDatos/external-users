@@ -45,7 +45,7 @@ public class OperationResource extends AbstractResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operationDto));
     }
 
-    @GetMapping(params = {"page", "size"})
+    @GetMapping
     @Timed
     public ResponseEntity<List<OperationDto>> find(String query, Pageable pageable) {
         Page<OperationEntity> entities = operationService.find(query, pageable);

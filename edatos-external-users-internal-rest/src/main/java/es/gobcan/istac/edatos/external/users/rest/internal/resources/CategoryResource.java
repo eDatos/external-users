@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,5 +57,14 @@ public class CategoryResource extends AbstractResource {
         Page<CategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return ResponseEntity.ok().headers(headers).body(result.getContent());
+    }
+
+    @Timed
+    @GetMapping("/tree")
+    @PreAuthorize("@secChecker.canAccessCategory(authentication)")
+    public ResponseEntity<List<CategoryDto>> getCategoryTree() {
+        List<CategoryEntity> entitiesTree = categoryService.getTree();
+        List<CategoryDto> dtosTree = new ArrayList<>(categoryMapper.toDtos(entitiesTree));
+        return ResponseEntity.ok(dtosTree);
     }
 }

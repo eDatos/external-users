@@ -23,7 +23,6 @@ public class CategoryDto extends AuditableDto implements Identifiable {
     private Instant updateDate;
     private Instant lastUpdated;
     private String uuid;
-    private CategoryDto parent;
     private List<CategoryDto> children = new ArrayList<>();
 
     @Override
@@ -125,14 +124,6 @@ public class CategoryDto extends AuditableDto implements Identifiable {
 
     public void setLastUpdated(Instant lastUpdated) {
         this.lastUpdated = lastUpdated;
-    }
-
-    public CategoryDto getParent() {
-        return parent;
-    }
-
-    public void setParent(CategoryDto parent) {
-        this.parent = parent;
     }
 
     public List<CategoryDto> getChildren() {

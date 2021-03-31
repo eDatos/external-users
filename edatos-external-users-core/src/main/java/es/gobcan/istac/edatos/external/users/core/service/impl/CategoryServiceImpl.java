@@ -29,11 +29,6 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryEntity> findAllCategories() {
-        return categoryRepository.findAll();
-    }
-
-    @Override
     public Page<CategoryEntity> find(String query, Pageable pageable) {
         DetachedCriteria criteria = queryUtil.queryToCategoryCriteria(query, pageable);
         return find(criteria, pageable);
@@ -42,6 +37,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Page<CategoryEntity> find(DetachedCriteria criteria, Pageable pageable) {
         return categoryRepository.findAll(criteria, pageable);
+    }
+
+    @Override
+    public List<CategoryEntity> getTree() {
+        return categoryRepository.getByParentIsNull();
     }
 
     @Override

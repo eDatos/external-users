@@ -11,9 +11,9 @@ import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 public interface CategoryService {
 
     CategoryEntity findCategoryById(Long id);
-    List<CategoryEntity> findAllCategories();
     Page<CategoryEntity> find(String query, Pageable pageable);
     Page<CategoryEntity> find(DetachedCriteria criteria, Pageable pageable);
+    List<CategoryEntity> getTree();
     CategoryEntity createCategory(CategoryEntity operation);
     CategoryEntity updateCategory(CategoryEntity operation);
     void deleteCategory(Long operationId);
