@@ -54,7 +54,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
                 });
 
                 this.operationService.find({ query: `CATEGORY_ID EQ ${category.id}` }).subscribe((operations) => {
-                    children.push(...operations.map((operation) => this.operatioToTreeNode(operation)));
+                    children.push(...operations.map((operation) => this.operationToTreeNode(operation)));
                 });
 
                 return this.categoryToTreeNode(category, children);
@@ -74,7 +74,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
         };
     }
 
-    private operatioToTreeNode(operation: Operation): TreeNode {
+    private operationToTreeNode(operation: Operation): TreeNode {
         return {
             label: operation.name.getLocalisedLabel(this.mainLanguageCode),
             icon: 'fa fa-table',
