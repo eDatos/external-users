@@ -2,7 +2,8 @@
     "entity": {
         "validation": {
             "passwordMatch": "Asegúrese de que sus contraseñas coninciden",
-            "email": "Su correo electrónico no es válido."
+            "email": "Su correo electrónico no es válido.",
+            "passwordNotMatch": "La contraseña actual y la nueva NO pueden ser la misma."
         }
     }
 }

@@ -58,7 +58,7 @@ export class AccountManagementComponent implements OnInit {
         return lastPath === 'edit';
     }
 
-    public openChangePasswordModal() {
+    public navigateToChangePassword() {
         this.router.navigate(['account-management/change-password']);
     }
 }

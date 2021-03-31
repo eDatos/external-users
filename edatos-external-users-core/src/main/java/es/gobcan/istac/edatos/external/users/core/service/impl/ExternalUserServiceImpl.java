@@ -3,7 +3,7 @@ package es.gobcan.istac.edatos.external.users.core.service.impl;
 import java.time.Instant;
 import java.util.HashSet;
 
-import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
+import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -39,16 +39,6 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     public ExternalUserEntity create(ExternalUserEntity user) {
         externalUserValidator.checkEmailEnUso(user);
         return externalUserRepository.saveAndFlush(user);
-    }
-
-    @Override
-    public void update(String firstName, String surname1, String surname2, String email) {
-        externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
-            user.setName(firstName);
-            user.setSurname1(surname1);
-            user.setSurname2(surname2);
-            user.setEmail(email);
-        });
     }
 
     @Override
@@ -112,4 +102,15 @@ public class ExternalUserServiceImpl implements ExternalUserService {
 
         return returnValue;
     }
+
+    @Override
+    public void updateExternalUserAccountPassword(ExternalUserEntity user, String currentPassword, String newPassword) {
+        if (!SecurityUtils.passwordEncoderMatches(currentPassword, user.getPassword())) {
+            throw new CustomParameterizedExceptionBuilder().code(ErrorConstants.PASSWORD_NOT_MATCH).message(ErrorMessagesConstants.PASSWORD_NOT_MATCH).build();
+        }
+        String passwordEncoder = SecurityUtils.passwordEncoder(newPassword);
+        user.setPassword(passwordEncoder);
+        externalUserRepository.saveAndFlush(user);
+    }
+
 }

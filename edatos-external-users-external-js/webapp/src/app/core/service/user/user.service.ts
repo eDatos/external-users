@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Credentials, User } from '@app/core/model';
+import { Credentials, User, UserAccountChangePassword } from '@app/core/model';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { createRequestOption, ResponseUtils } from 'arte-ng/src/lib/utils';
@@ -32,8 +32,8 @@ export class AccountUserService {
         return this.http.post(`api/login`, credentials).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
-    changeCurrentUserPassword(newPassword: string): Observable<User> {
-        return this.http.post(`${this.resourceUrl}/change-password`, newPassword).pipe(map((res) => ResponseUtils.convert(res, User)));
+    changeCurrentUserPassword(accountChangePassword: UserAccountChangePassword): Observable<User> {
+        return this.http.post(`${this.resourceUrl}/change-password`, accountChangePassword).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     /* 

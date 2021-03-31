@@ -67,3 +67,7 @@ export class UserAccount {
         return this.roles.some((userRol) => userRol.role == rol);
     }
 }
+
+export class UserAccountChangePassword {
+    constructor(public currentPassword: string, public newPassword: string) {}
+}

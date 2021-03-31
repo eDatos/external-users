@@ -18,8 +18,8 @@
         <i class="fa fa-bars"></i>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
-        <ul *ngIf="correctlyLogged()" class="navbar-nav ml-auto">
+    <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
+        <ul *ngIf="isCorrectlyLogged" class="navbar-nav ml-auto">
             <li>
                 <a class="nav-link btn" routerLink="favorite" routerLinkActive="active">
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -34,13 +34,13 @@
             </li>
 
             <li>
-                <a class="nav-link btn" id="myAccount" (click)="myAccount()" [title]="'global.menu.account.myAccount' | translate">
+                <a class="nav-link btn" routerLink="account-management" routerLinkActive="active" [title]="'global.menu.account.myAccount' | translate">
                     <i class="fa fa-fw fa-user" aria-hidden="true"></i>
                     <b class="caret"></b>
                 </a>
             </li>
             <li>
-                <a *ngSwitchCase="true" class="nav-link btn" (click)="logout()" id="logout" [title]="'global.menu.account.logout' | translate">
+                <a class="nav-link btn" (click)="logout()" id="logout" [title]="'global.menu.account.logout' | translate">
                     <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
                 </a>
             </li>

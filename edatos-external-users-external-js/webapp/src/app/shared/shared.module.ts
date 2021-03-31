@@ -28,6 +28,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { NgArrayPipesModule } from 'ngx-pipes';
 
 import { PasswordMatchValidatorDirective } from './directives';
+import { PasswordNotMatchValidatorDirective } from './directives';
 
 @NgModule({
     imports: [
@@ -54,7 +55,7 @@ import { PasswordMatchValidatorDirective } from './directives';
         TooltipModule,
         ArteNgModule,
     ],
-    declarations: [PasswordMatchValidatorDirective],
+    declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective],
     providers: [
         DatePipe,
         {
@@ -87,6 +88,7 @@ import { PasswordMatchValidatorDirective } from './directives';
         ReactiveFormsModule,
         ArteNgModule,
         PasswordMatchValidatorDirective,
+        PasswordNotMatchValidatorDirective,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

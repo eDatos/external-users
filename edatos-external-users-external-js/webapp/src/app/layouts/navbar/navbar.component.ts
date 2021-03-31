@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VERSION } from '@app/app.constants';
 import { ConfigService } from '@app/config';
 import { LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -11,16 +12,18 @@ import { LoginService, PermissionService, Principal, ProfileService } from '@app
 })
 export class NavbarComponent implements OnInit {
     inProduction: boolean;
-    isNavbarCollapsed: boolean;
-    modalRef: NgbModalRef;
-    version: string;
+    public isCorrectlyLogged: boolean;
+    public isNavbarCollapsed: boolean;
+    private modalRef: NgbModalRef;
+    public version: string;
 
     constructor(
         private loginService: LoginService,
         public permissionService: PermissionService,
         private principal: Principal,
         private profileService: ProfileService,
-        private configService: ConfigService
+        private configService: ConfigService,
+        private router: Router
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -30,14 +33,13 @@ export class NavbarComponent implements OnInit {
         this.profileService.getProfileInfo().subscribe((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
         });
+        this.principal.isCorrectlyLogged().subscribe((correctyLogged) => {
+            this.isCorrectlyLogged = correctyLogged;
+        });
     }
 
     collapseNavbar() {
         this.isNavbarCollapsed = true;
-    }
-
-    isAuthenticated() {
-        return this.principal.isAuthenticated();
     }
 
     logout() {
@@ -48,10 +50,6 @@ export class NavbarComponent implements OnInit {
 
     toggleNavbar() {
         this.isNavbarCollapsed = !this.isNavbarCollapsed;
-    }
-
-    public correctlyLogged(): boolean {
-        return Boolean(this.principal.correctlyLogged());
     }
 
     public puedeNavegarAdministracion(): boolean {

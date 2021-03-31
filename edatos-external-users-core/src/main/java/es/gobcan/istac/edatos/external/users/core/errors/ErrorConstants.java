@@ -17,6 +17,8 @@ public final class ErrorConstants {
     public static final String USUARIO_NO_VALIDO = "error.userManagement.usuario-no-valido";
     public static final String USUARIO_EMAIL_EN_USO = "error.userManagement.email-en-uso";
 
+    public static final String PASSWORD_NOT_MATCH = "error.userManagement.passwordNotMatch";
+
     /**********
      * FILE
      *********/

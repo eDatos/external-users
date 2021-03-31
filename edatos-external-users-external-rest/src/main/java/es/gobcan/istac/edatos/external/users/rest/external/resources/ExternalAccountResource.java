@@ -6,15 +6,14 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ChangePasswordDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import io.github.jhipster.web.util.ResponseUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.codahale.metrics.annotation.Timed;
 
@@ -26,11 +25,8 @@ import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
-import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 
 @RestController
 @RequestMapping("/api")
@@ -92,11 +88,24 @@ public class ExternalAccountResource extends AbstractResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
         }
 
-        ExternalUserEntity user = externalUserService.update(externalUserMapper.basicDtoToEntity(userDto));
+        ExternalUserEntity user = externalUserService.update(externalUserMapper.baseDtoToEntity(userDto));
         Optional<ExternalUserAccountBaseDto> updatedUser = Optional.ofNullable(externalUserMapper.toDto(user));
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, userDto.getEmail());
         return ResponseUtil.wrapOrNotFound(updatedUser);
     }
 
+    @PostMapping("/account/change-password")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canUpdateUser(authentication)")
+    public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordDto passwordDto) {
+        ExternalUserEntity user = externalUserService.getUsuarioWithAuthorities();
+        externalUserService.updateExternalUserAccountPassword(user, passwordDto.getCurrentPassword(), passwordDto.getNewPassword());
+
+        mailService.sendCreationEmailChangePassword(user);
+        Optional<ExternalUserAccountBaseDto> updatedUserDto = Optional.ofNullable(externalUserMapper.toBaseDto(user));
+
+        auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, updatedUserDto.get().getEmail());
+        return ResponseEntity.ok().build();
+    }
 }
