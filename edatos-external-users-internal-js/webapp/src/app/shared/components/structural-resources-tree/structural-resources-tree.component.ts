@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Category, Favorite, Operation } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service/category/category.service';
 import { OperationService } from '@app/shared/service/operation/operation.service';
+import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
@@ -16,8 +17,14 @@ export class StructuralResourcesTreeComponent implements OnInit {
 
     public resources: TreeNode[];
     public selectedResources: TreeNode[];
+    private mainLanguageCode: string;
 
-    constructor(private alertService: ArteAlertService, private categoryService: CategoryService, private operationService: OperationService) {}
+    constructor(
+        private alertService: ArteAlertService,
+        private categoryService: CategoryService,
+        private operationService: OperationService,
+        private translateService: TranslateService
+    ) {}
 
     public ngOnInit(): void {
         this.categoryService.getTree().subscribe((categories) => {
@@ -25,6 +32,8 @@ export class StructuralResourcesTreeComponent implements OnInit {
                 this.resources = treeNodes;
             });
         });
+
+        this.mainLanguageCode = this.translateService.getDefaultLang();
     }
 
     public nodeSelect(event) {
@@ -55,7 +64,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
 
     private categoryToTreeNode(category: Category, children: TreeNode[]): TreeNode {
         return {
-            label: category.name.getLocalisedLabel('es'),
+            label: category.name.getLocalisedLabel(this.mainLanguageCode),
             collapsedIcon: 'fa fa-folder',
             expandedIcon: 'fa fa-folder-open',
             expanded: true,
@@ -67,7 +76,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
 
     private operatioToTreeNode(operation: Operation): TreeNode {
         return {
-            label: operation.name.getLocalisedLabel('es'),
+            label: operation.name.getLocalisedLabel(this.mainLanguageCode),
             icon: 'fa fa-table',
             expanded: true,
             data: operation,
