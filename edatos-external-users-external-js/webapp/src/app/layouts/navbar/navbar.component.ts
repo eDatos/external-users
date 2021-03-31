@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VERSION } from '@app/app.constants';
 import { ConfigService } from '@app/config';
 import { LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
@@ -21,7 +22,8 @@ export class NavbarComponent implements OnInit {
         public permissionService: PermissionService,
         private principal: Principal,
         private profileService: ProfileService,
-        private configService: ConfigService
+        private configService: ConfigService,
+        private router: Router
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -52,5 +54,9 @@ export class NavbarComponent implements OnInit {
 
     public puedeNavegarAdministracion(): boolean {
         return this.permissionService.puedeNavegarAdministracion();
+    }
+
+    public navigateToMyAccount() {
+        this.router.navigate(['account-management']);
     }
 }
