@@ -27,6 +27,10 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['filter']);
     }
 
+    public navigateToSignup() {
+        this.router.navigate(['signup']);
+    }
+
     public navigateToUserManadgment() {
         this.router.navigate(['account-management']);
     }
