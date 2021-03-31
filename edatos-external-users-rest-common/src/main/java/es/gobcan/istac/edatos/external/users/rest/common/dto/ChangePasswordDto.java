@@ -26,8 +26,4 @@ public class ChangePasswordDto implements Serializable {
         this.newPassword = newPassword;
     }
 
-    @Override
-    public String toString() {
-        return "ChangePasswordDto{" + "oldPassword='" + currentPassword + '\'' + ", newPassword='" + newPassword + '\'' + '}';
-    }
 }
