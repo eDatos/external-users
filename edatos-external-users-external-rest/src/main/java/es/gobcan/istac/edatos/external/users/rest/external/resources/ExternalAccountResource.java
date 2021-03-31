@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ChangePasswordDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -87,11 +88,24 @@ public class ExternalAccountResource extends AbstractResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
         }
 
-        ExternalUserEntity user = externalUserService.update(externalUserMapper.basicDtoToEntity(userDto));
+        ExternalUserEntity user = externalUserService.update(externalUserMapper.baseDtoToEntity(userDto));
         Optional<ExternalUserAccountBaseDto> updatedUser = Optional.ofNullable(externalUserMapper.toDto(user));
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, userDto.getEmail());
         return ResponseUtil.wrapOrNotFound(updatedUser);
     }
 
+    @PostMapping("/account/change-password")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canUpdateUser(authentication)")
+    public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordDto passwordDto) {
+        ExternalUserEntity user = externalUserService.getUsuarioWithAuthorities();
+        externalUserService.updateExternalUserAccountPassword(user, passwordDto.getCurrentPassword(), passwordDto.getNewPassword());
+
+        mailService.sendCreationEmailChangePassword(user);
+        Optional<ExternalUserAccountBaseDto> updatedUserDto = Optional.ofNullable(externalUserMapper.toBaseDto(user));
+
+        auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, updatedUserDto.get().getEmail());
+        return ResponseEntity.ok().build();
+    }
 }

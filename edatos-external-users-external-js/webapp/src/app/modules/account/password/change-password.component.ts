@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AccountUserService, Principal } from '@app/core/service';
-import { User } from '@app/core/model';
+import { User, UserAccountChangePassword } from '@app/core/model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,9 +12,9 @@ export class ChangePasswordComponent implements OnInit {
     public isSaving: boolean = false;
 
     public account: any;
-    public password: string;
-    public oldPassword: string;
-    public confirmPassword: string;
+    public currentPassword: string;
+    public newPassword: string;
+    public confirmNewPassword: string;
 
     constructor(private userService: AccountUserService, private principal: Principal, private router: Router) {}
 
@@ -30,11 +30,12 @@ export class ChangePasswordComponent implements OnInit {
     }
 
     save() {
-        if (this.password !== this.confirmPassword) {
+        if (this.newPassword !== this.confirmNewPassword) {
             return;
         }
         this.isSaving = true;
-        this.userService.changeCurrentUserPassword(this.password).subscribe(
+        const accountChangePassword: UserAccountChangePassword = { currentPassword: this.currentPassword, newPassword: this.newPassword };
+        this.userService.changeCurrentUserPassword(accountChangePassword).subscribe(
             (res) => this.onSaveSuccess(res),
             (error) => this.onSaveError(error)
         );
