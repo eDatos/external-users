@@ -13,7 +13,7 @@ import { Observable, of } from 'rxjs';
 })
 export class StructuralResourcesTreeComponent implements OnInit {
     @Input()
-    public favorite: Favorite;
+    public favorites: Favorite[];
 
     public resources: TreeNode[];
     public selectedResources: TreeNode[];
@@ -49,10 +49,12 @@ export class StructuralResourcesTreeComponent implements OnInit {
             categories?.map((category) => {
                 const children = [];
 
+                // add category children
                 this.categoryListToTreeNode(category.children).subscribe((treeNodes) => {
                     children.push(...treeNodes);
                 });
 
+                // add operations attached to the category
                 this.operationService.find({ query: `CATEGORY_ID EQ ${category.id}` }).subscribe((operations) => {
                     children.push(...operations.map((operation) => this.operationToTreeNode(operation)));
                 });
@@ -70,7 +72,6 @@ export class StructuralResourcesTreeComponent implements OnInit {
             expanded: true,
             children,
             data: category,
-            leaf: false,
         };
     }
 
