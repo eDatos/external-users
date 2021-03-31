@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Filter, FilterService } from '@app/shared';
+import { Filter } from '@app/shared/model';
+import { FilterService } from '@app/shared/service';
 import { finalize } from 'rxjs/operators';
 
 @Component({

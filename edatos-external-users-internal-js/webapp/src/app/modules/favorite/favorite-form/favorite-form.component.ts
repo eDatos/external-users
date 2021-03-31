@@ -3,7 +3,8 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExternalUser } from '@app/core/model';
 import { ExternalUserService } from '@app/core/service';
-import { Favorite, FavoriteService } from '@app/shared';
+import { Favorite } from '@app/shared/model';
+import { FavoriteService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs/operators';
 

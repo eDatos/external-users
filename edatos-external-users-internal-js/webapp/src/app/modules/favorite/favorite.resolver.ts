@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Favorite, FavoriteService } from '@app/shared';
+import { Favorite } from '@app/shared/model';
+import { FavoriteService } from '@app/shared/service';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

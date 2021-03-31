@@ -1,4 +1,5 @@
-import { Category, InternationalString } from '@app/shared';
+import { Category } from '@app/shared/model/category.model';
+import { InternationalString } from '@app/shared/model/international-string.model';
 import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
 
