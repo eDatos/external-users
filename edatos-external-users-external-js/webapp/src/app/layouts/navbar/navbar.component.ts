@@ -55,8 +55,4 @@ export class NavbarComponent implements OnInit {
     public puedeNavegarAdministracion(): boolean {
         return this.permissionService.puedeNavegarAdministracion();
     }
-
-    public navigateToMyAccount() {
-        this.router.navigate(['account-management']);
-    }
 }
