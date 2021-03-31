@@ -50,13 +50,12 @@
                                 <arte-autocomplete-long-list
                                     id="email"
                                     name="email"
-                                    [(ngModel)]="favorite.email"
+                                    [(ngModel)]="favorite.externalUser"
                                     (completeMethod)="updateExternalUserSuggestions($event)"
-                                    (onSelect)="setEmail($event)"
                                     [suggestions]="externalUserList"
                                     [required]="true"
                                     [minLength]="1"
-                                    [itemTemplate]="emailTemplate"
+                                    [properties]="['email']"
                                 ></arte-autocomplete-long-list>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <span *ngFor="let m of messages">{{m}}</span>

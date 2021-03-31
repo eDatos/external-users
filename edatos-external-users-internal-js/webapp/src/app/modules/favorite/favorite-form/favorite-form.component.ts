@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExternalUser } from '@app/core/model';
 import { ExternalUserService } from '@app/core/service';
 import { Favorite, FavoriteService } from '@app/shared';
 import { TranslateService } from '@ngx-translate/core';
@@ -16,7 +17,7 @@ export class FavoriteFormComponent implements OnInit {
     public isLoading = false;
     public favorite: Favorite;
     public mainLanguageCode: string;
-    public externalUserList: string[];
+    public externalUserList: ExternalUser[];
 
     constructor(
         private favoriteService: FavoriteService,
@@ -74,23 +75,8 @@ export class FavoriteFormComponent implements OnInit {
 
     public updateExternalUserSuggestions(event) {
         this.externalUserService.find({ query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` }).subscribe((results) => {
-            this.externalUserList = results.body.map((user) => user.email);
+            this.externalUserList = results.body;
         });
-    }
-
-    public setEmail(email) {
-        if (email instanceof Object && '_ITEM_TEMPLATE_FIELD_' in email) {
-            this.favorite.email = email['_ITEM_TEMPLATE_FIELD_'];
-        } else {
-            this.favorite.email = email;
-        }
-    }
-
-    public emailTemplate(obj) {
-        if (obj instanceof Object && '_ITEM_TEMPLATE_FIELD_' in obj) {
-            return obj['_ITEM_TEMPLATE_FIELD_'];
-        }
-        return obj;
     }
 
     private toggleIsSaving(): void {

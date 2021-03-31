@@ -80,14 +80,14 @@ public class FavoriteResource extends AbstractResource {
             //   2. Should this be handled in the controller? The service? The validator?
             //   3. Should we assign automatically the user as the one making the request? Or should we check and
             //      if they don't match, throw a message? Like 'you cannot create favorites for other users'.
-            dto.setEmail(SecurityUtils.getCurrentUserLogin());
+            dto.getExternalUser().setEmail(SecurityUtils.getCurrentUserLogin());
         }
 
         FavoriteEntity entity = favoriteMapper.toEntity(dto);
         entity = favoriteService.create(entity);
         FavoriteDto newDto = favoriteMapper.toDto(entity);
 
-        auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getEmail());
+        auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getExternalUser().getEmail());
         return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
@@ -99,13 +99,13 @@ public class FavoriteResource extends AbstractResource {
         }
 
         // FIXME(EDATOS-3294): same as the FIXME above
-        dto.setEmail(SecurityUtils.getCurrentUserLogin());
+        dto.getExternalUser().setEmail(SecurityUtils.getCurrentUserLogin());
 
         FavoriteEntity entity = favoriteMapper.toEntity(dto);
         entity = favoriteService.update(entity);
         FavoriteDto newDto = favoriteMapper.toDto(entity);
 
-        auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getEmail());
+        auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getExternalUser().getEmail());
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
