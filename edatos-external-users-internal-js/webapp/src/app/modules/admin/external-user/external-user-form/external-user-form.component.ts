@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ExternalUser, Language, Role, Treatment } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
+import { Favorite } from '@app/shared/model';
+import { FavoriteService } from '@app/shared/service';
 import { ArteEventManager, GenericModalService } from 'arte-ng/services';
 import { Subscription } from 'rxjs';
 import { ExternalUserDeleteDialogComponent } from '../external-user-delete-dialog.component';
@@ -20,6 +22,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     public rolesEnum = Role;
     public languageEnum = Language;
     public treatmentEnum = Treatment;
+    public favorites: Favorite[];
 
     private subscription: Subscription;
 
@@ -27,6 +30,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         private externalUserService: ExternalUserService,
         public permissionService: PermissionService,
         private genericModalService: GenericModalService,
+        private favoriteService: FavoriteService,
         private eventManager: ArteEventManager,
         private route: ActivatedRoute,
         private router: Router
@@ -42,6 +46,10 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
         this.eventSubscriber = this.eventManager.subscribe(ExternalUserDeleteDialogComponent.EVENT_NAME, (response) => {
             this.externalUser = Object.assign(new ExternalUser(), response.content);
+        });
+
+        this.favoriteService.findByUserId(this.userId).subscribe((favorites) => {
+            this.favorites = favorites;
         });
     }
 
@@ -69,7 +77,6 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public save() {
-        this.externalUser.password = 'MIPASS';
         this.isSaving = true;
         if (this.externalUserExists()) {
             this.externalUserService.update(this.externalUser).subscribe(
