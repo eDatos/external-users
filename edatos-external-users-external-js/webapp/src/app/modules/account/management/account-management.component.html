@@ -27,21 +27,6 @@
         </div>
     </div>
     <div class="page-body">
-        <fieldset class="page-section" [disabled]="!isEditMode()" arteAutofocus>
-            <div class="row">
-                <div *ngIf="!isEditMode()" class="form-group form-group-inline col-md-6 required" [formControlStatus]="settingsForm.controls.email">
-                    <div class="form-row">
-                        <label class="form-label col-md-4" translate="login.form.username" for="email"></label>
-                        <div class="col-md-8 form-input-container errors-on-hover">
-                            <arte-input id="email" name="email" [(ngModel)]="account.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
-                            <div class="form-errors-messages" *hasErrors="let messages">
-                                <li *ngFor="let m of messages">{{m}}</li>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
         <form class="page-form" name="settingsForm" role="form" id="settings-form" (ngSubmit)="save()" #settingsForm="ngForm" novalidate autocomplete="off">
             <fieldset class="page-section" [disabled]="!isEditMode()" arteAutofocus>
                 <div class="row">
@@ -118,7 +103,17 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6"></div>
+                    <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="settingsForm.controls.email">
+                        <div class="form-row">
+                            <label class="form-label col-md-4" translate="signup.form.email" for="email"></label>
+                            <div class="col-md-8 form-input-container errors-on-hover">
+                                <arte-input id="email" name="email" [(ngModel)]="account.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <li *ngFor="let m of messages">{{m}}</li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="form-group form-group-inline col-md-6" [formControlStatus]="settingsForm.controls.organism">
                         <div class="form-row">
