@@ -1,5 +1,7 @@
-import { Category, ExternalItem, InternationalString } from '@app/shared';
+import { Category } from '@app/shared/model/category.model';
+import { InternationalString } from '@app/shared/model/international-string.model';
 import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
+import { Type } from 'class-transformer';
 
 export enum ProcStatus {
     INTERNALLY_PUBLISHED = 'INTERNALLY_PUBLISHED',
@@ -14,31 +16,21 @@ export enum Status {
 }
 
 export class Operation extends BaseVersionedAndAuditingEntity {
-    constructor(
-        public id?: number,
-        public code?: string,
-        public urn?: string,
-        public indicatorSystem?: boolean,
-        public internalInventoryDate?: Date,
-        public currentlyActive?: boolean,
-        public inventoryDate?: Date,
-        public commonMetadata?: ExternalItem,
-        public title?: InternationalString,
-        public acronym?: InternationalString,
-        public subjectArea?: Category,
-        public objective?: InternationalString,
-        public description?: InternationalString,
-        public procStatus?: ProcStatus,
-        public status?: Status,
-        public comment?: InternationalString,
-        public notes?: InternationalString,
-        public secondarySubjectAreas?: Category[],
-        public producer?: ExternalItem[],
-        public regionalResponsible?: ExternalItem[],
-        public regionalContributor?: ExternalItem[],
-        public publisher?: ExternalItem[],
-        public updateFrequency?: ExternalItem[]
-    ) {
-        super();
-    }
+    public id?: number;
+
+    public code?: string;
+
+    public currentlyActive?: boolean;
+
+    @Type(() => InternationalString)
+    public name?: InternationalString;
+
+    @Type(() => InternationalString)
+    public description?: InternationalString;
+
+    @Type(() => Category)
+    public category?: Category;
+
+    public procStatus?: ProcStatus;
+    public status?: Status;
 }

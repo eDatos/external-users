@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service.criteria;
 
+import static org.hibernate.sql.JoinType.LEFT_OUTER_JOIN;
+
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 
@@ -7,37 +9,25 @@ import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalItemEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.InternationalStringEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.LocalisedStringEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 
-import static org.hibernate.sql.JoinType.LEFT_OUTER_JOIN;
-
 public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
-
-    public OperationCriteriaProcessor() {
-        super(OperationEntity.class);
-    }
 
     public enum QueryProperty {
         ID,
         CODE,
         URN,
-        TITLE,
-        ACRONYM,
-        SUBJECT_AREA_URN,
-        SECONDARY_SUBJECT_AREA_URN,
+        NAME,
         DESCRIPTION,
-        STATISTICAL_OPERATION_TYPE_ID,
-        IS_INDICATORS_SYSTEM,
-        PRODUCER_URN,
-        INTERNAL_INVENTORY_DATE,
-        CURRENTLY_ACTIVE,
         STATUS,
         PROC_STATUS,
-        PUBLISHER_URN,
-        INVENTORY_DATE,
+        CATEGORY_ID,
+    }
+
+    public OperationCriteriaProcessor() {
+        super(OperationEntity.class);
     }
 
     @Override
@@ -65,38 +55,15 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .build());
 
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.URN).sortable()
-                .withEntityProperty(OperationEntity.Properties.URN).build());
-
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.TITLE, "t", LEFT_OUTER_JOIN)
+                .withAlias(OperationEntity.Properties.NAME, "t", LEFT_OUTER_JOIN)
                 .withAlias("t." + InternationalStringEntity.Properties.TEXTS, "tl", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.TITLE)
+                .withQueryProperty(QueryProperty.NAME)
                 .withEntityProperty("tl." + LocalisedStringEntity.Properties.LABEL)
                 .build());
         registerOrderProcessor(
                 OrderProcessorBuilder.orderProcessor()
-                .withQueryProperty(QueryProperty.TITLE)
-                .withEntityProperty(OperationEntity.Properties.TITLE)
-                .build());
-
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.ACRONYM, "a", LEFT_OUTER_JOIN)
-                .withAlias("a." + InternationalStringEntity.Properties.TEXTS, "al", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.ACRONYM)
-                .withEntityProperty("al." + LocalisedStringEntity.Properties.LABEL)
-                .build());
-
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.SUBJECT_AREA, "sa", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.SUBJECT_AREA_URN)
-                .withEntityProperty("sa." + ExternalItemEntity.Properties.URN)
-                .build());
-
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.SECONDARY_SUBJECT_AREAS, "ssa", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.SECONDARY_SUBJECT_AREA_URN)
-                .withEntityProperty("ssa." + ExternalItemEntity.Properties.URN)
+                .withQueryProperty(QueryProperty.NAME)
+                .withEntityProperty(OperationEntity.Properties.NAME)
                 .build());
 
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
@@ -104,29 +71,6 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withAlias("d." + InternationalStringEntity.Properties.TEXTS, "dl", LEFT_OUTER_JOIN)
                 .withQueryProperty(QueryProperty.DESCRIPTION)
                 .withEntityProperty("dl." + LocalisedStringEntity.Properties.LABEL)
-                .build());
-
-        registerRestrictionProcessor(RestrictionProcessorBuilder.booleanRestrictionProcessor()
-                .withQueryProperty(QueryProperty.IS_INDICATORS_SYSTEM)
-                .withEntityProperty(OperationEntity.Properties.INDICATOR_SYSTEM)
-                .build());
-
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.PRODUCER, "pro", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.PRODUCER_URN)
-                .withEntityProperty("pro." + ExternalItemEntity.Properties.URN)
-                .build());
-
-        registerRestrictionProcessor(
-            RestrictionProcessorBuilder.instantRestrictionProcessor()
-                .withQueryProperty(QueryProperty.INTERNAL_INVENTORY_DATE)
-                .withEntityProperty(OperationEntity.Properties.INTERNAL_INVENTORY_DATE)
-                .build());
-
-        registerRestrictionProcessor(
-            RestrictionProcessorBuilder.booleanRestrictionProcessor()
-                .withQueryProperty(QueryProperty.CURRENTLY_ACTIVE)
-                .withEntityProperty(OperationEntity.Properties.CURRENTLY_ACTIVE)
                 .build());
 
         registerRestrictionProcessor(
@@ -141,18 +85,11 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withEntityProperty(OperationEntity.Properties.PROC_STATUS)
                 .build());
 
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withAlias(OperationEntity.Properties.PUBLISHER, "pub", LEFT_OUTER_JOIN)
-                .withQueryProperty(QueryProperty.PUBLISHER_URN)
-                .withEntityProperty("pub." + ExternalItemEntity.Properties.URN)
+        registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
+                .withQueryProperty(QueryProperty.CATEGORY_ID)
+                .withAlias(OperationEntity.Properties.CATEGORY, OperationEntity.Properties.CATEGORY)
+                .withEntityProperty(OperationEntity.Properties.CATEGORY + ".id")
                 .build());
-
-        registerRestrictionProcessor(
-            RestrictionProcessorBuilder.instantRestrictionProcessor()
-                .withQueryProperty(QueryProperty.INVENTORY_DATE)
-                .withEntityProperty(OperationEntity.Properties.INVENTORY_DATE)
-                .build());
-
         //@formatter:on
     }
 }

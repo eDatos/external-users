@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
+import java.util.List;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,9 +13,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryEntity, Long> {
 
-    CategoryEntity findByCode(String code);
-    CategoryEntity findByUrn(String urn);
     Page<CategoryEntity> findAll(DetachedCriteria criteria, Pageable pageable);
-    boolean existsByCode(String code);
-    boolean existsByCodeAndIdNot(String code, Long id);
+    List<CategoryEntity> getByParentIsNull();
 }

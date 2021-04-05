@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Filter, FilterService } from '@app/shared';
+import { Filter } from '@app/shared/model';
+import { FilterService } from '@app/shared/service';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

@@ -1,10 +1,10 @@
-import { InternationalString } from '@app/shared';
+import { InternationalString } from '@app/shared/model/international-string.model';
 
 /**
- * See also org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum at
- * https://git.arte-consultores.com/istac/edatos-core-common.
+ * See also `org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum` at
+ * {@link https://git.arte-consultores.com/istac/edatos-core-common/blob/77dc463f161631a2ada290e155bc6ecba04167fa/src/main/java/org/siemac/edatos/core/common/enume/TypeExternalArtefactsEnum.java}.
  *
- * Ref: https://git.arte-consultores.com/istac/edatos-core-common/blob/master/src/main/java/org/siemac/edatos/core/common/enume/TypeExternalArtefactsEnum.java
+ * @see https://git.arte-consultores.com/istac/edatos-core-common
  */
 enum TypeExternalArtefacts {
     AGENCY = 'structuralResources#agency',

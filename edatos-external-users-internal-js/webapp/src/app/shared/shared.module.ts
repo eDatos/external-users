@@ -1,31 +1,29 @@
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { ArteInputModule, ArteOrderListModule, ArteTableModule, ArteAutocompleteModule, ArteSpinnerModule, ArteEntityListEmptyModule } from 'arte-ng';
-import { FormcontrolStatusService } from 'arte-ng/directives';
-import { GenericModalService } from 'arte-ng/services';
-
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { StructuralResourcesTreeModule } from '@app/shared/components/structural-resources-tree';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { CalendarModule } from 'primeng/calendar';
+
+import { ArteAutocompleteModule, ArteEntityListEmptyModule, ArteInputModule, ArteOrderListModule, ArteSpinnerModule, ArteTableModule } from 'arte-ng';
+import { FormcontrolStatusService } from 'arte-ng/directives';
+import { GenericModalService } from 'arte-ng/services';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgArrayPipesModule } from 'ngx-pipes';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { ChipsModule } from 'primeng/chips';
 import { ButtonModule } from 'primeng/button';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ChipsModule } from 'primeng/chips';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ListboxModule } from 'primeng/listbox';
 import { OrderListModule } from 'primeng/orderlist';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { FileUploadModule } from 'primeng/fileupload';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
-import { NgArrayPipesModule } from 'ngx-pipes';
 
 @NgModule({
     imports: [
@@ -90,6 +88,7 @@ import { NgArrayPipesModule } from 'ngx-pipes';
         ArteTableModule,
         ArteOrderListModule,
         ArteEntityListEmptyModule,
+        StructuralResourcesTreeModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
