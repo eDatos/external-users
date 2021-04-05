@@ -15,6 +15,9 @@ export class StructuralResourcesTreeComponent implements OnInit {
     @Input()
     public favorites: Favorite[];
 
+    @Input()
+    public disabled = false;
+
     public resources: TreeNode[];
     public selectedResources: TreeNode[] = [];
     private mainLanguageCode: string;
@@ -65,6 +68,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
             expanded: true,
             children,
             data: category,
+            selectable: !this.disabled,
         };
     }
 
@@ -75,6 +79,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
             expanded: true,
             data: operation,
             leaf: true,
+            selectable: !this.disabled,
         };
     }
 

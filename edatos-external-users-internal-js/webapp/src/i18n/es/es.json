@@ -348,6 +348,9 @@
                 "placeholder": "Introduzca rol (ac-autocomplete-short-list)"
             }
         },
+        "favorites": {
+            "title": "Favoritos"
+        },
         "home": {
             "createLabel": "Añadir nuevo usuario",
             "createOrEditLabel": "Crear o editar un usuario",
