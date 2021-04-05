@@ -19,4 +19,8 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
     public getLocalisedName(languageCode: string): string {
         return (this.category.name || this.operation.name)?.getLocalisedLabel(languageCode);
     }
+
+    public getResource(): Category | Operation {
+        return this.category ?? this.operation;
+    }
 }

@@ -1,9 +1,1 @@
-<p-tree
-    (onNodeSelect)="nodeSelect($event)"
-    (onNodeUnselect)="nodeUnselect($event)"
-    [(selection)]="selectedResources"
-    [propagateSelectionDown]="false"
-    [propagateSelectionUp]="false"
-    [value]="resources"
-    selectionMode="checkbox"
-></p-tree>
+<p-tree [(selection)]="selectedResources" [propagateSelectionDown]="false" [propagateSelectionUp]="false" [value]="resources" selectionMode="checkbox"></p-tree>

@@ -16,7 +16,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
     public favorites: Favorite[];
 
     public resources: TreeNode[];
-    public selectedResources: TreeNode[];
+    public selectedResources: TreeNode[] = [];
     private mainLanguageCode: string;
 
     constructor(
@@ -30,18 +30,11 @@ export class StructuralResourcesTreeComponent implements OnInit {
         this.categoryService.getTree().subscribe((categories) => {
             this.categoryListToTreeNode(categories).subscribe((treeNodes) => {
                 this.resources = treeNodes;
+                this.selectResources();
             });
         });
 
         this.mainLanguageCode = this.translateService.getDefaultLang();
-    }
-
-    public nodeSelect(event) {
-        console.log(event);
-    }
-
-    public nodeUnselect(event) {
-        this.alertService.error({ severity: 'info', summary: 'Node Unselected', detail: event.node.label });
     }
 
     private categoryListToTreeNode(categories: Category[]): Observable<TreeNode[]> {
@@ -83,5 +76,12 @@ export class StructuralResourcesTreeComponent implements OnInit {
             data: operation,
             leaf: true,
         };
+    }
+
+    private selectResources(): void {
+        for (const fav of this.favorites) {
+            const resource = this.resources.find((r) => r.data.id === fav.getResource().id);
+            this.selectedResources.push(resource);
+        }
     }
 }
