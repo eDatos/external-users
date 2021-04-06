@@ -79,7 +79,7 @@ public class FavoriteResource extends AbstractResource {
         entity = favoriteService.create(entity);
         FavoriteDto newDto = favoriteMapper.toDto(entity);
 
-        auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getExternalUser().getEmail());
+        auditPublisher.publish(AuditConstants.FAVORITE_CREATION, newDto.getExternalUser().getEmail());
         return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
@@ -95,7 +95,7 @@ public class FavoriteResource extends AbstractResource {
         entity = favoriteService.update(entity);
         FavoriteDto newDto = favoriteMapper.toDto(entity);
 
-        auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getExternalUser().getEmail());
+        auditPublisher.publish(AuditConstants.FAVORITE_EDITION, newDto.getExternalUser().getEmail());
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
@@ -105,7 +105,7 @@ public class FavoriteResource extends AbstractResource {
     public ResponseEntity<Void> deleteFavorite(@PathVariable Long id) {
         favoriteService.delete(favoriteService.find(id));
 
-        auditPublisher.publish(AuditConstants.FILTER_DELETION, id.toString());
+        auditPublisher.publish(AuditConstants.FAVORITE_DELETION, id.toString());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

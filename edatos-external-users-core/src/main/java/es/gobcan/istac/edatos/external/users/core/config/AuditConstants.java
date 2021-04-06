@@ -35,6 +35,10 @@ public final class AuditConstants {
     public static final String FILTER_EDITION = "FILTER_EDITION";
     public static final String FILTER_DELETION = "FILTER_DELETION";
 
+    public static final String FAVORITE_CREATION = "FAVORITE_CREATION";
+    public static final String FAVORITE_EDITION = "FAVORITE_EDITION";
+    public static final String FAVORITE_DELETION = "FAVORITE_DELETION";
+
     private AuditConstants() {
     }
 }
