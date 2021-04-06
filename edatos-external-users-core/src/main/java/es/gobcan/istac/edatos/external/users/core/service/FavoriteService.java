@@ -11,9 +11,9 @@ import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 
 public interface FavoriteService {
 
-    FavoriteEntity create(FavoriteEntity filter);
+    FavoriteEntity create(FavoriteEntity favorite);
 
-    FavoriteEntity update(FavoriteEntity filter);
+    FavoriteEntity update(FavoriteEntity favorite);
 
     FavoriteEntity find(Long id);
 
@@ -25,5 +25,5 @@ public interface FavoriteService {
 
     List<FavoriteEntity> find(String query, Sort sort);
 
-    void delete(FavoriteEntity filter);
+    void delete(FavoriteEntity favorite);
 }
