@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ExternalUser, Language, Role, Treatment } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
-import { Favorite } from '@app/shared/model';
+import { Category, Favorite, Operation } from '@app/shared/model';
 import { FavoriteService } from '@app/shared/service';
 import { ArteEventManager, GenericModalService } from 'arte-ng/services';
 import { Subscription } from 'rxjs';
@@ -48,9 +48,21 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
             this.externalUser = Object.assign(new ExternalUser(), response.content);
         });
 
-        this.favoriteService.findByUserId(this.userId).subscribe((favorites) => {
-            this.favorites = favorites;
-        });
+        this.updateFavorites();
+    }
+
+    public saveFavorite(resource: Category | Operation): void {
+        const favorite = new Favorite();
+        favorite.externalUser = this.externalUser;
+        favorite.resource = resource;
+        this.favoriteService.save(favorite).subscribe(
+            () => {
+                this.updateFavorites();
+            },
+            (error) => {
+                this.updateFavorites();
+            }
+        );
     }
 
     public isEditMode(): boolean {
@@ -105,6 +117,24 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public ngOnDestroy() {
         this.subscription.unsubscribe();
+    }
+
+    public deleteFavorite(resource: Category | Operation): void {
+        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.constructor === resource.constructor);
+        this.favoriteService.delete(favorite.id).subscribe(
+            () => {
+                this.updateFavorites();
+            },
+            (error) => {
+                this.updateFavorites();
+            }
+        );
+    }
+
+    private updateFavorites() {
+        this.favoriteService.findByUserId(this.userId).subscribe((favorites) => {
+            this.favorites = favorites;
+        });
     }
 
     private onSaveSuccess(result) {
