@@ -21,6 +21,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FilterMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.TestUtil;
 
@@ -50,6 +51,9 @@ public class FilterResourceExternalTest {
 
     @Autowired
     private ExternalUserRepository externalUserRepository;
+
+    @Autowired
+    private ExternalUserMapper externalUserMapper;
 
     @Autowired
     private FilterMapper filterMapper;
@@ -129,7 +133,7 @@ public class FilterResourceExternalTest {
     @Test
     public void testCreateFilterFail() throws Exception {
         FilterDto dto = new FilterDto();
-        dto.setEmail(user2.getEmail());
+        dto.setExternalUser(externalUserMapper.toDto(user2));
         dto.setPermalink(PERMALINK_1);
         this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
                                                .content(TestUtil.convertObjectToJsonBytes(dto)))
@@ -140,7 +144,7 @@ public class FilterResourceExternalTest {
     @Test
     public void testCreateFilterSucceeds() throws Exception {
         FilterDto dto = new FilterDto();
-        dto.setEmail(user2.getEmail());
+        dto.setExternalUser(externalUserMapper.toDto(user2));
         dto.setPermalink(PERMALINK_1);
         dto.setResourceName("resource name");
         this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -217,7 +221,7 @@ public class FilterResourceExternalTest {
     }
 
     @Test
-    public void testSortFiltersByUserLogin() throws Exception {
+    public void testSortFiltersByUserEmail() throws Exception {
         filter2.setExternalUser(user2);
         filterRepository.saveAndFlush(filter2);
 
@@ -225,8 +229,7 @@ public class FilterResourceExternalTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].email", is("user2@gmail.com")))
-                    .andExpect(jsonPath("$[1].email", is("user1@gmail.com")));
+                .andExpect(jsonPath("$[0].externalUser.email", is("user2@gmail.com"))).andExpect(jsonPath("$[1].externalUser.email", is("user1@gmail.com")));
     }
 
     @Test
