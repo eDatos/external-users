@@ -4,13 +4,13 @@ import { FilterListComponent } from '@app/modules/filter/filter-list/filter-list
 import { FilterRoutingModule } from '@app/modules/filter/filter-routing.module';
 import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { SharedModule } from '@app/shared';
-import { ArteEntityListEmptyModule, ArteSpinnerModule, ArteTableModule } from 'arte-ng';
+import { ArteAutocompleteModule, ArteEntityListEmptyModule, ArteSpinnerModule, ArteTableModule } from 'arte-ng';
 import { ArteDirectivesModule } from 'arte-ng/directives';
 import { FilterFormComponent } from './filter-form/filter-form.component';
 
 @NgModule({
     declarations: [FilterListComponent, FilterFormComponent],
-    imports: [CommonModule, FilterRoutingModule, ArteSpinnerModule, ArteEntityListEmptyModule, ArteTableModule, SharedModule, ArteDirectivesModule],
+    imports: [CommonModule, FilterRoutingModule, ArteSpinnerModule, ArteEntityListEmptyModule, ArteTableModule, SharedModule, ArteDirectivesModule, ArteAutocompleteModule],
     providers: [FilterFilter],
 })
 export class FilterModule {}

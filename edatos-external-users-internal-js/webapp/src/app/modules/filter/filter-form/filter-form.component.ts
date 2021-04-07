@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ExternalUser } from '@app/core/model';
+import { ExternalUserService } from '@app/core/service';
 import { Filter } from '@app/shared/model';
 import { FilterService } from '@app/shared/service';
 import { finalize } from 'rxjs/operators';
@@ -14,8 +16,15 @@ export class FilterFormComponent implements OnInit {
     public isSaving = false;
     public isLoading = false;
     public filter: Filter;
+    public externalUserList: ExternalUser[];
 
-    constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private titleService: Title, private router: Router) {
+    constructor(
+        private filterService: FilterService,
+        private activatedRoute: ActivatedRoute,
+        private titleService: Title,
+        private router: Router,
+        private externalUserService: ExternalUserService
+    ) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
         this.activatedRoute.url.subscribe((segments) => {
             const lastUrlSegment = segments[segments.length - 1].path;
@@ -59,6 +68,12 @@ export class FilterFormComponent implements OnInit {
                     this.toggleEditMode();
                 });
         }
+    }
+
+    public updateExternalUserSuggestions(event) {
+        this.externalUserService.find({ query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` }).subscribe((results) => {
+            this.externalUserList = results.body;
+        });
     }
 
     private toggleIsSaving(): void {
