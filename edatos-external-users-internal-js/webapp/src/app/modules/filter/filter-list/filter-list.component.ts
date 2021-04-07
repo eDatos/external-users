@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
+import { ResponseWrapper } from '@app/core/utils/response-utils';
 import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { Filter } from '@app/shared/model/filter.model';
 import { FilterService } from '@app/shared/service/filter/filter.service';
-import { ResponseWrapper } from 'arte-ng/model';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -13,6 +13,7 @@ import { LazyLoadEvent } from 'primeng/api';
 })
 export class FilterListComponent implements OnInit {
     public filters: Filter[];
+    public filter;
     public totalItems: number;
     public itemsPerPage: number;
     public columns: any = [
@@ -56,16 +57,7 @@ export class FilterListComponent implements OnInit {
 
     public ngOnInit(): void {
         this.activatedRoute.queryParams.subscribe((params) => {
-            this.filterSearch.fromQueryParams(params).subscribe(() =>
-                this.filterService
-                    .find({
-                        page: this.page - 1,
-                        size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
-                        sort: this.sort(),
-                        query: this.filterSearch.toQuery(),
-                    })
-                    .subscribe((rw) => this.onSuccess(rw))
-            );
+            this.filterSearch.fromQueryParams(params).subscribe(() => this.loadAll());
         });
     }
 
@@ -111,8 +103,26 @@ export class FilterListComponent implements OnInit {
         ]);
     }
 
-    public onSuccess(rw: ResponseWrapper) {
-        this.totalItems = parseInt(rw.headers.get('X-Total-Count'), 10);
-        this.filters = rw.json;
+    public onSuccess(response: ResponseWrapper<Filter[]>) {
+        this.totalItems = response.totalCount();
+        this.filters = response.body;
+    }
+
+    public filterUpdate(filterSearch: FilterFilter) {
+        this.page = 1;
+        const queryParams = Object.assign({}, filterSearch.toUrl(this.activatedRoute.snapshot.queryParams));
+        this.router.navigate([], { relativeTo: this.activatedRoute, queryParams });
+        this.loadAll(filterSearch);
+    }
+
+    public loadAll(filterSearch: FilterFilter = null) {
+        this.filterService
+            .find({
+                page: this.page - 1,
+                size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
+                sort: this.sort(),
+                query: filterSearch?.toQuery(),
+            })
+            .subscribe((res) => this.onSuccess(res));
     }
 }

@@ -6,6 +6,7 @@ import { ExternalUserFormComponent } from '@app/modules/external-user/external-u
 import { ExternalUserListComponent } from '@app/modules/external-user/external-user-list/external-user-list.component';
 import { ExternalUserRoutingModule } from '@app/modules/external-user/external-user-routing.module';
 import { ExternalUserSearchComponent } from '@app/modules/external-user/external-user-search/external-user-search.component';
+import { FavoriteModule } from '@app/modules/favorite';
 import { SharedModule } from '@app/shared';
 import { ArteAuditInfoModule, ArteAutocompleteModule, ArteEntityListEmptyModule, ArteSpinnerModule, ArteTableModule, ArteTriInputSwitchModule } from 'arte-ng';
 import { ArteDirectivesModule } from 'arte-ng/directives';
@@ -24,6 +25,7 @@ import { ArteDirectivesModule } from 'arte-ng/directives';
         ArteAutocompleteModule,
         ArteTriInputSwitchModule,
         ArteAuditInfoModule,
+        FavoriteModule,
     ],
     providers: [ExternalUserService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

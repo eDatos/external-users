@@ -1,5 +1,5 @@
 <div class="page">
-    <div class="page-header">
+    <div class="page-header has-filters">
         <div class="page-header-top">
             <h2 class="page-header-title">
                 <span class="page-header-title-text" translate="filter.home.title"></span>
@@ -11,7 +11,7 @@
                 </button>
             </div>
         </div>
-        <!--        <ac-filter-search [filters]="filters"></ac-filter-search>-->
+        <app-filter-search (onFilterUpdate)="filterUpdate($event)"></app-filter-search>
     </div>
     <div class="page-body">
         <arte-spinner *ngIf="!filters"></arte-spinner>

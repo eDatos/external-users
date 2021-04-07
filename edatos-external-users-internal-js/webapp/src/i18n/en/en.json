@@ -353,7 +353,9 @@
             "createDeactivatedTooltip": "User creation is deactivated",
             "createOrEditLabel": "Create or edit a user",
             "includeDeleted": "Include Deleted",
-            "title": "Users"
+            "title": "Users",
+            "favorites": "Favorites",
+            "filters": "Filters"
         },
         "language": "Language",
         "languageEnum": {
@@ -465,6 +467,11 @@
         "home": {
             "createLabel": "Create Filter",
             "title": "Filters"
+        },
+        "search": {
+            "name": "Search filters",
+            "placeholder": "Enter user name or email",
+            "includeFromDeactivatedUsers": "Include disabled user filters"
         },
         "name": "Filter"
     },

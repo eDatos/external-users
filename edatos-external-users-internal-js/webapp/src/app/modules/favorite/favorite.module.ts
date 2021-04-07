@@ -12,5 +12,6 @@ import { FavoriteFormComponent } from './favorite-form/favorite-form.component';
     declarations: [FavoriteListComponent, FavoriteFormComponent],
     imports: [CommonModule, FavoriteRoutingModule, ArteSpinnerModule, ArteEntityListEmptyModule, ArteTableModule, SharedModule, ArteDirectivesModule, ArteAutocompleteModule],
     providers: [FavoriteFilter],
+    exports: [FavoriteListComponent],
 })
 export class FavoriteModule {}

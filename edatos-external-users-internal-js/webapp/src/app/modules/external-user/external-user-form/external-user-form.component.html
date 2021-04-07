@@ -184,7 +184,7 @@
                 <arte-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></arte-audit-info>
             </div>
             <fieldset *ngIf="externalUserExists() && !isEditMode()" arteAutofocus class="page-section">
-                <h3 translate="externalUser.favorites.title"></h3>
+                <h3 translate="externalUser.home.favorites"></h3>
                 <app-structural-resources-tree
                     (onResourceSelect)="saveFavorite($event)"
                     (onResourceUnselect)="deleteFavorite($event)"
@@ -192,5 +192,9 @@
                 ></app-structural-resources-tree>
             </fieldset>
         </form>
+        <!--        <div class="page-section">-->
+        <!--            <h3 translate="externalUser.home.filters"></h3>-->
+        <!--            <app-favorite-table></app-favorite-table>-->
+        <!--        </div>-->
     </div>
 </div>
