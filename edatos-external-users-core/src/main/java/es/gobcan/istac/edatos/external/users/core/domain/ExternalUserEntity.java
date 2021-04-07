@@ -50,8 +50,7 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
     private String surname1;
 
     @Size(max = 255)
-    @NotNull
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String surname2;
 
     @NotNull

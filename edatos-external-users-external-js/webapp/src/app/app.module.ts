@@ -1,38 +1,29 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, APP_INITIALIZER} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 
-import {NgxWebstorageModule} from 'ngx-webstorage';
-import {AppComponent} from './app.component';
-import {CoreModule} from './core/core.module';
-import {ConfigModule} from './config/config.module';
-import {ConfigService} from './config';
-import {SharedModule} from './shared';
-import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClient, HTTP_INTERCEPTORS} from '@angular/common/http';
-import {AuthServerProvider} from './core/service/auth';
-import {AuthInterceptor, AuthExpiredInterceptor, ErrorHandlerInterceptor} from './core/interceptor';
-import {ToastModule} from 'primeng/toast';
-import {MessageService} from 'primeng/api';
-import {AppRoutingModule} from './app-routing.module';
-import {NavbarComponent} from './layouts/navbar';
-import {ErrorComponent, ErrorRoutingModule} from './layouts/error';
-import {ServiceWorkerModule} from '@angular/service-worker';
-import {environment} from '../environments/environment';
-import {CookieService} from 'ngx-cookie';
-import {DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES} from './app.constants';
-import {ScriptLoaderModule} from 'ngx-script-loader';
-import {ArteTableService} from "arte-ng";
-import {ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService} from "arte-ng/services";
-
-export function init(configService: ConfigService, authServerProvider: AuthServerProvider) {
-    return () => {
-        const promise: Promise<boolean> = new Promise((resolve, reject) => {
-            resolve(true);
-        });
-        return promise;
-    };
-}
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { AppComponent } from './app.component';
+import { CoreModule } from './core/core.module';
+import { ConfigModule } from './config/config.module';
+import { ConfigService } from './config';
+import { SharedModule } from './shared';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthServerProvider } from './core/service/auth';
+import { AuthInterceptor, AuthExpiredInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { AppRoutingModule } from './app-routing.module';
+import { NavbarComponent } from './layouts/navbar';
+import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { CookieService } from 'ngx-cookie';
+import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
+import { ScriptLoaderModule } from 'ngx-script-loader';
+import { ArteTableService } from 'arte-ng';
+import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');
@@ -50,7 +41,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
     imports: [
         BrowserModule,
         ErrorRoutingModule,
-        NgxWebstorageModule.forRoot({prefix: 'ac', separator: '-'}),
+        NgxWebstorageModule.forRoot({ prefix: 'ac', separator: '-' }),
         CoreModule,
         ConfigModule,
         SharedModule,
@@ -63,16 +54,10 @@ export function initTranslations(translateService: TranslateService, cookieServi
             },
         }),
         ToastModule,
-        ServiceWorkerModule.register('./ngsw-worker.js', {enabled: environment.production}),
+        ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
         ScriptLoaderModule,
     ],
     providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: init,
-            deps: [ConfigService, AuthServerProvider],
-            multi: true,
-        },
         {
             provide: APP_INITIALIZER,
             useFactory: initTranslations,
@@ -103,5 +88,4 @@ export function initTranslations(translateService: TranslateService, cookieServi
     ],
     bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

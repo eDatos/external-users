@@ -1,20 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-	<include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20180117115714_added_function_lower_unaccent.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20180118152128_added_procedure_add_usuario_with_existing_rol.xml" relativeToChangelogFile="false" />
+    <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180117115714_added_function_lower_unaccent.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180118152128_added_procedure_add_usuario_with_existing_rol.xml"
+             relativeToChangelogFile="false"/>
 
-	<include file="config/liquibase/changelog/20180126141725_added_entity_Fichero.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20180126141730_added_entity_Documento.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20200325111314_added_entity_InternationalString.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20200325111315_added_entity_LocalisedString.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20200325111316_added_entity_ExternalItem.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20210203100632_added_columns_Usuario.xml" relativeToChangelogFile="false" />
-    <include file="config/liquibase/changelog/20210223122800_added_entity_ExternalUser.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20210301120000_added_entity_Filter.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20210316085219_added_entity_Operation.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20210316085221_added_entity_Category.xml" relativeToChangelogFile="false" />
-	<include file="config/liquibase/changelog/20210316085222_added_entity_Favorite.xml" relativeToChangelogFile="false" />
+    <include file="config/liquibase/changelog/20180126141725_added_entity_Fichero.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180126141730_added_entity_Documento.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200325111314_added_entity_InternationalString.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200325111315_added_entity_LocalisedString.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200325111316_added_entity_ExternalItem.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210203100632_added_columns_Usuario.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210223122800_added_entity_ExternalUser.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210407112000_modify_column_entity_ExternalUser.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210301120000_added_entity_Filter.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210316085219_added_entity_Operation.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210316085221_added_entity_Category.xml"
+             relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210316085222_added_entity_Favorite.xml"
+             relativeToChangelogFile="false"/>
 </databaseChangeLog>
