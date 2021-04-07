@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HERRAMIENTAS_ROLES, USER, ALL_ALLOWED } from './core/service';
+import { USER, ALL_ALLOWED, FILTER_ROLES } from './core/service';
 import { UserRouteAccessGuard } from './core/guard';
 import { DEFAULT_PATH } from './app.constants';
 
@@ -40,14 +40,15 @@ const APP_ROUTES: Routes = [
             roles: USER,
         },
     },
-    /*  {
+    {
         path: 'filter',
         loadChildren: () => import('./modules/filter/filter.module').then((m) => m.FilterModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: USER,
+            roles: FILTER_ROLES,
         },
     },
+    /*
     {
         path: 'favorite',
         loadChildren: () => import('./modules/favorite/favorite.module').then((m) => m.FavoriteModule),
