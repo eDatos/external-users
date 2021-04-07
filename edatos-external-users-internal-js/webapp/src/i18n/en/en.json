@@ -350,6 +350,7 @@
         },
         "home": {
             "createLabel": "Add new user",
+            "createDeactivatedTooltip": "User creation is deactivated",
             "createOrEditLabel": "Create or edit a user",
             "includeDeleted": "Include Deleted",
             "title": "Users"

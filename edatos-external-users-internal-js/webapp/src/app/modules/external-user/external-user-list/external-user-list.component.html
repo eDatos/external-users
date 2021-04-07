@@ -4,10 +4,12 @@
             <h2 class="page-header-title">
                 <span class="page-header-title-text" translate="externalUser.home.title"></span>
             </h2>
-            <button *ngIf="permissionService.puedeNavegarUserManagement()" class="btn btn-primary" [routerLink]="['../external-users/new']">
-                <span class="btn-icon fa fa-plus"></span>
-                <span translate="externalUser.home.createLabel"></span>
-            </button>
+            <span [ngbTooltip]="'externalUser.home.createDeactivatedTooltip' | translate" placement="bottom" tooltipClass="tooltip-warning">
+                <button *ngIf="permissionService.puedeNavegarUserManagement()" [routerLink]="['/external-users/new']" class="btn btn-primary" disabled type="button">
+                    <span class="btn-icon fa fa-plus"></span>
+                    <span translate="externalUser.home.createLabel"></span>
+                </button>
+            </span>
         </div>
         <app-external-user-search [filters]="filters"></app-external-user-search>
     </div>
