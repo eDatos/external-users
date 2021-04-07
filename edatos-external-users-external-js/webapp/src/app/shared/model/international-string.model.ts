@@ -1,4 +1,4 @@
-import { BaseVersionedEntity, BaseEntity } from 'arte-ng/src/lib/model';
+import { BaseVersionedEntity, BaseEntity } from 'arte-ng/model';
 import { LocalisedString } from './localised-string.model';
 
 export class InternationalString extends BaseVersionedEntity implements BaseEntity {

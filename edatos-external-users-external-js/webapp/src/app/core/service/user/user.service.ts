@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { Credentials, User, UserAccountChangePassword } from '@app/core/model';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { createRequestOption, ResponseUtils } from 'arte-ng/src/lib/utils';
-import { ResponseWrapper } from 'arte-ng/src/lib/model';
+import { createRequestOption, ResponseUtils } from 'arte-ng/utils';
+import { ResponseWrapper } from 'arte-ng/model';
 
 @Injectable()
 export class AccountUserService {

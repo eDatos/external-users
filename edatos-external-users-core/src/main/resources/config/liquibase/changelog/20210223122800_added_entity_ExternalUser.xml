@@ -28,9 +28,7 @@
             <column name="surname1" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="surname2" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
+            <column name="surname2" type="varchar(255)"/>
             <column name="treatment" type="varchar(255)"/>
             <column name="phone_number" type="varchar(255)"/>
             <column name="language" type="varchar(255)">
