@@ -1,5 +1,4 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { ExternalUserService } from '@app/core/service';
 
 import { SharedModule } from '@app/shared';
 import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteTriInputSwitchModule } from 'arte-ng';
@@ -11,10 +10,6 @@ import {
     AuditsService,
     ConfigurationComponent,
     ConfigurationService,
-    ExternalUserDeleteDialogComponent,
-    ExternalUserFormComponent,
-    ExternalUserListComponent,
-    ExternalUserSearchComponent,
     HealthCheckComponent,
     HealthModalComponent,
     HealthService,
@@ -24,7 +19,6 @@ import {
     MetricsMonitoringModalComponent,
     MetricsService,
 } from '.';
-
 
 @NgModule({
     imports: [
@@ -37,27 +31,9 @@ import {
         ArteAuditInfoModule,
         ArteTriInputSwitchModule,
     ],
-    declarations: [
-        AuditsComponent,
-        ExternalUserSearchComponent,
-        ExternalUserListComponent,
-        ExternalUserFormComponent,
-        ExternalUserDeleteDialogComponent,
-        LogsComponent,
-        ConfigurationComponent,
-        HealthCheckComponent,
-        HealthModalComponent,
-        MetricsMonitoringComponent,
-        MetricsMonitoringModalComponent,
-    ],
-    entryComponents: [
-        ExternalUserFormComponent,
-        ExternalUserDeleteDialogComponent,
-        HealthModalComponent,
-        MetricsMonitoringModalComponent
-    ],
-    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService, ExternalUserService],
+    declarations: [AuditsComponent, LogsComponent, ConfigurationComponent, HealthCheckComponent, HealthModalComponent, MetricsMonitoringComponent, MetricsMonitoringModalComponent],
+    entryComponents: [HealthModalComponent, MetricsMonitoringModalComponent],
+    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AdminModule {
-}
+export class AdminModule {}

@@ -47,8 +47,6 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe(ExternalUserDeleteDialogComponent.EVENT_NAME, (response) => {
             this.externalUser = Object.assign(new ExternalUser(), response.content);
         });
-
-        this.updateFavorites();
     }
 
     public saveFavorite(resource: Category | Operation): void {
@@ -72,6 +70,9 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public load(id: number) {
         if (id) {
+            if (!this.isEditMode()) {
+                this.updateFavorites();
+            }
             this.externalUserService.get(id).subscribe((user) => {
                 this.externalUser = user;
             });
@@ -81,7 +82,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public clear() {
-        const returnPath: (string | number)[] = ['/admin', 'external-users'];
+        const returnPath: (string | number)[] = ['/external-users'];
         if (this.userId) {
             returnPath.push(this.userId);
         }
@@ -112,7 +113,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public externalUserExists(): boolean {
-        return !!this.externalUser.id;
+        return !!this.externalUser?.id;
     }
 
     public ngOnDestroy() {
@@ -141,7 +142,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.externalUser = result;
         this.isSaving = false;
-        this.router.navigate(['/admin', 'external-users', this.externalUser.id]);
+        this.router.navigate(['/external-users', this.externalUser.id]);
     }
 
     private onSaveError() {

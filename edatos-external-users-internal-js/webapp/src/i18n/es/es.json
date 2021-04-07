@@ -353,6 +353,7 @@
         },
         "home": {
             "createLabel": "Añadir nuevo usuario",
+            "createDeactivatedTooltip": "La creación de usuarios está desactivada",
             "createOrEditLabel": "Crear o editar un usuario",
             "includeDeleted": "Incluir eliminados",
             "title": "Usuarios"
