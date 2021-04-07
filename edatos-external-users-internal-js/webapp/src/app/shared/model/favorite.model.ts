@@ -16,14 +16,6 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
     @Type(() => Operation)
     public operation?: Operation;
 
-    public getLocalisedName(languageCode: string): string {
-        return (this.category.name || this.operation.name)?.getLocalisedLabel(languageCode);
-    }
-
-    public get resource(): Category | Operation {
-        return this.category ?? this.operation;
-    }
-
     public set resource(val: Category | Operation) {
         if (val instanceof Category) {
             this.category = val;
@@ -32,5 +24,13 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
         } else {
             console.error("Favorite resource needs a Category or an Operation, but the argument isn't an instance of neither");
         }
+    }
+
+    public get resource(): Category | Operation {
+        return this.category ?? this.operation;
+    }
+
+    public getLocalisedName(languageCode: string): string {
+        return (this.category || this.operation).name?.getLocalisedLabel(languageCode);
     }
 }
