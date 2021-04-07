@@ -20,18 +20,10 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.accountUserService.login(this.credentials).subscribe((foo: any) => {
-            this.principal.identity().then(() => this.navigateToUserManadgment());
+            this.principal.identity().then(() => this.navigateToFilter());
         });
     }
     private navigateToFilter() {
         this.router.navigate(['filter']);
-    }
-
-    public navigateToSignup() {
-        this.router.navigate(['signup']);
-    }
-
-    public navigateToUserManadgment() {
-        this.router.navigate(['account-management']);
     }
 }
