@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Principal } from './principal.service';
 import { Role } from '@app/core/model';
+import { Principal } from './principal.service';
 
 export const USER_MANAGEMENT_ROLES = [Role.ADMINISTRADOR];
 export const HERRAMIENTAS_ROLES = [Role.ADMINISTRADOR];
 export const ADMINISTRACION_ROLES = [Role.ADMINISTRADOR];
 
-export const OPERATION_ROLES = [Role.ADMINISTRADOR];
 export const FILTER_ROLES = [Role.ADMINISTRADOR];
 export const FAVORITE_ROLES = [Role.ADMINISTRADOR];
+export const EXTERNAL_USER_ROLES = [Role.ADMINISTRADOR];
 
 @Injectable()
 export class PermissionService {

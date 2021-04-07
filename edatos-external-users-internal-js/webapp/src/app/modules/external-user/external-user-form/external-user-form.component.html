@@ -3,7 +3,7 @@
         <button
             *ngIf="!isEditMode()"
             type="button"
-            routerLink="/admin/external-users"
+            routerLink="/external-users"
             class="btn btn-secondary btn-frameless back-arrow"
             [attr.aria-label]="'entity.action.back' | translate"
         >
@@ -20,12 +20,7 @@
         </h2>
         <div class="page-header-btns">
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button
-                    *ngIf="!isEditMode() && !externalUser.deletionDate"
-                    class="btn btn-secondary"
-                    [routerLink]="['/admin', 'external-users', externalUser.id, 'edit']"
-                    type="button"
-                >
+                <button *ngIf="!isEditMode() && !externalUser.deletionDate" class="btn btn-secondary" [routerLink]="['edit']" type="button">
                     <span class="fa fa-pencil"></span>
                     <span translate="entity.action.edit"></span>
                 </button>
@@ -188,7 +183,7 @@
             <div class="page-section">
                 <arte-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></arte-audit-info>
             </div>
-            <fieldset [disabled]="!isEditMode()" arteAutofocus class="page-section">
+            <fieldset *ngIf="externalUserExists() && !isEditMode()" arteAutofocus class="page-section">
                 <h3 translate="externalUser.favorites.title"></h3>
                 <app-structural-resources-tree
                     (onResourceSelect)="saveFavorite($event)"

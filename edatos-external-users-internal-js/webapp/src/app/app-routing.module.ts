@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DEFAULT_PATH } from './app.constants';
 import { UserRouteAccessGuard } from './core/guard';
-import { FILTER_ROLES, HERRAMIENTAS_ROLES, OPERATION_ROLES, FAVORITE_ROLES } from './core/service';
+import { FILTER_ROLES, HERRAMIENTAS_ROLES, FAVORITE_ROLES, EXTERNAL_USER_ROLES } from './core/service';
 
 const APP_ROUTES: Routes = [
     {
@@ -37,6 +37,14 @@ const APP_ROUTES: Routes = [
         canLoad: [UserRouteAccessGuard],
         data: {
             roles: FAVORITE_ROLES,
+        },
+    },
+    {
+        path: 'external-users',
+        loadChildren: () => import('./modules/external-user/external-user.module').then((m) => m.ExternalUserModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: EXTERNAL_USER_ROLES,
         },
     },
     {

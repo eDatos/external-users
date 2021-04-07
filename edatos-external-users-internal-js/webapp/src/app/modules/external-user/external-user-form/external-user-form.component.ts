@@ -48,7 +48,9 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
             this.externalUser = Object.assign(new ExternalUser(), response.content);
         });
 
-        this.updateFavorites();
+        if (this.externalUserExists()) {
+            this.updateFavorites();
+        }
     }
 
     public saveFavorite(resource: Category | Operation): void {
@@ -81,7 +83,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public clear() {
-        const returnPath: (string | number)[] = ['/admin', 'external-users'];
+        const returnPath: (string | number)[] = ['/external-users'];
         if (this.userId) {
             returnPath.push(this.userId);
         }
@@ -141,7 +143,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.externalUser = result;
         this.isSaving = false;
-        this.router.navigate(['/admin', 'external-users', this.externalUser.id]);
+        this.router.navigate(['/external-users', this.externalUser.id]);
     }
 
     private onSaveError() {

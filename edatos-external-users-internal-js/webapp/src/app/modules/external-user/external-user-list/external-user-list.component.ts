@@ -4,7 +4,7 @@ import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ExternalUser, User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
-import { ExternalUserFilter } from '@app/modules/admin/external-user/external-user-search/external-user-filter';
+import { ExternalUserFilter } from '@app/modules/external-user/external-user-search/external-user-filter';
 
 import { ArteEventManager } from 'arte-ng/services';
 import { LazyLoadEvent } from 'primeng/api';
@@ -116,7 +116,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
         this.searchSubscription = this.eventManager.subscribe('userSearch', (response) => {
             this.page = 1;
             const queryParams = Object.assign({}, this.filters.toUrl(this.activatedRoute.snapshot.queryParams));
-            this.router.navigate(['/admin', 'external-users'], { queryParams });
+            this.router.navigate([], { relativeTo: this.activatedRoute, queryParams });
             this.loadAll();
         });
     }

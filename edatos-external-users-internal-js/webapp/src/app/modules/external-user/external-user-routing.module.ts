@@ -1,14 +1,15 @@
-import { Routes } from '@angular/router';
-import { ExternalUserFormComponent } from '@app/modules/admin/external-user/external-user-form/external-user-form.component';
-import { ExternalUserListComponent } from '@app/modules/admin/external-user/external-user-list/external-user-list.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ExternalUserFormComponent } from '@app/modules/external-user/external-user-form/external-user-form.component';
+import { ExternalUserListComponent } from '@app/modules/external-user/external-user-list/external-user-list.component';
 import { ITEMS_PER_PAGE } from '@app/app.constants';
 import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
 import { USER_MANAGEMENT_ROLES } from '@app/core/service/auth';
 import { PagingParamsResolver } from 'arte-ng/services';
 
-export const externalUsersRoutes: Routes = [
+export const EXTERNAL_USER_ROUTES: Routes = [
     {
-        path: 'external-users',
+        path: '',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserListComponent,
         resolve: {
@@ -25,7 +26,7 @@ export const externalUsersRoutes: Routes = [
         },
     },
     {
-        path: 'external-users/:id',
+        path: 'new',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
@@ -34,7 +35,7 @@ export const externalUsersRoutes: Routes = [
         },
     },
     {
-        path: 'external-users/new',
+        path: ':id',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
@@ -43,7 +44,7 @@ export const externalUsersRoutes: Routes = [
         },
     },
     {
-        path: 'external-users/:id/edit',
+        path: ':id/edit',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
         data: {
@@ -52,3 +53,9 @@ export const externalUsersRoutes: Routes = [
         },
     },
 ];
+
+@NgModule({
+    imports: [RouterModule.forChild(EXTERNAL_USER_ROUTES)],
+    exports: [RouterModule],
+})
+export class ExternalUserRoutingModule {}
