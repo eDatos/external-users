@@ -21,6 +21,7 @@ public class FavoriteCriteriaProcessor extends AbstractCriteriaProcessor {
     public enum QueryProperty {
         ID,
         EMAIL,
+        USER_ID,
         CREATED_DATE,
     }
 
@@ -41,6 +42,12 @@ public class FavoriteCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.EMAIL)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".email")
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .longRestrictionProcessor()
+                .withQueryProperty(QueryProperty.USER_ID)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".id")
                 .build());
         registerOrderProcessor(OrderProcessorBuilder
                 .orderProcessor()

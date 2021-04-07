@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output } from '@angular/core';
 import { Category, Favorite, Operation } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service/category/category.service';
 import { OperationService } from '@app/shared/service/operation/operation.service';
@@ -11,30 +11,82 @@ import { Observable, of } from 'rxjs';
     selector: 'app-structural-resources-tree',
     templateUrl: './structural-resources-tree.component.html',
 })
-export class StructuralResourcesTreeComponent implements OnInit {
+export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
+    /**
+     * The list of favorites. The selection of the tree is automatically updated when favorites
+     * are added or removed.
+     */
     @Input()
     public favorites: Favorite[];
 
+    /**
+     * If true, the elements on the tree become unselectable.
+     */
+    @Input()
+    public disabled = false;
+
+    /**
+     * Emits an event when an element of the tree is selected.
+     */
+    @Output()
+    public onResourceSelect = new EventEmitter<Category | Operation>();
+
+    /**
+     * Emits an event when an element of the tree is unselected.
+     */
+    @Output()
+    public onResourceUnselect = new EventEmitter<Category | Operation>();
+
     public resources: TreeNode[];
     public selectedResources: TreeNode[] = [];
+
     private mainLanguageCode: string;
+    private tree: Category[];
+    private iterableDiffer: IterableDiffer<Favorite>;
+    private nodeList: TreeNode[] = [];
 
     constructor(
         private alertService: ArteAlertService,
         private categoryService: CategoryService,
         private operationService: OperationService,
-        private translateService: TranslateService
-    ) {}
+        private translateService: TranslateService,
+        private iterableDiffers: IterableDiffers
+    ) {
+        this.iterableDiffer = iterableDiffers.find([]).create(null);
+    }
+
+    public ngDoCheck(): void {
+        // On the use of iterableDiffer, see https://stackoverflow.com/a/42962723/7611990.
+        // Angular data-binding checking system does not check if the array has new elements, or
+        // if it deleted them. When the user selects and unselect favorites, the array changes and
+        // we must detect those changes to update the element selection on the tree.
+        const changes = this.iterableDiffer.diff(this.favorites);
+        if (changes) {
+            this.updateSelection();
+        }
+    }
 
     public ngOnInit(): void {
-        this.categoryService.getTree().subscribe((categories) => {
-            this.categoryListToTreeNode(categories).subscribe((treeNodes) => {
-                this.resources = treeNodes;
-                this.selectResources();
-            });
-        });
-
         this.mainLanguageCode = this.translateService.getDefaultLang();
+        this.categoryService.getTree().subscribe((categories) => {
+            this.tree = categories;
+            this.createTree();
+        });
+    }
+
+    public createTree() {
+        this.categoryListToTreeNode(this.tree).subscribe((treeNodes) => {
+            this.resources = treeNodes;
+        });
+    }
+
+    public updateSelection() {
+        this.selectedResources = [];
+        for (const node of this.nodeList) {
+            if (this.isFavorite(node.data)) {
+                this.selectedResources.push(node);
+            }
+        }
     }
 
     private categoryListToTreeNode(categories: Category[]): Observable<TreeNode[]> {
@@ -42,7 +94,7 @@ export class StructuralResourcesTreeComponent implements OnInit {
             categories?.map((category) => {
                 const children = [];
 
-                // add category children
+                // add category children to the tree
                 this.categoryListToTreeNode(category.children).subscribe((treeNodes) => {
                     children.push(...treeNodes);
                 });
@@ -58,30 +110,43 @@ export class StructuralResourcesTreeComponent implements OnInit {
     }
 
     private categoryToTreeNode(category: Category, children: TreeNode[]): TreeNode {
-        return {
+        const node = {
             label: category.name.getLocalisedLabel(this.mainLanguageCode),
             collapsedIcon: 'fa fa-folder',
             expandedIcon: 'fa fa-folder-open',
             expanded: true,
             children,
             data: category,
+            selectable: !this.disabled,
         };
+
+        if (this.isFavorite(category)) {
+            this.selectedResources.push(node);
+        }
+        this.nodeList.push(node);
+
+        return node;
     }
 
     private operationToTreeNode(operation: Operation): TreeNode {
-        return {
+        const node = {
             label: operation.name.getLocalisedLabel(this.mainLanguageCode),
             icon: 'fa fa-table',
             expanded: true,
             data: operation,
             leaf: true,
+            selectable: !this.disabled,
         };
+
+        if (this.isFavorite(operation)) {
+            this.selectedResources.push(node);
+        }
+        this.nodeList.push(node);
+
+        return node;
     }
 
-    private selectResources(): void {
-        for (const fav of this.favorites) {
-            const resource = this.resources.find((r) => r.data.id === fav.getResource().id);
-            this.selectedResources.push(resource);
-        }
+    private isFavorite(resource: Category | Operation): boolean {
+        return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor === resource.constructor);
     }
 }

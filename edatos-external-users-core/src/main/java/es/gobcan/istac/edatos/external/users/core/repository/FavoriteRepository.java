@@ -19,4 +19,6 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
     List<FavoriteEntity> findAll(DetachedCriteria criteria);
 
     List<FavoriteEntity> findAllByExternalUserOrderByCreatedDate(ExternalUserEntity user);
+
+    void deleteByExternalUser(ExternalUserEntity externalUser);
 }

@@ -25,11 +25,21 @@ export class FavoriteService {
             .pipe(map((favorite) => convert(Favorite, favorite)));
     }
 
-    public save(filter: Favorite): Observable<Favorite> {
-        return this.http.post<Favorite>(this.resourceUrl, filter).pipe(map((favorite) => convert(Favorite, favorite)));
+    public findByUserId(id: number): Observable<Favorite[]> {
+        return this.http
+            .get<Favorite[]>(this.resourceUrl, { params: { query: `USER_ID EQ ${id}` } })
+            .pipe(map((favorite) => convert(Favorite, favorite)));
     }
 
-    public update(filter: Favorite): Observable<Favorite> {
-        return this.http.put<Favorite>(this.resourceUrl, filter).pipe(map((favorite) => convert(Favorite, favorite)));
+    public save(favorite: Favorite): Observable<Favorite> {
+        return this.http.post<Favorite>(this.resourceUrl, favorite).pipe(map((fav) => convert(Favorite, fav)));
+    }
+
+    public update(favorite: Favorite): Observable<Favorite> {
+        return this.http.put<Favorite>(this.resourceUrl, favorite).pipe(map((fav) => convert(Favorite, fav)));
+    }
+
+    public delete(id: number): Observable<Favorite> {
+        return this.http.delete<Favorite>(`${this.resourceUrl}/${id}`).pipe(map((fav) => convert(Favorite, fav)));
     }
 }

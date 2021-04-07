@@ -20,7 +20,17 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
         return (this.category.name || this.operation.name)?.getLocalisedLabel(languageCode);
     }
 
-    public getResource(): Category | Operation {
+    public get resource(): Category | Operation {
         return this.category ?? this.operation;
+    }
+
+    public set resource(val: Category | Operation) {
+        if (val instanceof Category) {
+            this.category = val;
+        } else if (val instanceof Operation) {
+            this.operation = val;
+        } else {
+            console.error("Favorite resource needs a Category or an Operation, but the argument isn't an instance of neither");
+        }
     }
 }
