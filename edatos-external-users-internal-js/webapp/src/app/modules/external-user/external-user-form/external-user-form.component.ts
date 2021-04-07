@@ -47,10 +47,6 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe(ExternalUserDeleteDialogComponent.EVENT_NAME, (response) => {
             this.externalUser = Object.assign(new ExternalUser(), response.content);
         });
-
-        if (this.externalUserExists()) {
-            this.updateFavorites();
-        }
     }
 
     public saveFavorite(resource: Category | Operation): void {
@@ -74,6 +70,9 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public load(id: number) {
         if (id) {
+            if (!this.isEditMode()) {
+                this.updateFavorites();
+            }
             this.externalUserService.get(id).subscribe((user) => {
                 this.externalUser = user;
             });
@@ -114,7 +113,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public externalUserExists(): boolean {
-        return !!this.externalUser.id;
+        return !!this.externalUser?.id;
     }
 
     public ngOnDestroy() {
