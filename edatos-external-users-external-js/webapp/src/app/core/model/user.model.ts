@@ -1,4 +1,4 @@
-import { BaseAuditingEntity } from 'arte-ng/src/lib/model';
+import { BaseAuditingEntity } from 'arte-ng/model';
 import { Role } from './rol.model';
 import * as jwtDecode from 'jwt-decode';
 

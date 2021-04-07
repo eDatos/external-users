@@ -4,7 +4,7 @@ import { User, Role, Treatment, Language } from '@app/core/model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountUserService } from '@app/core/service/user';
 import { Subscription } from 'rxjs';
-import { GenericModalService, ArteEventManager } from 'arte-ng/src/lib/services';
+import { GenericModalService, ArteEventManager } from 'arte-ng/services';
 
 type SignUp = Omit<User, 'id' | 'roles'>;
 

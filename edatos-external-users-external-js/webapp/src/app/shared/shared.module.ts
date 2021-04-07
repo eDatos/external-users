@@ -1,13 +1,13 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ArteNgModule } from 'arte-ng';
-import { GenericModalService } from 'arte-ng/src/lib/services';
+import { ArteAutocompleteModule, ArteEntityListEmptyModule, ArteInputModule, ArteOrderListModule, ArteSpinnerModule, ArteTableModule } from 'arte-ng';
 
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { GenericModalService } from 'arte-ng/services';
+import { FormcontrolStatusService, ArteDirectivesModule } from 'arte-ng/directives';
+
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
@@ -53,10 +53,17 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         NgArrayPipesModule,
         FormsModule,
         TooltipModule,
-        ArteNgModule,
+        ArteInputModule,
+        ArteTableModule,
+        ArteOrderListModule,
+        ArteAutocompleteModule,
+        ArteSpinnerModule,
+        ArteEntityListEmptyModule,
+        ArteDirectivesModule,
     ],
     declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective],
     providers: [
+        FormcontrolStatusService,
         DatePipe,
         {
             // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
@@ -86,9 +93,15 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         TooltipModule,
         NgArrayPipesModule,
         ReactiveFormsModule,
-        ArteNgModule,
+        ArteInputModule,
+        ArteTableModule,
+        ArteOrderListModule,
+        ArteAutocompleteModule,
+        ArteSpinnerModule,
+        ArteEntityListEmptyModule,
         PasswordMatchValidatorDirective,
         PasswordNotMatchValidatorDirective,
+        ArteDirectivesModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
