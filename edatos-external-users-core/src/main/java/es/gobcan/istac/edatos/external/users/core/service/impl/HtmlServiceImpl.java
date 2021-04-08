@@ -26,10 +26,8 @@ public class HtmlServiceImpl implements HtmlService {
     @Override
     public String getHeaderHtml() {
         Locale locale = LocaleContextHolder.getLocale();
-        String appName = messageSource.getMessage("global.title", null, locale);
-        String headerHtml = (String.format("%s?appName=%s", metadataService.retrieveAppStyleHeaderUrl(), appName));
 
-        return renderHtml(headerHtml);
+        return renderHtml(renderHtml(metadataService.retrieveAppStyleHeaderUrl()));
     }
 
     @Override
