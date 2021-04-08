@@ -459,6 +459,7 @@
         "form": {
             "cancel": "Cancel",
             "edit": "Edit Filter",
+            "delete": "Delete Filter",
             "goBack": "Back to List",
             "legend": "Filter Details",
             "new": "Create a new filter",

@@ -50,6 +50,18 @@ export class FilterFormComponent implements OnInit {
         this.toggleEditMode();
     }
 
+    public delete() {
+        this.showSpinner();
+        this.filterService
+            .delete(this.filter.id)
+            .pipe(finalize(() => this.hideSpinner()))
+            .subscribe((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                    this.router.navigate([`..`], { relativeTo: this.activatedRoute });
+                }
+            });
+    }
+
     public submit(): void {
         this.toggleIsSaving();
         if (this.filter.id == null) {

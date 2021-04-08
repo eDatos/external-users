@@ -25,6 +25,11 @@
                 <span translate="filter.form.edit"></span>
             </button>
 
+            <button *ngIf="!inEditMode" class="btn btn-danger mr-2" (click)="delete()">
+                <span class="fa fa-trash"></span>
+                <span translate="filter.form.delete"></span>
+            </button>
+
             <button
                 *ngIf="inEditMode"
                 class="btn btn-primary d-flex align-items-center"
