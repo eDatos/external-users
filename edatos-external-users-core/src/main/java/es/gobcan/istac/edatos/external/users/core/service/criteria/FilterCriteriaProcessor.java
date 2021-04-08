@@ -5,13 +5,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.reflect.FieldUtils;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
+import com.arte.libs.grammar.domain.QueryPropertyRestriction;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
-import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
+import com.arte.libs.grammar.orm.jpa.criteria.CriteriaProcessorContext;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
+import com.arte.libs.grammar.orm.jpa.criteria.converter.CriterionConverter;
 
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
+import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
+import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 
 @Component
 public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
@@ -25,10 +31,15 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
     public static final String ENTITY_FIELD_LAST_ACCESS_DATE = validateFieldExists("lastAccessDate");
     public static final String ENTITY_FIELD_NOTES = validateFieldExists("notes");
 
+    private static final String TABLE_FIELD_EMAIL = ENTITY_FIELD_USER + ".email";
+    private static final String TABLE_FIELD_NAME = ENTITY_FIELD_USER + ".name";
+    private static final String TABLE_FIELD_SURNAME1 = ENTITY_FIELD_USER + ".surname1";
+    private static final String TABLE_FIELD_SURNAME2 = ENTITY_FIELD_USER + ".surname2";
+
     public enum QueryProperty {
         ID,
         NAME,
-        EMAIL,
+        USER,
         PERMALINK,
         CREATED_DATE,
         LAST_MODIFIED_DATE,
@@ -52,23 +63,17 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
      * Marking this as a {@code @Component} will delegate this to Spring.
      *
      * @implNote Limitations: this method DOES NOT check for nested entity properties
-     * like {@code user.login}.
-     *
+     *           like {@code user.login}.
      * @param fieldName the name of the field that is going to be checked.
      * @return the same field name passed as argument, if it exists.
-     *
      * @throws IllegalArgumentException if the field doesn't exists.
      */
     private static String validateFieldExists(String fieldName) {
-        List<String> fieldNames = FieldUtils.getAllFieldsList(FilterEntity.class)
-                                            .stream()
-                                            .map(Field::getName)
-                                            .collect(Collectors.toList());
+        List<String> fieldNames = FieldUtils.getAllFieldsList(FilterEntity.class).stream().map(Field::getName).collect(Collectors.toList());
         if (fieldNames.contains(fieldName)) {
             return fieldName;
         } else {
-            throw new IllegalArgumentException(
-                "Field name '" + fieldName + "' doesn't exists in '" + FilterCriteriaProcessor.class.toString() + "'");
+            throw new IllegalArgumentException("Field name '" + fieldName + "' doesn't exists in '" + FilterCriteriaProcessor.class.toString() + "'");
         }
     }
 
@@ -85,17 +90,10 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.NAME).sortable()
                 .withEntityProperty(ENTITY_FIELD_NAME)
                 .build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder
-                .stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.EMAIL)
+        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
+                .withQueryProperty(QueryProperty.USER)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
-                .withEntityProperty(ENTITY_FIELD_USER + ".email")
-                .build());
-        registerOrderProcessor(OrderProcessorBuilder
-                .orderProcessor()
-                .withQueryProperty(QueryProperty.EMAIL)
-                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
-                .withEntityProperty(ENTITY_FIELD_USER + ".email")
+                .withCriterionConverter(new SqlCriterionBuilder())
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()
@@ -123,5 +121,33 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withEntityProperty(ENTITY_FIELD_NOTES)
                 .build());
         // @formatter:on
+    }
+
+    private static class SqlCriterionBuilder implements CriterionConverter {
+
+        @Override
+        public Criterion convertToCriterion(QueryPropertyRestriction property, CriteriaProcessorContext context) {
+            if (QueryProperty.USER.name().equalsIgnoreCase(property.getLeftExpression())) {
+                return buildCriterion(property.getRightValue());
+            }
+            throw new CustomParameterizedExceptionBuilder().message(String.format("Parámetro de búsqueda no soportado: '%s'", property))
+                    .code(ErrorConstants.QUERY_NO_SOPORTADA, property.getLeftExpression(), property.getOperationType().name()).build();
+        }
+
+        private Criterion buildCriterion(String value) {
+            // @formatter:off
+            String query = "{alias}.id IN "
+                         + "(SELECT filter.id "
+                         + "FROM tb_filters filter "
+                         + "         LEFT JOIN tb_external_users ext_user on filter.external_user_fk = ext_user.id "
+                         + "WHERE ext_user.name ILIKE '" + value + "' "
+                         + "   OR ext_user.surname1 ILIKE '" + value + "' "
+                         + "   OR ext_user.surname2 ILIKE '" + value + "' "
+                         + "   OR ext_user.email ILIKE '" + value + "')";
+            // @formatter:on
+
+            return Restrictions.sqlRestriction(query);
+        }
+
     }
 }
