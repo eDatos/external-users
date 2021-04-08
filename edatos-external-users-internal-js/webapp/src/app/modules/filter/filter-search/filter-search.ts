@@ -6,6 +6,7 @@ import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
 export class FilterFilter extends BaseEntityFilter implements EntityFilter {
     public name: string;
     public user: string;
+    public userId: number;
     public includeFromDeletedUsers = false;
     public lastAccessDate: Date;
 
@@ -20,6 +21,9 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
         }
         if (this.user) {
             criterias.push(`USER ILIKE '%${this.escapeSingleQuotes(this.user)}%'`);
+        }
+        if (this.userId) {
+            criterias.push(`USER_ID EQ ${this.userId}`);
         }
         if (this.includeFromDeletedUsers) {
             criterias.push(`USER_DELETION_DATE IS_NULL`);
@@ -40,6 +44,11 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
             paramName: 'user',
             updateFilterFromParam: (param) => (this.user = param),
             clearFilter: () => (this.user = null),
+        });
+        this.registerParam({
+            paramName: 'userId',
+            updateFilterFromParam: (param) => (this.userId = param),
+            clearFilter: () => (this.userId = null),
         });
         this.registerParam({
             paramName: 'includeFromDeletedUsers',

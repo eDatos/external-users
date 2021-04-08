@@ -154,7 +154,7 @@
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="externalUser.email"></label>
                             <div class="col-md-8">
-                                <arte-input name="email" [(ngModel)]="externalUser.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
+                                <arte-input name="email" [(ngModel)]="externalUser.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"></arte-input>
                             </div>
                         </div>
                         <div *ngIf="(editForm.controls.email?.touched || editForm.controls.email?.dirty) && editForm.controls.email?.invalid" class="entity-field-error">
@@ -192,9 +192,11 @@
                 ></app-structural-resources-tree>
             </fieldset>
         </form>
-        <!--        <div class="page-section">-->
-        <!--            <h3 translate="externalUser.home.filters"></h3>-->
-        <!--            <app-favorite-table></app-favorite-table>-->
-        <!--        </div>-->
+        <div class="page-section">
+            <h3 translate="externalUser.home.filters"></h3>
+            <div class="page-table-container-fluid">
+                <app-filter-table [userId]="userId"></app-filter-table>
+            </div>
+        </div>
     </div>
 </div>

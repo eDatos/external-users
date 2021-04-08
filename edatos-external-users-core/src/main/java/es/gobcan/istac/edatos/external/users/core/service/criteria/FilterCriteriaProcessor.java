@@ -40,6 +40,7 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
         ID,
         NAME,
         USER,
+        USER_ID,
         PERMALINK,
         CREATED_DATE,
         LAST_MODIFIED_DATE,
@@ -92,8 +93,12 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.USER)
-                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withCriterionConverter(new SqlCriterionBuilder())
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
+                .withQueryProperty(QueryProperty.USER_ID)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".id")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()
