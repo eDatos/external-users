@@ -181,7 +181,7 @@
                 </div>
             </fieldset>
             <div class="page-section">
-                <arte-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></arte-audit-info>
+                <app-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></app-audit-info>
             </div>
             <fieldset *ngIf="externalUserExists() && !isEditMode()" arteAutofocus class="page-section">
                 <h3 translate="externalUser.home.favorites"></h3>
