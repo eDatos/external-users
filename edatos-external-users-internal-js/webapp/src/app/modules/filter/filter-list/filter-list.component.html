@@ -1,5 +1,5 @@
 <div class="page">
-    <div class="page-header">
+    <div class="page-header has-filters">
         <div class="page-header-top">
             <h2 class="page-header-title">
                 <span class="page-header-title-text" translate="filter.home.title"></span>
@@ -11,7 +11,7 @@
                 </button>
             </div>
         </div>
-        <!--        <ac-filter-search [filters]="filters"></ac-filter-search>-->
+        <app-filter-search [filters]="this.filterSearch"></app-filter-search>
     </div>
     <div class="page-body">
         <arte-spinner *ngIf="!filters"></arte-spinner>
@@ -29,7 +29,7 @@
                         <ng-template pTemplate="body" let-filter>
                             <tr [routerLink]="['../filter', filter.id]">
                                 <td>{{filter.name}}</td>
-                                <td>{{filter.email}}</td>
+                                <td>{{filter.externalUser.email}}</td>
                                 <td>{{filter.lastAccessDate}}</td>
                             </tr>
                         </ng-template>

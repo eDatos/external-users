@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { PageTitleService } from '@app/core/service';
 import { filter, map } from 'rxjs/operators';
 import { ERROR_ALERT_KEY } from './app.constants';
+import 'reflect-metadata';
 
 @Component({
     selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent implements OnInit {
 
     constructor(private pageTitleService: PageTitleService, private router: Router) {}
 
-    ngOnInit() {
+    public ngOnInit() {
         this.router.events
             .pipe(
                 filter((event) => event instanceof NavigationEnd),

@@ -154,7 +154,7 @@
                         <div class="form-row">
                             <label class="col-form-label col-md-4" translate="externalUser.email"></label>
                             <div class="col-md-8">
-                                <arte-input name="email" [(ngModel)]="externalUser.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
+                                <arte-input name="email" [(ngModel)]="externalUser.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"></arte-input>
                             </div>
                         </div>
                         <div *ngIf="(editForm.controls.email?.touched || editForm.controls.email?.dirty) && editForm.controls.email?.invalid" class="entity-field-error">
@@ -181,10 +181,10 @@
                 </div>
             </fieldset>
             <div class="page-section">
-                <arte-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></arte-audit-info>
+                <app-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></app-audit-info>
             </div>
             <fieldset *ngIf="externalUserExists() && !isEditMode()" arteAutofocus class="page-section">
-                <h3 translate="externalUser.favorites.title"></h3>
+                <h3 translate="externalUser.home.favorites"></h3>
                 <app-structural-resources-tree
                     (onResourceSelect)="saveFavorite($event)"
                     (onResourceUnselect)="deleteFavorite($event)"
@@ -192,5 +192,11 @@
                 ></app-structural-resources-tree>
             </fieldset>
         </form>
+        <div class="page-section">
+            <h3 translate="externalUser.home.filters"></h3>
+            <div class="page-table-container-fluid">
+                <app-filter-table [userId]="userId"></app-filter-table>
+            </div>
+        </div>
     </div>
 </div>

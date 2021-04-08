@@ -349,9 +349,11 @@
             }
         },
         "home": {
-            "createLabel": "Add new user",
             "createDeactivatedTooltip": "User creation is deactivated",
+            "createLabel": "Add new user",
             "createOrEditLabel": "Create or edit a user",
+            "favorites": "Favorites",
+            "filters": "Filters",
             "includeDeleted": "Include Deleted",
             "title": "Users"
         },
@@ -457,6 +459,7 @@
         "form": {
             "cancel": "Cancel",
             "edit": "Edit Filter",
+            "delete": "Delete Filter",
             "goBack": "Back to List",
             "legend": "Filter Details",
             "new": "Create a new filter",
@@ -466,7 +469,14 @@
             "createLabel": "Create Filter",
             "title": "Filters"
         },
-        "name": "Filter"
+        "name": "Filter",
+        "search": {
+            "includeFromDeactivatedUsers": "Include disabled user filters",
+            "name": "Search filters",
+            "placeholder": "Enter user name or email",
+            "placeholderForFilterNameSearch": "",
+            "placeholderForUserSearch": ""
+        }
     },
     "global": {
         "alerts": {

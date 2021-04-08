@@ -5,11 +5,33 @@ import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
 @Injectable()
 export class FilterFilter extends BaseEntityFilter implements EntityFilter {
     public name: string;
-    public login: string;
+    public user: string;
+    public userId: number;
+    public includeFromDeletedUsers = false;
     public lastAccessDate: Date;
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
+    }
+
+    public getCriterias() {
+        const criterias = [];
+        if (this.name) {
+            criterias.push(`NAME ILIKE '%${this.escapeSingleQuotes(this.name)}%'`);
+        }
+        if (this.user) {
+            criterias.push(`USER ILIKE '%${this.escapeSingleQuotes(this.user)}%'`);
+        }
+        if (this.userId) {
+            criterias.push(`USER_ID EQ ${this.userId}`);
+        }
+        if (this.includeFromDeletedUsers) {
+            criterias.push(`USER_DELETION_DATE IS_NULL`);
+        }
+        if (this.lastAccessDate) {
+            criterias.push(`LAST_ACCESS_DATE EQ '%${this.escapeSingleQuotes(this.lastAccessDate.toString())}%'`);
+        }
+        return criterias;
     }
 
     protected registerParameters() {
@@ -19,9 +41,21 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
             clearFilter: () => (this.name = null),
         });
         this.registerParam({
-            paramName: 'login',
-            updateFilterFromParam: (param) => (this.login = param),
-            clearFilter: () => (this.login = null),
+            paramName: 'user',
+            updateFilterFromParam: (param) => (this.user = param),
+            clearFilter: () => (this.user = null),
+        });
+        this.registerParam({
+            paramName: 'userId',
+            updateFilterFromParam: (param) => (this.userId = param),
+            clearFilter: () => (this.userId = null),
+        });
+        this.registerParam({
+            paramName: 'includeFromDeletedUsers',
+            updateFilterFromParam: (param) => {
+                this.includeFromDeletedUsers = param === 'true';
+            },
+            clearFilter: () => (this.includeFromDeletedUsers = false),
         });
         this.registerParam({
             paramName: 'lastAccessDate',
@@ -30,21 +64,7 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
         });
     }
 
-    getCriterias() {
-        const criterias = [];
-        if (this.name) {
-            criterias.push(`NAME ILIKE '%${this.escapeSingleQuotes(this.name)}%'`);
-        }
-        if (this.login) {
-            criterias.push(`LOGIN ILIKE '%${this.escapeSingleQuotes(this.login)}%'`);
-        }
-        if (this.lastAccessDate) {
-            criterias.push(`LAST_ACCESS_DATE = '%${this.escapeSingleQuotes(this.lastAccessDate.toString())}%'`);
-        }
-        return criterias;
-    }
-
-    fromCamelCaseToSnakeCase(param: string): string {
+    public fromCamelCaseToSnakeCase(param: string): string {
         return param.replace(/([A-Z])/g, '_$1').toLowerCase();
     }
 }

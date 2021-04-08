@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { convert, ResponseWrapper } from '@app/core/utils/response-utils';
 import { Filter } from '@app/shared/model/filter.model';
-import { ResponseWrapper } from 'arte-ng/model';
-import { createRequestOption, ResponseUtils } from 'arte-ng/utils';
+import { createRequestOption } from 'arte-ng/utils';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -15,19 +15,27 @@ export class FilterService {
     constructor(private http: HttpClient) {}
 
     public get(id: number): Observable<Filter> {
-        return this.http.get<Filter>(`${this.resourceUrl}/${id}`);
+        return this.http.get<Filter>(`${this.resourceUrl}/${id}`).pipe(map((res) => convert(Filter, res)));
     }
 
-    public find(req?: any): Observable<ResponseWrapper> {
+    public find(req?: any): Observable<ResponseWrapper<Filter[]>> {
         const options = createRequestOption(req);
-        return this.http.get(this.resourceUrl, { ...options, observe: 'response' }).pipe(map((res) => ResponseUtils.convertToResponseWrapper(res, Filter)));
+        return this.http
+            .get<Filter[]>(this.resourceUrl, { ...options, observe: 'response' })
+            .pipe(map((res) => convert(Filter, res)));
     }
 
     public save(filter: Filter): Observable<Filter> {
-        return this.http.post<Filter>(this.resourceUrl, filter);
+        return this.http.post<Filter>(this.resourceUrl, filter).pipe(map((res) => convert(Filter, res)));
     }
 
     public update(filter: Filter): Observable<Filter> {
-        return this.http.put<Filter>(this.resourceUrl, filter);
+        return this.http.put<Filter>(this.resourceUrl, filter).pipe(map((res) => convert(Filter, res)));
+    }
+
+    public delete(id: number): Observable<ResponseWrapper<Filter>> {
+        return this.http
+            .delete<Filter>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .pipe(map((res) => convert(Filter, res)));
     }
 }

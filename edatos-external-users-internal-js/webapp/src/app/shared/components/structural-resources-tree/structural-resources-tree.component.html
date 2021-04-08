@@ -1,6 +1,6 @@
 <p-tree
-    (onNodeSelect)="onResourceSelect.emit($event.node.data)"
-    (onNodeUnselect)="onResourceUnselect.emit($event.node.data)"
+    (onNodeSelect)="onSelect($event.node)"
+    (onNodeUnselect)="onUnselect($event.node)"
     [(selection)]="selectedResources"
     [propagateSelectionDown]="false"
     [propagateSelectionUp]="false"

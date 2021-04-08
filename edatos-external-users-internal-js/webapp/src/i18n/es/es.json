@@ -348,13 +348,12 @@
                 "placeholder": "Introduzca rol (ac-autocomplete-short-list)"
             }
         },
-        "favorites": {
-            "title": "Favoritos"
-        },
         "home": {
-            "createLabel": "Añadir nuevo usuario",
             "createDeactivatedTooltip": "La creación de usuarios está desactivada",
+            "createLabel": "Añadir nuevo usuario",
             "createOrEditLabel": "Crear o editar un usuario",
+            "favorites": "Favoritos",
+            "filters": "Filtros",
             "includeDeleted": "Incluir eliminados",
             "title": "Usuarios"
         },
@@ -460,6 +459,7 @@
         "form": {
             "cancel": "Cancelar",
             "edit": "Editar filtro",
+            "delete": "Eliminar filtro",
             "goBack": "Volver al listado",
             "legend": "Detalles del filtro",
             "new": "Crear un nuevo filtro",
@@ -469,7 +469,14 @@
             "createLabel": "Crear filtro",
             "title": "Filtros"
         },
-        "name": "Filtro"
+        "name": "Filtro",
+        "search": {
+            "includeFromDeactivatedUsers": "Incluir filtros de usuarios desactivados",
+            "name": "Buscar filtros",
+            "placeholder": "",
+            "placeholderForFilterNameSearch": "Buscar filtros por nombre",
+            "placeholderForUserSearch": "Buscar filtros por datos del usuario (nombre, apellidos, email)"
+        }
     },
     "global": {
         "alerts": {

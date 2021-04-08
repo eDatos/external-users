@@ -83,6 +83,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public updateSelection() {
         this.selectedResources = [];
         for (const node of this.nodeList) {
+            this.unsetLoadingNode(node);
             if (this.isFavorite(node.data)) {
                 this.selectedResources.push(node);
             }
@@ -118,6 +119,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             children,
             data: category,
             selectable: !this.disabled,
+            makingRequest: false,
         };
 
         if (this.isFavorite(category)) {
@@ -131,7 +133,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     private operationToTreeNode(operation: Operation): TreeNode {
         const node = {
             label: operation.name.getLocalisedLabel(this.mainLanguageCode),
-            icon: 'fa fa-table',
+            collapsedIcon: 'fa fa-table',
+            expandedIcon: 'fa fa-table',
             expanded: true,
             data: operation,
             leaf: true,
@@ -148,5 +151,25 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     private isFavorite(resource: Category | Operation): boolean {
         return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor === resource.constructor);
+    }
+
+    public onSelect(treeNode: TreeNode) {
+        this.setLoadingNode(treeNode);
+        this.onResourceSelect.emit(treeNode.data);
+    }
+
+    public onUnselect(treeNode: TreeNode) {
+        this.setLoadingNode(treeNode);
+        this.onResourceUnselect.emit(treeNode.data);
+    }
+
+    private setLoadingNode(treeNode: TreeNode) {
+        treeNode.selectable = false;
+        treeNode.icon = 'fa fa-spinner fa-spin';
+    }
+
+    private unsetLoadingNode(node: TreeNode) {
+        node.icon = null;
+        node.selectable = !this.disabled;
     }
 }

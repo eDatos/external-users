@@ -24,6 +24,7 @@ import { OrderListModule } from 'primeng/orderlist';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { AppAuditInfoComponent } from './components/audit-info/audit-info.component';
 
 @NgModule({
     imports: [
@@ -89,7 +90,9 @@ import { TooltipModule } from 'primeng/tooltip';
         ArteOrderListModule,
         ArteEntityListEmptyModule,
         StructuralResourcesTreeModule,
+        AppAuditInfoComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [AppAuditInfoComponent],
 })
 export class SharedModule {}
