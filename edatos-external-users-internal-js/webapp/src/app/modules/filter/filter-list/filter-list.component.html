@@ -11,7 +11,7 @@
                 </button>
             </div>
         </div>
-        <app-filter-search (onFilterUpdate)="filterUpdate($event)"></app-filter-search>
+        <app-filter-search [filters]="this.filterSearch"></app-filter-search>
     </div>
     <div class="page-body">
         <arte-spinner *ngIf="!filters"></arte-spinner>

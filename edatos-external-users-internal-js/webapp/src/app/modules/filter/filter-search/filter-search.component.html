@@ -3,7 +3,7 @@
         <div class="form-group col-md-5">
             <label translate="filter.search.name"></label>
             <arte-input
-                (keyup)="emit()"
+                (keyup)="filter()"
                 [(ngModel)]="filters.user"
                 [attr.aria-label]="'filter.search.name' | translate"
                 [name]="'filter'"
@@ -13,7 +13,7 @@
         <div class="form-group col-md-3 ac-ui-unfluid">
             <label translate="filter.search.includeFromDeactivatedUsers"></label>
             <div>
-                <arte-tri-input-switch (onChange)="emit()" [(ngModel)]="filters.includeFromDeletedUsers" [required]="true"></arte-tri-input-switch>
+                <arte-tri-input-switch (onChange)="filter()" [(ngModel)]="filters.includeFromDeletedUsers" [required]="true"></arte-tri-input-switch>
             </div>
         </div>
     </div>
