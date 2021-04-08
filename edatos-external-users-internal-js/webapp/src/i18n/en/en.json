@@ -349,13 +349,13 @@
             }
         },
         "home": {
-            "createLabel": "Add new user",
             "createDeactivatedTooltip": "User creation is deactivated",
+            "createLabel": "Add new user",
             "createOrEditLabel": "Create or edit a user",
-            "includeDeleted": "Include Deleted",
-            "title": "Users",
             "favorites": "Favorites",
-            "filters": "Filters"
+            "filters": "Filters",
+            "includeDeleted": "Include Deleted",
+            "title": "Users"
         },
         "language": "Language",
         "languageEnum": {
@@ -468,12 +468,14 @@
             "createLabel": "Create Filter",
             "title": "Filters"
         },
+        "name": "Filter",
         "search": {
+            "includeFromDeactivatedUsers": "Include disabled user filters",
             "name": "Search filters",
             "placeholder": "Enter user name or email",
-            "includeFromDeactivatedUsers": "Include disabled user filters"
-        },
-        "name": "Filter"
+            "placeholderForFilterNameSearch": "",
+            "placeholderForUserSearch": ""
+        }
     },
     "global": {
         "alerts": {

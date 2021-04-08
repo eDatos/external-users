@@ -6,8 +6,8 @@
                 (keyup)="filter()"
                 [(ngModel)]="filters.user"
                 [attr.aria-label]="'filter.search.name' | translate"
-                [name]="'filter'"
-                [placeholder]="'filter.search.placeholder'"
+                name="filterUserSearch"
+                [placeholder]="'filter.search.placeholderForUserSearch'"
             ></arte-input>
         </div>
         <div class="form-group col-md-3 ac-ui-unfluid">
@@ -15,6 +15,17 @@
             <div>
                 <arte-tri-input-switch (onChange)="filter()" [(ngModel)]="filters.includeFromDeletedUsers" [required]="true"></arte-tri-input-switch>
             </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-5">
+            <arte-input
+                (keyup)="filter()"
+                [(ngModel)]="filters.name"
+                [attr.aria-label]="'filter.search.name' | translate"
+                name="filterNameSearch"
+                [placeholder]="'filter.search.placeholderForFilterNameSearch'"
+            ></arte-input>
         </div>
     </div>
     <div class="page-filters-btns">

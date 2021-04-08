@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ResponseWrapper } from '@app/core/utils/response-utils';
-import { FilterFilter } from '@app/modules/filter';
+import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { Filter } from '@app/shared/model';
 import { FilterService } from '@app/shared/service';
 import { LazyLoadEvent } from 'primeng/api';
