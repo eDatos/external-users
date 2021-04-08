@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ERROR_ALERT_KEY } from './app.constants';
+import 'reflect-metadata';
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
