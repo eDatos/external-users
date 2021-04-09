@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { USER, ALL_ALLOWED, FILTER_ROLES } from './core/service';
 import { UserRouteAccessGuard } from './core/guard';
 import { DEFAULT_PATH } from './app.constants';
+import { NotLoggedUserCanAccessGuard } from './core/guard/not-logged-user-can-access.guard';
 
 const APP_ROUTES: Routes = [
     {

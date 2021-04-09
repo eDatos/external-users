@@ -45,7 +45,6 @@ export class NavbarComponent implements OnInit {
     logout() {
         this.collapseNavbar();
         this.loginService.logout();
-        const config = this.configService.getConfig();
     }
 
     toggleNavbar() {
