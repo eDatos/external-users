@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.arte.libs.grammar.domain.QueryPropertyRestriction;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 import com.arte.libs.grammar.orm.jpa.criteria.CriteriaProcessorContext;
+import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.converter.CriterionConverter;
 
@@ -41,6 +42,7 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
         NAME,
         USER,
         USER_ID,
+        EMAIL,
         PERMALINK,
         CREATED_DATE,
         LAST_MODIFIED_DATE,
@@ -99,6 +101,18 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.USER_ID)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".id")
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .stringRestrictionProcessor()
+                .withQueryProperty(QueryProperty.EMAIL)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".email")
+                .build());
+        registerOrderProcessor(OrderProcessorBuilder
+                .orderProcessor()
+                .withQueryProperty(QueryProperty.EMAIL)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".email")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()
