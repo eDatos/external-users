@@ -20,6 +20,7 @@ import { UserRouteAccessGuard } from './guard';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotLoggedUserCanAccessGuard } from './guard/not-logged-user-can-access.guard';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -33,6 +34,7 @@ registerLocaleData(localeEs, 'es');
         StateStorageService,
         AccountUserService,
         UserRouteAccessGuard,
+        NotLoggedUserCanAccessGuard,
         PageTitleService,
         Title,
         {
