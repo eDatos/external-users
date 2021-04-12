@@ -4,7 +4,7 @@ import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { Filter } from '@app/core/model';
 import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { FilterService } from '@app/shared/service/filter/filter.service';
-import { ResponseWrapper } from 'arte-ng/model';
+import { ResponseWrapper } from '@app/core/utils/response-utils';
 import { LazyLoadEvent } from 'primeng/api';
 
 @Component({
@@ -25,11 +25,11 @@ export class FilterListComponent implements OnInit {
             },
         },
         {
-            fieldName: 'email',
+            fieldName: 'createdDate',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.entity.email',
+                translatePath: 'filter.entity.createdDate',
             },
         },
         {
@@ -111,8 +111,8 @@ export class FilterListComponent implements OnInit {
         ]);
     }
 
-    public onSuccess(rw: ResponseWrapper) {
-        this.totalItems = parseInt(rw.headers.get('X-Total-Count'), 10);
-        this.filters = rw.json;
+    public onSuccess(response: ResponseWrapper<Filter[]>) {
+        this.totalItems = response.totalCount();
+        this.filters = response.body;
     }
 }

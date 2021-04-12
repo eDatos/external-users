@@ -27,7 +27,7 @@ public class HtmlServiceImpl implements HtmlService {
     public String getHeaderHtml() {
         Locale locale = LocaleContextHolder.getLocale();
 
-        return renderHtml(renderHtml(metadataService.retrieveApiStyleHeaderUrl()));
+        return renderHtml(renderHtml(metadataService.retrieveAppStyleHeaderUrl()));
     }
 
     @Override
