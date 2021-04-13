@@ -1,11 +1,12 @@
 package es.gobcan.istac.edatos.external.users.core.service.validator;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class LoginValidator extends AbstractValidator<String> {
