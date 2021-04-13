@@ -2,6 +2,9 @@ package es.gobcan.istac.edatos.external.users.core.domain.vo;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class LocalisedStringVO implements Serializable {
 
     String label;
@@ -29,6 +32,26 @@ public class LocalisedStringVO implements Serializable {
 
     public void setLocale(String locale) {
         this.locale = locale;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (!(o instanceof LocalisedStringVO)) {
+            return false;
+        }
+
+        LocalisedStringVO that = (LocalisedStringVO) o;
+
+        return new EqualsBuilder().append(label, that.label).append(locale, that.locale).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(label).append(locale).toHashCode();
     }
 
     @Override
