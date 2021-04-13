@@ -20,9 +20,9 @@
             <column name="code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="comment" type="JSON"/>
-            <column name="description" type="JSON"/>
-            <column name="name" type="JSON">
+            <column name="comment" type="JSONB"/>
+            <column name="description" type="JSONB"/>
+            <column name="name" type="JSONB">
                 <constraints nullable="false"/>
             </column>
             <column name="nested_code" type="VARCHAR(255)"/>
