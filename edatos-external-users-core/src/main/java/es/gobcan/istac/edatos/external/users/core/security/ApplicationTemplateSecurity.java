@@ -109,6 +109,10 @@ public class ApplicationTemplateSecurity {
     public boolean canAccessConfig(Authentication authentication) {
         return this.isAdmin(authentication);
     }
+    
+    public boolean canUpdateDataProtectionPolicy(Authentication authentication) {
+        return this.isAdmin(authentication);
+    }
 
     private boolean isAdmin(Authentication authentication) {
         return this.hasRole(authentication, Role.ADMINISTRADOR);
