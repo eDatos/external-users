@@ -36,13 +36,13 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  * {@code metamac-srm-core:org.siemac.metamac.srm.core.category.domain.CategoryMetamac}.
  */
 @Entity
-@Table(name = "tb_category")
+@Table(name = "tb_categories")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_category")
-    @SequenceGenerator(name = "seq_tb_category", sequenceName = "seq_tb_category", allocationSize = 50, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_categories")
+    @SequenceGenerator(name = "seq_tb_categories", sequenceName = "seq_tb_categories", allocationSize = 50, initialValue = 1)
     private Long id;
 
     /**

@@ -1,12 +1,12 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet author="arte" id="1615884741322-0">
-        <createSequence incrementBy="50" sequenceName="seq_tb_category" startValue="1"/>
+        <createSequence incrementBy="50" sequenceName="seq_tb_categories" startValue="1"/>
     </changeSet>
     <changeSet author="arte" id="1615884741322-1">
-        <createTable tableName="tb_category">
+        <createTable tableName="tb_categories">
             <column name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_categoryPK"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_categoriesPK"/>
             </column>
             <column name="created_by" type="VARCHAR(50)">
                 <constraints nullable="false"/>
@@ -37,9 +37,9 @@
         </createTable>
     </changeSet>
     <changeSet author="arte" id="1615884741322-2">
-        <addForeignKeyConstraint baseColumnNames="parent_fk" baseTableName="tb_category" constraintName="FKfpgkmf0r6rai1rfc3ivqboc91" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="parent_fk" baseTableName="tb_categories" constraintName="FKfpgkmf0r6rai1rfc3ivqboc91" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
     </changeSet>
     <changeSet author="arte" id="1615884741322-3">
-        <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_operations" constraintName="FKtp169e04q7ytpf5sx3iwevc4g" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_category" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_operations" constraintName="FKtp169e04q7ytpf5sx3iwevc4g" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
     </changeSet>
 </databaseChangeLog>
