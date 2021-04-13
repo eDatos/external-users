@@ -69,7 +69,10 @@
                 "number": "Este campo debe ser un número.",
                 "datetimelocal": "Este campo debe ser una fecha y hora.",
                 "ZonedDateTimelocal": "Este campo debe ser una fecha y hora.",
-                "not-valid": "El valor de este campo no es válido"
+                "not-valid": "El valor de este campo no es válido",
+                "passwordMatch": "Asegúrese de que sus contraseñas coninciden",
+                "email": "Su correo electrónico no es válido.",
+                "passwordNotMatch": "La contraseña actual y la nueva NO pueden ser la misma."
             }
         },
         "alert-service": {
