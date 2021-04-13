@@ -177,11 +177,13 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         return parent;
     }
 
-    public void setParent(CategoryEntity parent) {
-        if (parent != null) {
-            parent.removeChild(this);
+    public void setParent(CategoryEntity newParent) {
+        if (newParent != null && !newParent.children.contains(this)) {
+            newParent.children.add(this);
+        } else if (this.parent != null) {
+            this.parent.children.remove(this);
         }
-        this.parent = parent;
+        this.parent = newParent;
     }
 
     public Set<CategoryEntity> getChildren() {
