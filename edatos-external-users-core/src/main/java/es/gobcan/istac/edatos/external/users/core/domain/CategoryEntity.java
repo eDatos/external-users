@@ -21,7 +21,10 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.hibernate.validator.constraints.Length;
+
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
@@ -38,6 +41,11 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
 @Entity
 @Table(name = "tb_categories")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
+// jsonb is already defined on a package-level, but for some reason liquibase:diff doesn't detect it, so
+// it needs to be declared on at least one entity for it to work. Refer to
+// https://stackoverflow.com/a/52117748/7611990
+// https://stackoverflow.com/a/56030790/7611990
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
