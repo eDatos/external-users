@@ -275,6 +275,10 @@
             "EXTERNALLY_PUBLISHED": "Publicado externamente",
             "INTERNALLY_PUBLISHED": "Publicado internamente",
             "label": "Estado del ciclo de vida"
+        },
+        "localeToLanguage": {
+            "ES": "Español",
+            "EN": "Inglés"
         }
     },
     "error": {
@@ -508,7 +512,8 @@
                 "logs": "Logs",
                 "main": "Administración",
                 "metrics": "Métricas",
-                "userManagement": "Gestión de usuarios"
+                "userManagement": "Gestión de usuarios",
+                "dataProtectionPolicy": "Política de protección de datos"
             },
             "administracion": {
                 "main": "Administración"
@@ -676,6 +681,11 @@
     },
     "operation": {
         "name": "Operación estadística"
+    },
+    "dataProtectionPolicy": {
+        "home": {
+            "title": "Política de protección de datos"
+        }
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"
