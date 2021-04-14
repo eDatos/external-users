@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.errors;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -67,14 +68,8 @@ public class ExceptionTranslator {
     @ResponseBody
     public ParameterizedErrorVM processParameterizedValidationError(ConstraintViolationException ex) {
         return new CustomParameterizedExceptionBuilder().message("La entidad no se ha podido almancenar")
-                                                        .errorItems(ex.getConstraintViolations()
-                                                                      .stream()
-                                                                      .map(this::getParameterizedItemFromViolation)
-                                                                      .collect(Collectors.toList()))
-                                                        .cause(ex)
-                                                        .code(ErrorConstants.ERR_DATA_CONSTRAINT)
-                                                        .build()
-                                                        .getParameterizedErrorVM();
+                .errorItems(ex.getConstraintViolations().stream().map(this::getParameterizedItemFromViolation).collect(Collectors.toList())).cause(ex).code(ErrorConstants.ERR_DATA_CONSTRAINT).build()
+                .getParameterizedErrorVM();
     }
 
     private ParameterizedErrorItem getParameterizedItemFromViolation(ConstraintViolation<?> violation) {
@@ -140,7 +135,10 @@ public class ExceptionTranslator {
         }
         EDatosExceptionItem principalException = eDatosException.getPrincipalException();
         if (principalException != null) {
-            List<String> params = Stream.of(principalException.getMessageParameters()).map(Object::toString).collect(Collectors.toList());
+            List<String> params = principalException.getMessageParameters() != null
+                    ? Stream.of(principalException.getMessageParameters()).map(Object::toString).collect(Collectors.toList())
+                    : new ArrayList<>();
+
             return new ParameterizedErrorVM(principalException.getMessage(), principalException.getCode(), params, items);
         } else {
             return new ParameterizedErrorVM(items);
@@ -148,8 +146,13 @@ public class ExceptionTranslator {
     }
 
     private static ParameterizedErrorItem toParameterizedErrorItem(EDatosExceptionItem exceptionItem) {
-        ParameterizedErrorItem parameterizedErrorItem = new ParameterizedErrorItem(exceptionItem.getMessage(), exceptionItem.getCode(),
-                Stream.of(exceptionItem.getMessageParameters()).map(Object::toString).toArray(String[]::new));
+        List<String> messageParameters = exceptionItem.getMessageParameters() != null
+                ? Stream.of(exceptionItem.getMessageParameters()).map(Object::toString).collect(Collectors.toList())
+                : new ArrayList<>();
+        String[] params = messageParameters.toArray(new String[messageParameters.size()]);
+
+        ParameterizedErrorItem parameterizedErrorItem = new ParameterizedErrorItem(exceptionItem.getMessage(), exceptionItem.getCode(), params);
+
         for (EDatosExceptionItem item : exceptionItem.getExceptionItems()) {
             parameterizedErrorItem.addErrorItem(toParameterizedErrorItem(item));
         }

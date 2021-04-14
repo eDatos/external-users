@@ -1,12 +1,13 @@
 package es.gobcan.istac.edatos.external.users.core.service.validator;
 
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import org.apache.commons.lang3.StringUtils;
+import org.siemac.edatos.core.common.exception.EDatosException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Component
 public class LoginValidator extends AbstractValidator<String> {
@@ -19,19 +20,19 @@ public class LoginValidator extends AbstractValidator<String> {
             checkExistsUsuarioWithLogin(login);
             checkUsuarioIsActivated(login);
         } else {
-            throw new CustomParameterizedExceptionBuilder().message("El campo login no puede estar vacío").code(ErrorConstants.LOGIN_VACIO).build();
+            throw new EDatosException(ServiceExceptionType.LOGIN_VOID);
         }
     }
 
     private void checkExistsUsuarioWithLogin(String login) {
         if (!externalUserRepository.existsByEmailIgnoreCase(login)) {
-            throw new CustomParameterizedExceptionBuilder().message(String.format("El usuario con el login %s no existe", login)).code(ErrorConstants.LOGIN_USUARIO_NO_EXISTE).build();
+            throw new EDatosException(ServiceExceptionType.LOGIN_FAILED);
         }
     }
 
     private void checkUsuarioIsActivated(String login) {
         if (!externalUserRepository.existsByEmailIgnoreCaseAndDeletionDateIsNull(login)) {
-            throw new CustomParameterizedExceptionBuilder().message(String.format("El usuario con el login %s se encuentra desactivado", login)).code(ErrorConstants.LOGIN_USUARIO_DESACTIVADO).build();
+            throw new EDatosException(ServiceExceptionType.LOGIN_USER_DISABLED);
         }
     }
 

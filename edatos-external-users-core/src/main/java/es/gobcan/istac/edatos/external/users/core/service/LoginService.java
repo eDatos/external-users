@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface LoginService {
 
-    public Optional<ExternalUserEntity> authenticate(String login, String password);
+    public ExternalUserEntity authenticate(String login, String password);
 }

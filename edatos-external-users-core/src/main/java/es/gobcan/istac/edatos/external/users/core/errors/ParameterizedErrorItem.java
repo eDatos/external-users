@@ -45,4 +45,5 @@ public class ParameterizedErrorItem implements Serializable {
     public void addErrorItem(ParameterizedErrorItem errorItem) {
         errorItems.add(errorItem);
     }
+
 }

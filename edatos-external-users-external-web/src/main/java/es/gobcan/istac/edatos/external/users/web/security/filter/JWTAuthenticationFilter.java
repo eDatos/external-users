@@ -1,8 +1,10 @@
 package es.gobcan.istac.edatos.external.users.web.security.filter;
 
 import es.gobcan.istac.edatos.external.users.core.config.Constants;
+import es.gobcan.istac.edatos.external.users.core.errors.ParameterizedErrorVM;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.LoginDto;
 import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
+import es.gobcan.istac.edatos.external.users.web.security.provider.LoginAuthenticationException;
 import es.gobcan.istac.edatos.external.users.web.security.provider.TokenProvider;
 import io.github.jhipster.config.JHipsterProperties;
 import org.apache.commons.lang3.StringUtils;
@@ -12,11 +14,13 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,6 +87,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         mapper.writeValue(res.getWriter(), tokenResponse);
         res.getWriter().flush();
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        LoginAuthenticationException loginException = (LoginAuthenticationException) failed;
+
+        ParameterizedErrorVM errorResponse = loginException.getParameterizedErrorVM();
+
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(loginException.getStatus().value());
+        mapper.writeValue(response.getWriter(), errorResponse);
+        response.getWriter().flush();
     }
 
     private String getCookiePath() {

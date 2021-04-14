@@ -4,9 +4,12 @@ import java.time.Instant;
 import java.util.HashSet;
 
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
+import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -106,11 +109,10 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     @Override
     public void updateExternalUserAccountPassword(ExternalUserEntity user, String currentPassword, String newPassword) {
         if (!SecurityUtils.passwordEncoderMatches(currentPassword, user.getPassword())) {
-            throw new CustomParameterizedExceptionBuilder().code(ErrorConstants.PASSWORD_NOT_MATCH).message(ErrorMessagesConstants.PASSWORD_NOT_MATCH).build();
+            throw new EDatosException(ServiceExceptionType.PASSWORD_NOT_MATCH);
         }
         String passwordEncoder = SecurityUtils.passwordEncoder(newPassword);
         user.setPassword(passwordEncoder);
         externalUserRepository.saveAndFlush(user);
     }
-
 }
