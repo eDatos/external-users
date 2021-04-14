@@ -28,7 +28,6 @@ import { AppAuditInfoComponent } from './components/audit-info/audit-info.compon
 import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
-import { EditorComponent } from './components/editor/editor.component';
 
 
 @NgModule({
@@ -101,6 +100,6 @@ import { EditorComponent } from './components/editor/editor.component';
         MultiLanguageEditorComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    declarations: [AppAuditInfoComponent, MultiLanguageEditorComponent, EditorComponent],
+    declarations: [AppAuditInfoComponent, MultiLanguageEditorComponent],
 })
 export class SharedModule {}

@@ -1,7 +1,7 @@
-
-import { Component, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, Input, QueryList, ViewChildren } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InternationalString, LocalisedString } from '@app/shared/model';
+import { Editor } from 'primeng/editor';
 
 @Component({
   selector: 'app-multi-language-editor',
@@ -15,7 +15,13 @@ import { InternationalString, LocalisedString } from '@app/shared/model';
     }
   ]
 })
-export class MultiLanguageEditorComponent implements ControlValueAccessor, OnChanges {
+export class MultiLanguageEditorComponent implements ControlValueAccessor {
+
+  onTouched: any;
+  onChange: any;
+  isDisabled: boolean = false;
+  editors: any = {};
+  value: InternationalString = new InternationalString();
 
   @Input()
   locales: String[] = [];
@@ -23,127 +29,54 @@ export class MultiLanguageEditorComponent implements ControlValueAccessor, OnCha
   @Input()
   isEditMode: boolean = true;
 
-  value: InternationalString = new InternationalString();
-  form: FormGroup;
-
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({});
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.locales.isFirstChange() && changes.locales?.currentValue && changes.locales.currentValue != changes.locales.previousValue) {
-      this.form = this.fb.group(changes.locales.currentValue.reduce((acc, locale) => { acc[locale] = [this.value.getLocalisedLabel(locale || '') || '']; return acc; }, {}));
-    }
-  }
-
-  writeValue(values: LocalisedString[]): void {
-    values.forEach(value => this.form.get(value.locale).setValue(value.label));
-    this.value.texts = values;
-  }
-
-  registerOnChange(fn: any): void {
-    this.form.valueChanges.subscribe(value => {
-      this.value.texts = this.locales.map(locale => ({ locale: locale, label: value[locale.toString()] } as LocalisedString));
-      fn(this.value);
-    });
-  }
-
-
-  registerOnTouched(fn: any): void {
-    this.form.valueChanges.subscribe(value => {
-      fn();
-    });
-  }
-
-  setDisabledState?(isDisabled: boolean): void {
-    isDisabled ? this.form.disable() : this.form.enable();
-  }
-}
-/* TODO: eliminar el comentario si procede
-
-import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InternationalString, LocalisedString } from '@app/shared/model';
-import { TranslateService } from '@ngx-translate/core';
-import { SelectItem } from 'primeng/api';
-
-@Component({
-  selector: 'app-multi-language-editor',
-  templateUrl: './multi-language-editor.component.html',
-  styleUrls: ['./multi-language-editor.component.css'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      multi: true,
-      useExisting: forwardRef(() => MultiLanguageEditorComponent),
-    }
-  ]
-})
-export class MultiLanguageEditorComponent implements ControlValueAccessor, OnChanges {
-
-  @Input()
-  locales: String[] = null;
-
-  @Input()
-  isEditMode: boolean = true;
-
-  currentLocale: string;
-  quillEditors: any[] = [];
-  value: InternationalString = new InternationalString();
-  onTouched: any;
-  onChange: any;
-  isDisabled: boolean = false;
-  languages: SelectItem[] = [];
-
-  constructor(private translateService: TranslateService) {
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.locales && changes.locales.isFirstChange() && changes.locales.currentValue && changes.locales.currentValue != changes.locales.previousValue) {
-      this.translateService.get("enum.localeToLanguage").subscribe(values => {
-        changes.locales.currentValue?.forEach(locale => {
-          this.languages.push({ label: values[locale.toUpperCase()], value: locale } as SelectItem);
-        });
+  @ViewChildren(Editor) set setEditors(editors: QueryList<Editor>) {
+    if(editors) {
+      editors.forEach(editor => {
+        this.editors[editor.el.nativeElement.id] = editor.quill;
+        editor.el.nativeElement.id;
       });
     }
   }
 
+  constructor() { }
+
   writeValue(values: LocalisedString[]): void {
     this.value.texts = values;
+    this.value.texts.forEach(value => {
+      this.editors[value.locale].setContents(this.editors[value.locale].clipboard.convert(value.label));
+    });
   }
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
+
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
-    this.quillEditors.forEach(quill => {
-      isDisabled || !this.isEditMode ? quill.disable() : quill.enable();
+    this.isDisabled = isDisabled; 
+    this.editors?.forEach(editor => {
+      (this.isDisabled || !this.isEditMode) ? editor.disable() : editor.enable();
     });
-  }
-
-  onLocaleChange(locale: any) {
-    this.currentLocale = locale.value;
   }
 
   onEditorInit(event: any, locale: string) {
-    this.quillEditors.push(event.editor);
-    this.isDisabled || !this.isEditMode ? event.editor.disable() : event.editor.enable();
-    event.editor.setText(this.value.getLocalisedLabel(locale) || "");
+    (this.isDisabled || !this.isEditMode) ? event.editor.disable() : event.editor.enable();
+    event.editor.setContents(event.editor.clipboard.convert(this.value.getLocalisedLabel(locale) || ""));
   }
 
-  onEditorChange(event: any) {
+  onEditorChange(event: any, locale: string) {
     this.value.texts = this.value.texts.map(text => {
-      if (text.locale === this.currentLocale) text.label = event.textValue;
+      if (text.locale === locale) text.label = event.htmlValue;
       return text;
     });
     this.onChange(this.value);
+  }
+
+  onEditorTouched(event: any) {
     this.onTouched();
   }
 }
-*/

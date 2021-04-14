@@ -1,3 +1,7 @@
 .single-language-editor {
     margin-bottom: 20px;
 }
+
+::ng-deep .no-toolbar .ui-editor-toolbar {
+    display: none;
+}
