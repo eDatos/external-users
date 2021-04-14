@@ -5,3 +5,7 @@
 ::ng-deep .no-toolbar .ui-editor-toolbar {
     display: none;
 }
+
+.scrolling-editor {
+    overflow-y: scroll;
+}
