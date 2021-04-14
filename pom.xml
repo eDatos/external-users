@@ -129,6 +129,7 @@
 
         <cxf.version>3.3.5</cxf.version>
 
+        <jackson.version>2.12.2</jackson.version>
         <jackson-core-asl.version>1.9.4</jackson-core-asl.version>
         <jackson-es.gobcan.istac.edatos.external.users.rest.external.mapper-asl.version>1.9.4
         </jackson-es.gobcan.istac.edatos.external.users.rest.external.mapper-asl.version>
@@ -152,7 +153,7 @@
         <metamac-srm-rest-internal-api.version>2.2.0</metamac-srm-rest-internal-api.version>
         <metamac-srm-rest-external-api.version>2.2.0</metamac-srm-rest-external-api.version>
 
-        <hibernate-types.version>2.9.11</hibernate-types.version>
+        <hibernate-types.version>2.10.4</hibernate-types.version>
         <h2.version>1.4.200</h2.version>
     </properties>
 
