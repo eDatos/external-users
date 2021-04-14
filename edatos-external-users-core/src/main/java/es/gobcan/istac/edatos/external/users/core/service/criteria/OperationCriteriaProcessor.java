@@ -54,6 +54,7 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withEntityProperty(OperationEntity.Properties.CODE)
                 .build());
 
+        // TODO(EDATOS-3294): Criteria processors don't work with json/jsonb fields.
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withAlias(OperationEntity.Properties.NAME, "t", LEFT_OUTER_JOIN)
                 .withAlias("t." + InternationalStringEntity.Properties.TEXTS, "tl", LEFT_OUTER_JOIN)
