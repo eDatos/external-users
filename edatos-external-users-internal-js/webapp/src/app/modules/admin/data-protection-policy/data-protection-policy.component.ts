@@ -21,7 +21,7 @@ export class DataProtectionPolicyComponent {
       this.isEditMode = lastPath === 'edit';
     }
 
-    this.dataProtectionPolicyForm = this.fb.group({ 'dataProtectionPolicy': [new InternationalString()] });
+    this.dataProtectionPolicyForm = this.fb.group({ 'dataProtectionPolicy': [[]] });
     this.dataProtectionPolicyService.getDataProtectionPolicy().subscribe(dataProtectionPolicy => {
       this.dataProtectionPolicy = new InternationalString();
       this.dataProtectionPolicy.id = dataProtectionPolicy.id;

@@ -1,13 +1,12 @@
 
-import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { InternationalString, LocalisedString } from '@app/shared/model';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-multi-language-editor',
   templateUrl: './multi-language-editor.component.html',
-  styleUrls: ['./multi-language-editor.component.css'],
+  styleUrls: ['./multi-language-editor.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
