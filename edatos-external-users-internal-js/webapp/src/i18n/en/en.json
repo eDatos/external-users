@@ -226,14 +226,14 @@
                 "notANumber": "The entered value must be numeric"
             }
         },
+        "deactivate": {
+            "title": "Confirm deactivation"
+        },
         "delete": {
             "title": "Confirm delete operation"
         },
         "eliminar": {
             "title": "Confirm Deletion"
-        },
-        "deactivate": {
-            "title": "Confirm deactivation"
         },
         "input": {
             "placeholder": "Enter the desired text here"
@@ -461,8 +461,8 @@
         },
         "form": {
             "cancel": "Cancel",
-            "edit": "Edit Filter",
             "delete": "Delete Filter",
+            "edit": "Edit Filter",
             "goBack": "Back to List",
             "legend": "Filter Details",
             "new": "Create a new filter",
@@ -679,6 +679,9 @@
     },
     "operation": {
         "name": "Statistical operation"
+    },
+    "structuralResourcesTree": {
+        "noRecordsFound": "No se ha encontrado ningún tema ni operación"
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}"
