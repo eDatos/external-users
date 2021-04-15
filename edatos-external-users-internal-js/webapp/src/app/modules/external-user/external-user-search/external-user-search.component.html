@@ -19,6 +19,16 @@
                 [translationPath]="'externalUser.languageEnum.'"
                 name="language"
             ></arte-autocomplete-enum>
+            <arte-autocomplete-enum
+                (onSelect)="filter()"
+                (onUnselect)="filter()"
+                [(ngModel)]="filters.languages"
+                [attr.aria-label]="'externalUser.filters.name.placeholders.language' | translate"
+                [multiple]="true"
+                [suggestionsEnum]="languageEnum"
+                [translationPath]="'externalUser.languageEnum.'"
+                name="language"
+            ></arte-autocomplete-enum>
         </div>
         <div class="form-group col-md-3 ac-ui-unfluid">
             <label translate="externalUser.home.includeDeleted"></label>

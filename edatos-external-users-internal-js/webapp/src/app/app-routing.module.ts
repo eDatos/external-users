@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from '@app/layouts/error';
 import { DEFAULT_PATH } from './app.constants';
 import { UserRouteAccessGuard } from './core/guard';
 import { EXTERNAL_USER_ROLES, FAVORITE_ROLES, FILTER_ROLES, HERRAMIENTAS_ROLES } from './core/service';
@@ -49,7 +50,7 @@ const APP_ROUTES: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'notfound',
+        component: ErrorComponent,
     },
 ];
 

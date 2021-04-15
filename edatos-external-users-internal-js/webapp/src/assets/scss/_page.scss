@@ -1,22 +1,24 @@
 @import 'variables';
 @import 'mixins';
 
+body {
+    padding-top: $primary-navbar-height + $secondary-navbar-height;
+}
+
 .page {
     width: 100%;
     height: 100%;
-    margin-top: $primary-navbar-height + $secondary-navbar-height;
     margin-bottom: 4rem;
 
     &.has-header-fixed {
         .page-header {
             position: fixed;
             z-index: $page-header-zindex;
-            top: $primary-navbar-height + $secondary-navbar-height;
             left: 0;
             right: 0;
         }
         & .page-body {
-            margin-top: $primary-navbar-height + $secondary-navbar-height + $page-header-height;
+            margin-top: $page-header-height;
         }
     }
 
