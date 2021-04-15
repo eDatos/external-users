@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VERSION } from '@app/app.constants';
-import { ConfigService } from '@app/config';
-import { LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
-import { Router } from '@angular/router';
+import { AccountUserService, LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
+import { DeleteConfirmDialogComponent } from '@app/modules/account';
+import { GenericModalService } from 'arte-ng/services';
 
 @Component({
     selector: 'app-navbar',
@@ -14,16 +13,16 @@ export class NavbarComponent implements OnInit {
     inProduction: boolean;
     public isCorrectlyLogged: boolean;
     public isNavbarCollapsed: boolean;
-    private modalRef: NgbModalRef;
     public version: string;
+    public account: any;
 
     constructor(
         private loginService: LoginService,
         public permissionService: PermissionService,
         private principal: Principal,
         private profileService: ProfileService,
-        private configService: ConfigService,
-        private router: Router
+        private genericModalService: GenericModalService,
+        private userService: AccountUserService
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -53,5 +52,22 @@ export class NavbarComponent implements OnInit {
 
     public puedeNavegarAdministracion(): boolean {
         return this.permissionService.puedeNavegarAdministracion();
+    }
+
+    public openDeleteDialog() {
+        this.userService
+            .getLogueado()
+            .toPromise()
+            .then((account) => {
+                const modalRef = this.genericModalService.open(DeleteConfirmDialogComponent as Component, { user: { ...account } });
+                modalRef.result.subscribe((isDelete) => this.onDeleteSuccess(isDelete));
+            });
+    }
+
+    private onDeleteSuccess(isDelete: boolean) {
+        if (isDelete) {
+            this.collapseNavbar();
+            this.loginService.logout();
+        }
     }
 }

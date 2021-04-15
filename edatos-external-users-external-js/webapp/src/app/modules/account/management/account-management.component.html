@@ -18,12 +18,6 @@
                 <span class="fa fa-ban"></span>
                 <span translate="entity.action.cancel"></span>
             </button>
-            <ng-container>
-                <button *ngIf="!isEditMode()" type="button" class="btn btn-default" (click)="navigateToChangePassword()" translate="login.action.signup">
-                    <span class="fa fa-unlock"></span>
-                    <span translate="entity.action.change-password"></span>
-                </button>
-            </ng-container>
         </div>
     </div>
     <div class="page-body">
@@ -131,7 +125,7 @@
                         <div class="form-row">
                             <label class="form-label col-md-4" translate="signup.form.phoneNumber" for="phoneNumber"></label>
                             <div class="col-md-8 form-input-container errors-on-hover">
-                                <arte-input id="phoneNumber" name="phoneNumber" [(ngModel)]="account.phoneNumber" [maxlength]="50" [pattern]="'^[0-9]*$'"></arte-input>
+                                <arte-input id="phoneNumber" name="phoneNumber" [(ngModel)]="account.phoneNumber" [maxlength]="50"></arte-input>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <span *ngFor="let m of messages">{{m}}</span>
                                 </div>
