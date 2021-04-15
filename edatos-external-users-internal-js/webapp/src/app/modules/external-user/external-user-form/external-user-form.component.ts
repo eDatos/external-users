@@ -12,6 +12,7 @@ import { ExternalUserDeleteDialogComponent } from '../external-user-delete-dialo
 @Component({
     selector: 'app-external-user-form',
     templateUrl: './external-user-form.component.html',
+    styleUrls: ['./external-user-form.component.scss'],
 })
 export class ExternalUserFormComponent implements OnInit, OnDestroy {
     public externalUser: ExternalUser;

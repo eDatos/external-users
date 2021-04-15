@@ -55,7 +55,7 @@
     <div class="page-body">
         <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
             <fieldset [disabled]="!inEditMode" arteAutofocus class="page-section">
-                <h3 translate="externalUser.personalData"></h3>
+                <h3 class="mt-3" translate="externalUser.personalData"></h3>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
@@ -193,10 +193,8 @@
             </fieldset>
         </form>
         <div *ngIf="externalUserExists() && !inEditMode" class="page-section">
-            <h3 translate="externalUser.home.filters"></h3>
-            <div class="page-table-container-fluid">
-                <app-filter-table [userId]="userId"></app-filter-table>
-            </div>
+            <h3 class="mt-3" translate="externalUser.home.filters"></h3>
+            <app-filter-table [userId]="userId"></app-filter-table>
         </div>
     </div>
 </div>
