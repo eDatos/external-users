@@ -19,6 +19,9 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 
+/**
+ * The data protection policy is a document that describe how and for what the user's personal data is used.
+ */
 @Entity
 @Table(name = "tb_data_protection_policy")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
@@ -32,6 +35,9 @@ public class DataProtectionPolicyEntity extends AbstractVersionedAndAuditingEnti
     @SequenceGenerator(name = "seq_tb_data_protection_policy", sequenceName = "seq_tb_data_protection_policy", allocationSize = 50, initialValue = 1)
     private Long id;
 
+    /**
+     * The multi-language content of the data protection policy. Rich text is supported.
+     */
     @NotNull
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb", nullable = false)
