@@ -151,7 +151,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
     }
 
     public transition() {
-        this.router.navigate(['/admin', 'external-users'], {
+        this.router.navigate(['/external-users'], {
             queryParams: {
                 page: this.page,
                 size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
