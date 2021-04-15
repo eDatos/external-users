@@ -232,6 +232,9 @@
         "eliminar": {
             "title": "Confirmar eliminación"
         },
+        "deactivate": {
+            "title": "Confirmar desactivación"
+        },
         "input": {
             "placeholder": "Introduzca aquí el texto deseado"
         },
@@ -322,7 +325,7 @@
         "activado": "Activado",
         "created": "Se ha creado el usuario {{ param }}",
         "deactivate": {
-            "question": "¿Seguro que desea eliminar el usuario <strong>{{ email }}</strong>?"
+            "question": "¿Seguro que desea desactivar el usuario <strong>{{ email }}</strong>?"
         },
         "deleted": "Se ha eliminado el usuario {{ param }}",
         "deletionDate": "Fecha de borrado",

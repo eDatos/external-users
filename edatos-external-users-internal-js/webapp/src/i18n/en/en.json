@@ -232,6 +232,9 @@
         "eliminar": {
             "title": "Confirm Deletion"
         },
+        "deactivate": {
+            "title": "Confirm deactivation"
+        },
         "input": {
             "placeholder": "Enter the desired text here"
         },
