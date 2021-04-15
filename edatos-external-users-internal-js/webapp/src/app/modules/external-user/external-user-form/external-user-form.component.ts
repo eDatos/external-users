@@ -93,7 +93,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public save() {
         this.isSaving = true;
-        if (this.externalUserExists()) {
+        if (this.userId) {
             this.externalUserService.update(this.externalUser).subscribe(
                 (response) => this.onSaveSuccess(response),
                 () => this.onSaveError()
@@ -112,10 +112,6 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public restore() {
         this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser }, { container: '.app' });
-    }
-
-    public externalUserExists(): boolean {
-        return !!this.externalUser?.id;
     }
 
     public ngOnDestroy() {
