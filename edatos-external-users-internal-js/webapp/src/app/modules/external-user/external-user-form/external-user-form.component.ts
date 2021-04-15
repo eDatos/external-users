@@ -24,6 +24,8 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     public treatmentEnum = Treatment;
     public favorites: Favorite[];
 
+    public inEditMode = false;
+
     private subscription: Subscription;
 
     constructor(
@@ -34,7 +36,10 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         private eventManager: ArteEventManager,
         private route: ActivatedRoute,
         private router: Router
-    ) {}
+    ) {
+        const lastUrlSegment = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
+        this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
+    }
 
     public ngOnInit() {
         this.isSaving = false;
@@ -63,14 +68,9 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         );
     }
 
-    public isEditMode(): boolean {
-        const lastPath = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
-        return lastPath === 'edit' || lastPath === 'new';
-    }
-
     public load(id: number) {
         if (id) {
-            if (!this.isEditMode()) {
+            if (!this.inEditMode) {
                 this.updateFavorites();
             }
             this.externalUserService.get(id).subscribe((user) => {
@@ -81,12 +81,13 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         }
     }
 
-    public clear() {
-        const returnPath: (string | number)[] = ['/external-users'];
+    public cancel() {
         if (this.userId) {
-            returnPath.push(this.userId);
+            this.load(this.userId);
+        } else {
+            this.router.navigate(['..']);
         }
-        this.router.navigate(returnPath);
+        this.toggleEditMode();
     }
 
     public save() {
@@ -132,6 +133,14 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         );
     }
 
+    public toggleEditMode() {
+        this.inEditMode = !this.inEditMode;
+    }
+
+    public edit() {
+        this.toggleEditMode();
+    }
+
     private updateFavorites() {
         this.favoriteService.findByUserId(this.userId).subscribe((favorites) => {
             this.favorites = favorites;
@@ -142,6 +151,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.externalUser = result;
         this.isSaving = false;
+        this.toggleEditMode();
         this.router.navigate(['/external-users', this.externalUser.id]);
     }
 
