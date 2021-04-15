@@ -32,6 +32,11 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
     public static final CommonServiceExceptionType LOGIN_FAILED = create("exception.external_users.login.failed");
 
     /********
+     * EXTERNAL_USER
+     ********/
+    public static final CommonServiceExceptionType EXTERNAL_USER_DELETED = create("exception.external_users.deleted");
+
+    /********
      * PASSWORD
      ********/
     public static final CommonServiceExceptionType PASSWORD_NOT_MATCH = create("exception.external_users.password.not_match");

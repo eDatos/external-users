@@ -36,6 +36,10 @@ export class AccountUserService {
         return this.http.post(`${this.resourceUrl}/change-password`, accountChangePassword).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
+    delete(id: number): Observable<User> {
+        return this.http.delete(`${this.resourceUrl}/${id}`).pipe(map((res) => ResponseUtils.convert(res, User)));
+    }
+
     /* 
     get(login: string, includeDeleted = true): Observable<User> {
         const options = createRequestOption({ includeDeleted });
@@ -45,10 +49,6 @@ export class AccountUserService {
     find(req?: any): Observable<ResponseWrapper> {
         const options = createRequestOption(req);
         return this.http.get(this.resourceUrl, { ...options, observe: 'response' }).pipe(map((res) => ResponseUtils.convertToResponseWrapper(res, User)));
-    }
-
-    delete(login: string): Observable<User> {
-        return this.http.delete(`${this.resourceUrl}/${login}`).pipe(map((res) => ResponseUtils.convert(res, User)));
     }
 
     restore(login: string): Observable<User> {

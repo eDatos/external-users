@@ -32,6 +32,9 @@
                     "minlength": "Se requiere que su segundo apellido tenga por lo menos 1 carácter",
                     "maxlength": "Su segundo apellido no puede tener más de 50 carácteres"
                 }
+            },
+            "delete": {
+                "text": "Al confirmar se dará de baja en el sistema."
             }
         }
     }

@@ -51,9 +51,8 @@ public class ExternalUserServiceImpl implements ExternalUserService {
 
     @Override
     public ExternalUserEntity delete(Long id) {
-        ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id)
-                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build()); // TODO(EDATOS-3278): Replace with
-                                                                                                                                                           // EDatosException
+        ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id).orElseThrow(() -> new EDatosException(ServiceExceptionType.EXTERNAL_USER_DELETED));
+
         usuario.setDeletionDate(Instant.now());
         usuario.setDeletedBy(SecurityUtils.getCurrentUserLogin());
         return externalUserRepository.saveAndFlush(usuario);
