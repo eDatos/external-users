@@ -3,21 +3,18 @@ import { Treatment } from '@app/core/model/treatment.model';
 import { BaseVersionedAndAuditingWithDeletionEntity } from 'arte-ng/model';
 
 export class ExternalUser extends BaseVersionedAndAuditingWithDeletionEntity {
-    constructor(
-        public id?: any,
-        public name?: string,
-        public surname1?: string,
-        public surname2?: string,
-        public password?: string,
-        public email?: string,
-        public organism?: string,
-        public treatment?: Treatment,
-        public language?: Language,
-        public phoneNumber?: string,
-        public roles?: any[]
-    ) {
-        super();
-    }
+    public id?: any;
+    public name?: string;
+    public surname1?: string;
+    public surname2?: string;
+    public password?: string;
+    public email?: string;
+    public organism?: string;
+    public treatment?: Treatment;
+    public language?: Language;
+    public phoneNumber?: string;
+    public emailNotificationsEnabled?: boolean;
+    public roles?: any[];
 
     public getFullName(): string {
         return `${this.name} ${this.surname1} ${this.surname2}`;

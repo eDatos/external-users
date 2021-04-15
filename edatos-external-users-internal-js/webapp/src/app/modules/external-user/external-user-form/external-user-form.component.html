@@ -178,6 +178,20 @@
                             </ng-container>
                         </div>
                     </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="externalUser.enableEmailNotifications"></label>
+                            <div class="col-md-8">
+                                <arte-tri-input-switch
+                                    [(ngModel)]="externalUser.emailNotificationsEnabled"
+                                    [disabled]="!inEditMode"
+                                    [required]="true"
+                                    name="emailNotificationsEnabled"
+                                ></arte-tri-input-switch>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
             <div class="page-section">

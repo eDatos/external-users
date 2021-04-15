@@ -334,6 +334,7 @@
             "title": "Usuario"
         },
         "email": "Email",
+        "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario",
         "filters": {
             "name": {
                 "label": "Usuario",

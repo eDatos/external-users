@@ -1,8 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-                   xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
 
     <changeSet author="arte" id="20210223122800-00">
         <createSequence incrementBy="50" sequenceName="seq_tb_external_users" startValue="1"/>
@@ -35,7 +34,9 @@
                 <constraints nullable="false"/>
             </column>
             <column name="organism" type="varchar(255)"/>
-
+            <column name="email_notifications_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
             <column name="deletion_date" type="timestamp">
                 <constraints nullable="true"/>
             </column>
