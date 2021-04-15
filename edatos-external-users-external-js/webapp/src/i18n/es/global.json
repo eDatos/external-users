@@ -76,7 +76,8 @@
             "modificar": "Modificar",
             "publishInternally": "Publicar internamente",
             "publishExternally": "Publicar externamente",
-            "change-password": "Cambiar contraseña"
+            "change-password": "Cambiar contraseña",
+            "data-protection-policy": "Política de protección de datos"
         },
         "delete": {
             "title": "Confirmar operación de borrado"

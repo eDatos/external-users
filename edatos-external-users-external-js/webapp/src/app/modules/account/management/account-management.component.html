@@ -23,6 +23,10 @@
                     <span class="fa fa-unlock"></span>
                     <span translate="entity.action.change-password"></span>
                 </button>
+                <button *ngIf="!isEditMode()" type="button" class="btn btn-default" (click)="navigateToDataProtectionPolicy()">
+                    <span class="fa fa-file"></span>
+                    <span translate="entity.action.data-protection-policy"></span>
+                </button>
             </ng-container>
         </div>
     </div>

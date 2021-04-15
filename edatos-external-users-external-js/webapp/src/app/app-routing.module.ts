@@ -49,6 +49,13 @@ const APP_ROUTES: Routes = [
             roles: FILTER_ROLES,
         },
     },
+    {
+        path: 'data-protection-policy',
+        loadChildren: () => import('./modules/account/data-protection-policy/data-protection-policy.module').then((m) => m.DataProtectionPolicyModule),
+        data: {
+            roles: ALL_ALLOWED,
+        },
+    },
     /*
     {
         path: 'favorite',

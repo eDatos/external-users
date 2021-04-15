@@ -41,7 +41,6 @@ export class MultiLanguageEditorComponent implements ControlValueAccessor {
   constructor() { }
 
   writeValue(values: LocalisedString[]): void {
-    debugger;
     this.value.texts = values;
     this.value.texts.forEach(value => {
       this.editors[value.locale]?.setContents(this.editors[value.locale].clipboard.convert(value.label));

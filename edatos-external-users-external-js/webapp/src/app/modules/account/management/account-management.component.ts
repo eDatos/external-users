@@ -61,4 +61,8 @@ export class AccountManagementComponent implements OnInit {
     public navigateToChangePassword() {
         this.router.navigate(['account-management/change-password']);
     }
+
+    public navigateToDataProtectionPolicy() {
+        this.router.navigate(['data-protection-policy']);
+    }
 }
