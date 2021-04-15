@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import es.gobcan.istac.edatos.external.users.core.domain.DataProtectionPolicyEntity;
 
 @Repository
-public interface DataProtectionPolicyRepository extends JpaRepository<DataProtectionPolicyEntity, Long> {
+public interface DataProtectionPolicyRepository extends JpaRepository<DataProtectionPolicyEntity, Long>, DetachEntityRepositoryCustom<DataProtectionPolicyEntity> {
 
 }

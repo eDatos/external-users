@@ -14,6 +14,7 @@ export class DataProtectionPolicyComponent {
   dataProtectionPolicy: InternationalString;
   isEditMode: boolean = false;
   dataProtectionPolicyForm: FormGroup;
+  locales: string[] = [];
 
   constructor(route: ActivatedRoute, private router: Router, private dataProtectionPolicyService: DataProtectionPolicyService, @Inject(LOCALE_ID) public locale: string, private fb: FormBuilder) {
     if (route.snapshot.url.length !== 0) {
@@ -26,6 +27,7 @@ export class DataProtectionPolicyComponent {
       this.dataProtectionPolicy = new InternationalString();
       this.dataProtectionPolicy.id = dataProtectionPolicy.id;
       this.dataProtectionPolicy.texts = dataProtectionPolicy.value.texts;
+      this.locales = dataProtectionPolicy.value.texts.map(text => text.locale);
       this.dataProtectionPolicyForm.get("dataProtectionPolicy").setValue(this.dataProtectionPolicy.texts);
     });
   }
