@@ -336,9 +336,9 @@
         "email": "e-mail",
         "enableEmailNotifications": "Enable email notifications for this user",
         "filters": {
-            "name": {
-                "label": "User",
-                "placeholder": "Enter name, username or surname"
+            "placeholders": {
+                "fullname": "Enter name or surname",
+                "language": "Enter user languages"
             },
             "rolEnum": {
                 "label": "Role"
@@ -350,7 +350,8 @@
             "rolShort": {
                 "label": "Search by role (ac-autocomplete-short-list)",
                 "placeholder": "Enter role (ac-autocomplete-short-list)"
-            }
+            },
+            "title": "Filter users"
         },
         "home": {
             "createDeactivatedTooltip": "User creation is deactivated",

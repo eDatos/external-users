@@ -168,7 +168,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
 
     private processUrlParams(): void {
         this.filters.includeDeleted = this.activatedRoute.snapshot.queryParams.hasOwnProperty('includeDeleted');
-        this.filters.query = this.activatedRoute.snapshot.queryParams.query;
+        this.filters.fullname = this.activatedRoute.snapshot.queryParams.query;
     }
 
     public isActivo(user: User): boolean {

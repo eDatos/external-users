@@ -336,9 +336,9 @@
         "email": "Email",
         "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario",
         "filters": {
-            "name": {
-                "label": "Usuario",
-                "placeholder": "Introduzca nombre, usuario o apellidos"
+            "placeholders": {
+                "fullname": "Introduzca nombre o apellidos",
+                "language": "Introduzca idiomas del usuario"
             },
             "rolEnum": {
                 "label": "Rol"
@@ -350,7 +350,8 @@
             "rolShort": {
                 "label": "Búsqueda por rol (ac-autocomplete-short-list)",
                 "placeholder": "Introduzca rol (ac-autocomplete-short-list)"
-            }
+            },
+            "title": "Filtrar usuarios"
         },
         "home": {
             "createDeactivatedTooltip": "La creación de usuarios está desactivada",
