@@ -39,7 +39,8 @@
                                 <td>{{user.surname2}}</td>
                                 <td>{{user.email}}</td>
                                 <td>{{ 'externalUser.languageEnum.' + user.language | translate }}</td>
-                                <td>{{ 'externalUser.treatmentEnum.' + user.treatment | translate }}</td>
+                                <td *ngIf="user.treatment">{{ 'externalUser.treatmentEnum.' + user.treatment | translate }}</td>
+                                <td *ngIf="!user.treatment"></td>
                                 <td>
                                     <span class="badge badge-danger ml-1" *ngIf="user.deletionDate">{{ 'externalUser.status.deleted' | translate }}</span>
                                     <span class="badge badge-info ml-1" *ngIf="!user.deletionDate">{{ 'externalUser.status.active' | translate }}</span>
