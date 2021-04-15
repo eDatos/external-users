@@ -33,4 +33,10 @@
     <changeSet author="arte" id="1615884742603-4">
         <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_favorites" constraintName="FKofygq73agw6csd3h9l4i82fu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_operations" validate="true"/>
     </changeSet>
+    <changeSet author="arte" id="1615884742603-5">
+        <addUniqueConstraint columnNames="external_user_fk, category_fk" constraintName="UK6ubfpj9qk6ffa0wsgiqtewdn7" tableName="tb_favorites"/>
+    </changeSet>
+    <changeSet author="arte" id="1615884742603-6">
+        <addUniqueConstraint columnNames="external_user_fk, operation_fk" constraintName="UKlxjkh55oohstxpley34nth2yh" tableName="tb_favorites"/>
+    </changeSet>
 </databaseChangeLog>
