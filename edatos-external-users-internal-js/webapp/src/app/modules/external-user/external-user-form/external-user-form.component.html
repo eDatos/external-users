@@ -192,7 +192,7 @@
                 ></app-structural-resources-tree>
             </fieldset>
         </form>
-        <div class="page-section">
+        <div *ngIf="externalUserExists() && !isEditMode()" class="page-section">
             <h3 translate="externalUser.home.filters"></h3>
             <div class="page-table-container-fluid">
                 <app-filter-table [userId]="userId"></app-filter-table>
