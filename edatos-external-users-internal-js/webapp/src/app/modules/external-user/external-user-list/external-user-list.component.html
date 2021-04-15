@@ -4,6 +4,7 @@
             <h2 class="page-header-title">
                 <span class="page-header-title-text" translate="externalUser.home.title"></span>
             </h2>
+            <!--TODO(EDATOS-3345): User creation is temporarily deactivated.-->
             <span [ngbTooltip]="'externalUser.home.createDeactivatedTooltip' | translate" placement="bottom" tooltipClass="tooltip-warning">
                 <button *ngIf="permissionService.puedeNavegarUserManagement()" [routerLink]="['/external-users/new']" class="btn btn-primary" disabled type="button">
                     <span class="btn-icon fa fa-plus"></span>
