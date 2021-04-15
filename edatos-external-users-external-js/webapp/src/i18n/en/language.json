@@ -2,5 +2,10 @@
     "language": {
         "SPANISH": "Spanish",
         "CATALAN": "Catalan"
+    },
+    "localeToLanguage": {
+        "es": "Spanish",
+        "en": "English",
+        "ca": "Catalan"
     }
 }

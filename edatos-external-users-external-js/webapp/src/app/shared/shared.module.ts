@@ -25,10 +25,13 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { EditorModule } from 'primeng/editor';
+
 import { NgArrayPipesModule } from 'ngx-pipes';
 
 import { PasswordMatchValidatorDirective } from './directives';
 import { PasswordNotMatchValidatorDirective } from './directives';
+import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
 
 @NgModule({
     imports: [
@@ -60,8 +63,9 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         ArteSpinnerModule,
         ArteEntityListEmptyModule,
         ArteDirectivesModule,
+        EditorModule
     ],
-    declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective],
+    declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective, MultiLanguageEditorComponent],
     providers: [
         FormcontrolStatusService,
         DatePipe,
@@ -102,6 +106,7 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         PasswordMatchValidatorDirective,
         PasswordNotMatchValidatorDirective,
         ArteDirectivesModule,
+        MultiLanguageEditorComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
