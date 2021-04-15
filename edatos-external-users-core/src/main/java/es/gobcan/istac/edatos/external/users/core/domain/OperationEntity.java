@@ -18,11 +18,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
-
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
@@ -35,7 +32,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
 @Entity
 @Table(name = "tb_operations", uniqueConstraints = {@UniqueConstraint(columnNames = {"code"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class OperationEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
