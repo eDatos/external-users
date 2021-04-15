@@ -4,7 +4,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExce
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -20,13 +20,13 @@ import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVers
  * designate to be aware of their creations, modifications and deletions.
  */
 @Entity
-@Table(name = "tb_favorite")
+@Table(name = "tb_favorites")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_favorite")
-    @SequenceGenerator(name = "seq_tb_favorite", sequenceName = "seq_tb_favorite", allocationSize = 50, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_favorites")
+    @SequenceGenerator(name = "seq_tb_favorites", sequenceName = "seq_tb_favorites", allocationSize = 50, initialValue = 1)
     private Long id;
 
     @NotNull
