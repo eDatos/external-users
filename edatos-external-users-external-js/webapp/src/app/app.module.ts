@@ -5,12 +5,10 @@ import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { ConfigModule } from './config/config.module';
-import { ConfigService } from './config';
 import { SharedModule } from './shared';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthServerProvider } from './core/service/auth';
 import { AuthInterceptor, AuthExpiredInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
@@ -24,6 +22,7 @@ import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 import { ArteTableService } from 'arte-ng';
 import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
+import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');
@@ -47,6 +46,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
         SharedModule,
         AppRoutingModule,
         TranslateModule.forRoot({
+            missingTranslationHandler: {provide: MissingTranslationHandler, useClass: MissingTranslationHandlerImpl},
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
