@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Language } from '@app/core/model';
 import { ArteEventManager } from 'arte-ng/services';
 
 import { Subject, Subscription } from 'rxjs';
@@ -10,11 +11,12 @@ import { ExternalUserFilter } from './external-user-filter';
     templateUrl: 'external-user-search.component.html',
 })
 export class ExternalUserSearchComponent implements OnInit, OnDestroy {
-    private filterChangesSubject: Subject<any> = new Subject<any>();
-    public subscription: Subscription;
-
     @Input()
     public filters: ExternalUserFilter;
+    public subscription: Subscription;
+    public languageEnum = Language;
+
+    private filterChangesSubject: Subject<any> = new Subject<any>();
 
     constructor(private eventManager: ArteEventManager) {}
 

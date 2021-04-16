@@ -71,6 +71,10 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
     @Size(max = 255)
     private String organism;
 
+    @NotNull
+    @Column(nullable = false)
+    private boolean emailNotificationsEnabled = true;
+
     @Size(min = 6)
     @NotNull
     @Column(nullable = false)
@@ -161,6 +165,14 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
 
     public void setOrganism(String organism) {
         this.organism = organism;
+    }
+
+    public boolean isEmailNotificationsEnabled() {
+        return emailNotificationsEnabled;
+    }
+
+    public void setEmailNotificationsEnabled(boolean emailNotificationsEnabled) {
+        this.emailNotificationsEnabled = emailNotificationsEnabled;
     }
 
     public Set<ExternalUserRole> getRoles() {

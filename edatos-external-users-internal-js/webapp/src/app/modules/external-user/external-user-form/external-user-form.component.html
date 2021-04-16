@@ -1,7 +1,7 @@
 <div class="page" *ngIf="externalUser">
     <div class="page-header page-header-top">
         <button
-            *ngIf="!isEditMode()"
+            *ngIf="!inEditMode"
             type="button"
             routerLink="/external-users"
             class="btn btn-secondary btn-frameless back-arrow"
@@ -20,31 +20,31 @@
         </h2>
         <div class="page-header-btns">
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button *ngIf="!isEditMode() && !externalUser.deletionDate" class="btn btn-secondary" [routerLink]="['edit']" type="button">
+                <button (click)="edit()" *ngIf="!inEditMode && !externalUser.deletionDate" class="btn btn-secondary" type="button">
                     <span class="fa fa-pencil"></span>
                     <span translate="entity.action.edit"></span>
                 </button>
             </ng-container>
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button *ngIf="isEditMode()" type="submit" form="edit-form" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <button *ngIf="inEditMode" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary" form="edit-form" type="submit">
                     <span class="fa fa-floppy-o"></span>
                     <span translate="entity.action.save"></span>
                 </button>
             </ng-container>
             <ng-container>
-                <button *ngIf="isEditMode()" type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
+                <button (click)="cancel()" *ngIf="inEditMode" class="btn btn-secondary" data-dismiss="modal" type="button">
                     <span class="fa fa-ban"></span>
                     <span translate="entity.action.cancel"></span>
                 </button>
             </ng-container>
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button *ngIf="!isEditMode() && externalUser.deletionDate" type="button" class="btn btn-warning" (click)="restore()">
+                <button (click)="restore()" *ngIf="!inEditMode && externalUser.deletionDate" class="btn btn-warning" type="button">
                     <span class="fa fa-undo"></span>
                     <span translate="entity.action.restore"></span>
                 </button>
             </ng-container>
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button *ngIf="!isEditMode() && !externalUser.deletionDate" type="button" class="btn btn-danger" (click)="delete()">
+                <button (click)="delete()" *ngIf="!inEditMode && !externalUser.deletionDate" class="btn btn-danger" type="button">
                     <span class="fa fa-remove"></span>
                     <span translate="entity.action.deactivate"></span>
                 </button>
@@ -54,8 +54,8 @@
 
     <div class="page-body">
         <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
-            <fieldset class="page-section" [disabled]="!isEditMode()" arteAutofocus>
-                <h3 translate="externalUser.personalData"></h3>
+            <fieldset [disabled]="!inEditMode" arteAutofocus class="page-section">
+                <h3 class="mt-3" translate="externalUser.personalData"></h3>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
@@ -124,7 +124,7 @@
                                     [(ngModel)]="externalUser.treatment"
                                     [suggestionsEnum]="treatmentEnum"
                                     [translationPath]="'externalUser.treatmentEnum.'"
-                                    [disabled]="!isEditMode()"
+                                    [disabled]="!inEditMode"
                                     required
                                 >
                                 </arte-autocomplete-enum>
@@ -142,7 +142,7 @@
                                     [(ngModel)]="externalUser.language"
                                     [suggestionsEnum]="languageEnum"
                                     [translationPath]="'externalUser.languageEnum.'"
-                                    [disabled]="!isEditMode()"
+                                    [disabled]="!inEditMode"
                                     required
                                 >
                                 </arte-autocomplete-enum>
@@ -178,12 +178,26 @@
                             </ng-container>
                         </div>
                     </div>
+
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="externalUser.enableEmailNotifications"></label>
+                            <div class="col-md-8">
+                                <arte-tri-input-switch
+                                    [(ngModel)]="externalUser.emailNotificationsEnabled"
+                                    [disabled]="!inEditMode"
+                                    [required]="true"
+                                    name="emailNotificationsEnabled"
+                                ></arte-tri-input-switch>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
             <div class="page-section">
-                <app-audit-info [entity]="externalUser" *ngIf="externalUserExists()"></app-audit-info>
+                <app-audit-info *ngIf="userId" [entity]="externalUser"></app-audit-info>
             </div>
-            <fieldset *ngIf="externalUserExists() && !isEditMode()" arteAutofocus class="page-section">
+            <fieldset *ngIf="userId && !inEditMode" arteAutofocus class="page-section">
                 <h3 translate="externalUser.home.favorites"></h3>
                 <app-structural-resources-tree
                     (onResourceSelect)="saveFavorite($event)"
@@ -192,11 +206,9 @@
                 ></app-structural-resources-tree>
             </fieldset>
         </form>
-        <div class="page-section">
-            <h3 translate="externalUser.home.filters"></h3>
-            <div class="page-table-container-fluid">
-                <app-filter-table [userId]="userId"></app-filter-table>
-            </div>
+        <div *ngIf="userId && !inEditMode" class="page-section">
+            <h3 class="mt-3" translate="externalUser.home.filters"></h3>
+            <app-filter-table [userId]="userId"></app-filter-table>
         </div>
     </div>
 </div>

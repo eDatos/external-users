@@ -1,7 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.errors;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,14 +12,15 @@ import org.siemac.edatos.core.common.exception.EDatosException;
 import org.siemac.edatos.core.common.exception.EDatosExceptionItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.orm.jpa.JpaOptimisticLockingFailureException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -40,8 +40,11 @@ public class ExceptionTranslator {
 
     private final Logger log = LoggerFactory.getLogger(ExceptionTranslator.class);
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
+
+    public ExceptionTranslator(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @ExceptionHandler(ConcurrencyFailureException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -143,6 +146,14 @@ public class ExceptionTranslator {
         } else {
             return new ParameterizedErrorVM(items);
         }
+    }
+
+    @ExceptionHandler(JpaOptimisticLockingFailureException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public ParameterizedErrorVM optimistickLockingError(JpaOptimisticLockingFailureException ex) {
+        return new ParameterizedErrorVM(ServiceExceptionType.OPTIMISTIC_LOCKING.getMessageForReasonType(LocaleContextHolder.getLocale()), ServiceExceptionType.OPTIMISTIC_LOCKING.getCode(), null,
+                null);
     }
 
     private static ParameterizedErrorItem toParameterizedErrorItem(EDatosExceptionItem exceptionItem) {
