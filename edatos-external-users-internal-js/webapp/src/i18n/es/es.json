@@ -278,7 +278,13 @@
         },
         "localeToLanguage": {
             "ES": "Español",
-            "EN": "Inglés"
+            "EN": "Inglés",
+            "CA": "Catalán",
+            "PT": "Portugués",
+            "RU": "Ruso",
+            "ZH": "Chino",
+            "FR": "Francés",
+            "DE": "Alemán"
         }
     },
     "error": {

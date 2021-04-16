@@ -6,6 +6,11 @@
     "localeToLanguage": {
         "es": "Spanish",
         "en": "English",
-        "ca": "Catalan"
+        "ca": "Catalan",
+        "pt": "Portuguese",
+        "ru": "Russian",
+        "zh": "Chinese",
+        "fr": "French",
+        "de": "German"
     }
 }
