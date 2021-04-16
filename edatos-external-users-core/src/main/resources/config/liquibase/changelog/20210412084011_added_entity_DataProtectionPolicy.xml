@@ -22,13 +22,5 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1618216857047-3">  
-	    <insert tableName="tb_data_protection_policy">  
-	        <column name="id" value="0"/>
-	        <column name="created_by" value="admin"/>
-	        <column name="created_date" value="now()"/>
-	        <column name="value" value='{"texts": []}'/>
-	        <column name="opt_lock" value="0"/>
-	    </insert>
-	</changeSet>
+    <include file="config/liquibase/postgresql/add_data_protection_policy_row.sql" relativeToChangelogFile="false"/>
 </databaseChangeLog>
