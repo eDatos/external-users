@@ -30,4 +30,8 @@ export class LoginComponent implements OnInit {
     public navigateToSignup() {
         this.router.navigate(['signup']);
     }
+
+    public navigateToDataProtectionPolicy() {
+        this.router.navigate(['data-protection-policy']);
+    }
 }
