@@ -4,6 +4,7 @@ import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ExternalUser, User } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
+import { ResponseWrapper } from '@app/core/utils/response-utils';
 import { ExternalUserFilter } from '@app/modules/external-user/external-user-search/external-user-filter';
 
 import { ArteEventManager } from 'arte-ng/services';
@@ -15,9 +16,6 @@ import { Subscription } from 'rxjs';
     templateUrl: './external-user-list.component.html',
 })
 export class ExternalUserListComponent implements OnInit, OnDestroy {
-    private eventSubscriber: Subscription;
-    private searchSubscription: Subscription;
-
     public totalItems: any;
     public itemsPerPage: any;
     public page: any;
@@ -25,7 +23,6 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
     public reverse: any;
     public filters: ExternalUserFilter;
     public users: ExternalUser[];
-
     public columns = [
         {
             fieldName: 'name',
@@ -82,6 +79,8 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
             },
         },
     ];
+    private eventSubscriber: Subscription;
+    private searchSubscription: Subscription;
 
     constructor(
         public permissionService: PermissionService,
@@ -91,13 +90,6 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
         private router: Router
     ) {
         this.filters = new ExternalUserFilter();
-        this.itemsPerPage = ITEMS_PER_PAGE;
-        this.activatedRoute.data.subscribe((data) => {
-            this.page = data['pagingParams'].page;
-            this.reverse = data['pagingParams'].ascending;
-            this.predicate = data['pagingParams'].predicate;
-            this.itemsPerPage = data['pagingParams'].itemsPerPage;
-        });
     }
 
     public ngOnInit() {
@@ -122,17 +114,20 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
     }
 
     public loadAll() {
-        this.userService
-            .find({
-                page: this.page - 1,
-                size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
-                sort: this.sort(),
-                query: this.filters.toQuery(),
-            })
-            .subscribe((res) => this.onSuccess(res.body, res.headers));
+        const transitionParams = {
+            page: this.page - 1,
+            size: this.size(),
+            sort: this.sort(),
+        };
+        const queryRequestParams = {
+            query: this.filters.toQuery(),
+            ...transitionParams,
+        };
+        this.router.navigate(['/external-users'], { queryParams: this.filters.toUrl(this.activatedRoute.snapshot.queryParams) });
+        this.userService.find(queryRequestParams).subscribe((res) => this.onSuccess(res));
     }
 
-    public sort() {
+    public sort(): string[] {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
             result.push('id');
@@ -145,33 +140,31 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
             this.predicate = e.sortField;
-            this.reverse = e.sortOrder == 1;
+            this.reverse = e.sortOrder === 1;
         }
-        this.transition();
-    }
-
-    public transition() {
-        this.router.navigate(['/admin', 'external-users'], {
-            queryParams: {
-                page: this.page,
-                size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
-            },
-        });
         this.loadAll();
-    }
-
-    private onSuccess(data, headers) {
-        this.totalItems = headers.get('X-Total-Count');
-        this.users = data;
-    }
-
-    private processUrlParams(): void {
-        this.filters.includeDeleted = this.activatedRoute.snapshot.queryParams.hasOwnProperty('includeDeleted');
-        this.filters.query = this.activatedRoute.snapshot.queryParams.query;
     }
 
     public isActivo(user: User): boolean {
         return !user.deletionDate;
+    }
+
+    private size(): number {
+        return PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE;
+    }
+
+    private onSuccess(data: ResponseWrapper<ExternalUser[]>) {
+        this.totalItems = data.totalCount();
+        this.users = data.body;
+    }
+
+    private processUrlParams(): void {
+        this.activatedRoute.data.subscribe((data) => {
+            this.page = data['pagingParams'].page;
+            this.reverse = data['pagingParams'].ascending;
+            this.predicate = data['pagingParams'].predicate;
+            this.itemsPerPage = data['pagingParams'].itemsPerPage;
+        });
+        this.filters.processUrlParams(this.activatedRoute.snapshot.queryParams);
     }
 }

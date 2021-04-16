@@ -22,15 +22,17 @@ public class LoginPasswordAuthenticationProvider implements AuthenticationProvid
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String login = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
+        try {
 
-        Optional<ExternalUserEntity> userAuthenticated = loginService.authenticate(login, password);
+            ExternalUserEntity userAuthenticated = loginService.authenticate(login, password);
 
-        if (userAuthenticated.isPresent()) {
             List<GrantedAuthority> grantedAuths = new ArrayList<>();
             grantedAuths.add(new SimpleGrantedAuthority(ExternalUserRole.USER.name()));
             return new UsernamePasswordAuthenticationToken(login, password, grantedAuths);
+
+        } catch (Exception e) {
+            throw LoginAuthenticationExceptionFactory.instance(e);
         }
-        return null;
     }
 
     @Override

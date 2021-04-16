@@ -1,8 +1,8 @@
-import { BaseAuditingEntity } from 'arte-ng/model';
+import { BaseVersionedAndAuditingWithDeletionEntity } from 'arte-ng/model';
 import { Role } from './rol.model';
 import * as jwtDecode from 'jwt-decode';
 
-export class User extends BaseAuditingEntity {
+export class User extends BaseVersionedAndAuditingWithDeletionEntity {
     public id?: any;
     public name?: string;
     public surname1?: string;
@@ -40,6 +40,10 @@ export class User extends BaseAuditingEntity {
         this.roles = roles ? roles : null;
         this.treatment = treatment ? treatment : null;
         this.language = language ? language : null;
+    }
+
+    public getFullName(): string {
+        return `${this.name} ${this.surname1} ${this.surname2}`;
     }
 
     public hasRole(rol: Role): boolean {

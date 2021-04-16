@@ -19,8 +19,8 @@ public class ExternalUserDto extends AbstractVersionedAndAuditingAndLogicalDelet
     private Language language;
     private String phoneNumber;
     private String password;
-
     private String organism;
+    private boolean emailNotificationsEnabled;
 
     public String getName() {
         return name;
@@ -92,5 +92,13 @@ public class ExternalUserDto extends AbstractVersionedAndAuditingAndLogicalDelet
 
     public void setOrganism(String organism) {
         this.organism = organism;
+    }
+
+    public boolean isEmailNotificationsEnabled() {
+        return emailNotificationsEnabled;
+    }
+
+    public void setEmailNotificationsEnabled(boolean emailNotificationsEnabled) {
+        this.emailNotificationsEnabled = emailNotificationsEnabled;
     }
 }

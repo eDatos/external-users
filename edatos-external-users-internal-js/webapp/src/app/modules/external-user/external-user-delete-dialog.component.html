@@ -1,6 +1,6 @@
 <form name="deleteForm" (ngSubmit)="confirmAction(user.id)">
     <div class="modal-header">
-        <h4 *ngIf="!user.deletionDate" class="modal-title" translate="entity.eliminar.title"></h4>
+        <h4 *ngIf="!user.deletionDate" class="modal-title" translate="entity.deactivate.title"></h4>
         <h4 *ngIf="user.deletionDate" class="modal-title" translate="entity.restore.title"></h4>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
     </div>

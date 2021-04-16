@@ -226,6 +226,9 @@
                 "notANumber": "The entered value must be numeric"
             }
         },
+        "deactivate": {
+            "title": "Confirm deactivation"
+        },
         "delete": {
             "title": "Confirm delete operation"
         },
@@ -341,10 +344,11 @@
             "title": "User"
         },
         "email": "e-mail",
+        "enableEmailNotifications": "Enable email notifications for this user",
         "filters": {
-            "name": {
-                "label": "User",
-                "placeholder": "Enter name, username or surname"
+            "placeholders": {
+                "fullname": "Enter name or surname",
+                "language": "Enter user languages"
             },
             "rolEnum": {
                 "label": "Role"
@@ -356,7 +360,8 @@
             "rolShort": {
                 "label": "Search by role (ac-autocomplete-short-list)",
                 "placeholder": "Enter role (ac-autocomplete-short-list)"
-            }
+            },
+            "title": "Filter users"
         },
         "home": {
             "createDeactivatedTooltip": "User creation is deactivated",
@@ -468,8 +473,8 @@
         },
         "form": {
             "cancel": "Cancel",
-            "edit": "Edit Filter",
             "delete": "Delete Filter",
+            "edit": "Edit Filter",
             "goBack": "Back to List",
             "legend": "Filter Details",
             "new": "Create a new filter",
@@ -692,6 +697,9 @@
         "home": {
             "title": "Data protection policy"
         }
+    },
+    "structuralResourcesTree": {
+        "noRecordsFound": "No se ha encontrado ningún tema ni operación"
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}"

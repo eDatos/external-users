@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -81,22 +80,6 @@ public class FavoriteResource extends AbstractResource {
 
         auditPublisher.publish(AuditConstants.FAVORITE_CREATION, newDto.getExternalUser().getId().toString());
         return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
-    }
-
-    @PutMapping
-    @Timed
-    @PreAuthorize("@secChecker.canUpdateFavorites(authentication)")
-    public ResponseEntity<FavoriteDto> updateFavorite(@RequestBody FavoriteDto dto) {
-        if (dto == null || dto.getId() == null) {
-            throw new EDatosException(CommonServiceExceptionType.PARAMETER_REQUIRED, "id");
-        }
-
-        FavoriteEntity entity = favoriteMapper.toEntity(dto);
-        entity = favoriteService.update(entity);
-        FavoriteDto newDto = favoriteMapper.toDto(entity);
-
-        auditPublisher.publish(AuditConstants.FAVORITE_EDITION, newDto.getExternalUser().getId().toString());
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
     @DeleteMapping("/{id}")

@@ -1,14 +1,24 @@
 <div class="page-filters">
     <div class="form-row">
         <div class="form-group col-md-5">
-            <label translate="externalUser.filters.name.label"></label>
+            <label translate="externalUser.filters.title"></label>
             <arte-input
-                [name]="'filter'"
-                [attr.aria-label]="'externalUser.filters.name.placeholder' | translate"
-                [placeholder]="'externalUser.filters.name.placeholder'"
-                [(ngModel)]="filters.query"
+                [(ngModel)]="filters.fullname"
+                [attr.aria-label]="'externalUser.filters.placeholders.fullname' | translate"
+                name="name"
+                placeholder="externalUser.filters.placeholders.fullname"
                 (keyup)="filter()"
             ></arte-input>
+            <arte-autocomplete-enum
+                (onSelect)="filter()"
+                (onUnselect)="filter()"
+                [(ngModel)]="filters.languages"
+                [attr.aria-label]="'externalUser.filters.name.placeholders.language' | translate"
+                [multiple]="true"
+                [suggestionsEnum]="languageEnum"
+                [translationPath]="'externalUser.languageEnum.'"
+                name="language"
+            ></arte-autocomplete-enum>
         </div>
         <div class="form-group col-md-3 ac-ui-unfluid">
             <label translate="externalUser.home.includeDeleted"></label>

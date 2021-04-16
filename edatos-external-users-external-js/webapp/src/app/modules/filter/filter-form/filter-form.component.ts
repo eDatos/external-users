@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Filter } from '@app/core/model';
+import { AccountUserService } from '@app/core/service';
 import { FilterService } from '@app/shared/service';
 import { finalize } from 'rxjs/operators';
 
@@ -14,8 +15,15 @@ export class FilterFormComponent implements OnInit {
     public isSaving = false;
     public isLoading = false;
     public filter: Filter;
+    public account: any;
 
-    constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private titleService: Title, private router: Router) {
+    constructor(
+        private userService: AccountUserService,
+        private filterService: FilterService,
+        private activatedRoute: ActivatedRoute,
+        private titleService: Title,
+        private router: Router
+    ) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
         this.activatedRoute.url.subscribe((segments) => {
             const lastUrlSegment = segments[segments.length - 1].path;
@@ -26,6 +34,13 @@ export class FilterFormComponent implements OnInit {
     public ngOnInit() {
         if (!this.inEditMode) {
             this.titleService.setTitle(this.titleService.getTitle() + ' ' + this.filter.id);
+        } else {
+            this.userService
+                .getLogueado()
+                .toPromise()
+                .then((account) => {
+                    this.account = account;
+                });
         }
     }
 
@@ -43,6 +58,8 @@ export class FilterFormComponent implements OnInit {
 
     public submit(): void {
         this.toggleIsSaving();
+        this.filter.externalUser = this.account;
+
         if (this.filter.id == null) {
             this.filterService
                 .save(this.filter)
@@ -59,6 +76,18 @@ export class FilterFormComponent implements OnInit {
                     this.toggleEditMode();
                 });
         }
+    }
+
+    public delete() {
+        this.showSpinner();
+        this.filterService
+            .delete(this.filter.id)
+            .pipe(finalize(() => this.hideSpinner()))
+            .subscribe((response) => {
+                if (response.status >= 200 && response.status < 300) {
+                    this.router.navigate([`..`], { relativeTo: this.activatedRoute });
+                }
+            });
     }
 
     private toggleIsSaving(): void {

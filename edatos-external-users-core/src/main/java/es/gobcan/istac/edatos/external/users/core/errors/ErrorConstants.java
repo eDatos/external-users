@@ -35,14 +35,6 @@ public final class ErrorConstants {
     public static final String ID_FALTA = "error.id-falta";
 
     /**********
-     * LOGIN
-     *********/
-    public static final String LOGIN_USUARIO_NO_EXISTE = "error.login.user-not-exists";
-    public static final String LOGIN_USUARIO_DESACTIVADO = "error.login.user-disabled";
-    public static final String LOGIN_VACIO = "error.login.void";
-    public static final String LOGIN_FALLIDO = "error.login.failed";
-
-    /**********
      * QUERY
      *********/
     public static final String QUERY_NO_SOPORTADA = "error.query-no-soportada";
