@@ -6,6 +6,8 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
 
     public static final CommonServiceExceptionType INVALID_PROC_STATUS = create("exception.external_users.invalid.proc_status");
 
+    public static final CommonServiceExceptionType GENERIC_ERROR = create("exception.external_users.generic");
+
     /********
      * OPERATION
      ********/
@@ -35,6 +37,7 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
      * EXTERNAL_USER
      ********/
     public static final CommonServiceExceptionType EXTERNAL_USER_DELETED = create("exception.external_users.deleted");
+    public static final CommonServiceExceptionType EXTERNAL_USER_DEACTIVATE = create("exception.external_users.deactivate");
 
     /********
      * PASSWORD

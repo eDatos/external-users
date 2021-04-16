@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
             .getLogueado()
             .toPromise()
             .then((account) => {
-                const modalRef = this.genericModalService.open(DeleteConfirmDialogComponent as Component, { user: { ...account } });
+                const modalRef = this.genericModalService.open(DeleteConfirmDialogComponent as Component, { user: { ...account } }, { container: '.app' });
                 modalRef.result.subscribe((isDelete) => this.onDeleteSuccess(isDelete));
             });
     }

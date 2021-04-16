@@ -1,4 +1,7 @@
 @import './vendor/fontawesome';
+
 @import '~bootstrap/scss/bootstrap-reboot';
 
-@import './bootstrap.scss';
+.app {
+    @import './bootstrap.scss';
+}

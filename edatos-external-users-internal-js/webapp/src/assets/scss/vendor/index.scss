@@ -5,7 +5,7 @@
 /**
  * So... why do we need this two styles? Well, let's see:
  *
- * This was first made because a bug related to º. Bootstrap styles used
+ * This was first made because a bug related to metamac-navbar. Bootstrap styles used
  * by this app would collide with the defined ones from metamac-navbar, causing the navbar to
  * have some bugs (shorter margins, the dropdown pointer was duplicating, that sort of thing).
  *

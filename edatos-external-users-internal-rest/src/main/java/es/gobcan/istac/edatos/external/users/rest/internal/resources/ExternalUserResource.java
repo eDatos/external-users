@@ -125,7 +125,7 @@ public class ExternalUserResource extends AbstractResource {
     @DeleteMapping("/{id}")
     @PreAuthorize("@secChecker.canModifyUserStatus(authentication)")
     public ResponseEntity<ExternalUserDto> deactivateExternalUser(@PathVariable Long id) {
-        ExternalUserDto dto = externalUserMapper.toDto(externalUserService.delete(id));
+        ExternalUserDto dto = externalUserMapper.toDto(externalUserService.deactivate(id));
         return ResponseEntity.ok(dto);
     }
 
