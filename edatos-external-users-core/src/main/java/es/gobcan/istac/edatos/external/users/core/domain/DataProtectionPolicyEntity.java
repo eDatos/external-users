@@ -20,7 +20,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVers
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 
 /**
- * The data protection policy is a document that describe how and for what the user's personal data is used.
+ * The data protection policy is a document that describes how and for what the user's personal data is used.
  */
 @Entity
 @Table(name = "tb_data_protection_policy")
