@@ -90,13 +90,6 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
         private router: Router
     ) {
         this.filters = new ExternalUserFilter();
-        this.itemsPerPage = ITEMS_PER_PAGE;
-        this.activatedRoute.data.subscribe((data) => {
-            this.page = data['pagingParams'].page;
-            this.reverse = data['pagingParams'].ascending;
-            this.predicate = data['pagingParams'].predicate;
-            this.itemsPerPage = data['pagingParams'].itemsPerPage;
-        });
     }
 
     public ngOnInit() {
@@ -121,17 +114,20 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
     }
 
     public loadAll() {
-        const queryParams = {
+        const transitionParams = {
             page: this.page - 1,
-            size: PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE,
+            size: this.size(),
             sort: this.sort(),
-            query: this.filters.toQuery(),
         };
-        this.router.navigate(['/external-users'], { queryParams });
-        this.userService.find(queryParams).subscribe((res) => this.onSuccess(res));
+        const queryRequestParams = {
+            query: this.filters.toQuery(),
+            ...transitionParams,
+        };
+        this.router.navigate(['/external-users'], { queryParams: this.filters.toUrl(this.activatedRoute.snapshot.queryParams) });
+        this.userService.find(queryRequestParams).subscribe((res) => this.onSuccess(res));
     }
 
-    public sort() {
+    public sort(): string[] {
         const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
         if (this.predicate !== 'id') {
             result.push('id');
@@ -153,12 +149,22 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
         return !user.deletionDate;
     }
 
+    private size(): number {
+        return PAGINATION_OPTIONS.indexOf(Number(this.itemsPerPage)) > -1 ? this.itemsPerPage : ITEMS_PER_PAGE;
+    }
+
     private onSuccess(data: ResponseWrapper<ExternalUser[]>) {
         this.totalItems = data.totalCount();
         this.users = data.body;
     }
 
     private processUrlParams(): void {
+        this.activatedRoute.data.subscribe((data) => {
+            this.page = data['pagingParams'].page;
+            this.reverse = data['pagingParams'].ascending;
+            this.predicate = data['pagingParams'].predicate;
+            this.itemsPerPage = data['pagingParams'].itemsPerPage;
+        });
         this.filters.processUrlParams(this.activatedRoute.snapshot.queryParams);
     }
 }
