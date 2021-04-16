@@ -17,8 +17,8 @@ import { Editor } from 'primeng/editor';
 })
 export class MultiLanguageEditorComponent implements ControlValueAccessor {
 
-  onTouched: any;
-  onChange: any;
+  onTouched: any = () => {};
+  onChange: any = () => {};
   isDisabled: boolean = false;
   editors: any = {};
   value: InternationalString = new InternationalString();
@@ -33,7 +33,6 @@ export class MultiLanguageEditorComponent implements ControlValueAccessor {
     if(editors) {
       editors.forEach(editor => {
         this.editors[editor.el.nativeElement.id] = editor.quill;
-        editor.el.nativeElement.id;
       });
     }
   }
@@ -41,7 +40,7 @@ export class MultiLanguageEditorComponent implements ControlValueAccessor {
   constructor() { }
 
   writeValue(values: LocalisedString[]): void {
-    this.value.texts = values;
+    this.value.texts = values || [];
     this.value.texts.forEach(value => {
       this.editors[value.locale]?.setContents(this.editors[value.locale].clipboard.convert(value.label));
     });

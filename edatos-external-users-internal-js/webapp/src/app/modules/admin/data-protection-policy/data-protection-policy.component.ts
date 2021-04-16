@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, LOCALE_ID, Inject } from '@angular/core';
+import { Component, LOCALE_ID, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InternationalString } from '@app/shared/model/international-string.model';
@@ -24,10 +24,8 @@ export class DataProtectionPolicyComponent {
 
     this.dataProtectionPolicyForm = this.fb.group({ 'dataProtectionPolicy': [[]] });
     this.dataProtectionPolicyService.getDataProtectionPolicy().subscribe(dataProtectionPolicy => {
-      this.dataProtectionPolicy = new InternationalString();
-      this.dataProtectionPolicy.id = dataProtectionPolicy.id;
-      this.dataProtectionPolicy.texts = dataProtectionPolicy.value.texts;
-      this.locales = dataProtectionPolicy.value.texts.map(text => text.locale);
+      this.dataProtectionPolicy = dataProtectionPolicy;
+      this.locales = this.dataProtectionPolicy.texts.map(text => text.locale);
       this.dataProtectionPolicyForm.get("dataProtectionPolicy").setValue(this.dataProtectionPolicy.texts);
     });
   }
@@ -38,16 +36,9 @@ export class DataProtectionPolicyComponent {
     this.router.navigate(returnPath);
   }
 
-  getLocalisedDataProtectionPolicy(locale?: string): string {
-    return this.dataProtectionPolicy.getLocalisedLabel(locale ? locale : this.locale);
-  }
-
   save() {
-    console.log(this.dataProtectionPolicyForm.value);
     this.dataProtectionPolicyService.updateDataProtectionPolicy(this.dataProtectionPolicyForm.get('dataProtectionPolicy').value).subscribe(() => {
       this.clear();
-    }, (error) => {
-      console.error(error);
     });
   }
 }
