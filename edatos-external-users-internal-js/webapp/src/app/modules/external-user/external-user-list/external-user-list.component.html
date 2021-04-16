@@ -4,6 +4,7 @@
             <h2 class="page-header-title">
                 <span class="page-header-title-text" translate="externalUser.home.title"></span>
             </h2>
+            <!--TODO(EDATOS-3345): User creation is temporarily deactivated.-->
             <span [ngbTooltip]="'externalUser.home.createDeactivatedTooltip' | translate" placement="bottom" tooltipClass="tooltip-warning">
                 <button *ngIf="permissionService.puedeNavegarUserManagement()" [routerLink]="['/external-users/new']" class="btn btn-primary" disabled type="button">
                     <span class="btn-icon fa fa-plus"></span>
@@ -38,7 +39,8 @@
                                 <td>{{user.surname2}}</td>
                                 <td>{{user.email}}</td>
                                 <td>{{ 'externalUser.languageEnum.' + user.language | translate }}</td>
-                                <td>{{ 'externalUser.treatmentEnum.' + user.treatment | translate }}</td>
+                                <td *ngIf="user.treatment">{{ 'externalUser.treatmentEnum.' + user.treatment | translate }}</td>
+                                <td *ngIf="!user.treatment"></td>
                                 <td>
                                     <span class="badge badge-danger ml-1" *ngIf="user.deletionDate">{{ 'externalUser.status.deleted' | translate }}</span>
                                     <span class="badge badge-info ml-1" *ngIf="!user.deletionDate">{{ 'externalUser.status.active' | translate }}</span>

@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ErrorComponent } from '@app/layouts/error';
 import { DEFAULT_PATH } from './app.constants';
 import { UserRouteAccessGuard } from './core/guard';
-import { FILTER_ROLES, HERRAMIENTAS_ROLES, FAVORITE_ROLES, EXTERNAL_USER_ROLES } from './core/service';
+import { EXTERNAL_USER_ROLES, FAVORITE_ROLES, FILTER_ROLES, HERRAMIENTAS_ROLES } from './core/service';
 
 const APP_ROUTES: Routes = [
     {
@@ -49,12 +50,12 @@ const APP_ROUTES: Routes = [
     },
     {
         path: '**',
-        redirectTo: 'notfound',
+        component: ErrorComponent,
     },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(APP_ROUTES, { useHash: true })],
+    imports: [RouterModule.forRoot(APP_ROUTES, { useHash: true, onSameUrlNavigation: 'reload' })],
     exports: [RouterModule],
 })
 export class AppRoutingModule {}

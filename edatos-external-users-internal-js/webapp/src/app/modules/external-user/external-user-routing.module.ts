@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ExternalUserFormComponent } from '@app/modules/external-user/external-user-form/external-user-form.component';
-import { ExternalUserListComponent } from '@app/modules/external-user/external-user-list/external-user-list.component';
 import { ITEMS_PER_PAGE } from '@app/app.constants';
 import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
 import { USER_MANAGEMENT_ROLES } from '@app/core/service/auth';
+import { ExternalUserFormComponent } from '@app/modules/external-user/external-user-form/external-user-form.component';
+import { ExternalUserListComponent } from '@app/modules/external-user/external-user-list/external-user-list.component';
 import { PagingParamsResolver } from 'arte-ng/services';
 
 export const EXTERNAL_USER_ROUTES: Routes = [
@@ -28,7 +28,8 @@ export const EXTERNAL_USER_ROUTES: Routes = [
     {
         path: 'new',
         canActivate: [UserRouteAccessGuard],
-        component: ExternalUserFormComponent,
+        // component: ExternalUserFormComponent,
+        redirectTo: '', // TODO(EDATOS-3345): User creation is temporarily deactivated.
         data: {
             pageTitle: 'externalUser.home.title',
             roles: USER_MANAGEMENT_ROLES,
@@ -41,15 +42,6 @@ export const EXTERNAL_USER_ROUTES: Routes = [
         data: {
             pageTitle: 'externalUser.home.title',
             roles: USER_MANAGEMENT_ROLES,
-        },
-    },
-    {
-        path: ':id/edit',
-        canActivate: [UserRouteAccessGuard],
-        component: ExternalUserFormComponent,
-        data: {
-            roles: USER_MANAGEMENT_ROLES,
-            pageTitle: 'externalUser.home.title',
         },
     },
 ];

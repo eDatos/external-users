@@ -14,6 +14,7 @@ import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.converter.CriterionConverter;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.util.CriteriaUtil;
@@ -41,7 +42,7 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
         LANGUAGE,
         TREATMENT,
         DELETION_DATE,
-        QUERY,
+        FULLNAME,
     }
 
     public ExternalUserCriteriaProcessor() {
@@ -61,7 +62,7 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.SURNAME2).sortable()
                 .withEntityProperty(ENTITY_FIELD_SURNAME2).build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.QUERY)
+                .withQueryProperty(QueryProperty.FULLNAME)
                 .withCriterionConverter(new SqlCriterionBuilder())
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder.dateRestrictionProcessor()
@@ -71,6 +72,10 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.EMAIL).sortable()
                 .withEntityProperty(ENTITY_FIELD_EMAIL)
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder.enumRestrictionProcessor(Language.class)
+                .withQueryProperty(QueryProperty.LANGUAGE)
+                .withEntityProperty(ENTITY_FIELD_LANGUAGE)
                 .build());
         registerOrderProcessor(OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.LANGUAGE)
@@ -87,7 +92,7 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
 
         @Override
         public Criterion convertToCriterion(QueryPropertyRestriction property, CriteriaProcessorContext context) {
-            if (QueryProperty.QUERY.name().equalsIgnoreCase(property.getLeftExpression())) {
+            if (QueryProperty.FULLNAME.name().equalsIgnoreCase(property.getLeftExpression())) {
                 List<String> fields = new ArrayList<>(Arrays.asList(TABLE_FIELD_EMAIL, TABLE_FIELD_NAME, TABLE_FIELD_SURNAME1, TABLE_FIELD_SURNAME2));
                 return CriteriaUtil.buildAccentAndCaseInsensitiveCriterion(property, fields);
             }

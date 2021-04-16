@@ -226,6 +226,9 @@
                 "notANumber": "El valor introducido debe ser numérico"
             }
         },
+        "deactivate": {
+            "title": "Confirmar desactivación"
+        },
         "delete": {
             "title": "Confirmar operación de borrado"
         },
@@ -322,7 +325,7 @@
         "activado": "Activado",
         "created": "Se ha creado el usuario {{ param }}",
         "deactivate": {
-            "question": "¿Seguro que desea eliminar el usuario <strong>{{ email }}</strong>?"
+            "question": "¿Seguro que desea desactivar el usuario <strong>{{ email }}</strong>?"
         },
         "deleted": "Se ha eliminado el usuario {{ param }}",
         "deletionDate": "Fecha de borrado",
@@ -331,10 +334,11 @@
             "title": "Usuario"
         },
         "email": "Email",
+        "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario",
         "filters": {
-            "name": {
-                "label": "Usuario",
-                "placeholder": "Introduzca nombre, usuario o apellidos"
+            "placeholders": {
+                "fullname": "Introduzca nombre o apellidos",
+                "language": "Introduzca idiomas del usuario"
             },
             "rolEnum": {
                 "label": "Rol"
@@ -346,7 +350,8 @@
             "rolShort": {
                 "label": "Búsqueda por rol (ac-autocomplete-short-list)",
                 "placeholder": "Introduzca rol (ac-autocomplete-short-list)"
-            }
+            },
+            "title": "Filtrar usuarios"
         },
         "home": {
             "createDeactivatedTooltip": "La creación de usuarios está desactivada",
@@ -458,8 +463,8 @@
         },
         "form": {
             "cancel": "Cancelar",
-            "edit": "Editar filtro",
             "delete": "Eliminar filtro",
+            "edit": "Editar filtro",
             "goBack": "Volver al listado",
             "legend": "Detalles del filtro",
             "new": "Crear un nuevo filtro",
@@ -676,6 +681,9 @@
     },
     "operation": {
         "name": "Operación estadística"
+    },
+    "structuralResourcesTree": {
+        "noRecordsFound": "No se ha encontrado ningún tema ni operación"
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"
