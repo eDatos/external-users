@@ -1,5 +1,7 @@
 import { Component, LOCALE_ID, Inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DEFAULT_LANG } from '@app/app.constants';
+import { InternationalString } from '@app/shared';
 import { DataProtectionPolicyService } from './data-protection-policy.service';
 
 @Component({
@@ -17,6 +19,11 @@ export class DataProtectionPolicyComponent {
     this.dataProtectionPolicyForm = fb.group({ 'dataProtectionPolicy': [[]] });
     this.locales = [locale];
     dataProtectionPolicyService.getDataProtectionPolicy().subscribe(dataProtectionPolicy => {
+      var internationalDataProtectionPolicy = new InternationalString();
+      internationalDataProtectionPolicy.texts = dataProtectionPolicy.value.texts;
+      if(!internationalDataProtectionPolicy.getLocalisedLabel(this.locales[0])) {
+        this.locales = [DEFAULT_LANG];
+      }
       this.dataProtectionPolicyForm.get("dataProtectionPolicy").setValue(dataProtectionPolicy.value.texts);
     });
   }
