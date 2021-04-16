@@ -1,6 +1,6 @@
 import { Component, forwardRef, Input, QueryList, ViewChildren } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InternationalString, LocalisedString } from '@app/shared/model';
+import { InternationalString } from '@app/shared/model';
 import { Editor } from 'primeng/editor';
 
 @Component({
@@ -37,10 +37,13 @@ export class MultiLanguageEditorComponent implements ControlValueAccessor {
     }
   }
 
-  constructor() { }
+  constructor() { 
+    this.value.texts = [];
+  }
 
-  writeValue(values: LocalisedString[]): void {
-    this.value.texts = values || [];
+  writeValue(value: InternationalString): void {
+    this.value = value || new InternationalString();
+    this.value.texts = this.value.texts || [];
     this.value.texts.forEach(value => {
       this.editors[value.locale]?.setContents(this.editors[value.locale].clipboard.convert(value.label));
     });

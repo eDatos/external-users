@@ -9,7 +9,7 @@
                 routerLink="/admin/data-protection-policy/edit">
                 <span class="fa fa-pencil"></span> <span translate="entity.action.edit"></span>
             </button>
-            <button *ngIf="isEditMode" type="submit" form="form" class="btn btn-primary">
+            <button *ngIf="isEditMode" type="submit" form="data-protection-policy-form" class="btn btn-primary">
                 <span class="fa fa-floppy-o"></span>
                 <span translate="entity.action.save"></span>
             </button>
@@ -20,8 +20,8 @@
         </div>
     </div>
     <div class="page-body">
-        <form [formGroup]="dataProtectionPolicyForm" class="page-form page-section" (ngSubmit)="save()" id="form">
-            <app-multi-language-editor formControlName="dataProtectionPolicy" [locales]="locales" [isEditMode]="isEditMode"></app-multi-language-editor>
+        <form class="page-form page-section" (ngSubmit)="save()" id="data-protection-policy-form" #dataProtectionPolicyForm="ngForm">
+            <app-multi-language-editor [(ngModel)]="dataProtectionPolicy" name="dataProtectionPolicy" [locales]="locales" [isEditMode]="isEditMode"></app-multi-language-editor>
         </form>
     </div>
 </div>

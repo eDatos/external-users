@@ -12,8 +12,8 @@
         </div>
     </div>
     <div class="page-body">
-        <form [formGroup]="dataProtectionPolicyForm" class="page-form page-section">
-            <app-multi-language-editor formControlName="dataProtectionPolicy" [locales]="locales" [isEditMode]="isEditMode"></app-multi-language-editor>
+        <form class="page-form page-section" id="data-protection-policy-form" #dataProtectionPolicyForm="ngForm">
+            <app-multi-language-editor [(ngModel)]="dataProtectionPolicy" name="dataProtectionPolicy" [locales]="locales" [isEditMode]="isEditMode"></app-multi-language-editor>
         </form>
     </div>
 </div>
