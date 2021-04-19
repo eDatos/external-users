@@ -91,11 +91,13 @@ public class DataProtectionPolicyServiceTest {
     @Test
     public void testUpdateDataProtectionPolicyOnlyNeededLanguages() throws Exception {
         DataProtectionPolicyEntity databaseEntity = dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
-        InternationalStringVO updateParam = new InternationalStringVO();
+        DataProtectionPolicyEntity updateParam = new DataProtectionPolicyEntity();
+        InternationalStringVO texts = new InternationalStringVO();
         for(String language: languages.subList(1, languages.size())) {
             LocalisedStringVO rightLocaleString = new LocalisedStringVO(language, language);
-            updateParam.addText(rightLocaleString);
+            texts.addText(rightLocaleString);
         }
+        updateParam.setValue(texts);
         
         dataProtectionPolicyService.update(updateParam);
         DataProtectionPolicyEntity returnedValue = dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
@@ -120,9 +122,11 @@ public class DataProtectionPolicyServiceTest {
         databaseEntity.getValue().addText(new LocalisedStringVO("en", "en"));
         dataProtectionPolicyRepository.saveAndFlush(databaseEntity);
         
-        InternationalStringVO updateParam = new InternationalStringVO();
-        updateParam.addText(new LocalisedStringVO("klingon", "klingon"));
-        updateParam.addText(new LocalisedStringVO("English klingon", "en"));
+        DataProtectionPolicyEntity updateParam = new DataProtectionPolicyEntity();
+        InternationalStringVO texts = new InternationalStringVO();
+        texts.addText(new LocalisedStringVO("klingon", "klingon"));
+        texts.addText(new LocalisedStringVO("English klingon", "en"));
+        updateParam.setValue(texts);
         
         dataProtectionPolicyService.update(updateParam);
         DataProtectionPolicyEntity returnedValue = dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
