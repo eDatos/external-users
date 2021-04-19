@@ -1,5 +1,6 @@
 import { Component, LOCALE_ID, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataProtectionPolicy } from '@app/shared/model/data-protection-policy.model';
 import { InternationalString } from '@app/shared/model/international-string.model';
 import { DataProtectionPolicyService } from './data-protection-policy.service';
 
@@ -10,7 +11,7 @@ import { DataProtectionPolicyService } from './data-protection-policy.service';
 })
 export class DataProtectionPolicyComponent {
 
-  dataProtectionPolicy: InternationalString = new InternationalString();
+  dataProtectionPolicy: DataProtectionPolicy = new DataProtectionPolicy();
   isEditMode: boolean = false;
   locales: string[] = [];
 
@@ -22,7 +23,7 @@ export class DataProtectionPolicyComponent {
 
     this.dataProtectionPolicyService.getDataProtectionPolicy().subscribe(dataProtectionPolicy => {
       this.dataProtectionPolicy = dataProtectionPolicy;
-      this.locales = this.dataProtectionPolicy.texts.map(text => text.locale);
+      this.locales = this.dataProtectionPolicy.value.texts.map(text => text.locale);
     });
   }
 

@@ -2,7 +2,6 @@ package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
 import java.util.Optional;
 
-import org.siemac.edatos.core.common.dto.InternationalStringDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.DataProtectionPolicyEnt
 import es.gobcan.istac.edatos.external.users.core.service.DataProtectionPolicyService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.DataProtectionPolicyDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.DataProtectionPolicyMapper;
-import es.gobcan.istac.edatos.external.users.rest.common.mapper.InternationalStringVOMapper;
 import io.github.jhipster.web.util.ResponseUtil;
 
 @RestController
@@ -28,12 +26,10 @@ public class DataProtectionPolicyResource extends AbstractResource {
 
     private final DataProtectionPolicyService dataProtectionPolicyService;
     private final DataProtectionPolicyMapper dataProtectionPolicyMapper;
-    private final InternationalStringVOMapper internationalStringVOMapper;
 
-    public DataProtectionPolicyResource(DataProtectionPolicyService dataProtectionPolicyService, DataProtectionPolicyMapper dataProtectionPolicyMapper, InternationalStringVOMapper internationalStringVOMapper) {
+    public DataProtectionPolicyResource(DataProtectionPolicyService dataProtectionPolicyService, DataProtectionPolicyMapper dataProtectionPolicyMapper) {
         this.dataProtectionPolicyService = dataProtectionPolicyService;
         this.dataProtectionPolicyMapper = dataProtectionPolicyMapper;
-        this.internationalStringVOMapper = internationalStringVOMapper;
     }
 
     @GetMapping
@@ -48,9 +44,9 @@ public class DataProtectionPolicyResource extends AbstractResource {
     @PutMapping
     @Timed
     @PreAuthorize("@secChecker.canUpdateDataProtectionPolicy(authentication)")
-    public ResponseEntity<DataProtectionPolicyDto> updateDataProtectionPolicy(@RequestBody InternationalStringDto dataProtectionPolicyValue) {
-        DataProtectionPolicyEntity dataProtectionPolicy = dataProtectionPolicyService.update(internationalStringVOMapper.toEntity(dataProtectionPolicyValue));
-        DataProtectionPolicyDto dataProtectionPolicyDto = dataProtectionPolicyMapper.toDto(dataProtectionPolicy);
+    public ResponseEntity<DataProtectionPolicyDto> updateDataProtectionPolicy(@RequestBody DataProtectionPolicyDto dataProtectionPolicy) {
+        DataProtectionPolicyEntity dataProtectionPolicyEntity = dataProtectionPolicyService.update(dataProtectionPolicyMapper.toEntity(dataProtectionPolicy));
+        DataProtectionPolicyDto dataProtectionPolicyDto = dataProtectionPolicyMapper.toDto(dataProtectionPolicyEntity);
         return ResponseEntity.ok().body(dataProtectionPolicyDto);
     }
 }

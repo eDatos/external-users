@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { InternationalString } from '@app/shared';
 import { map } from 'rxjs/operators';
+import { DataProtectionPolicy } from '@app/shared/model/data-protection-policy.model';
 
 @Injectable()
 export class DataProtectionPolicyService {
@@ -11,12 +12,14 @@ export class DataProtectionPolicyService {
 
     constructor(private http: HttpClient) { }
 
-    getDataProtectionPolicy(): Observable<InternationalString> {
+    getDataProtectionPolicy(): Observable<DataProtectionPolicy> {
         return this.http.get(this.dataProtectionPolicyUrl).pipe(map((response: any) => {
-            let internationalDataProtectionPolicy = new InternationalString();
-            internationalDataProtectionPolicy.id = response.id;
-            internationalDataProtectionPolicy.texts = response.value.texts;
-            return internationalDataProtectionPolicy;
+            let dataProtectionPolicy = response as DataProtectionPolicy;
+            let internationalValue = new InternationalString();
+            internationalValue.texts = response.value.texts;
+            dataProtectionPolicy.value = internationalValue;
+
+            return dataProtectionPolicy;
         }));
     }
 }

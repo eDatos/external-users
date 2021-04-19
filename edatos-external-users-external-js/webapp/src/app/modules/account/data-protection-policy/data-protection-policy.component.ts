@@ -1,6 +1,7 @@
 import { Component, LOCALE_ID, Inject } from '@angular/core';
 import { DEFAULT_LANG } from '@app/app.constants';
 import { InternationalString } from '@app/shared';
+import { DataProtectionPolicy } from '@app/shared/model/data-protection-policy.model';
 import { DataProtectionPolicyService } from './data-protection-policy.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { DataProtectionPolicyService } from './data-protection-policy.service';
 })
 export class DataProtectionPolicyComponent {
 
-  dataProtectionPolicy: InternationalString = new InternationalString();
+  dataProtectionPolicy: DataProtectionPolicy = new DataProtectionPolicy();
   isEditMode: boolean = false;
   locales: string[] = [];
 
@@ -18,7 +19,7 @@ export class DataProtectionPolicyComponent {
     this.locales = [locale];
     dataProtectionPolicyService.getDataProtectionPolicy().subscribe(dataProtectionPolicy => {
       this.dataProtectionPolicy = dataProtectionPolicy;
-      if(!dataProtectionPolicy.getLocalisedLabel(this.locales[0])) {
+      if(!dataProtectionPolicy.value.getLocalisedLabel(this.locales[0])) {
         this.locales = [DEFAULT_LANG];
       }
     });

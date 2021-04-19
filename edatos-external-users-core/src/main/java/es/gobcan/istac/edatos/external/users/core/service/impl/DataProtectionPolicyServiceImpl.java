@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -52,10 +53,10 @@ public class DataProtectionPolicyServiceImpl implements DataProtectionPolicyServ
     }
 
     @Override
-    public DataProtectionPolicyEntity update(InternationalStringVO value) {
+    public DataProtectionPolicyEntity update(DataProtectionPolicyEntity updatedEntity) {
         DataProtectionPolicyEntity entity = this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
         List<String> languages = metadataProperties.getLanguages().stream().map(language -> language.toLowerCase()).collect(Collectors.toList());
-        for (LocalisedStringVO localisedString : value.getTexts()) {
+        for (LocalisedStringVO localisedString : new ArrayList<>(updatedEntity.getValue().getTexts())) {
             if (localisedString != null) {
                 LocalisedStringVO storedLocalisedString = entity.getValue().getLocalisedLabelEntity(localisedString.getLocale());
                 if (storedLocalisedString != null) {
