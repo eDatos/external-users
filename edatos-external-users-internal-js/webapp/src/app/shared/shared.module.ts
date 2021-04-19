@@ -28,6 +28,7 @@ import { AppAuditInfoComponent } from './components/audit-info/audit-info.compon
 import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
+import { QuillModule } from 'ngx-quill'
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { EditorModule } from 'primeng/editor';
         ArteSpinnerModule,
         ArteEntityListEmptyModule,
         DropdownModule,
-        EditorModule
+        EditorModule,
+        QuillModule
     ],
     providers: [
         FormcontrolStatusService,
