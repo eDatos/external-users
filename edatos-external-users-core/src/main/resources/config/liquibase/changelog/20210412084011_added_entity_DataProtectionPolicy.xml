@@ -22,5 +22,4 @@
             </column>
         </createTable>
     </changeSet>
-    <include file="config/liquibase/postgresql/add_data_protection_policy_row.sql" relativeToChangelogFile="false"/>
 </databaseChangeLog>

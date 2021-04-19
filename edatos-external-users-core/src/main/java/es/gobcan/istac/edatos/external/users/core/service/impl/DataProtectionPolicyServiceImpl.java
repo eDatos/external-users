@@ -23,11 +23,17 @@ public class DataProtectionPolicyServiceImpl implements DataProtectionPolicyServ
     public DataProtectionPolicyServiceImpl(DataProtectionPolicyRepository configurationRepository, MetadataProperties metadataProperties) {
         this.dataProtectionPolicyRepository = configurationRepository;
         this.metadataProperties = metadataProperties;
+        if(this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc() == null) {
+            DataProtectionPolicyEntity entity = new DataProtectionPolicyEntity();
+            InternationalStringVO internationalString = new InternationalStringVO();
+            entity.setValue(internationalString);
+            this.dataProtectionPolicyRepository.saveAndFlush(entity);
+        }
     }
 
     @Override
     public DataProtectionPolicyEntity find() {
-        DataProtectionPolicyEntity entity = this.dataProtectionPolicyRepository.findOne(0L);
+        DataProtectionPolicyEntity entity = this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
         dataProtectionPolicyRepository.detachEntity(entity);
         Set<LocalisedStringVO> texts = new HashSet<>();
         List<String> languages = metadataProperties.getLanguages().stream().map(language -> language.toLowerCase()).collect(Collectors.toList());
@@ -47,7 +53,7 @@ public class DataProtectionPolicyServiceImpl implements DataProtectionPolicyServ
 
     @Override
     public DataProtectionPolicyEntity update(InternationalStringVO value) {
-        DataProtectionPolicyEntity entity = this.dataProtectionPolicyRepository.findOne(0L);
+        DataProtectionPolicyEntity entity = this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
         List<String> languages = metadataProperties.getLanguages().stream().map(language -> language.toLowerCase()).collect(Collectors.toList());
         for (LocalisedStringVO localisedString : value.getTexts()) {
             if (localisedString != null) {
