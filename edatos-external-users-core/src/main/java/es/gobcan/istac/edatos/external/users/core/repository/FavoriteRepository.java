@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
@@ -17,12 +18,9 @@ import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> {
 
     Page<FavoriteEntity> findAll(DetachedCriteria criteria, Pageable pageable);
-
     List<FavoriteEntity> findAll(DetachedCriteria criteria);
-
     List<FavoriteEntity> findAllByExternalUserOrderByCreatedDate(ExternalUserEntity user);
-
-    void deleteByExternalUser(ExternalUserEntity externalUser);
+    Optional<FavoriteEntity> findByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
     void deleteByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
     void deleteByExternalUserAndOperation(ExternalUserEntity externalUser, OperationEntity operation);
 }

@@ -1,9 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
@@ -37,25 +35,24 @@ public class FavoriteServiceImpl implements FavoriteService {
     public FavoriteEntity create(FavoriteEntity favorite) {
         favoriteValidator.validate(favorite);
         if (favorite.getCategory() != null) {
-            Set<FavoriteEntity> favorites = new HashSet<>();
-            create(favorite.getExternalUser(), favorite.getCategory(), favorites);
-            return favoriteRepository.save(favorites).get(0);
+            create(favorite.getExternalUser(), favorite.getCategory());
+            return favoriteRepository.findByExternalUserAndCategory(favorite.getExternalUser(), favorite.getCategory()).get();
         } else {
             return favoriteRepository.saveAndFlush(favorite);
         }
     }
 
-    private void create(ExternalUserEntity externalUser, CategoryEntity parent, Set<FavoriteEntity> favorites) {
+    private void create(ExternalUserEntity externalUser, CategoryEntity parent) {
         if (externalUser.getFavorites().stream().map(FavoriteEntity::getCategory).noneMatch(cat -> Objects.equals(cat, parent))) {
-            favorites.add(newFavorite(externalUser, parent));
+            favoriteRepository.save(newFavorite(externalUser, parent));
         }
         for (OperationEntity operation : parent.getOperations()) {
             if (externalUser.getFavorites().stream().map(FavoriteEntity::getOperation).noneMatch(op -> Objects.equals(op, operation))) {
-                favorites.add(newFavorite(externalUser, operation));
+                favoriteRepository.save(newFavorite(externalUser, operation));
             }
         }
         for (CategoryEntity child : parent.getChildren()) {
-            create(externalUser, child, favorites);
+            create(externalUser, child);
         }
     }
 
