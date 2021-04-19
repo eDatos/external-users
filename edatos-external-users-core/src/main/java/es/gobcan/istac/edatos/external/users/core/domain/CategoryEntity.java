@@ -108,6 +108,10 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final Set<CategoryEntity> children = new HashSet<>();
 
+    @NotNull
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private final Set<OperationEntity> operations = new HashSet<>();
+
     @Override
     public Long getId() {
         return id;
@@ -214,5 +218,27 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     public void removeChild(CategoryEntity category) {
         category.setParent(null);
         this.children.remove(category);
+    }
+
+    public Set<OperationEntity> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(Set<OperationEntity> operations) {
+        for (OperationEntity operation : operations) {
+            operation.setCategory(this);
+        }
+        this.operations.clear();
+        this.operations.addAll(operations);
+    }
+
+    public void addOperation(OperationEntity operation) {
+        operation.setCategory(this);
+        this.operations.add(operation);
+    }
+
+    public void removeOperation(OperationEntity operation) {
+        operation.setCategory(null);
+        this.operations.remove(operation);
     }
 }

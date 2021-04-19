@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 
 @Repository
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> {
@@ -21,4 +23,6 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
     List<FavoriteEntity> findAllByExternalUserOrderByCreatedDate(ExternalUserEntity user);
 
     void deleteByExternalUser(ExternalUserEntity externalUser);
+    void deleteByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
+    void deleteByExternalUserAndOperation(ExternalUserEntity externalUser, OperationEntity operation);
 }

@@ -10,6 +10,7 @@ import { Observable, of } from 'rxjs';
 @Component({
     selector: 'app-structural-resources-tree',
     templateUrl: './structural-resources-tree.component.html',
+    styleUrls: ['./structural-resources-tree.component.scss'],
 })
 export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     /**
@@ -171,13 +172,23 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor === resource.constructor);
     }
 
-    private setLoadingNode(treeNode: TreeNode) {
-        treeNode.selectable = false;
-        treeNode.icon = 'fa fa-spinner fa-spin';
+    private setLoadingNode(node: TreeNode) {
+        node.icon = 'fa fa-spinner fa-spin';
+        node.selectable = false;
+        if (node.children) {
+            for (const child of node.children) {
+                this.setLoadingNode(child);
+            }
+        }
     }
 
     private unsetLoadingNode(node: TreeNode) {
         node.icon = null;
         node.selectable = !this.disabled;
+        if (node.children) {
+            for (const child of node.children) {
+                this.unsetLoadingNode(child);
+            }
+        }
     }
 }
