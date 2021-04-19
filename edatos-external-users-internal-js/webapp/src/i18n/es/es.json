@@ -453,6 +453,11 @@
         },
         "name": "Favorito"
     },
+    "thematicSubscriptions": {
+        "home": {
+            "title": "Suscripciones temáticas"
+        }
+    },
     "filter": {
         "entity": {
             "email": "Email",

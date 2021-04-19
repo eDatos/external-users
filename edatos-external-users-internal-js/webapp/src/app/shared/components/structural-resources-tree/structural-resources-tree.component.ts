@@ -26,6 +26,14 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public disabled = false;
 
     /**
+     * Sets the selection method of the tree.
+     *
+     * @see https://www.primefaces.org/primeng/v9-lts/#/tree
+     */
+    @Input()
+    public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
+
+    /**
      * Emits an event when an element of the tree is selected.
      */
     @Output()
@@ -90,6 +98,16 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         }
     }
 
+    public onSelect(treeNode: TreeNode) {
+        this.setLoadingNode(treeNode);
+        this.onResourceSelect.emit(treeNode.data);
+    }
+
+    public onUnselect(treeNode: TreeNode) {
+        this.setLoadingNode(treeNode);
+        this.onResourceUnselect.emit(treeNode.data);
+    }
+
     private categoryListToTreeNode(categories: Category[]): Observable<TreeNode[]> {
         return of(
             categories?.map((category) => {
@@ -151,16 +169,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     private isFavorite(resource: Category | Operation): boolean {
         return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor === resource.constructor);
-    }
-
-    public onSelect(treeNode: TreeNode) {
-        this.setLoadingNode(treeNode);
-        this.onResourceSelect.emit(treeNode.data);
-    }
-
-    public onUnselect(treeNode: TreeNode) {
-        this.setLoadingNode(treeNode);
-        this.onResourceUnselect.emit(treeNode.data);
     }
 
     private setLoadingNode(treeNode: TreeNode) {
