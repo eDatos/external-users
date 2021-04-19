@@ -111,7 +111,7 @@ public class ApplicationTemplateSecurity {
     }
     
     public boolean canAccessDataProtectionPolicy(Authentication authentication) {
-        return this.isUser(authentication);
+        return this.isAdmin(authentication);
     }
     
     public boolean canUpdateDataProtectionPolicy(Authentication authentication) {
