@@ -38,6 +38,7 @@ public class DataProtectionPolicyResource extends AbstractResource {
 
     @GetMapping
     @Timed
+    @PreAuthorize("@secChecker.canAccessDataProtectionPolicy(authentication)")
     public ResponseEntity<DataProtectionPolicyDto> getDataProtectionPolicy() {
         DataProtectionPolicyEntity dataProtectionPolicy = dataProtectionPolicyService.find();
         DataProtectionPolicyDto dataProtectionPolicyDto = dataProtectionPolicyMapper.toDto(dataProtectionPolicy);
