@@ -63,8 +63,6 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     public void delete(Long id) {
         ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id).orElseThrow(() -> new EDatosException(ServiceExceptionType.EXTERNAL_USER_DELETED));
         // TODO EDATOS-3338 Is pending confirm if delete is logical or complete
-        // TODO If is delete complete, it would be interesting to add onDelete="Cascade" in liquidbase or the entity
-        filterRepository.deleteAllByExternalUser(usuario);
         externalUserRepository.delete(id);
     }
 
