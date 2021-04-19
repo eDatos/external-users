@@ -23,7 +23,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         if (this.fullname) {
             criterias.push(`FULLNAME ILIKE '%${this.escapeSingleQuotes(this.fullname)}%'`);
         }
-        if (this.languages) {
+        if (this.languages?.length > 0) {
             criterias.push(`LANGUAGE IN (${this.languages.join(',')})`);
         }
         if (!this.includeDeleted) {
