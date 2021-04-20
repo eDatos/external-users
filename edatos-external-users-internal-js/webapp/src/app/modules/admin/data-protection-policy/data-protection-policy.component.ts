@@ -23,7 +23,7 @@ export class DataProtectionPolicyComponent {
 
     this.dataProtectionPolicyService.getDataProtectionPolicy().subscribe(dataProtectionPolicy => {
       this.dataProtectionPolicy = dataProtectionPolicy;
-      this.locales = this.dataProtectionPolicy.value.texts.map(text => text.locale);
+      this.locales = this.dataProtectionPolicy.value.texts.map(text => text.locale).sort((a, b) => (a < b) ? -1 : +(a > b));
     });
   }
 
