@@ -8,16 +8,24 @@ declare const MetamacNavBar: {
 
 @Component({
     selector: 'app-edatos-navbar',
-    template: `<nav id="edatos-navbar"></nav>`,
+    template: `
+        <div *ngIf="isLoading; else loadComplete" class="edatos-navbar"></div>
+        <ng-template #loadComplete>
+            <nav id="edatos-navbar"></nav>
+        </ng-template>
+    `,
     styleUrls: ['./edatos-navbar.component.scss'],
 })
 export class EdatosNavbarComponent implements OnInit {
+    public isLoading = true;
+
     constructor(private configService: ConfigService, private scriptService: ScriptService) {}
 
-    ngOnInit() {
+    public ngOnInit() {
         const navbarScriptUrl = this.configService.getConfig().metadata.navbarScriptUrl;
         this.scriptService.loadScript(`${navbarScriptUrl}/js/metamac-navbar.js`).subscribe(
             (_) => {
+                this.isLoading = false;
                 MetamacNavBar.loadNavbar({
                     element: 'edatos-navbar',
                 });

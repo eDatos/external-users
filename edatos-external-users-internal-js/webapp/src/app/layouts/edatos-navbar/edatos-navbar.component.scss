@@ -1,5 +1,5 @@
 @import 'variables';
-#edatos-navbar {
+.edatos-navbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,4 +7,10 @@
     z-index: $primary-navbar-zindex;
     width: 100%;
     height: $primary-navbar-height;
+    background-color: #2c2c2c;
+    background-image: -webkit-linear-gradient(top, #333333, #222222);
+}
+
+#edatos-navbar {
+    @extend .edatos-navbar;
 }
