@@ -2,7 +2,9 @@
 @import 'mixins';
 
 .page {
+    width: 100%;
     height: 100%;
+    margin-bottom: 4rem;
 
     &.has-header-fixed {
         .page-header {
@@ -16,10 +18,11 @@
         }
     }
 
-    &.has-menu, &.has-menu-animated {
-        transition: padding-left .3s ease-in-out;
+    &.has-menu,
+    &.has-menu-animated {
+        transition: padding-left 0.3s ease-in-out;
         &.has-header-fixed .page-header {
-            transition: left .3s ease-in-out;
+            transition: left 0.3s ease-in-out;
         }
     }
 
@@ -66,7 +69,7 @@
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
         background-color: white;
-        box-shadow: 0 1px 4px -1px rgba(0,0,0,.3);
+        box-shadow: 0 1px 4px -1px rgba(0, 0, 0, 0.3);
         z-index: $page-header-zindex;
         &.page-header-fixed {
             position: fixed;
@@ -128,7 +131,6 @@
         }
     }
 
-    
     .page-body {
         padding-left: $page-padding-left;
         padding-right: $page-padding-right;
@@ -139,7 +141,6 @@
             font-size: 1.3rem;
         }
     }
-
 
     .page-table-container-fluid {
         margin-left: -$page-padding-left;
@@ -161,7 +162,6 @@
         .table-count {
             padding-left: $page-padding-left;
         }
-        
     }
 
     .page-table {
@@ -173,7 +173,7 @@
             padding-bottom: 1rem;
         }
         & > thead > tr > th {
-            font-size: .8rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
             background-color: #f8f8f8;
             color: #444;
@@ -184,7 +184,6 @@
         align-items: center;
         height: 100%;
     }
-
 }
 
 @include media-breakpoint-down(sm) {

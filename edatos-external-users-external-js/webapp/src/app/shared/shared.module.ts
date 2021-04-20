@@ -29,6 +29,7 @@ import { NgArrayPipesModule } from 'ngx-pipes';
 
 import { PasswordMatchValidatorDirective } from './directives';
 import { PasswordNotMatchValidatorDirective } from './directives';
+import { NbButtonModule, NbCardModule } from '@nebular/theme';
 
 @NgModule({
     imports: [
@@ -60,6 +61,8 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         ArteSpinnerModule,
         ArteEntityListEmptyModule,
         ArteDirectivesModule,
+        NbButtonModule,
+        NbCardModule,
     ],
     declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective],
     providers: [
@@ -102,6 +105,8 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         PasswordMatchValidatorDirective,
         PasswordNotMatchValidatorDirective,
         ArteDirectivesModule,
+        NbButtonModule,
+        NbCardModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -3,7 +3,9 @@ package es.gobcan.istac.edatos.external.users.core.service.validator;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +24,7 @@ public class ExternalUserValidator extends AbstractValidator<ExternalUserEntity>
                     ? externalUserRepository.findOneByEmailAndIdNot(email, externalUser.getId())
                     : externalUserRepository.findOneByEmail(email);
             if (existingUserWithMail.isPresent()) {
-                throw new CustomParameterizedExceptionBuilder().message(String.format("Email '%s' ya en uso", email)).code(ErrorConstants.USUARIO_EMAIL_EN_USO).build();
+                throw new EDatosException(ServiceExceptionType.EXTERNAL_USER_CREATE);
             }
         }
 

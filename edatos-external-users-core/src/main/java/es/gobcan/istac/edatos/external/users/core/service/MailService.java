@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
+import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
 
@@ -13,8 +14,6 @@ public interface MailService {
 
     void sendFromTemplate(ExternalUserEntity user, String templateName, String titleKey);
 
-    void sendCreationEmail(ExternalUserEntity user);
-
-    void sendCreationEmailChangePassword(ExternalUserEntity user);
+    void sendExternalUserEmailTemplate(ExternalUserEntity user, String mailTemplate);
 
 }

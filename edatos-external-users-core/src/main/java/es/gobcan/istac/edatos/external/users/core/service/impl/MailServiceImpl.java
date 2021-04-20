@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import javax.mail.internet.MimeMessage;
 
+import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
@@ -103,16 +104,9 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Async
-    public void sendCreationEmail(ExternalUserEntity user) {
+    public void sendExternalUserEmailTemplate(ExternalUserEntity user, String mailTemplate) {
         log.debug("Sending creation email to '{}'", user.getEmail());
-        sendFromTemplate(user, "creationExternalUserAccount", "email.creation.title");
-    }
-
-    @Override
-    @Async
-    public void sendCreationEmailChangePassword(ExternalUserEntity user) {
-        log.debug("Sending creation email to '{}'", user.getEmail());
-        sendFromTemplate(user, "changePasswordExternalUserAccount", "email.creation.title");
+        sendFromTemplate(user, mailTemplate, "email.creation.title");
     }
 
 }

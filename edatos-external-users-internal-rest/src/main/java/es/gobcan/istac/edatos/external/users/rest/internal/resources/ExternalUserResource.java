@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.data.domain.Page;
@@ -79,7 +80,7 @@ public class ExternalUserResource extends AbstractResource {
         }
 
         ExternalUserEntity userEntity = externalUserService.create(externalUserMapper.toEntity(externalUser));
-        mailService.sendCreationEmail(userEntity);
+        mailService.sendExternalUserEmailTemplate(userEntity, MailConstants.MAIL_CREATION_EXT_USER);
         ExternalUserDto userDto = externalUserMapper.toDto(userEntity);
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_CREACION, userDto.getEmail());
@@ -113,7 +114,6 @@ public class ExternalUserResource extends AbstractResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
-
     @GetMapping("/{id}")
     @Timed
     @PreAuthorize("@secChecker.canAccessUser(authentication)")
@@ -125,7 +125,7 @@ public class ExternalUserResource extends AbstractResource {
     @DeleteMapping("/{id}")
     @PreAuthorize("@secChecker.canModifyUserStatus(authentication)")
     public ResponseEntity<ExternalUserDto> deactivateExternalUser(@PathVariable Long id) {
-        ExternalUserDto dto = externalUserMapper.toDto(externalUserService.delete(id));
+        ExternalUserDto dto = externalUserMapper.toDto(externalUserService.deactivate(id));
         return ResponseEntity.ok(dto);
     }
 
