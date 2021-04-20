@@ -28,7 +28,7 @@
     </changeSet>
     <changeSet author="arte" id="1615884742603-2">
         <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_favorites"
-                                 constraintName="FKpj9683wyvqjq3fx69d0wk9nhd" onDelete="CASCADE" deferrable="false"
+                                 constraintName="FKpj9683wyvqjq3fx69d0wk9nhd" deferrable="false"
                                  initiallyDeferred="false" referencedColumnNames="id"
                                  referencedTableName="tb_external_users" validate="true"/>
     </changeSet>

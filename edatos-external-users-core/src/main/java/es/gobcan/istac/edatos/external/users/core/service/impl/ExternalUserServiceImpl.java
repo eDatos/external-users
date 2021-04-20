@@ -63,6 +63,8 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     public void delete(Long id) {
         ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id).orElseThrow(() -> new EDatosException(ServiceExceptionType.EXTERNAL_USER_DELETED));
         // TODO EDATOS-3338 Is pending confirm if delete is logical or complete
+
+        filterRepository.deleteAllByExternalUser(usuario);
         externalUserRepository.delete(id);
     }
 

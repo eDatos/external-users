@@ -40,7 +40,7 @@
     </changeSet>
     <changeSet author="arte" id="1614600000806-3">
         <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_filters"
-                                 constraintName="FK8qilav02i9hcsaliys51o3xf8" onDelete="CASCADE" deferrable="false"
+                                 constraintName="FK8qilav02i9hcsaliys51o3xf8" deferrable="false"
                                  initiallyDeferred="false" referencedColumnNames="id"
                                  referencedTableName="tb_external_users" validate="true"/>
     </changeSet>
