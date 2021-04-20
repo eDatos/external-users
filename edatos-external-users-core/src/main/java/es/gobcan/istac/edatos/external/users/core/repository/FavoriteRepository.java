@@ -23,4 +23,5 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
     Optional<FavoriteEntity> findByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
     void deleteByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
     void deleteByExternalUserAndOperation(ExternalUserEntity externalUser, OperationEntity operation);
+    int countAllByCategory(CategoryEntity category);
 }

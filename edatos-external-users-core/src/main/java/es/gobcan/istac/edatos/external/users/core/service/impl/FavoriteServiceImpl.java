@@ -113,6 +113,11 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
     }
 
+    @Override
+    public int getCategorySubscribers(CategoryEntity category) {
+        return favoriteRepository.countAllByCategory(category);
+    }
+
     public void delete(ExternalUserEntity externalUser, CategoryEntity parent) {
         favoriteRepository.deleteByExternalUserAndCategory(externalUser, parent);
         for (OperationEntity operation : parent.getOperations()) {

@@ -7,6 +7,8 @@ import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 
+type Mode = 'view' | 'select';
+
 @Component({
     selector: 'app-structural-resources-tree',
     templateUrl: './structural-resources-tree.component.html',
@@ -21,18 +23,26 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public favorites: Favorite[];
 
     /**
-     * If true, the elements on the tree become unselectable.
+     * If true, the elements on the tree become unselectable. On 'view' mode is true by default.
+     *
+     * @see StructuralResourcesTreeComponent#mode
      */
     @Input()
     public disabled = false;
 
     /**
-     * Sets the selection method of the tree.
+     * Mode of the component.
      *
-     * @see https://www.primefaces.org/primeng/v9-lts/#/tree
+     * If set to 'view', the tree shows the structural resources without any checkbox and
+     * they are not selectable. {@link StructuralResourcesTreeComponent#favorites} is not
+     * required.
+     *
+     * If set to 'select', the tree show checkboxes next to each element.
+     * {@link StructuralResourcesTreeComponent#favorites} becomes necessary since it's where
+     * the selected favorites are synchronized. This is the default mode.
      */
     @Input()
-    public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
+    public mode: Mode = 'select';
 
     /**
      * Emits an event when an element of the tree is selected.
@@ -48,6 +58,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     public resources: TreeNode[];
     public selectedResources: TreeNode[] = [];
+    public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
 
     private mainLanguageCode: string;
     private tree: Category[];
@@ -77,6 +88,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     public ngOnInit(): void {
         this.mainLanguageCode = this.translateService.getDefaultLang();
+        this.setMode();
         this.categoryService.getTree().subscribe((categories) => {
             this.tree = categories;
             this.createTree();
@@ -189,6 +201,18 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             for (const child of node.children) {
                 this.unsetLoadingNode(child);
             }
+        }
+    }
+
+    private setMode() {
+        switch (this.mode) {
+            case 'view':
+                this.selectionMode = 'single';
+                this.disabled = true;
+                break;
+            case 'select':
+                this.selectionMode = 'checkbox';
+                break;
         }
     }
 }

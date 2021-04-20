@@ -11,4 +11,13 @@
     .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-toggler {
         margin-left: -1.125em;
     }
+
+    .ui-tree-container .ui-treenode .ui-treenode-content {
+        //display: flex;
+        //align-items: baseline;
+    }
+}
+
+.subscribed-users {
+    color: #a5a5a5;
 }

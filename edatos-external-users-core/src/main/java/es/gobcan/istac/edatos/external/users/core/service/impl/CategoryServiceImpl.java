@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
+import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
