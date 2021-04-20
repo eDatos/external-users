@@ -1,9 +1,15 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.hibernate.criterion.DetachedCriteria;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,6 +30,8 @@ public class FavoriteServiceImpl implements FavoriteService {
     private final FavoriteRepository favoriteRepository;
     private final FavoriteValidator favoriteValidator;
     private final QueryUtil queryUtil;
+
+    private final Logger log = LoggerFactory.getLogger(FavoriteServiceImpl.class);
 
     public FavoriteServiceImpl(FavoriteRepository favoriteRepository, FavoriteValidator favoriteValidator, QueryUtil queryUtil) {
         this.favoriteRepository = favoriteRepository;
@@ -114,8 +122,10 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    public int getCategorySubscribers(CategoryEntity category) {
-        return favoriteRepository.countAllByCategory(category);
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "default")
+    public long getCategorySubscribers(CategoryEntity category) {
+        Map<Long, Long> categorySubscribers = favoriteRepository.getCategorySubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
+        return categorySubscribers.getOrDefault(category.getId(), 0L);
     }
 
     public void delete(ExternalUserEntity externalUser, CategoryEntity parent) {

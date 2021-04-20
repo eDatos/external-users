@@ -19,5 +19,5 @@ public interface FavoriteService {
     Page<FavoriteEntity> find(String query, Pageable pageable);
     List<FavoriteEntity> find(String query, Sort sort);
     void delete(FavoriteEntity favorite);
-    int getCategorySubscribers(CategoryEntity category);
+    long getCategorySubscribers(CategoryEntity category);
 }
