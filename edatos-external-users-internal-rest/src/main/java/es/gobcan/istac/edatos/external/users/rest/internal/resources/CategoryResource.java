@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +19,9 @@ import com.codahale.metrics.annotation.Timed;
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.StructuralResourcesTreeDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.StructuralResourcesTreeMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -33,10 +34,12 @@ public class CategoryResource extends AbstractResource {
 
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
+    private final StructuralResourcesTreeMapper structuralResourcesTreeMapper;
 
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper) {
+    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, StructuralResourcesTreeMapper structuralResourcesTreeMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
+        this.structuralResourcesTreeMapper = structuralResourcesTreeMapper;
     }
 
     @GetMapping("/{id}")
@@ -60,9 +63,7 @@ public class CategoryResource extends AbstractResource {
     @Timed
     @GetMapping("/tree")
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    public ResponseEntity<List<CategoryDto>> getCategoryTree() {
-        List<CategoryEntity> entitiesTree = categoryService.getTree();
-        List<CategoryDto> dtosTree = new ArrayList<>(categoryMapper.toDtos(entitiesTree));
-        return ResponseEntity.ok(dtosTree);
+    public ResponseEntity<List<StructuralResourcesTreeDto>> getCategoryTree() {
+        return ResponseEntity.ok(structuralResourcesTreeMapper.toDto());
     }
 }

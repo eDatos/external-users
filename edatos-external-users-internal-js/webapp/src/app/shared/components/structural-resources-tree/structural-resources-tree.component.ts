@@ -1,5 +1,6 @@
 import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output } from '@angular/core';
 import { Category, Favorite, Operation } from '@app/shared/model';
+import { StructuralResourcesTree } from '@app/shared/model/structural-resources-tree.model';
 import { CategoryService } from '@app/shared/service/category/category.service';
 import { OperationService } from '@app/shared/service/operation/operation.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -61,7 +62,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
 
     private mainLanguageCode: string;
-    private tree: Category[];
+    private tree: StructuralResourcesTree[];
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: TreeNode[] = [];
 
@@ -90,9 +91,17 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         this.mainLanguageCode = this.translateService.getDefaultLang();
         this.setMode();
         this.categoryService.getTree().subscribe((categories) => {
-            this.tree = categories;
+            this.tree = this.sort(categories);
             this.createTree();
         });
+    }
+
+    private sort(categories: StructuralResourcesTree[]): StructuralResourcesTree[] {
+        categories.sort((a, b) => (a.getLocalisedName() < b.getLocalisedName() ? -1 : a.getLocalisedName() === b.getLocalisedName() ? 0 : 1));
+        for (const element of categories) {
+            this.sort(element.children);
+        }
+        return categories;
     }
 
     public createTree() {
@@ -121,7 +130,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         this.onResourceUnselect.emit(treeNode.data);
     }
 
-    private categoryListToTreeNode(categories: Category[]): Observable<TreeNode[]> {
+    private categoryListToTreeNode(categories: StructuralResourcesTree[]): Observable<TreeNode[]> {
         return of(
             categories?.map((category) => {
                 const children = [];
@@ -131,17 +140,17 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                     children.push(...treeNodes);
                 });
 
-                // add operations attached to the category
-                this.operationService.find({ query: `CATEGORY_ID EQ ${category.id}` }).subscribe((operations) => {
-                    children.push(...operations.map((operation) => this.operationToTreeNode(operation)));
-                });
+                // // add operations attached to the category
+                // this.operationService.find({ query: `CATEGORY_ID EQ ${category.id}` }).subscribe((operations) => {
+                //     children.push(...operations.map((operation) => this.operationToTreeNode(operation)));
+                // });
 
-                return this.categoryToTreeNode(category, children);
+                return category.type === 'category' ? this.categoryToTreeNode(category, children) : this.operationToTreeNode(category);
             })
         );
     }
 
-    private categoryToTreeNode(category: Category, children: TreeNode[]): TreeNode {
+    private categoryToTreeNode(category: StructuralResourcesTree, children: TreeNode[]): TreeNode {
         const node = {
             label: category.name.getLocalisedLabel(this.mainLanguageCode),
             collapsedIcon: 'fa fa-folder',
@@ -161,7 +170,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return node;
     }
 
-    private operationToTreeNode(operation: Operation): TreeNode {
+    private operationToTreeNode(operation: StructuralResourcesTree): TreeNode {
         const node = {
             label: operation.name.getLocalisedLabel(this.mainLanguageCode),
             collapsedIcon: 'fa fa-table',
@@ -180,8 +189,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return node;
     }
 
-    private isFavorite(resource: Category | Operation): boolean {
-        return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor === resource.constructor);
+    private isFavorite(resource: StructuralResourcesTree): boolean {
+        return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor.name.toLowerCase() === resource.type.toLowerCase());
     }
 
     private setLoadingNode(node: TreeNode) {

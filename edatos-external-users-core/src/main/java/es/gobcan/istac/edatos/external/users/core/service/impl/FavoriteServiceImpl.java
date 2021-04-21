@@ -122,10 +122,17 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "default")
-    public long getCategorySubscribers(CategoryEntity category) {
-        Map<Long, Long> categorySubscribers = favoriteRepository.getCategorySubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
-        return categorySubscribers.getOrDefault(category.getId(), 0L);
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "categories")
+    public Map<Long, Long> getCategorySubscribers() {
+        log.warn("HOLA CATEGORY");
+        return favoriteRepository.getCategorySubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
+    }
+
+    @Override
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "operations")
+    public Map<Long, Long> getOperationSubscribers() {
+        log.warn("HOLA OPERATION");
+        return favoriteRepository.getOperationSubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
     }
 
     public void delete(ExternalUserEntity externalUser, CategoryEntity parent) {
