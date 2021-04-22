@@ -2,9 +2,12 @@
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
     [(selection)]="selectedResources"
-    [propagateSelectionDown]="false"
-    [propagateSelectionUp]="false"
     [value]="resources"
-    selectionMode="checkbox"
+    [selectionMode]="selectionMode"
     [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
-></p-tree>
+>
+    <ng-template *ngIf="mode === 'view'" let-node pTemplate="default">
+        <span class="label">{{node.label}}</span>&nbsp;
+        <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{ amount: node.data.subscribers || 0 } }})</span>
+    </ng-template>
+</p-tree>

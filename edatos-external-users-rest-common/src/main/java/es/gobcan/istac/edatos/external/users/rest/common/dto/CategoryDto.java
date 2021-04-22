@@ -23,6 +23,7 @@ public class CategoryDto extends AuditableDto implements Identifiable {
     private Instant updateDate;
     private Instant lastUpdated;
     private String uuid;
+    private long subscribedUsers;
     private List<CategoryDto> children = new ArrayList<>();
 
     @Override
@@ -132,5 +133,13 @@ public class CategoryDto extends AuditableDto implements Identifiable {
 
     public void setChildren(List<CategoryDto> children) {
         this.children = children;
+    }
+
+    public long getSubscribedUsers() {
+        return subscribedUsers;
+    }
+
+    public void setSubscribedUsers(long subscribedUsers) {
+        this.subscribedUsers = subscribedUsers;
     }
 }

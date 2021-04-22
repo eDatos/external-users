@@ -13,6 +13,8 @@ export class Category extends BaseVersionedAndAuditingEntity {
 
     public urn?: string;
 
+    public subscribedUsers?: number;
+
     @Type(() => InternationalString)
     public name?: InternationalString;
 

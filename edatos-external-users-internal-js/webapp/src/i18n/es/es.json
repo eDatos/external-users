@@ -453,6 +453,11 @@
         },
         "name": "Favorito"
     },
+    "thematicSubscriptions": {
+        "home": {
+            "title": "Suscripciones temáticas"
+        }
+    },
     "filter": {
         "entity": {
             "email": "Email",
@@ -683,7 +688,8 @@
         "name": "Operación estadística"
     },
     "structuralResourcesTree": {
-        "noRecordsFound": "No se ha encontrado ningún tema ni operación"
+        "noRecordsFound": "No se ha encontrado ningún tema ni operación",
+        "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"
