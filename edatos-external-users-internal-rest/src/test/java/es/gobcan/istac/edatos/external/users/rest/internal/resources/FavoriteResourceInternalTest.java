@@ -40,7 +40,6 @@ import static es.gobcan.istac.edatos.external.users.util.InternationalStringUtil
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -214,7 +213,7 @@ public class FavoriteResourceInternalTest {
 
     @Test
     public void testGetListOfFavorites() throws Exception {
-        this.mockMvc.perform(get(ENDPOINT_URL)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
+        this.mockMvc.perform(get(ENDPOINT_URL)).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].operation.name.texts[0].label", is(operation1.getName().getLocalisedLabel(LOCALE))))
                 .andExpect(jsonPath("$[1].operation.name.texts[0].label", is(operation2.getName().getLocalisedLabel(LOCALE))));
     }
