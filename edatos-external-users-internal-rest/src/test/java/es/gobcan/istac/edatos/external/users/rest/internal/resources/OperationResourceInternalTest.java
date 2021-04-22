@@ -1,12 +1,5 @@
 package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,6 +23,13 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
@@ -183,7 +183,7 @@ public class OperationResourceInternalTest {
                 .andExpect(jsonPath("$[0].id", is(operation1.getId().intValue()))).andExpect(jsonPath("$[1].id", is(operation2.getId().intValue())));
     }
 
-    // TODO(EDATOS-3294): This test it's not working because the criteria it's not ready yet to work with jsonb fields.
+    // TODO(EDATOS-3294): This test isn't working because the criteria is not ready yet to work with jsonb fields.
     @Test
     @Ignore("TODO(EDATOS-3294): This test it's not working because the criteria it's not ready yet to work with jsonb fields.")
     public void testGetOperationByName() throws Exception {

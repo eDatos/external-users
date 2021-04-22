@@ -7,7 +7,7 @@ import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository
 import es.gobcan.istac.edatos.external.users.rest.common.dto.OperationDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
-@Mapper(componentModel = "spring", uses = {GenericMapperResolver.class, ExternalItemMapper.class, InternationalStringVOMapper.class, CategoryMapper.class, OperationRepository.class})
+@Mapper(componentModel = "spring", uses = {GenericMapperResolver.class, InternationalStringVOMapper.class, CategoryMapper.class, OperationRepository.class})
 public abstract class OperationMapper implements EntityMapper<OperationDto, OperationEntity> {
 
     public abstract OperationDto toDto(OperationEntity source);
