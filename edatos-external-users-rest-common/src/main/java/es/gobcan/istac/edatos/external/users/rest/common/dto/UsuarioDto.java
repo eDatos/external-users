@@ -5,8 +5,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingAndLogicalDeletionDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
@@ -20,10 +18,6 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
     private String apellido1;
     private String apellido2;
     private String email;
-    private Gender gender;
-    private Language language;
-    private String organization;
-    private String phoneNumber;
     private SortedSet<Role> roles;
 
     public Long getId() {
@@ -94,10 +88,6 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
         this.apellido2 = source.getApellido2();
         this.email = source.getEmail();
         this.roles = new TreeSet<>(source.getRoles());
-        this.gender = source.getGender();
-        this.language = source.getLanguage();
-        this.organization = source.getOrganization();
-        this.phoneNumber = source.getPhoneNumber();
         this.setOptLock(source.getOptLock());
         this.setCreatedDate(source.getCreatedDate());
         this.setCreatedBy(source.getCreatedBy());
@@ -106,37 +96,5 @@ public class UsuarioDto extends AbstractVersionedAndAuditingAndLogicalDeletionDt
     @Override
     public String toString() {
         return "UsuarioDto [id=" + id + ", login=" + login + ", nombre=" + nombre + ", email=" + email + "]";
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public Language getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public String getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 }
