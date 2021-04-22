@@ -4,14 +4,18 @@ import { Type } from 'class-transformer';
 
 export class Category extends BaseVersionedAndAuditingEntity {
     public code: string;
-    public nestedCode: string;
+    public nestedCode: string | null = null;
 
     @Type(() => InternationalString)
     public name: InternationalString;
 
     @Type(() => Category)
-    public parent: Category;
+    public parent: Category | null = null;
 
     @Type(() => Category)
-    public children: Category[];
+    public children: Category[] = [];
+
+    public get type(): 'category' {
+        return 'category';
+    }
 }

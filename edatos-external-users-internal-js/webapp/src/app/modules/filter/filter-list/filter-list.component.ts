@@ -14,10 +14,10 @@ import { Subscription } from 'rxjs';
     templateUrl: './filter-list.component.html',
 })
 export class FilterListComponent implements OnInit {
-    public filters: Filter[];
+    public filters?: Filter[];
     public filterSearch = new FilterFilter();
-    public totalItems: number;
-    public itemsPerPage: number;
+    public totalItems: number | null = null;
+    public itemsPerPage?: number;
     public columns: any = [
         {
             fieldName: 'name',
@@ -44,10 +44,10 @@ export class FilterListComponent implements OnInit {
             },
         },
     ];
-    private eventSubscriber: Subscription;
-    private searchSubscription: Subscription;
+    private eventSubscriber?: Subscription;
+    private searchSubscription?: Subscription;
     private page: any;
-    private reverse: boolean;
+    private reverse?: boolean;
     private predicate: any;
 
     constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private router: Router, private eventManager: ArteEventManager) {
@@ -79,7 +79,7 @@ export class FilterListComponent implements OnInit {
     }
 
     public loadData(e: LazyLoadEvent) {
-        this.page = e.first / e.rows + 1;
+        this.page = e.first! / e.rows! + 1;
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
             this.predicate = this.filterSearch.fromCamelCaseToSnakeCase(e.sortField);
@@ -124,8 +124,8 @@ export class FilterListComponent implements OnInit {
     }
 
     public registerChangeInUsers() {
-        this.eventSubscriber = this.eventManager.subscribe('filterListModification', (response) => this.loadAll());
-        this.searchSubscription = this.eventManager.subscribe('filterSearch', (response) => {
+        this.eventSubscriber = this.eventManager.subscribe('filterListModification', () => this.loadAll());
+        this.searchSubscription = this.eventManager.subscribe('filterSearch', () => {
             this.page = 1;
             const queryParams = Object.assign({}, this.filterSearch.toUrl(this.activatedRoute.snapshot.queryParams));
             this.router.navigate([], { relativeTo: this.activatedRoute, queryParams });

@@ -4,10 +4,10 @@ import { Type } from 'class-transformer';
 
 export class Filter extends BaseVersionedAndAuditingEntity {
     public name: string;
-    public resourceName: string;
+    public resourceName: string | null = null;
     public permalink: string;
     public lastAccessDate: Date;
-    public notes: string;
+    public notes: string | null = null;
 
     @Type(() => ExternalUser)
     public externalUser: ExternalUser;

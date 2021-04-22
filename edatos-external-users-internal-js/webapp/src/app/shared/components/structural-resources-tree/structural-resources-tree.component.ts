@@ -21,7 +21,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
      * are added or removed.
      */
     @Input()
-    public favorites: Favorite[];
+    public favorites?: Favorite[];
 
     /**
      * If true, the elements on the tree become unselectable. On 'view' mode is true by default.
@@ -57,12 +57,12 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     @Output()
     public onResourceUnselect = new EventEmitter<Category | Operation>();
 
-    public resources: TreeNode[];
+    public resources: TreeNode[] = [];
     public selectedResources: TreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
 
-    private mainLanguageCode: string;
-    private tree: StructuralResourcesTree[];
+    private readonly mainLanguageCode: string;
+    private tree: StructuralResourcesTree[] = [];
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: TreeNode[] = [];
 
@@ -73,7 +73,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         private translateService: TranslateService,
         private iterableDiffers: IterableDiffers
     ) {
-        this.iterableDiffer = iterableDiffers.find([]).create(null);
+        this.mainLanguageCode = this.translateService.getDefaultLang();
+        this.iterableDiffer = iterableDiffers.find([]).create();
     }
 
     public ngDoCheck(): void {
@@ -88,7 +89,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public ngOnInit(): void {
-        this.mainLanguageCode = this.translateService.getDefaultLang();
         this.setMode();
         this.categoryService.getTree().subscribe((categories) => {
             this.tree = this.sort(categories);
@@ -97,7 +97,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     private sort(categories: StructuralResourcesTree[]): StructuralResourcesTree[] {
-        categories.sort((a, b) => (a.getLocalisedName() < b.getLocalisedName() ? -1 : a.getLocalisedName() === b.getLocalisedName() ? 0 : 1));
+        categories.sort((a, b) => (a.getLocalisedName(this.mainLanguageCode)! < b.getLocalisedName(this.mainLanguageCode)! ? -1 : 1));
         for (const element of categories) {
             this.sort(element.children);
         }
@@ -133,18 +133,10 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     private categoryListToTreeNode(categories: StructuralResourcesTree[]): Observable<TreeNode[]> {
         return of(
             categories?.map((category) => {
-                const children = [];
-
-                // add category children to the tree
+                const children: TreeNode[] = [];
                 this.categoryListToTreeNode(category.children).subscribe((treeNodes) => {
                     children.push(...treeNodes);
                 });
-
-                // // add operations attached to the category
-                // this.operationService.find({ query: `CATEGORY_ID EQ ${category.id}` }).subscribe((operations) => {
-                //     children.push(...operations.map((operation) => this.operationToTreeNode(operation)));
-                // });
-
                 return category.type === 'category' ? this.categoryToTreeNode(category, children) : this.operationToTreeNode(category);
             })
         );
@@ -190,7 +182,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     private isFavorite(resource: StructuralResourcesTree): boolean {
-        return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor.name.toLowerCase() === resource.type.toLowerCase());
+        return this.favorites?.some((favorite) => favorite.resource?.id === resource.id && favorite.resource.type === resource.type) ?? false;
     }
 
     private setLoadingNode(node: TreeNode) {

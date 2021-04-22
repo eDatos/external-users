@@ -11,4 +11,8 @@ export class Operation extends BaseVersionedAndAuditingEntity {
 
     @Type(() => Category)
     public category: Category;
+
+    public get type(): 'operation' {
+        return 'operation';
+    }
 }
