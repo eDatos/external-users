@@ -1,9 +1,10 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper.config;
 
+import java.io.Serializable;
+
 import org.mapstruct.MapperConfig;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingInheritanceStrategy;
-import org.siemac.edatos.core.common.dto.AuditableDto;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractAuditingEntity;
 
@@ -14,5 +15,5 @@ public interface AuditingMapperConfig {
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "lastModifiedBy", ignore = true)
     @Mapping(target = "lastModifiedDate", ignore = true)
-    AbstractAuditingEntity toEntity(AuditableDto dto);
+    AbstractAuditingEntity toEntity(Serializable dto);
 }

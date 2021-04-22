@@ -4,14 +4,12 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.siemac.edatos.core.common.dto.AuditableDto;
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
-import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
 
-public class CategoryDto extends AuditableDto implements Identifiable {
+public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
-    private Long id;
     private String code;
     private String nestedCode;
     private String uri;
@@ -19,32 +17,10 @@ public class CategoryDto extends AuditableDto implements Identifiable {
     private InternationalStringDto name;
     private InternationalStringDto description;
     private InternationalStringDto comment;
-    private Instant createdDate;
     private Instant updateDate;
     private Instant lastUpdated;
-    private String uuid;
     private long subscribedUsers;
     private List<CategoryDto> children = new ArrayList<>();
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String getUuid() {
-        return uuid;
-    }
-
-    @Override
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
 
     public String getCode() {
         return code;
@@ -100,15 +76,6 @@ public class CategoryDto extends AuditableDto implements Identifiable {
 
     public void setComment(InternationalStringDto comment) {
         this.comment = comment;
-    }
-
-    @Override
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
     }
 
     public Instant getUpdateDate() {
