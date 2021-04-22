@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +21,6 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
-import org.hibernate.validator.constraints.Length;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
@@ -57,30 +55,14 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      * The code of the category. For example: 060, or 060_010_030.
      */
     @NotNull
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String code;
 
     /**
      * The nested code splits the codes from all the levels by a dot. For example: 060.060_010.060_010_030.
      */
+    @Column(unique = true)
     private String nestedCode;
-
-    /**
-     * URI to the API of the resource. Useful to guide the user to the API, if needed.
-     */
-    @NotNull
-    @Column(nullable = false, length = 4000)
-    @Length(max = 4000)
-    private String uri;
-
-    /**
-     * The unique and legible identifier of the category. I.e.:
-     * {@code urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:TEMAS_CANARIAS(01.000).050.050_010.050_010_040}
-     */
-    @NotNull
-    @Column(nullable = false, length = 4000)
-    @Length(max = 4000)
-    private String urn;
 
     /**
      * The category name. I.e.: "Forestry and hunting"
@@ -89,16 +71,6 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
-
-    @Type(type = "jsonb")
-    @Column(columnDefinition = "jsonb")
-    private InternationalStringVO description;
-
-    @Type(type = "jsonb")
-    @Column(columnDefinition = "jsonb")
-    private InternationalStringVO comment;
-
-    private Instant updateDate;
 
     @ManyToOne
     @JoinColumn(name = "parent_fk")
@@ -137,52 +109,12 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.nestedCode = nestedCode;
     }
 
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public String getUrn() {
-        return urn;
-    }
-
-    public void setUrn(String urn) {
-        this.urn = urn;
-    }
-
     public InternationalStringVO getName() {
         return name;
     }
 
     public void setName(InternationalStringVO name) {
         this.name = name;
-    }
-
-    public InternationalStringVO getDescription() {
-        return description;
-    }
-
-    public void setDescription(InternationalStringVO description) {
-        this.description = description;
-    }
-
-    public InternationalStringVO getComment() {
-        return comment;
-    }
-
-    public void setComment(InternationalStringVO comment) {
-        this.comment = comment;
-    }
-
-    public Instant getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Instant updateDate) {
-        this.updateDate = updateDate;
     }
 
     public CategoryEntity getParent() {

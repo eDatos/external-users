@@ -1,8 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.service.criteria;
 
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
-
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
@@ -14,11 +11,7 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
     public enum QueryProperty {
         ID,
         CODE,
-        URN,
         NAME,
-        DESCRIPTION,
-        STATUS,
-        PROC_STATUS,
         CATEGORY_ID,
     }
 
@@ -55,18 +48,6 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.NAME)
                 .withEntityProperty(OperationEntity.Properties.NAME)
-                .build());
-
-        registerRestrictionProcessor(
-            RestrictionProcessorBuilder.enumRestrictionProcessor(Status.class)
-                .withQueryProperty(QueryProperty.STATUS)
-                .withEntityProperty(OperationEntity.Properties.STATUS)
-                .build());
-
-        registerRestrictionProcessor(
-            RestrictionProcessorBuilder.enumRestrictionProcessor(ProcStatus.class)
-                .withQueryProperty(QueryProperty.PROC_STATUS)
-                .withEntityProperty(OperationEntity.Properties.PROC_STATUS)
                 .build());
 
         registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()

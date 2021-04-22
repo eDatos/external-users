@@ -13,9 +13,6 @@ public class OperationDto extends AbstractVersionedAndAuditingDto implements Ser
     private String code;
     private InternationalStringDto name;
     private CategoryDto category;
-    private InternationalStringDto description;
-    private ProcStatus procStatus;
-    private Status status;
 
     public String getCode() {
         return code;
@@ -39,29 +36,5 @@ public class OperationDto extends AbstractVersionedAndAuditingDto implements Ser
 
     public void setCategory(CategoryDto category) {
         this.category = category;
-    }
-
-    public InternationalStringDto getDescription() {
-        return description;
-    }
-
-    public void setDescription(InternationalStringDto description) {
-        this.description = description;
-    }
-
-    public ProcStatus getProcStatus() {
-        return procStatus;
-    }
-
-    public void setProcStatus(ProcStatus procStatus) {
-        this.procStatus = procStatus;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }
