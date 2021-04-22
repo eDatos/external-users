@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -61,7 +60,7 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "category_fk")
     private CategoryEntity category;
 

@@ -100,8 +100,8 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     private Instant updateDate;
 
+    @ManyToOne
     @JoinColumn(name = "parent_fk")
-    @ManyToOne(cascade = CascadeType.ALL)
     private CategoryEntity parent;
 
     @NotNull
