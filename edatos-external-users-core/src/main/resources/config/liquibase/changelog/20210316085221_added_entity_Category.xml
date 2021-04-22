@@ -20,18 +20,11 @@
             <column name="code" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="comment" type="JSONB"/>
-            <column name="description" type="JSONB"/>
             <column name="name" type="JSONB">
                 <constraints nullable="false"/>
             </column>
-            <column name="nested_code" type="VARCHAR(255)"/>
-            <column name="update_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
-            <column name="uri" type="VARCHAR(4000)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="urn" type="VARCHAR(4000)">
-                <constraints nullable="false"/>
+            <column name="nested_code" type="VARCHAR(255)">
+                <constraints unique="true"/>
             </column>
             <column name="parent_fk" type="BIGINT"/>
         </createTable>
