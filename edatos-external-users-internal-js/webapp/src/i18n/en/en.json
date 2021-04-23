@@ -278,6 +278,16 @@
             "EXTERNALLY_PUBLISHED": "Externally published",
             "INTERNALLY_PUBLISHED": "Internally published",
             "label": "Life cycle status"
+        },
+        "localeToLanguage": {
+            "ES": "Spanish",
+            "EN": "English",
+            "CA": "Catalan",
+            "PT": "Portuguese",
+            "RU": "Russian",
+            "ZH": "Chinese",
+            "FR": "French",
+            "DE": "German"
         }
     },
     "error": {
@@ -513,7 +523,8 @@
                 "logs": "Logs",
                 "main": "Administration",
                 "metrics": "Metrics",
-                "userManagement": "User management"
+                "userManagement": "User management",
+                "dataProtectionPolicy": "Data protection policy"
             },
             "administracion": {
                 "main": "Administration"
@@ -681,6 +692,11 @@
     },
     "operation": {
         "name": "Statistical operation"
+    },
+    "dataProtectionPolicy": {
+        "home": {
+            "title": "Data protection policy"
+        }
     },
     "structuralResourcesTree": {
         "noRecordsFound": "No se ha encontrado ningún tema ni operación"

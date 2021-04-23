@@ -7,4 +7,5 @@
     <include file="config/liquibase/changelog/20210316085219_added_entity_Operation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210316085221_added_entity_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210316085222_added_entity_Favorite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210412084011_added_entity_DataProtectionPolicy.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

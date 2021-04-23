@@ -33,12 +33,43 @@
                 </a>
             </li>
 
-            <li>
-                <a class="nav-link btn" routerLink="account-management" routerLinkActive="active" [title]="'global.menu.account.myAccount' | translate">
-                    <i class="fa fa-fw fa-user" aria-hidden="true"></i>
-                    <b class="caret"></b>
+            <li *ngIf="isCorrectlyLogged" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+                <a class="nav-link dropdown-toggle btn" ngbDropdownToggle id="admin-menu">
+                    <span>
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        <b class="caret"></b>
+                    </span>
                 </a>
+                <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                    <li>
+                        <a class="dropdown-item" routerLink="account-management" routerLinkActive="active">
+                            <i class="fa" aria-hidden="true"></i>
+                            <span translate="global.menu.account.myAccount"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/account-management/change-password" routerLinkActive="active">
+                            <i class="fa" aria-hidden="true"></i>
+                            <span translate="entity.action.change-password"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/data-protection-policy" routerLinkActive="active">
+                            <i class="fa" aria-hidden="true"></i>
+                            <span translate="entity.action.data-protection-policy"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item unsubscribe-dialog" (click)="openDeleteDialog()" routerLinkActive="active">
+                            <i class="fa" aria-hidden="true"></i>
+                            <span translate="entity.action.unsubscribe"></span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
+            <li></li>
+
             <li>
                 <a class="nav-link btn" (click)="logout()" id="logout" [title]="'global.menu.account.logout' | translate">
                     <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>

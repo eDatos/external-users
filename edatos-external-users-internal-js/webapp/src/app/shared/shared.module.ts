@@ -25,6 +25,11 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppAuditInfoComponent } from './components/audit-info/audit-info.component';
+import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
+import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
+import { QuillModule } from 'ngx-quill'
+
 
 @NgModule({
     imports: [
@@ -54,6 +59,9 @@ import { AppAuditInfoComponent } from './components/audit-info/audit-info.compon
         ArteAutocompleteModule,
         ArteSpinnerModule,
         ArteEntityListEmptyModule,
+        DropdownModule,
+        EditorModule,
+        QuillModule
     ],
     providers: [
         FormcontrolStatusService,
@@ -91,8 +99,9 @@ import { AppAuditInfoComponent } from './components/audit-info/audit-info.compon
         ArteEntityListEmptyModule,
         StructuralResourcesTreeModule,
         AppAuditInfoComponent,
+        MultiLanguageEditorComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    declarations: [AppAuditInfoComponent],
+    declarations: [AppAuditInfoComponent, MultiLanguageEditorComponent],
 })
 export class SharedModule {}

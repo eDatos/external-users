@@ -28,7 +28,7 @@
                 "apidocs": "API",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "filter": "Filtros",
-                "favorite": "Favoritos"
+                "favorite": "Suscripciones temáticas"
             },
             "administracion": {
                 "main": "Administración"
@@ -76,7 +76,9 @@
             "modificar": "Modificar",
             "publishInternally": "Publicar internamente",
             "publishExternally": "Publicar externamente",
-            "change-password": "Cambiar contraseña"
+            "change-password": "Cambiar contraseña",
+            "data-protection-policy": "Política de protección de datos",
+            "unsubscribe": "Darse de baja"
         },
         "delete": {
             "title": "Confirmar operación de borrado"

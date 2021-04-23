@@ -26,7 +26,6 @@ public class MetadataProperties {
     private String metamacCasLoginUrl;
     private String metamacCasLogoutUrl;
     private String defaultLanguage;
-    private List<String> languages = new ArrayList<>();
 
     @PostConstruct
     public void setValues() {
@@ -35,7 +34,7 @@ public class MetadataProperties {
             metamacCasPrefix = normalizeUrl(configurationService.retrieveSecurityCasServerUrlPrefix());
             metamacCasLoginUrl = normalizeUrl(configurationService.retrieveSecurityCasServiceLoginUrl());
             metamacCasLogoutUrl = normalizeUrl(configurationService.retrieveSecurityCasServiceLogoutUrl());
-            languages = configurationService.retrieveLanguages();
+            List<String> languages = configurationService.retrieveLanguages();
             defaultLanguage = languages.get(0);
         } catch (Exception e) {
             log.error("Error getting the value of a metadata {}", e);
@@ -62,8 +61,10 @@ public class MetadataProperties {
         return defaultLanguage;
     }
 
+    // 
     public List<String> getLanguages() {
-        return languages;
+        // The languages are retrieved each time it is needed so that multi-language fields can be updated
+        return configurationService.retrieveLanguages();
     }
 
     private String normalizeUrl(String url) {

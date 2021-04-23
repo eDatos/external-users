@@ -13,6 +13,7 @@ export class User extends BaseVersionedAndAuditingWithDeletionEntity {
     public treatment?: any[];
     public language?: any[];
     public phoneNumber?: string;
+    public emailNotificationsEnabled?: boolean;
     public roles?: any[];
 
     constructor(

@@ -130,6 +130,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/apis/operations-internal/**").permitAll()
+                .antMatchers("/api/data-protection-policy").permitAll()
                 .antMatchers("/**").authenticated();
         //@formatter:on
     }

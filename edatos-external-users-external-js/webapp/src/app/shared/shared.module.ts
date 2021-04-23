@@ -25,10 +25,15 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
+import { EditorModule } from 'primeng/editor';
+
 import { NgArrayPipesModule } from 'ngx-pipes';
+import { QuillModule } from 'ngx-quill';
 
 import { PasswordMatchValidatorDirective } from './directives';
 import { PasswordNotMatchValidatorDirective } from './directives';
+import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
+import { NbButtonModule, NbCardModule } from '@nebular/theme';
 
 @NgModule({
     imports: [
@@ -60,8 +65,12 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         ArteSpinnerModule,
         ArteEntityListEmptyModule,
         ArteDirectivesModule,
+        EditorModule,
+        QuillModule.forRoot(),
+        NbButtonModule,
+        NbCardModule,
     ],
-    declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective],
+    declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective, MultiLanguageEditorComponent],
     providers: [
         FormcontrolStatusService,
         DatePipe,
@@ -102,6 +111,9 @@ import { PasswordNotMatchValidatorDirective } from './directives';
         PasswordMatchValidatorDirective,
         PasswordNotMatchValidatorDirective,
         ArteDirectivesModule,
+        MultiLanguageEditorComponent,
+        NbButtonModule,
+        NbCardModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

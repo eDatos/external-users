@@ -1,0 +1,22 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="myActorLabel">
+        <span class="mr-2">
+            <i class="fa"></i>
+        </span>
+        <span translate="entity.action.unsubscribe"></span>
+    </h4>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="clear()">&times;</button>
+</div>
+<div class="modal-body">
+    <div>
+        <span translate="account.messages.delete.text"></span>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="col-sm-6 text-right">
+        <button type="submit" class="btn btn-primary" (click)="confirm()">
+            <span class="fa"></span>
+            <span translate="entity.action.confirm"></span>
+        </button>
+    </div>
+</div>
