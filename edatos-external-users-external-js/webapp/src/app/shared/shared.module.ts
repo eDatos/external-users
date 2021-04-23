@@ -28,6 +28,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { EditorModule } from 'primeng/editor';
 
 import { NgArrayPipesModule } from 'ngx-pipes';
+import { QuillModule } from 'ngx-quill';
 
 import { PasswordMatchValidatorDirective } from './directives';
 import { PasswordNotMatchValidatorDirective } from './directives';
@@ -63,7 +64,8 @@ import { MultiLanguageEditorComponent } from './components/multi-language-editor
         ArteSpinnerModule,
         ArteEntityListEmptyModule,
         ArteDirectivesModule,
-        EditorModule
+        EditorModule,
+        QuillModule.forRoot()
     ],
     declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective, MultiLanguageEditorComponent],
     providers: [
