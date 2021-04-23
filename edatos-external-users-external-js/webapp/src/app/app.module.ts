@@ -23,6 +23,7 @@ import { ScriptLoaderModule } from 'ngx-script-loader';
 import { ArteTableService } from 'arte-ng';
 import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
+import { DeleteConfirmDialogComponent } from './modules/account';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');
@@ -36,7 +37,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
 }
 
 @NgModule({
-    declarations: [AppComponent, NavbarComponent, ErrorComponent],
+    declarations: [AppComponent, NavbarComponent, ErrorComponent, DeleteConfirmDialogComponent],
     imports: [
         BrowserModule,
         ErrorRoutingModule,
