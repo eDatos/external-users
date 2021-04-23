@@ -57,7 +57,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     @Output()
     public onResourceUnselect = new EventEmitter<Category | Operation>();
 
-    public resources: TreeNode[] = [];
+    public resources: TreeNode[];
     public selectedResources: TreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
 
