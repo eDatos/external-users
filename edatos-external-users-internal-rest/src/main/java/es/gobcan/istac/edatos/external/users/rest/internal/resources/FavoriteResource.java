@@ -3,11 +3,11 @@ package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,9 +58,9 @@ public class FavoriteResource extends AbstractResource {
     @GetMapping
     @Timed
     @PreAuthorize("@secChecker.canAccessFavorites(authentication)")
-    public ResponseEntity<List<FavoriteDto>> getFavorites(@RequestParam(required = false) String query, Sort sort) {
-        List<FavoriteDto> result = favoriteService.find(query, sort).stream().map(favoriteMapper::toDto).collect(Collectors.toList());
-        return ResponseEntity.ok(result);
+    public ResponseEntity<List<FavoriteDto>> getFavorites(@RequestParam(required = false) String query, Pageable pageable) {
+        Page<FavoriteDto> result = favoriteService.find(query, pageable).map(favoriteMapper::toDto);
+        return ResponseEntity.ok(result.getContent());
     }
 
     @PostMapping

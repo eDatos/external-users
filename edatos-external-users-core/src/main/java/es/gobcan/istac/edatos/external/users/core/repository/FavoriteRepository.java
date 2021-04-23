@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,7 +22,7 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
 
     Page<FavoriteEntity> findAll(DetachedCriteria criteria, Pageable pageable);
     List<FavoriteEntity> findAll(DetachedCriteria criteria);
-    List<FavoriteEntity> findAllByExternalUserOrderByCreatedDate(ExternalUserEntity user);
+    List<FavoriteEntity> findByExternalUser(ExternalUserEntity user);
     Optional<FavoriteEntity> findByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
     void deleteByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
     void deleteByExternalUserAndOperation(ExternalUserEntity externalUser, OperationEntity operation);

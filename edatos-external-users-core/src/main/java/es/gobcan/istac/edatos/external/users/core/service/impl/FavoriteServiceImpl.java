@@ -20,6 +20,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
+import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.core.service.validator.FavoriteValidator;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
@@ -28,13 +29,15 @@ import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 public class FavoriteServiceImpl implements FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
+    private final OperationRepository operationRepository;
     private final FavoriteValidator favoriteValidator;
     private final QueryUtil queryUtil;
 
     private final Logger log = LoggerFactory.getLogger(FavoriteServiceImpl.class);
 
-    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, FavoriteValidator favoriteValidator, QueryUtil queryUtil) {
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, OperationRepository operationRepository, FavoriteValidator favoriteValidator, QueryUtil queryUtil) {
         this.favoriteRepository = favoriteRepository;
+        this.operationRepository = operationRepository;
         this.favoriteValidator = favoriteValidator;
         this.queryUtil = queryUtil;
     }
@@ -51,11 +54,11 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     private void create(ExternalUserEntity externalUser, CategoryEntity parent) {
-        if (externalUser.getFavorites().stream().map(FavoriteEntity::getCategory).noneMatch(cat -> Objects.equals(cat, parent))) {
+        if (favoriteRepository.findByExternalUser(externalUser).stream().map(FavoriteEntity::getCategory).noneMatch(cat -> Objects.equals(cat, parent))) {
             favoriteRepository.save(newFavorite(externalUser, parent));
         }
-        for (OperationEntity operation : parent.getOperations()) {
-            if (externalUser.getFavorites().stream().map(FavoriteEntity::getOperation).noneMatch(op -> Objects.equals(op, operation))) {
+        for (OperationEntity operation : operationRepository.getByCategory(parent)) {
+            if (favoriteRepository.findByExternalUser(externalUser).stream().map(FavoriteEntity::getOperation).noneMatch(op -> Objects.equals(op, operation))) {
                 favoriteRepository.save(newFavorite(externalUser, operation));
             }
         }
@@ -96,7 +99,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public List<FavoriteEntity> findAllByUser(ExternalUserEntity user) {
-        return favoriteRepository.findAllByExternalUserOrderByCreatedDate(user);
+        return favoriteRepository.findByExternalUser(user);
     }
 
     @Override
@@ -135,7 +138,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     public void delete(ExternalUserEntity externalUser, CategoryEntity parent) {
         favoriteRepository.deleteByExternalUserAndCategory(externalUser, parent);
-        for (OperationEntity operation : parent.getOperations()) {
+        for (OperationEntity operation : operationRepository.getByCategory(parent)) {
             favoriteRepository.deleteByExternalUserAndOperation(externalUser, operation);
         }
         for (CategoryEntity child : parent.getChildren()) {

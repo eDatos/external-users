@@ -27,7 +27,12 @@ export class FavoriteService {
 
     public findByUserId(id: number): Observable<Favorite[]> {
         return this.http
-            .get<Favorite[]>(this.resourceUrl, { params: { query: `USER_ID EQ ${id}` } })
+            .get<Favorite[]>(this.resourceUrl, {
+                params: {
+                    query: `USER_ID EQ ${id}`,
+                    size: '100000',
+                },
+            })
             .pipe(map((favorite) => convert(Favorite, favorite)));
     }
 
