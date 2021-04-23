@@ -50,8 +50,6 @@ public class DataProtectionPolicyServiceTest {
         assertThat(returnedValue.getOptLock()).isNotEqualTo(databaseEntity.getOptLock());
         assertThat(returnedValue.getCreatedBy()).isEqualTo(databaseEntity.getCreatedBy());
         assertThat(returnedValue.getCreatedDate()).isEqualTo(databaseEntity.getCreatedDate());
-        assertThat(returnedValue.getLastModifiedBy()).isEqualTo(databaseEntity.getLastModifiedBy());
-        assertThat(returnedValue.getLastModifiedDate()).isNotEqualTo(databaseEntity.getLastModifiedDate());
         assertThat(returnedValue.getValue().getTexts()).hasSize(languages.size());
         
         InternationalStringVO value = returnedValue.getValue();
@@ -80,8 +78,6 @@ public class DataProtectionPolicyServiceTest {
         assertThat(returnedValue.getOptLock()).isNotEqualTo(databaseEntity.getOptLock());
         assertThat(returnedValue.getCreatedBy()).isEqualTo(databaseEntity.getCreatedBy());
         assertThat(returnedValue.getCreatedDate()).isEqualTo(databaseEntity.getCreatedDate());
-        assertThat(returnedValue.getLastModifiedBy()).isEqualTo(databaseEntity.getCreatedBy());
-        assertThat(returnedValue.getLastModifiedDate()).isNotEqualTo(databaseEntity.getLastModifiedDate());
         for(String language: languages) {
             assertThat(value.getLocalisedLabel(language)).isEqualTo(language);
         }
@@ -107,8 +103,6 @@ public class DataProtectionPolicyServiceTest {
         assertThat(returnedValue.getOptLock()).isNotEqualTo(databaseEntity.getOptLock());
         assertThat(returnedValue.getCreatedBy()).isEqualTo(databaseEntity.getCreatedBy());
         assertThat(returnedValue.getCreatedDate()).isEqualTo(databaseEntity.getCreatedDate());
-        assertThat(returnedValue.getLastModifiedBy()).isEqualTo(databaseEntity.getCreatedBy());
-        assertThat(returnedValue.getLastModifiedDate()).isNotEqualTo(databaseEntity.getLastModifiedDate());
         for(String language: languages.subList(1, languages.size())) {
             assertThat(value.getLocalisedLabel(language)).isEqualTo(language);
         }
@@ -136,8 +130,6 @@ public class DataProtectionPolicyServiceTest {
         assertThat(returnedValue.getOptLock()).isNotEqualTo(databaseEntity.getOptLock());
         assertThat(returnedValue.getCreatedBy()).isEqualTo(databaseEntity.getCreatedBy());
         assertThat(returnedValue.getCreatedDate()).isEqualTo(databaseEntity.getCreatedDate());
-        assertThat(returnedValue.getLastModifiedBy()).isEqualTo(databaseEntity.getCreatedBy());
-        assertThat(returnedValue.getLastModifiedDate()).isNotEqualTo(databaseEntity.getLastModifiedDate());
         assertThat(value.getLocalisedLabel("klingon")).isNull();
         assertThat(value.getLocalisedLabel("en")).isEqualTo("English klingon");
         assertThat(value.getTexts()).hasSize(1);
