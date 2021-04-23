@@ -3,12 +3,11 @@ package es.gobcan.istac.edatos.external.users.core.service.impl;
 import java.time.Instant;
 import java.util.HashSet;
 
-import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
+import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
-import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,10 +27,12 @@ import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 public class ExternalUserServiceImpl implements ExternalUserService {
 
     private final ExternalUserRepository externalUserRepository;
+    private final FilterRepository filterRepository;
     private final QueryUtil queryUtil;
 
-    public ExternalUserServiceImpl(ExternalUserRepository externalUserRepository, QueryUtil queryUtil) {
+    public ExternalUserServiceImpl(ExternalUserRepository externalUserRepository, FilterRepository filterRepository, QueryUtil queryUtil) {
         this.externalUserRepository = externalUserRepository;
+        this.filterRepository = filterRepository;
         this.queryUtil = queryUtil;
     }
 
@@ -50,13 +51,21 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     }
 
     @Override
-    public ExternalUserEntity delete(Long id) {
-        ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id)
-                .orElseThrow(() -> new CustomParameterizedExceptionBuilder().message("Usuario no válido").code(ErrorConstants.USUARIO_NO_VALIDO).build()); // TODO(EDATOS-3278): Replace with
-                                                                                                                                                           // EDatosException
+    public ExternalUserEntity deactivate(Long id) {
+        ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id).orElseThrow(() -> new EDatosException(ServiceExceptionType.EXTERNAL_USER_DEACTIVATE));
+
         usuario.setDeletionDate(Instant.now());
         usuario.setDeletedBy(SecurityUtils.getCurrentUserLogin());
         return externalUserRepository.saveAndFlush(usuario);
+    }
+
+    @Override
+    public void delete(Long id) {
+        ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id).orElseThrow(() -> new EDatosException(ServiceExceptionType.EXTERNAL_USER_DELETED));
+        // TODO EDATOS-3338 Is pending confirm if delete is logical or complete
+
+        filterRepository.deleteAllByExternalUser(usuario);
+        externalUserRepository.delete(id);
     }
 
     @Override

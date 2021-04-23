@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { ArteTableService } from 'arte-ng';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 
@@ -72,6 +75,9 @@ export function initTranslations(translateService: TranslateService, cookieServi
         ToastModule,
         ServiceWorkerModule.register('./ngsw-worker.js', { enabled: environment.production }),
         ScriptLoaderModule,
+        LoadingBarHttpClientModule,
+        LoadingBarRouterModule,
+        LoadingBarModule,
     ],
     providers: [
         {

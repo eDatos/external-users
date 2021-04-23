@@ -7,11 +7,10 @@ import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
 @Mapper(componentModel = "spring", uses = {GenericMapperResolver.class, InternationalStringVOMapper.class})
-public interface CategoryMapper extends EntityMapper<CategoryDto, CategoryEntity> {
+public abstract class CategoryMapper implements EntityMapper<CategoryDto, CategoryEntity> {
+    @Override
+    public abstract CategoryDto toDto(CategoryEntity entity);
 
     @Override
-    CategoryDto toDto(CategoryEntity entity);
-
-    @Override
-    CategoryEntity toEntity(CategoryDto dto);
+    public abstract CategoryEntity toEntity(CategoryDto dto);
 }

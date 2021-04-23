@@ -41,6 +41,14 @@ const APP_ROUTES: Routes = [
         },
     },
     {
+        path: 'thematic-subscriptions',
+        loadChildren: () => import('./modules/thematic-subscriptions/thematic-subscriptions.module').then((m) => m.ThematicSubscriptionsModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: FAVORITE_ROLES,
+        },
+    },
+    {
         path: 'external-users',
         loadChildren: () => import('./modules/external-user/external-user.module').then((m) => m.ExternalUserModule),
         canLoad: [UserRouteAccessGuard],

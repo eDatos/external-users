@@ -33,6 +33,7 @@ import { QuillModule } from 'ngx-quill';
 import { PasswordMatchValidatorDirective } from './directives';
 import { PasswordNotMatchValidatorDirective } from './directives';
 import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
+import { NbButtonModule, NbCardModule } from '@nebular/theme';
 
 @NgModule({
     imports: [
@@ -65,7 +66,9 @@ import { MultiLanguageEditorComponent } from './components/multi-language-editor
         ArteEntityListEmptyModule,
         ArteDirectivesModule,
         EditorModule,
-        QuillModule.forRoot()
+        QuillModule.forRoot(),
+        NbButtonModule,
+        NbCardModule,
     ],
     declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective, MultiLanguageEditorComponent],
     providers: [
@@ -108,7 +111,9 @@ import { MultiLanguageEditorComponent } from './components/multi-language-editor
         PasswordMatchValidatorDirective,
         PasswordNotMatchValidatorDirective,
         ArteDirectivesModule,
-        MultiLanguageEditorComponent
+        MultiLanguageEditorComponent,
+        NbButtonModule,
+        NbCardModule,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

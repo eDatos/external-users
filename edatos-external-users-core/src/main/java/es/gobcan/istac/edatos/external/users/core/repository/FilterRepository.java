@@ -19,4 +19,6 @@ public interface FilterRepository extends JpaRepository<FilterEntity, Long> {
     List<FilterEntity> findAll(DetachedCriteria criteria);
 
     List<FilterEntity> findAllByExternalUserOrderByCreatedDate(ExternalUserEntity user);
+
+    void deleteAllByExternalUser(ExternalUserEntity user);
 }

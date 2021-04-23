@@ -1,7 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.service.validator;
 
-import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
-import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import org.apache.commons.lang3.StringUtils;

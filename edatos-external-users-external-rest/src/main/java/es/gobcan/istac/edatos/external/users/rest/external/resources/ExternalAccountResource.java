@@ -6,10 +6,13 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ChangePasswordDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,13 +59,9 @@ public class ExternalAccountResource extends AbstractResource {
     @PostMapping("/account/signup")
     @Timed
     public ResponseEntity<ExternalUserAccountDto> create(@Valid @RequestBody ExternalUserAccountDto externalUserDto) throws URISyntaxException {
-        if (externalUserRepository.findOneByEmail(externalUserDto.getEmail().toLowerCase()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
-        }
-
         ExternalUserEntity newExternalUser = externalUserMapper.toEntity(externalUserDto);
         externalUserService.create(newExternalUser);
-        mailService.sendCreationEmail(newExternalUser);
+        mailService.sendExternalUserEmailTemplate(newExternalUser, MailConstants.MAIL_CREATION_EXT_USER);
         ExternalUserAccountDto newExternalUserDto = externalUserMapper.toDto(newExternalUser);
 
         auditPublisher.publish(AuditConstants.USUARIO_CREACION, newExternalUserDto.getEmail());
@@ -95,6 +94,21 @@ public class ExternalAccountResource extends AbstractResource {
         return ResponseUtil.wrapOrNotFound(updatedUser);
     }
 
+    @DeleteMapping("/account/{id}")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canModifyUserStatus(authentication)")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            ExternalUserEntity user = externalUserRepository.findOne(id);
+            externalUserService.delete(id);
+            mailService.sendExternalUserEmailTemplate(user, MailConstants.MAIL_DELETE_EXT_USER);
+            auditPublisher.publish(AuditConstants.EXT_USUARIO_DESACTIVACION, user.getEmail());
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
+        }
+    }
+
     @PostMapping("/account/change-password")
     @Timed
     @PreAuthorize("@secCheckerExternal.canUpdateUser(authentication)")
@@ -102,7 +116,7 @@ public class ExternalAccountResource extends AbstractResource {
         ExternalUserEntity user = externalUserService.getUsuarioWithAuthorities();
         externalUserService.updateExternalUserAccountPassword(user, passwordDto.getCurrentPassword(), passwordDto.getNewPassword());
 
-        mailService.sendCreationEmailChangePassword(user);
+        mailService.sendExternalUserEmailTemplate(user, MailConstants.MAIL_CHANGE_PASSWORD_EXT_USER);
         Optional<ExternalUserAccountBaseDto> updatedUserDto = Optional.ofNullable(externalUserMapper.toBaseDto(user));
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, updatedUserDto.get().getEmail());

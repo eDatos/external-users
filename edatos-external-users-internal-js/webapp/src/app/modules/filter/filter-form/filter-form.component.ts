@@ -17,6 +17,7 @@ export class FilterFormComponent implements OnInit {
     public isLoading = false;
     public filter: Filter;
     public externalUserList: ExternalUser[];
+    public userId: string;
 
     constructor(
         private filterService: FilterService,
@@ -26,6 +27,8 @@ export class FilterFormComponent implements OnInit {
         private externalUserService: ExternalUserService
     ) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
+        this.userId = this.activatedRoute.snapshot.queryParams['id'];
+        this.loadExternalUsersList();
         this.activatedRoute.url.subscribe((segments) => {
             const lastUrlSegment = segments[segments.length - 1].path;
             this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
@@ -83,8 +86,16 @@ export class FilterFormComponent implements OnInit {
     }
 
     public updateExternalUserSuggestions(event) {
-        this.externalUserService.find({ query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` }).subscribe((results) => {
+        this.loadExternalUsersList(event);
+    }
+
+    private loadExternalUsersList(event?) {
+        this.externalUserService.find(event ? { query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` } : undefined).subscribe((results) => {
             this.externalUserList = results.body;
+            if (this.userId) {
+                // tslint:disable-next-line:triple-equals
+                this.filter.externalUser = this.externalUserList.filter((user) => user.id == this.userId)?.[0];
+            }
         });
     }
 

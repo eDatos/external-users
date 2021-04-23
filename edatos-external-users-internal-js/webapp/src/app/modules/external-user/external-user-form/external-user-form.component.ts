@@ -4,6 +4,7 @@ import { ExternalUser, Language, Role, Treatment } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
 import { Category, Favorite, Operation } from '@app/shared/model';
+import { StructuralResourcesTree } from '@app/shared/model/structural-resources-tree.model';
 import { FavoriteService } from '@app/shared/service';
 import { ArteEventManager, GenericModalService } from 'arte-ng/services';
 import { Subscription } from 'rxjs';
@@ -118,8 +119,8 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    public deleteFavorite(resource: Category | Operation): void {
-        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.constructor === resource.constructor);
+    public deleteFavorite(resource: StructuralResourcesTree): void {
+        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.constructor.name.toLowerCase() === resource.type.toLowerCase());
         this.favoriteService.delete(favorite.id).subscribe(
             () => {
                 this.updateFavorites();

@@ -5,9 +5,13 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FavoriteDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
@@ -16,6 +20,10 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
 
     @Autowired
     private ExternalUserRepository externalUserRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
+    @Autowired
+    private OperationRepository operationRepository;
 
     @Override
     @Mapping(target = "externalUser", source = "externalUser", qualifiedByName = "externalUserToBaseDto")
@@ -23,6 +31,8 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
 
     @Override
     @Mapping(target = "externalUser", source = "externalUser.id", qualifiedByName = "externalUserFromId")
+    @Mapping(target = "category", source = "category.id", qualifiedByName = "categoryFromId")
+    @Mapping(target = "operation", source = "operation.id", qualifiedByName = "operationFromId")
     public abstract FavoriteEntity toEntity(FavoriteDto dto);
 
     @Named("externalUserFromId")
@@ -31,5 +41,21 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
             return null;
         }
         return externalUserRepository.findOne(id);
+    }
+
+    @Named("categoryFromId")
+    public CategoryEntity categoryFromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return categoryRepository.findOne(id);
+    }
+
+    @Named("operationFromId")
+    public OperationEntity operationFromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return operationRepository.findOne(id);
     }
 }

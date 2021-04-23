@@ -397,3 +397,46 @@ VALUES (40, 'system', '2021-04-16 10:49:31.000000', 1, '3.4', '{
         }
     ]
 }', '40', '40', 29);
+
+
+INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, proc_status, status, category_fk)
+VALUES (1, 'system', '2021-04-16 10:49:31.000000', 1, 'op1', '{
+    "texts": [
+        {
+            "label": "Nacimientos",
+            "locale": "es"
+        }
+    ]
+}', 'EXTERNALLY_PUBLISHED', 'PRODUCTION', 2);
+
+
+INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, proc_status, status, category_fk)
+VALUES (2, 'system', '2021-04-16 10:49:31.000000', 1, 'op2', '{
+    "texts": [
+        {
+            "label": "Fallecimientos",
+            "locale": "es"
+        }
+    ]
+}', 'EXTERNALLY_PUBLISHED', 'PRODUCTION', 2);
+
+
+INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, proc_status, status, category_fk)
+VALUES (3, 'system', '2021-04-16 10:49:31.000000', 1, 'op3', '{
+    "texts": [
+        {
+            "label": "Producción de energía",
+            "locale": "es"
+        }
+    ]
+}', 'EXTERNALLY_PUBLISHED', 'PRODUCTION', 19);
+
+INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, proc_status, status, category_fk)
+VALUES (4, 'system', '2021-04-16 10:49:31.000000', 1, 'op4', '{
+    "texts": [
+        {
+            "label": "Consumo de energía",
+            "locale": "es"
+        }
+    ]
+}', 'EXTERNALLY_PUBLISHED', 'PRODUCTION', 19);
