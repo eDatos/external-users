@@ -3,6 +3,8 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { SharedModule } from '@app/shared';
 import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteTriInputSwitchModule } from 'arte-ng';
 import { ArteDirectivesModule } from 'arte-ng/directives';
+import { DataProtectionPolicyComponent } from './data-protection-policy/data-protection-policy.component';
+import { DataProtectionPolicyService } from './data-protection-policy/data-protection-policy.service';
 
 import {
     AdminRoutingModule,
@@ -31,9 +33,9 @@ import {
         ArteAuditInfoModule,
         ArteTriInputSwitchModule,
     ],
-    declarations: [AuditsComponent, LogsComponent, ConfigurationComponent, HealthCheckComponent, HealthModalComponent, MetricsMonitoringComponent, MetricsMonitoringModalComponent],
+    declarations: [AuditsComponent, LogsComponent, ConfigurationComponent, HealthCheckComponent, HealthModalComponent, MetricsMonitoringComponent, MetricsMonitoringModalComponent, DataProtectionPolicyComponent],
     entryComponents: [HealthModalComponent, MetricsMonitoringModalComponent],
-    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService],
+    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService, DataProtectionPolicyService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {}

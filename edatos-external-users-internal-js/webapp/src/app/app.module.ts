@@ -3,7 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { ArteTableModule, ArteTableService } from 'arte-ng';
+import { ArteTableService } from 'arte-ng';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 
 import { NgxWebstorageModule } from 'ngx-webstorage';
@@ -12,7 +12,7 @@ import { CoreModule } from './core/core.module';
 import { ConfigModule } from './config/config.module';
 import { ConfigService } from './config';
 import { SharedModule } from './shared';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthServerProvider } from './core/service/auth';
@@ -28,6 +28,7 @@ import { CookieService } from 'ngx-cookie';
 import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
 import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 import { EdatosNavbarComponent } from './layouts/edatos-navbar/edatos-navbar.component';
+import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
 
 export function init(configService: ConfigService, authServerProvider: AuthServerProvider) {
     return () => {
@@ -64,6 +65,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
         SharedModule,
         AppRoutingModule,
         TranslateModule.forRoot({
+            missingTranslationHandler: {provide: MissingTranslationHandler, useClass: MissingTranslationHandlerImpl},
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
