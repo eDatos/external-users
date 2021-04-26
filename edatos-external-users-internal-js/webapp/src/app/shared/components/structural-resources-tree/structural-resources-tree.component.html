@@ -19,6 +19,11 @@
             <!--
                 On the usage of `$any()` for `$event.target` in the blur event, see
                 https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
+
+                On the usage of `$event.stopPropagation()` on keydown events, PrimeNG has another listener on that event
+                that fails when the input element dissapears from the DOM after the text is saved (due to the *ngIf
+                kicking). It seems the exception is harmless; but anyway, $event.stopPropagation() halts the event
+                going up to that listener and prevents it from printing the stacktrace to the console.
             -->
             <input
                 [value]="node.label"
@@ -30,8 +35,8 @@
                 (input)="setInputLength(nodeNameInput)"
                 (focus)="setInputLength(nodeNameInput)"
                 (blur)="saveNodeName(node, $any($event.target).value)"
-                (keydown.escape)="disableNodeEdit(node)"
-                (keydown.enter)="saveNodeName(node, $event.target.value)"
+                (keydown.escape)="disableNodeEdit(node); $event.stopPropagation()"
+                (keydown.enter)="saveNodeName(node, $event.target.value); $event.stopPropagation()"
                 #nodeNameInput
             />
         </label>
