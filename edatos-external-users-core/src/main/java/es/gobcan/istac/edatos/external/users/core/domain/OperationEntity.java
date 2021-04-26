@@ -2,8 +2,6 @@ package es.gobcan.istac.edatos.external.users.core.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,8 +15,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
@@ -46,19 +42,6 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
-
-    @Type(type = "jsonb")
-    @Column(columnDefinition = "jsonb")
-    private InternationalStringVO description;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ProcStatus procStatus;
-
-    @NotNull
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "category_fk")
@@ -111,30 +94,6 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
         this.category = category;
     }
 
-    public InternationalStringVO getDescription() {
-        return description;
-    }
-
-    public void setDescription(InternationalStringVO description) {
-        this.description = description;
-    }
-
-    public ProcStatus getProcStatus() {
-        return procStatus;
-    }
-
-    public void setProcStatus(ProcStatus procStatus) {
-        this.procStatus = procStatus;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public static final class Properties {
 
         private Properties() {
@@ -142,9 +101,6 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
 
         public static final String CODE = "code";
         public static final String NAME = "name";
-        public static final String PROC_STATUS = "procStatus";
-        public static final String STATUS = "status";
-        public static final String DESCRIPTION = "description";
         public static final String CATEGORY = "category";
     }
 }

@@ -1,22 +1,26 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ExternalUserRole;
-import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
-
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
-import org.mapstruct.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
-import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {GenericMapperResolver.class})
+import org.mapstruct.AfterMapping;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.ExternalUserRole;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
+
+@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {GenericMapperResolver.class})
 public abstract class ExternalUserAccountMapper implements EntityMapper<ExternalUserAccountDto, ExternalUserEntity> {
 
     @Autowired

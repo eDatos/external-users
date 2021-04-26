@@ -1,11 +1,5 @@
 package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +18,12 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
 import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
@@ -70,8 +70,6 @@ public class CategoryResourceInternalTest {
 
         cat0 = new CategoryEntity();
         cat0.setName(intStr);
-        cat0.setUri("uri:001");
-        cat0.setUrn("urn:001");
         cat0.setCode("001");
         categoryRepository.saveAndFlush(cat0);
 
@@ -86,8 +84,6 @@ public class CategoryResourceInternalTest {
 
         cat1 = new CategoryEntity();
         cat1.setName(intStr);
-        cat1.setUri("uri:002");
-        cat1.setUrn("urn:002");
         cat1.setCode("002");
         cat1.setParent(cat0);
         categoryRepository.saveAndFlush(cat1);
@@ -103,8 +99,6 @@ public class CategoryResourceInternalTest {
 
         cat2 = new CategoryEntity();
         cat2.setName(intStr);
-        cat2.setUri("uri:003");
-        cat2.setUrn("urn:003");
         cat2.setCode("003");
         cat2.setParent(cat1);
         categoryRepository.saveAndFlush(cat2);
@@ -143,8 +137,6 @@ public class CategoryResourceInternalTest {
 
         CategoryEntity cat0b = new CategoryEntity();
         cat0b.setName(intStr);
-        cat0b.setUri("uri:000b");
-        cat0b.setUrn("urn:000b");
         cat0b.setCode("000b");
         categoryRepository.saveAndFlush(cat0b);
 

@@ -20,13 +20,6 @@
             <column name="code" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="description" type="JSONB"/>
-            <column name="proc_status" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="status" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
             <column name="name" type="JSONB">
                 <constraints nullable="false"/>
             </column>

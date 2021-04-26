@@ -3,14 +3,12 @@ import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
 
 export class Filter extends BaseVersionedAndAuditingEntity {
-    public id?: number;
-    public name?: string;
-    public resourceName?: string;
+    public name: string;
+    public resourceName: string | null = null;
+    public permalink: string;
+    public lastAccessDate: Date;
+    public notes: string | null = null;
 
     @Type(() => ExternalUser)
-    public externalUser?: ExternalUser;
-
-    public permalink?: string;
-    public lastAccessDate?: Date;
-    public notes?: string;
+    public externalUser: ExternalUser;
 }
