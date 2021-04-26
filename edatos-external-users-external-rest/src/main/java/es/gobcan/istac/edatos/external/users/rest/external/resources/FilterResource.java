@@ -62,7 +62,7 @@ public class FilterResource extends AbstractResource {
     @GetMapping
     @Timed
     public ResponseEntity<List<FilterDto>> getFilters(Pageable pageable, @RequestParam(required = false) String query) {
-        Page<FilterDto> result = filterService.find(query, pageable).map(filterMapper::toDto);
+        Page<FilterDto> result = filterService.findByExternalUser(query, pageable).map(filterMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
@@ -79,9 +79,7 @@ public class FilterResource extends AbstractResource {
         FilterDto newDto = filterMapper.toDto(entity);
 
         auditPublisher.publish(AuditConstants.FILTER_CREATION, newDto.getExternalUser().getId().toString());
-        return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId()))
-                             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString()))
-                             .body(newDto);
+        return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
     @PutMapping
@@ -96,9 +94,7 @@ public class FilterResource extends AbstractResource {
         FilterDto newDto = filterMapper.toDto(entity);
 
         auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getExternalUser().getId().toString());
-        return ResponseEntity.ok()
-                             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString()))
-                             .body(newDto);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
     @DeleteMapping("/{id}")
@@ -107,8 +103,6 @@ public class FilterResource extends AbstractResource {
         filterService.delete(filterService.find(id));
 
         auditPublisher.publish(AuditConstants.FILTER_DELETION, id.toString());
-        return ResponseEntity.noContent()
-                             .headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString()))
-                             .build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

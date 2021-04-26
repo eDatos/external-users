@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, Data, CanLoad, Route } from '@angular/router';
 import { DEFAULT_PATH } from '@app/app.constants';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Principal } from '../service/auth/principal.service';
 
 @Injectable()

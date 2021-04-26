@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -73,10 +74,7 @@ public class FilterResourceExternalTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(filterResource)
-                                      .setControllerAdvice(exceptionTranslator)
-                                      .setCustomArgumentResolvers(pageableArgumentResolver)
-                                      .build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(filterResource).setControllerAdvice(exceptionTranslator).setCustomArgumentResolvers(pageableArgumentResolver).build();
     }
 
     @Before
@@ -113,128 +111,82 @@ public class FilterResourceExternalTest {
     }
 
     @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testSaveTwoFiltersWithTheSameUserAndPermalink() throws Exception {
         filter2.setPermalink(filter1.getPermalink());
-        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(filterMapper.toDto(filter2))))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(filterMapper.toDto(filter2)))).andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testSaveANonUrlPermalink() throws Exception {
         filter1.setPermalink("not a url");
-        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(filterMapper.toDto(filter1))))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(filterMapper.toDto(filter1)))).andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
     @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testCreateFilterFail() throws Exception {
         FilterDto dto = new FilterDto();
         dto.setExternalUser(externalUserMapper.toDto(user2));
         dto.setPermalink(PERMALINK_1);
-        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(dto)))
-                    .andDo(print())
-                    .andExpect(status().isBadRequest());
+        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(dto))).andDo(print()).andExpect(status().isBadRequest());
     }
 
     @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testCreateFilterSucceeds() throws Exception {
         FilterDto dto = new FilterDto();
         dto.setExternalUser(externalUserMapper.toDto(user2));
         dto.setPermalink(PERMALINK_1);
         dto.setResourceName("resource name");
-        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(dto)))
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.name", is("resource name")));
+        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(dto))).andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name", is("resource name")));
 
         dto.setName("filter name");
         dto.setPermalink(PERMALINK_2);
-        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                               .content(TestUtil.convertObjectToJsonBytes(dto)))
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.name", is("filter name")));
+        this.mockMvc.perform(post(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(dto))).andExpect(status().isCreated())
+                .andExpect(jsonPath("$.name", is("filter name")));
     }
 
     @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testCanUpdateFilter() throws Exception {
         FilterDto dto = filterMapper.toDto(filter1);
         dto.setName("My new filter name");
 
-        this.mockMvc.perform(put(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8)
-                                              .content(TestUtil.convertObjectToJsonBytes(dto)))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.name", is("My new filter name")));
+        this.mockMvc.perform(put(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(dto))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("My new filter name")));
 
         assertThat(filter1.getLastModifiedDate()).isNotEqualTo(dto.getLastModifiedDate());
     }
 
     @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testDeleteFilter() throws Exception {
         this.mockMvc.perform(delete(ENDPOINT_URL + "/" + filter1.getId())).andExpect(status().isNoContent());
         assertThat(filterRepository.findOne(filter1.getId())).isNull();
     }
 
     @Test
-    public void testListAllFilters() throws Exception {
-        this.mockMvc.perform(get(ENDPOINT_URL))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].name", is("My filter 1")))
-                    .andExpect(jsonPath("$[1].name", is("My filter 2")));
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
+    public void testGetFilters() throws Exception {
+        this.mockMvc.perform(get(ENDPOINT_URL)).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(2))).andExpect(jsonPath("$[0].name", is("My filter 1")))
+                .andExpect(jsonPath("$[1].name", is("My filter 2")));
     }
 
     @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testGetFilterByName() throws Exception {
-        this.mockMvc.perform(get(ENDPOINT_URL + "?query=NAME ILIKE '%filter 2'"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(1)))
-                    .andExpect(jsonPath("$[0].name", is("My filter 2")));
+        this.mockMvc.perform(get(ENDPOINT_URL + "?query=NAME ILIKE '%filter 2'")).andDo(print()).andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name", is("My filter 2")));
     }
 
     @Test
-    public void testGetFilterByUserLogin() throws Exception {
-        this.mockMvc.perform(get(ENDPOINT_URL + "?query=EMAIL EQ 'user1@gmail.com'"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].name", is("My filter 1")))
-                    .andExpect(jsonPath("$[1].name", is("My filter 2")));
-
-        FilterEntity filter = new FilterEntity();
-        filter.setName("User 2 filter");
-        filter.setPermalink(PERMALINK_1);
-        filter.setExternalUser(user2);
-        filterRepository.saveAndFlush(filter);
-
-        this.mockMvc.perform(get(ENDPOINT_URL + "?query=EMAIL EQ 'user2@gmail.com'"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(1)))
-                    .andExpect(jsonPath("$[0].name", is("User 2 filter")));
-    }
-
-    @Test
-    public void testSortFiltersByUserEmail() throws Exception {
-        filter2.setExternalUser(user2);
-        filterRepository.saveAndFlush(filter2);
-
-        this.mockMvc.perform(get(ENDPOINT_URL + "?sort=email,desc"))
-                    .andDo(print())
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].externalUser.email", is("user2@gmail.com"))).andExpect(jsonPath("$[1].externalUser.email", is("user1@gmail.com")));
-    }
-
-    @Test
+    @WithMockUser(username = "user1@gmail.com", authorities = {"USER"}, password = "user")
     public void testIfTheFilterDoesntExists404IsReturned() throws Exception {
-        this.mockMvc.perform(get(ENDPOINT_URL + "/1"))
-                    .andExpect(status().isNotFound());
+        this.mockMvc.perform(get(ENDPOINT_URL + "/8")).andExpect(status().isNotFound());
     }
 }

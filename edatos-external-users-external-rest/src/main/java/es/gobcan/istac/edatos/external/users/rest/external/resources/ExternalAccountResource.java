@@ -11,6 +11,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ChangePasswordDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserDto;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.http.HttpStatus;
@@ -54,6 +55,13 @@ public class ExternalAccountResource extends AbstractResource {
         this.externalUserService = externalUserService;
         this.externalUserMapper = externalUserMapper;
         this.auditPublisher = auditPublisher;
+    }
+
+    @GetMapping("/{id}")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canAccessUser(authentication)")
+    public ResponseEntity<ExternalUserAccountDto> get(@PathVariable Long id) {
+        return ResponseEntity.ok(externalUserMapper.toDto(externalUserService.find(id)));
     }
 
     @PostMapping("/account/signup")

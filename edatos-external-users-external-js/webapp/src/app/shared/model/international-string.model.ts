@@ -1,10 +1,12 @@
 import { BaseVersionedEntity, BaseEntity } from 'arte-ng/model';
 import { LocalisedString } from './localised-string.model';
+import { Type } from 'class-transformer';
 
 export class InternationalString extends BaseVersionedEntity implements BaseEntity {
-    constructor(public id?: number, public texts?: LocalisedString[]) {
-        super();
-    }
+    public id?: number;
+
+    @Type(() => LocalisedString)
+    public texts?: LocalisedString[];
 
     public getLocalisedLabel(locale: string): string {
         return this.texts?.find((localisedString) => localisedString.locale === locale)?.label;
