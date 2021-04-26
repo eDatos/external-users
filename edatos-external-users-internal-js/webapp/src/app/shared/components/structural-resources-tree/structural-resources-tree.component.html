@@ -5,8 +5,8 @@
     [value]="resources"
     [selectionMode]="selectionMode"
     [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
-    [draggableNodes]="true"
-    [droppableNodes]="true"
+    [draggableNodes]="enableDragAndDrop"
+    [droppableNodes]="enableDragAndDrop"
     [loading]="!resources"
 >
     <ng-template *ngIf="mode === 'view'" let-node pTemplate="default">

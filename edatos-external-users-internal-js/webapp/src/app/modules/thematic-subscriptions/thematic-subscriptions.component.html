@@ -3,10 +3,18 @@
         <h2 class="page-header-title">
             <span class="page-header-title-text">{{ 'thematicSubscriptions.home.title' | translate }}</span>
         </h2>
+        <button *ngIf="treeMode === 'view'" class="btn btn-secondary" routerLink="edit">
+            <span class="fa fa-pencil"></span>
+            <span translate="entity.action.edit"></span>
+        </button>
+        <button *ngIf="treeMode === 'edit'" class="btn btn-link" routerLink="..">
+            <span class="fa fa-arrow-left"></span>
+            <span translate="entity.action.back"></span>
+        </button>
     </div>
     <div class="page-body">
         <div class="mt-4">
-            <app-structural-resources-tree mode="view" [disabled]="true"></app-structural-resources-tree>
+            <app-structural-resources-tree [mode]="treeMode" [disabled]="true"></app-structural-resources-tree>
         </div>
     </div>
 </div>

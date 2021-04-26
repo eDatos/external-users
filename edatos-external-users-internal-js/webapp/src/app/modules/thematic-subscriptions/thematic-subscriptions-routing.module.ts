@@ -6,6 +6,15 @@ import { ThematicSubscriptionsComponent } from '@app/modules/thematic-subscripti
 export const THEMATIC_SUBSCRIPTIONS_ROUTES: Routes = [
     {
         path: '',
+        pathMatch: 'full',
+        component: ThematicSubscriptionsComponent,
+        data: {
+            pageTitle: 'thematicSubscriptions.home.title',
+        },
+        canActivate: [UserRouteAccessGuard],
+    },
+    {
+        path: 'edit',
         component: ThematicSubscriptionsComponent,
         data: {
             pageTitle: 'thematicSubscriptions.home.title',

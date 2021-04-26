@@ -63,6 +63,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public resources: TreeNode[];
     public selectedResources: TreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
+    public enableDragAndDrop = false;
 
     private readonly mainLanguageCode: string;
     private tree: StructuralResourcesTree[] = [];
@@ -266,6 +267,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 break;
             case 'edit':
                 this.selectionMode = 'single';
+                this.enableDragAndDrop = true;
                 break;
         }
     }
