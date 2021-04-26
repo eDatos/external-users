@@ -131,7 +131,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 parent.children = [];
             }
             const node: TreeNode = {
-                label: 'nuevo nodo',
+                label: '',
                 collapsedIcon: 'fa fa-folder',
                 expandedIcon: 'fa fa-folder-open',
                 expanded: true,
@@ -157,6 +157,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public disableNodeEdit(node: TreeNode & { edit?: boolean }) {
+        if (node.label.trim().length === 0) {
+            this.deleteNode(node);
+        }
         node.edit = false;
     }
 

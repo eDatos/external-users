@@ -16,6 +16,10 @@
     <ng-template *ngIf="mode === 'edit'" let-node pTemplate="default">
         <span *ngIf="!node.edit" class="label mr-2" (dblclick)="enableNodeEdit(node)">{{node.label}}</span>
         <label *ngIf="node.edit" class="input-sizer">
+            <!--
+                On the usage of `$any()` for `$event.target` in the blur event, see
+                https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
+            -->
             <input
                 [value]="node.label"
                 type="text"
@@ -25,13 +29,12 @@
                 arteAutofocus
                 (input)="setInputLength(nodeNameInput)"
                 (focus)="setInputLength(nodeNameInput)"
-                (blur)="disableNodeEdit(node)"
+                (blur)="saveNodeName(node, $any($event.target).value)"
                 (keydown.escape)="disableNodeEdit(node)"
                 (keydown.enter)="saveNodeName(node, $event.target.value)"
                 #nodeNameInput
             />
         </label>
-
         <button type="button" class="btn btn-primary node-btn-sm mr-2" (click)="addNode(node)">
             <i class="fa fa-plus" aria-hidden="true"></i>
         </button>

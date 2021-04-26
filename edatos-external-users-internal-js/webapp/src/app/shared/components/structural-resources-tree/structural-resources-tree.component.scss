@@ -72,6 +72,11 @@
     }
 }
 
-.subscribed-users {
+@mixin grey {
     color: #a5a5a5;
+}
+
+.subscribed-users,
+.untitled-node {
+    @include grey;
 }
