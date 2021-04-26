@@ -8,7 +8,7 @@ import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 
-type Mode = 'view' | 'select';
+export type Mode = 'view' | 'select' | 'edit';
 
 @Component({
     selector: 'app-structural-resources-tree',
@@ -34,13 +34,16 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     /**
      * Mode of the component.
      *
+     * If set to 'select', the tree show checkboxes next to each element.
+     * {@link StructuralResourcesTreeComponent#favorites} becomes necessary since it's where
+     * the selected favorites are synchronized. This is the default mode.
+     *
      * If set to 'view', the tree shows the structural resources without any checkbox and
      * they are not selectable. {@link StructuralResourcesTreeComponent#favorites} is not
      * required.
      *
-     * If set to 'select', the tree show checkboxes next to each element.
-     * {@link StructuralResourcesTreeComponent#favorites} becomes necessary since it's where
-     * the selected favorites are synchronized. This is the default mode.
+     * If set to 'edit', the tree allows to create, delete, and move around nodes. This
+     * mode it's meant to map the elements of the tree to categories and operations.
      */
     @Input()
     public mode: Mode = 'select';
@@ -96,14 +99,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         });
     }
 
-    private sort(categories: StructuralResourcesTree[]): StructuralResourcesTree[] {
-        categories.sort((a, b) => (a.getLocalisedName(this.mainLanguageCode)! < b.getLocalisedName(this.mainLanguageCode)! ? -1 : 1));
-        for (const element of categories) {
-            this.sort(element.children);
-        }
-        return categories;
-    }
-
     public createTree() {
         this.categoryListToTreeNode(this.tree).subscribe((treeNodes) => {
             this.resources = treeNodes;
@@ -128,6 +123,58 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public onUnselect(treeNode: TreeNode) {
         this.setLoadingNode(treeNode);
         this.onResourceUnselect.emit(treeNode.data);
+    }
+
+    public addNode(parent?: TreeNode) {
+        if (parent) {
+            if (!parent.children) {
+                parent.children = [];
+            }
+            const node: TreeNode = {
+                label: 'nuevo nodo',
+                collapsedIcon: 'fa fa-folder',
+                expandedIcon: 'fa fa-folder-open',
+                expanded: true,
+                data: new Category(),
+                selectable: !this.disabled,
+            };
+            parent.children.push(node);
+            this.nodeList.push(node);
+            this.enableNodeEdit(node);
+        } else {
+            // TODO(EDATOS-3357): What happens when the tree is empty?
+        }
+    }
+
+    public deleteNode(node: TreeNode) {
+        this.nodeList.splice(this.nodeList.indexOf(node));
+        node.parent?.children.splice(node.parent?.children.indexOf(node));
+    }
+
+    public saveNodeName(node: TreeNode, content: string) {
+        node.label = content;
+        this.disableNodeEdit(node);
+    }
+
+    public disableNodeEdit(node: TreeNode & { edit?: boolean }) {
+        node.edit = false;
+    }
+
+    public enableNodeEdit(node: TreeNode & { edit?: boolean }) {
+        node.edit = true;
+    }
+
+    public setInputLength(inputRef: HTMLInputElement) {
+        // see https://css-tricks.com/auto-growing-inputs-textareas/
+        inputRef.parentElement.dataset.value = inputRef.value;
+    }
+
+    private sort(categories: StructuralResourcesTree[]): StructuralResourcesTree[] {
+        categories.sort((a, b) => (a.getLocalisedName(this.mainLanguageCode)! < b.getLocalisedName(this.mainLanguageCode)! ? -1 : 1));
+        for (const element of categories) {
+            this.sort(element.children);
+        }
+        return categories;
     }
 
     private categoryListToTreeNode(categories: StructuralResourcesTree[]): Observable<TreeNode[]> {
@@ -213,6 +260,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 break;
             case 'select':
                 this.selectionMode = 'checkbox';
+                break;
+            case 'edit':
+                this.selectionMode = 'single';
                 break;
         }
     }

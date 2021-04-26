@@ -11,6 +11,32 @@
 >
     <ng-template *ngIf="mode === 'view'" let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
-        <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{ amount: node.data.subscribers || 0 } }})</span>
+        <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
+    </ng-template>
+    <ng-template *ngIf="mode === 'edit'" let-node pTemplate="default">
+        <span *ngIf="!node.edit" class="label mr-2" (dblclick)="enableNodeEdit(node)">{{node.label}}</span>
+        <label *ngIf="node.edit" class="input-sizer">
+            <input
+                [value]="node.label"
+                type="text"
+                name="nodeName"
+                class="mr-2"
+                pInputText
+                arteAutofocus
+                (input)="setInputLength(nodeNameInput)"
+                (focus)="setInputLength(nodeNameInput)"
+                (blur)="disableNodeEdit(node)"
+                (keydown.escape)="disableNodeEdit(node)"
+                (keydown.enter)="saveNodeName(node, $event.target.value)"
+                #nodeNameInput
+            />
+        </label>
+
+        <button type="button" class="btn btn-primary node-btn-sm mr-2" (click)="addNode(node)">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+        </button>
+        <button type="button" class="btn btn-danger node-btn-sm" (click)="deleteNode(node)">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+        </button>
     </ng-template>
 </p-tree>
