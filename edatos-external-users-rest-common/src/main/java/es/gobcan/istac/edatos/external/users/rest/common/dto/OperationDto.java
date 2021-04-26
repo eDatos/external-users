@@ -1,22 +1,18 @@
 package es.gobcan.istac.edatos.external.users.rest.common.dto;
 
-import org.siemac.edatos.core.common.dto.AuditableDto;
+import java.io.Serializable;
+
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
 import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 
-import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
 
-public class OperationDto extends AuditableDto implements Identifiable {
-
-    private static final long serialVersionUID = 1L;
+public class OperationDto extends AbstractVersionedAndAuditingDto implements Serializable {
 
     private String code;
     private InternationalStringDto name;
     private CategoryDto category;
-    private InternationalStringDto description;
-    private ProcStatus procStatus;
-    private Status status;
 
     public String getCode() {
         return code;
@@ -40,29 +36,5 @@ public class OperationDto extends AuditableDto implements Identifiable {
 
     public void setCategory(CategoryDto category) {
         this.category = category;
-    }
-
-    public InternationalStringDto getDescription() {
-        return description;
-    }
-
-    public void setDescription(InternationalStringDto description) {
-        this.description = description;
-    }
-
-    public ProcStatus getProcStatus() {
-        return procStatus;
-    }
-
-    public void setProcStatus(ProcStatus procStatus) {
-        this.procStatus = procStatus;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }

@@ -15,7 +15,10 @@
         "lib": ["es2018", "dom"],
         "paths": {
             "@app/*": ["./src/app/*"]
-        }
+        },
+        //"strictFunctionTypes": true,
+        //"strictBindCallApply": true,
+        //"strictNullChecks": true,
     },
     "angularCompilerOptions": {
         "fullTemplateTypeCheck": true,

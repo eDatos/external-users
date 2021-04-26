@@ -9,9 +9,10 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
-@Mapper(componentModel = "spring", uses = {GenericMapperResolver.class, ExternalUserMapper.class})
+@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {GenericMapperResolver.class, ExternalUserMapper.class})
 public abstract class FilterMapper implements EntityMapper<FilterDto, FilterEntity> {
 
     @Autowired

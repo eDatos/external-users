@@ -1,19 +1,10 @@
 package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -30,6 +21,13 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EdatosExternalUsersRestTestApp.class)
@@ -83,8 +81,6 @@ public class OperationResourceInternalTest {
 
         category0 = new CategoryEntity();
         category0.setName(intStr);
-        category0.setUri("uri:001");
-        category0.setUrn("urn:001");
         category0.setCode("001");
         categoryRepository.saveAndFlush(category0);
 
@@ -99,8 +95,6 @@ public class OperationResourceInternalTest {
 
         category1 = new CategoryEntity();
         category1.setName(intStr);
-        category1.setUri("uri:002");
-        category1.setUrn("urn:002");
         category1.setCode("002");
         category1.setParent(category0);
         categoryRepository.saveAndFlush(category1);
@@ -116,8 +110,6 @@ public class OperationResourceInternalTest {
 
         operation0 = new OperationEntity();
         operation0.setName(intStr);
-        operation0.setProcStatus(ProcStatus.EXTERNALLY_PUBLISHED);
-        operation0.setStatus(Status.PRODUCTION);
         operation0.setCode("001");
         operation0.setCategory(category0);
         operationRepository.saveAndFlush(operation0);
@@ -133,8 +125,6 @@ public class OperationResourceInternalTest {
 
         operation1 = new OperationEntity();
         operation1.setName(intStr);
-        operation1.setProcStatus(ProcStatus.EXTERNALLY_PUBLISHED);
-        operation1.setStatus(Status.PRODUCTION);
         operation1.setCode("002");
         operation1.setCategory(category1);
         operationRepository.saveAndFlush(operation1);
@@ -150,8 +140,6 @@ public class OperationResourceInternalTest {
 
         operation2 = new OperationEntity();
         operation2.setName(intStr);
-        operation2.setProcStatus(ProcStatus.EXTERNALLY_PUBLISHED);
-        operation2.setStatus(Status.PRODUCTION);
         operation2.setCode("003");
         operation2.setCategory(category1);
         operationRepository.saveAndFlush(operation2);
@@ -183,7 +171,7 @@ public class OperationResourceInternalTest {
                 .andExpect(jsonPath("$[0].id", is(operation1.getId().intValue()))).andExpect(jsonPath("$[1].id", is(operation2.getId().intValue())));
     }
 
-    // TODO(EDATOS-3294): This test it's not working because the criteria it's not ready yet to work with jsonb fields.
+    // TODO(EDATOS-3294): This test isn't working because the criteria is not ready yet to work with jsonb fields.
     @Test
     @Ignore("TODO(EDATOS-3294): This test it's not working because the criteria it's not ready yet to work with jsonb fields.")
     public void testGetOperationByName() throws Exception {

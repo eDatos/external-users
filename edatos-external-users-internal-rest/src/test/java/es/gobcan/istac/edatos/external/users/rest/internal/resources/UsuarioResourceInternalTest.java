@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
@@ -25,8 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.UsuarioEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Gender;
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
 import es.gobcan.istac.edatos.external.users.core.repository.UsuarioRepository;
@@ -38,10 +35,8 @@ import es.gobcan.istac.edatos.external.users.rest.common.util.TestUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.vm.ManagedUserVM;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
@@ -117,8 +112,6 @@ public class UsuarioResourceInternalTest {
         user.setEmail(DEFAULT_EMAIL);
         user.setNombre(DEFAULT_NOMBRE);
         user.setApellido1(DEFAULT_PRIMER_APELLIDO);
-        user.setGender(Gender.MALE);
-        user.setLanguage(Language.SPANISH);
         return user;
     }
 
@@ -196,8 +189,6 @@ public class UsuarioResourceInternalTest {
         anotherUser.setEmail("jhipster@localhost");
         anotherUser.setNombre("java");
         anotherUser.setApellido1("hipster");
-        anotherUser.setGender(Gender.MALE);
-        anotherUser.setLanguage(Language.SPANISH);
         userRepository.saveAndFlush(anotherUser);
 
         // Update the user
@@ -213,19 +204,12 @@ public class UsuarioResourceInternalTest {
         user.setLogin("myNewLogin2");
         user.setEmail("test@t");
         user.setApellido2("hipster2");
-        user.setGender(Gender.FEMALE);
-        user.setLanguage(Language.CATALAN);
-        user.setPhoneNumber("600112233");
-        user.setOrganization("ACME Corporation");
         // userRepository.saveAndFlush(anotherUser);
 
         managedUserVM = new ManagedUserVM();
         managedUserVM.updateFrom(user);
         restUserMockMvc.perform(put(ENDPOINT_URL).contentType(TestUtil.APPLICATION_JSON_UTF8).content(TestUtil.convertObjectToJsonBytes(managedUserVM))).andExpect(status().isOk())
-                .andExpect(jsonPath("$.login").value("mynewlogin2"))
-                .andExpect(jsonPath("$.gender").value("FEMALE"))
-                .andExpect(jsonPath("$.organization").value("ACME Corporation"))
-                .andExpect(jsonPath("$.phoneNumber").value("600112233"));
+                .andExpect(jsonPath("$.login").value("mynewlogin2"));
     }
 
     @Test

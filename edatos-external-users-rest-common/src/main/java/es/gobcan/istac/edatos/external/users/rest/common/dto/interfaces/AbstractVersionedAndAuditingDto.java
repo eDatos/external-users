@@ -5,8 +5,6 @@ import java.time.Instant;
 
 public abstract class AbstractVersionedAndAuditingDto implements Identifiable, Versionable, Serializable, Cloneable {
 
-    private static final long serialVersionUID = 1L;
-
     private Long id;
     private Long optLock;
     private Instant createdDate;

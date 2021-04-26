@@ -13,9 +13,10 @@ import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FavoriteDto;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
-@Mapper(componentModel = "spring", uses = {GenericMapperResolver.class, ExternalUserAccountMapper.class, CategoryMapper.class, OperationMapper.class})
+@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {GenericMapperResolver.class, ExternalUserAccountMapper.class, CategoryMapper.class, OperationMapper.class})
 public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, FavoriteEntity> {
 
     @Autowired

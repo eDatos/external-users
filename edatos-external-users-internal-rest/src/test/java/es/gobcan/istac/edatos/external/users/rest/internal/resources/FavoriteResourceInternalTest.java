@@ -134,38 +134,28 @@ public class FavoriteResourceInternalTest {
 
         category0a = new CategoryEntity();
         category0a.setName(createIntStr(LOCALE, "Categoría abuela 1"));
-        category0a.setUri("uri:000a");
-        category0a.setUrn("urn:000a");
         category0a.setCode("000a");
         categoryRepository.saveAndFlush(category0a);
 
         category0b = new CategoryEntity();
         category0b.setName(createIntStr(LOCALE, "Categoría abuela 2"));
-        category0b.setUri("uri:000b");
-        category0b.setUrn("urn:000b");
         category0b.setCode("000b");
         categoryRepository.saveAndFlush(category0b);
 
         category1 = new CategoryEntity();
         category1.setName(createIntStr(LOCALE, "Categoría madre"));
-        category1.setUri("uri:001");
-        category1.setUrn("urn:001");
         category1.setCode("001");
         category1.setParent(category0a);
         categoryRepository.saveAndFlush(category1);
 
         category2a = new CategoryEntity();
         category2a.setName(createIntStr(LOCALE, "Categoría hija 1"));
-        category2a.setUri("uri:002a");
-        category2a.setUrn("urn:002a");
         category2a.setCode("002a");
         category2a.setParent(category1);
         categoryRepository.saveAndFlush(category2a);
 
         category2b = new CategoryEntity();
         category2b.setName(createIntStr(LOCALE, "Categoría hija 2"));
-        category2b.setUri("uri:002b");
-        category2b.setUrn("urn:002b");
         category2b.setCode("002b");
         category2b.setParent(category1);
         categoryRepository.saveAndFlush(category2b);
@@ -174,24 +164,18 @@ public class FavoriteResourceInternalTest {
         operation1.setName(createIntStr(LOCALE, "Operación 1"));
         operation1.setCode("o:001");
         operation1.setCategory(category0a);
-        operation1.setProcStatus(ProcStatus.INTERNALLY_PUBLISHED);
-        operation1.setStatus(Status.PRODUCTION);
         operationRepository.saveAndFlush(operation1);
 
         operation2 = new OperationEntity();
         operation2.setName(createIntStr(LOCALE, "Operación 2"));
         operation2.setCode("o:002");
         operation2.setCategory(category2b);
-        operation2.setProcStatus(ProcStatus.INTERNALLY_PUBLISHED);
-        operation2.setStatus(Status.PRODUCTION);
         operationRepository.saveAndFlush(operation2);
 
         operation3 = new OperationEntity();
         operation3.setName(createIntStr(LOCALE, "Operación 3"));
         operation3.setCode("o:003");
         operation3.setCategory(category2a);
-        operation3.setProcStatus(ProcStatus.INTERNALLY_PUBLISHED);
-        operation3.setStatus(Status.PRODUCTION);
         operationRepository.saveAndFlush(operation3);
 
         favorite1 = new FavoriteEntity();
