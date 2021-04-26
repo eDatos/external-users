@@ -26,4 +26,6 @@ public interface FilterService {
     List<FilterEntity> find(String query, Sort sort);
 
     void delete(FilterEntity filter);
+
+    public Page<FilterEntity> findByExternalUser(String query, Pageable pageable);
 }

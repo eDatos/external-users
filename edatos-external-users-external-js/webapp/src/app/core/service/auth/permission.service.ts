@@ -6,9 +6,6 @@ export const USER = [Role.USER];
 export const HERRAMIENTAS_ROLES = [Role.HERRAMIENTAS_ROLES];
 export const ALL_ALLOWED = [Role.ANY_ROLE_ALLOWED];
 
-export const FILTER_ROLES = [Role.USER];
-export const FAVORITE_ROLES = [Role.USER];
-
 @Injectable()
 export class PermissionService {
     constructor(private principal: Principal) {}

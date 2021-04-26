@@ -2,7 +2,10 @@ package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.util.List;
 
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,11 +21,13 @@ import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 public class FilterServiceImpl implements FilterService {
 
     private final FilterRepository filterRepository;
+    private final ExternalUserRepository externalUserRepository;
 
     private final QueryUtil queryUtil;
 
-    public FilterServiceImpl(FilterRepository filterRepository, QueryUtil queryUtil) {
+    public FilterServiceImpl(FilterRepository filterRepository, ExternalUserRepository externalUserRepository, QueryUtil queryUtil) {
         this.filterRepository = filterRepository;
+        this.externalUserRepository = externalUserRepository;
         this.queryUtil = queryUtil;
     }
 
@@ -61,6 +66,14 @@ public class FilterServiceImpl implements FilterService {
     public List<FilterEntity> find(String query, Sort sort) {
         DetachedCriteria criteria = queryUtil.queryToFilterSortCriteria(query, sort);
         return filterRepository.findAll(criteria);
+    }
+
+    @Override
+    public Page<FilterEntity> findByExternalUser(String query, Pageable pageable) {
+        DetachedCriteria criteria = queryUtil.queryToFilterCriteria(query, pageable);
+        ExternalUserEntity externalUser = externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).get();
+        criteria.add(Restrictions.eq("externalUser", externalUser));
+        return filterRepository.findAll(criteria, pageable);
     }
 
     @Override
