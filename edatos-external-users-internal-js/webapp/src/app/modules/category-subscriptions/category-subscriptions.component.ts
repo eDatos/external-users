@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Mode } from '@app/shared/components/structural-resources-tree';
 
 @Component({
-    selector: 'app-thematic-subscriptions',
-    templateUrl: './thematic-subscriptions.component.html',
-    styleUrls: ['./thematic-subscriptions.component.scss'],
+    selector: 'app-category-subscriptions',
+    templateUrl: './category-subscriptions.component.html',
+    styleUrls: ['./category-subscriptions.component.scss'],
 })
-export class ThematicSubscriptionsComponent implements OnInit {
+export class CategorySubscriptionsComponent implements OnInit {
     public treeMode: Mode = 'view';
 
     constructor(private activatedRoute: ActivatedRoute) {
