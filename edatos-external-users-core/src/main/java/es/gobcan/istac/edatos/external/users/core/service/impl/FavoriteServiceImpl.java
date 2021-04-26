@@ -5,8 +5,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import es.gobcan.istac.edatos.external.users.core.domain.*;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,10 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
@@ -30,15 +30,18 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
     private final OperationRepository operationRepository;
+    private final ExternalUserRepository externalUserRepository;
     private final FavoriteValidator favoriteValidator;
     private final QueryUtil queryUtil;
 
     private final Logger log = LoggerFactory.getLogger(FavoriteServiceImpl.class);
 
-    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, OperationRepository operationRepository, FavoriteValidator favoriteValidator, QueryUtil queryUtil) {
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, OperationRepository operationRepository, FavoriteValidator favoriteValidator, ExternalUserRepository externalUserRepository,
+            QueryUtil queryUtil) {
         this.favoriteRepository = favoriteRepository;
         this.operationRepository = operationRepository;
         this.favoriteValidator = favoriteValidator;
+        this.externalUserRepository = externalUserRepository;
         this.queryUtil = queryUtil;
     }
 
@@ -112,6 +115,13 @@ public class FavoriteServiceImpl implements FavoriteService {
     public List<FavoriteEntity> find(String query, Sort sort) {
         DetachedCriteria criteria = queryUtil.queryToFavoriteSortCriteria(query, sort);
         return favoriteRepository.findAll(criteria);
+    }
+
+    @Override
+    public List<FavoriteEntity> findByExternalUser() {
+        ExternalUserEntity externalUser = externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).get();
+        List<FavoriteEntity> list = favoriteRepository.findByExternalUser(externalUser);
+        return list;
     }
 
     @Override

@@ -1,12 +1,16 @@
 package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import es.gobcan.istac.edatos.external.users.rest.common.dto.StructuralResourcesTreeDto;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.StructuralResourcesTreeMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +35,17 @@ public class CategoryResource extends AbstractResource {
 
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
+    private final StructuralResourcesTreeMapper structuralResourcesTreeMapper;
 
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper) {
+    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, StructuralResourcesTreeMapper structuralResourcesTreeMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
+        this.structuralResourcesTreeMapper = structuralResourcesTreeMapper;
     }
 
     @GetMapping("/{id}")
     @Timed
+    @PreAuthorize("@secCheckerExternal.canAccessCategory(authentication)")
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
         CategoryEntity category = categoryService.findCategoryById(id);
         CategoryDto categoryDto = categoryMapper.toDto(category);
@@ -47,9 +54,17 @@ public class CategoryResource extends AbstractResource {
 
     @GetMapping
     @Timed
+    @PreAuthorize("@secCheckerExternal.canAccessCategory(authentication)")
     public ResponseEntity<List<CategoryDto>> getCategory(Pageable pageable, @RequestParam(required = false) String query) {
         Page<CategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return ResponseEntity.ok().headers(headers).body(result.getContent());
+    }
+
+    @Timed
+    @GetMapping("/tree")
+    @PreAuthorize("@secCheckerExternal.canAccessCategory(authentication)")
+    public ResponseEntity<List<StructuralResourcesTreeDto>> getCategoryTree() {
+        return ResponseEntity.ok(structuralResourcesTreeMapper.toDto());
     }
 }

@@ -1,6 +1,7 @@
 import { DatePipe, CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ArteAutocompleteModule, ArteEntityListEmptyModule, ArteInputModule, ArteOrderListModule, ArteSpinnerModule, ArteTableModule } from 'arte-ng';
@@ -26,6 +27,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { EditorModule } from 'primeng/editor';
+import { TreeModule } from 'primeng/tree';
 
 import { NgArrayPipesModule } from 'ngx-pipes';
 import { QuillModule } from 'ngx-quill';
@@ -66,11 +68,12 @@ import { NbButtonModule, NbCardModule } from '@nebular/theme';
         ArteEntityListEmptyModule,
         ArteDirectivesModule,
         EditorModule,
+        TreeModule,
         QuillModule.forRoot(),
         NbButtonModule,
         NbCardModule,
     ],
-    declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective, MultiLanguageEditorComponent],
+    declarations: [PasswordMatchValidatorDirective, PasswordNotMatchValidatorDirective, MultiLanguageEditorComponent, StructuralResourcesTreeComponent],
     providers: [
         FormcontrolStatusService,
         DatePipe,
@@ -100,6 +103,7 @@ import { NbButtonModule, NbCardModule } from '@nebular/theme';
         TranslateModule,
         TableModule,
         TooltipModule,
+        TreeModule,
         NgArrayPipesModule,
         ReactiveFormsModule,
         ArteInputModule,
@@ -112,6 +116,7 @@ import { NbButtonModule, NbCardModule } from '@nebular/theme';
         PasswordNotMatchValidatorDirective,
         ArteDirectivesModule,
         MultiLanguageEditorComponent,
+        StructuralResourcesTreeComponent,
         NbButtonModule,
         NbCardModule,
     ],

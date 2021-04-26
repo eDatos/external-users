@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { USER, ALL_ALLOWED, FILTER_ROLES } from './core/service';
+import { USER, ALL_ALLOWED } from './core/service';
 import { UserRouteAccessGuard } from './core/guard';
 import { DEFAULT_PATH } from './app.constants';
-import { NotLoggedUserCanAccessGuard } from './core/guard/not-logged-user-can-access.guard';
 
 const APP_ROUTES: Routes = [
     {
@@ -46,7 +45,7 @@ const APP_ROUTES: Routes = [
         loadChildren: () => import('./modules/filter/filter.module').then((m) => m.FilterModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: FILTER_ROLES,
+            roles: USER,
         },
     },
     {
@@ -56,7 +55,6 @@ const APP_ROUTES: Routes = [
             roles: ALL_ALLOWED,
         },
     },
-    /*
     {
         path: 'favorite',
         loadChildren: () => import('./modules/favorite/favorite.module').then((m) => m.FavoriteModule),
@@ -64,7 +62,7 @@ const APP_ROUTES: Routes = [
         data: {
             roles: USER,
         },
-    },*/
+    },
     {
         path: '**',
         redirectTo: 'notfound',
