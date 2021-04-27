@@ -55,12 +55,14 @@ public class FavoriteResource extends AbstractResource {
 
     @GetMapping("/{id}")
     @Timed
+    @PreAuthorize("@secCheckerExternal.canAccessFavorites(authentication)")
     public ResponseEntity<FavoriteDto> getFavoriteById(@PathVariable Long id) {
         return ResponseEntity.ok(favoriteMapper.toDto(favoriteService.find(id)));
     }
 
     @GetMapping
     @Timed
+    @PreAuthorize("@secCheckerExternal.canAccessFavorites(authentication)")
     public ResponseEntity<List<FavoriteDto>> getFavorites() {
         List<FavoriteDto> result = favoriteService.findByExternalUser().stream().map(favoriteMapper::toDto).collect(Collectors.toList());
         return ResponseEntity.ok(result);
@@ -68,6 +70,7 @@ public class FavoriteResource extends AbstractResource {
 
     @PostMapping
     @Timed
+    @PreAuthorize("@secCheckerExternal.canCreateFavorites(authentication)")
     public ResponseEntity<FavoriteDto> createFavorite(@RequestBody FavoriteDto dto) throws URISyntaxException {
         if (dto != null && dto.getId() != null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
