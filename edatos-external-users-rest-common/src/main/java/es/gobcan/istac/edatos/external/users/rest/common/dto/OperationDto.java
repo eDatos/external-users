@@ -3,14 +3,13 @@ package es.gobcan.istac.edatos.external.users.rest.common.dto;
 import java.io.Serializable;
 
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
 
 public class OperationDto extends AbstractVersionedAndAuditingDto implements Serializable {
 
     private String code;
+    private String urn;
     private InternationalStringDto name;
     private CategoryDto category;
 
@@ -20,6 +19,14 @@ public class OperationDto extends AbstractVersionedAndAuditingDto implements Ser
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getUrn() {
+        return urn;
+    }
+
+    public void setUrn(String urn) {
+        this.urn = urn;
     }
 
     public InternationalStringDto getName() {

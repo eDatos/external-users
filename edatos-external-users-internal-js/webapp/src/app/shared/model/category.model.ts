@@ -5,6 +5,7 @@ import { Type } from 'class-transformer';
 export class Category extends BaseVersionedAndAuditingEntity {
     public code: string;
     public nestedCode: string | null = null;
+    public urn: string;
 
     @Type(() => InternationalString)
     public name: InternationalString;

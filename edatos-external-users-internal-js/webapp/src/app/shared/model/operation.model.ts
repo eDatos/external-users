@@ -5,6 +5,7 @@ import { Type } from 'class-transformer';
 
 export class Operation extends BaseVersionedAndAuditingEntity {
     public code: string;
+    public urn: string;
 
     @Type(() => InternationalString)
     public name: InternationalString;

@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotBlank;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
@@ -42,6 +43,11 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
+
+    @NotNull
+    @NotBlank
+    @Column(nullable = false, unique = true)
+    private String urn;
 
     @ManyToOne
     @JoinColumn(name = "category_fk")

@@ -21,6 +21,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
@@ -63,6 +64,18 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      */
     @Column(unique = true)
     private String nestedCode;
+
+    /**
+     * A Uniform Resource Name (URN) is a Uniform Resource Identifier (URI) that is assigned under
+     * the "urn" URI scheme and a particular URN namespace, with the intent that the URN will be a
+     * persistent, location-independent resource identifier, according to RFC8141.
+     * <p>
+     * Example: {@code urn:sdmx:org.sdmx.infomodel.categoryscheme.CategoryScheme=ISTAC:SDMXStatSubMatDomainsWD1(01.000)}.
+     */
+    @NotNull
+    @NotBlank
+    @Column(nullable = false, unique = true)
+    private String urn;
 
     /**
      * The category name. I.e.: "Forestry and hunting"

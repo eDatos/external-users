@@ -11,6 +11,7 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     private String code;
     private String nestedCode;
+    private String urn;
     private InternationalStringDto name;
     private List<CategoryDto> children = new ArrayList<>();
 
@@ -28,6 +29,14 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     public void setNestedCode(String nestedCode) {
         this.nestedCode = nestedCode;
+    }
+
+    public String getUrn() {
+        return urn;
+    }
+
+    public void setUrn(String urn) {
+        this.urn = urn;
     }
 
     public InternationalStringDto getName() {
