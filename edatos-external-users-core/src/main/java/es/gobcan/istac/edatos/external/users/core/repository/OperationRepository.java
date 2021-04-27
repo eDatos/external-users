@@ -8,12 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 
 @Repository
-public interface OperationRepository extends JpaRepository<OperationEntity, Long> {
+public interface OperationRepository extends JpaRepository<ExternalOperationEntity, Long> {
 
-    Page<OperationEntity> findAll(DetachedCriteria criteria, Pageable pageable);
-    List<OperationEntity> getByCategory(CategoryEntity parent);
+    Page<ExternalOperationEntity> findAll(DetachedCriteria criteria, Pageable pageable);
+    List<ExternalOperationEntity> getByCategory(ExternalCategoryEntity parent);
 }

@@ -22,7 +22,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVers
  * and deletions.
  */
 @Entity
-@Table(name = "tb_favorites", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "category_fk"}), @UniqueConstraint(columnNames = {"external_user_fk", "operation_fk"})})
+@Table(name = "tb_favorites", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "external_category_fk"}), @UniqueConstraint(columnNames = {"external_user_fk", "external_operation_fk"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
@@ -36,13 +36,13 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
     @ManyToOne(optional = false)
     private ExternalUserEntity externalUser;
 
-    @JoinColumn(name = "category_fk")
+    @JoinColumn(name = "external_category_fk")
     @ManyToOne
-    private CategoryEntity category;
+    private ExternalCategoryEntity category;
 
-    @JoinColumn(name = "operation_fk")
+    @JoinColumn(name = "external_operation_fk")
     @ManyToOne
-    private OperationEntity operation;
+    private ExternalOperationEntity operation;
 
     @Override
     public Long getId() {
@@ -61,19 +61,19 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
         this.externalUser = user;
     }
 
-    public CategoryEntity getCategory() {
+    public ExternalCategoryEntity getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryEntity category) {
+    public void setCategory(ExternalCategoryEntity category) {
         this.category = category;
     }
 
-    public OperationEntity getOperation() {
+    public ExternalOperationEntity getOperation() {
         return operation;
     }
 
-    public void setOperation(OperationEntity operation) {
+    public void setOperation(ExternalOperationEntity operation) {
         this.operation = operation;
     }
 }

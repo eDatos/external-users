@@ -26,13 +26,13 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  * into a group with other operations (aka, 'families').
  */
 @Entity
-@Table(name = "tb_operations", uniqueConstraints = {@UniqueConstraint(columnNames = {"code"})})
+@Table(name = "tb_external_operations", uniqueConstraints = {@UniqueConstraint(columnNames = {"code"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
-public class OperationEntity extends AbstractVersionedAndAuditingEntity {
+public class ExternalOperationEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_operations")
-    @SequenceGenerator(name = "seq_tb_operations", sequenceName = "seq_tb_operations", allocationSize = 50, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_external_operations")
+    @SequenceGenerator(name = "seq_tb_external_operations", sequenceName = "seq_tb_external_operations", allocationSize = 50, initialValue = 1)
     private Long id;
 
     @NotNull
@@ -50,8 +50,8 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
     private String urn;
 
     @ManyToOne
-    @JoinColumn(name = "category_fk")
-    private CategoryEntity category;
+    @JoinColumn(name = "external_category_fk")
+    private ExternalCategoryEntity category;
 
     @Override
     public Long getId() {
@@ -92,11 +92,11 @@ public class OperationEntity extends AbstractVersionedAndAuditingEntity {
         this.name = name;
     }
 
-    public CategoryEntity getCategory() {
+    public ExternalCategoryEntity getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryEntity category) {
+    public void setCategory(ExternalCategoryEntity category) {
         this.category = category;
     }
 

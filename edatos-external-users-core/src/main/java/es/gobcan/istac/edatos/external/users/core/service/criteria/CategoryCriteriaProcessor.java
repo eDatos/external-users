@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.util.CriteriaUtil;
 
 @Component
 public class CategoryCriteriaProcessor extends AbstractCriteriaProcessor {
 
-    public static final CriteriaUtil criteriaUtil = new CriteriaUtil(CategoryEntity.class);
+    public static final CriteriaUtil criteriaUtil = new CriteriaUtil(ExternalCategoryEntity.class);
 
     public static final String ENTITY_FIELD_ID = criteriaUtil.validateFieldExists("id");
     public static final String ENTITY_FIELD_CODE = criteriaUtil.validateFieldExists("code");
@@ -22,7 +22,7 @@ public class CategoryCriteriaProcessor extends AbstractCriteriaProcessor {
     }
 
     public CategoryCriteriaProcessor() {
-        super(CategoryEntity.class);
+        super(ExternalCategoryEntity.class);
     }
 
     @Override

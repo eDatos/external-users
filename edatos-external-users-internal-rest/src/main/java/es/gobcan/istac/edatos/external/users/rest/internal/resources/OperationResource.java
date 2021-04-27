@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.service.OperationService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.OperationDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.OperationMapper;
@@ -40,7 +40,7 @@ public class OperationResource extends AbstractResource {
     @GetMapping("/{id}")
     @Timed
     public ResponseEntity<OperationDto> get(@PathVariable Long id) {
-        OperationEntity operation = operationService.findOperationById(id);
+        ExternalOperationEntity operation = operationService.findOperationById(id);
         OperationDto operationDto = operationMapper.toDto(operation);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operationDto));
     }
@@ -48,7 +48,7 @@ public class OperationResource extends AbstractResource {
     @GetMapping
     @Timed
     public ResponseEntity<List<OperationDto>> find(String query, Pageable pageable) {
-        Page<OperationEntity> entities = operationService.find(query, pageable);
+        Page<ExternalOperationEntity> entities = operationService.find(query, pageable);
         Page<OperationDto> result = entities.map(operationMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return new ResponseEntity<>(result.getContent(), headers, HttpStatus.OK);

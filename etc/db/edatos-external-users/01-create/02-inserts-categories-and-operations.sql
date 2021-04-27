@@ -1,4 +1,4 @@
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (1, 'system', '2021-04-16 10:49:31.000000', 1, '1', '{
     "texts": [
         {
@@ -8,7 +8,7 @@ VALUES (1, 'system', '2021-04-16 10:49:31.000000', 1, '1', '{
     ]
 }', null);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (2, 'system', '2021-04-16 10:49:31.000000', 1, '1.1', '{
     "texts": [
         {
@@ -18,7 +18,7 @@ VALUES (2, 'system', '2021-04-16 10:49:31.000000', 1, '1.1', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (3, 'system', '2021-04-16 10:49:31.000000', 1, '1.2', '{
     "texts": [
         {
@@ -28,7 +28,7 @@ VALUES (3, 'system', '2021-04-16 10:49:31.000000', 1, '1.2', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (4, 'system', '2021-04-16 10:49:31.000000', 1, '1.3', '{
     "texts": [
         {
@@ -38,7 +38,7 @@ VALUES (4, 'system', '2021-04-16 10:49:31.000000', 1, '1.3', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (5, 'system', '2021-04-16 10:49:31.000000', 1, '1.4', '{
     "texts": [
         {
@@ -48,7 +48,7 @@ VALUES (5, 'system', '2021-04-16 10:49:31.000000', 1, '1.4', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (6, 'system', '2021-04-16 10:49:31.000000', 1, '1.5', '{
     "texts": [
         {
@@ -58,7 +58,7 @@ VALUES (6, 'system', '2021-04-16 10:49:31.000000', 1, '1.5', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (7, 'system', '2021-04-16 10:49:31.000000', 1, '1.6', '{
     "texts": [
         {
@@ -68,7 +68,7 @@ VALUES (7, 'system', '2021-04-16 10:49:31.000000', 1, '1.6', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (8, 'system', '2021-04-16 10:49:31.000000', 1, '1.7', '{
     "texts": [
         {
@@ -78,7 +78,7 @@ VALUES (8, 'system', '2021-04-16 10:49:31.000000', 1, '1.7', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (9, 'system', '2021-04-16 10:49:31.000000', 1, '1.8', '{
     "texts": [
         {
@@ -88,7 +88,7 @@ VALUES (9, 'system', '2021-04-16 10:49:31.000000', 1, '1.8', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (10, 'system', '2021-04-16 10:49:31.000000', 1, '1.9', '{
     "texts": [
         {
@@ -98,7 +98,7 @@ VALUES (10, 'system', '2021-04-16 10:49:31.000000', 1, '1.9', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (11, 'system', '2021-04-16 10:49:31.000000', 1, '1.10', '{
     "texts": [
         {
@@ -108,7 +108,7 @@ VALUES (11, 'system', '2021-04-16 10:49:31.000000', 1, '1.10', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (12, 'system', '2021-04-16 10:49:31.000000', 1, '1.11', '{
     "texts": [
         {
@@ -118,7 +118,7 @@ VALUES (12, 'system', '2021-04-16 10:49:31.000000', 1, '1.11', '{
     ]
 }', 1);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (13, 'system', '2021-04-16 10:49:31.000000', 1, '2', '{
     "texts": [
         {
@@ -128,7 +128,7 @@ VALUES (13, 'system', '2021-04-16 10:49:31.000000', 1, '2', '{
     ]
 }', null);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (14, 'system', '2021-04-16 10:49:31.000000', 1, '2.1', '{
     "texts": [
         {
@@ -138,7 +138,7 @@ VALUES (14, 'system', '2021-04-16 10:49:31.000000', 1, '2.1', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (15, 'system', '2021-04-16 10:49:31.000000', 1, '2.2', '{
     "texts": [
         {
@@ -148,7 +148,7 @@ VALUES (15, 'system', '2021-04-16 10:49:31.000000', 1, '2.2', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (16, 'system', '2021-04-16 10:49:31.000000', 1, '2.3', '{
     "texts": [
         {
@@ -158,7 +158,7 @@ VALUES (16, 'system', '2021-04-16 10:49:31.000000', 1, '2.3', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (17, 'system', '2021-04-16 10:49:31.000000', 1, '2.4', '{
     "texts": [
         {
@@ -168,7 +168,7 @@ VALUES (17, 'system', '2021-04-16 10:49:31.000000', 1, '2.4', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (18, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.1', '{
     "texts": [
         {
@@ -178,7 +178,7 @@ VALUES (18, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.1', '{
     ]
 }', 17);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (19, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.2', '{
     "texts": [
         {
@@ -188,7 +188,7 @@ VALUES (19, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.2', '{
     ]
 }', 17);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (20, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.3', '{
     "texts": [
         {
@@ -198,7 +198,7 @@ VALUES (20, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.3', '{
     ]
 }', 17);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (21, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.4', '{
     "texts": [
         {
@@ -208,7 +208,7 @@ VALUES (21, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.4', '{
     ]
 }', 17);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (22, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.5', '{
     "texts": [
         {
@@ -218,7 +218,7 @@ VALUES (22, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.5', '{
     ]
 }', 17);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (23, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.6', '{
     "texts": [
         {
@@ -228,7 +228,7 @@ VALUES (23, 'system', '2021-04-16 10:49:31.000000', 1, '2.4.6', '{
     ]
 }', 17);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (24, 'system', '2021-04-16 10:49:31.000000', 1, '2.5', '{
     "texts": [
         {
@@ -238,7 +238,7 @@ VALUES (24, 'system', '2021-04-16 10:49:31.000000', 1, '2.5', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (25, 'system', '2021-04-16 10:49:31.000000', 1, '2.6', '{
     "texts": [
         {
@@ -248,7 +248,7 @@ VALUES (25, 'system', '2021-04-16 10:49:31.000000', 1, '2.6', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (26, 'system', '2021-04-16 10:49:31.000000', 1, '2.7', '{
     "texts": [
         {
@@ -258,7 +258,7 @@ VALUES (26, 'system', '2021-04-16 10:49:31.000000', 1, '2.7', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (27, 'system', '2021-04-16 10:49:31.000000', 1, '2.8', '{
     "texts": [
         {
@@ -268,7 +268,7 @@ VALUES (27, 'system', '2021-04-16 10:49:31.000000', 1, '2.8', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (28, 'system', '2021-04-16 10:49:31.000000', 1, '2.8', '{
     "texts": [
         {
@@ -278,7 +278,7 @@ VALUES (28, 'system', '2021-04-16 10:49:31.000000', 1, '2.8', '{
     ]
 }', 13);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (29, 'system', '2021-04-16 10:49:31.000000', 1, '3', '{
     "texts": [
         {
@@ -288,7 +288,7 @@ VALUES (29, 'system', '2021-04-16 10:49:31.000000', 1, '3', '{
     ]
 }', null);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (30, 'system', '2021-04-16 10:49:31.000000', 1, '3.1', '{
     "texts": [
         {
@@ -298,7 +298,7 @@ VALUES (30, 'system', '2021-04-16 10:49:31.000000', 1, '3.1', '{
     ]
 }', 29);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (31, 'system', '2021-04-16 10:49:31.000000', 1, '3.2', '{
     "texts": [
         {
@@ -308,7 +308,7 @@ VALUES (31, 'system', '2021-04-16 10:49:31.000000', 1, '3.2', '{
     ]
 }', 29);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (32, 'system', '2021-04-16 10:49:31.000000', 1, '3.3', '{
     "texts": [
         {
@@ -318,7 +318,7 @@ VALUES (32, 'system', '2021-04-16 10:49:31.000000', 1, '3.3', '{
     ]
 }', 29);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (33, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.1', '{
     "texts": [
         {
@@ -328,7 +328,7 @@ VALUES (33, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.1', '{
     ]
 }', 32);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (34, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.2', '{
     "texts": [
         {
@@ -338,7 +338,7 @@ VALUES (34, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.2', '{
     ]
 }', 32);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (35, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.3', '{
     "texts": [
         {
@@ -348,7 +348,7 @@ VALUES (35, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.3', '{
     ]
 }', 32);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (36, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.4', '{
     "texts": [
         {
@@ -358,7 +358,7 @@ VALUES (36, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.4', '{
     ]
 }', 32);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (37, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.5', '{
     "texts": [
         {
@@ -368,7 +368,7 @@ VALUES (37, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.5', '{
     ]
 }', 32);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (38, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.6', '{
     "texts": [
         {
@@ -378,7 +378,7 @@ VALUES (38, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.6', '{
     ]
 }', 32);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (39, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.7', '{
     "texts": [
         {
@@ -388,7 +388,7 @@ VALUES (39, 'system', '2021-04-16 10:49:31.000000', 1, '3.3.7', '{
     ]
 }', 32);
 
-INSERT INTO tb_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
+INSERT INTO tb_external_categories (id, created_by, created_date, opt_lock, code, name, parent_fk)
 VALUES (40, 'system', '2021-04-16 10:49:31.000000', 1, '3.4', '{
     "texts": [
         {
@@ -399,7 +399,7 @@ VALUES (40, 'system', '2021-04-16 10:49:31.000000', 1, '3.4', '{
 }', 29);
 
 
-INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, category_fk)
+INSERT INTO tb_external_operations (id, created_by, created_date, opt_lock, code, name, external_category_fk)
 VALUES (1, 'system', '2021-04-16 10:49:31.000000', 1, 'op1', '{
     "texts": [
         {
@@ -410,7 +410,7 @@ VALUES (1, 'system', '2021-04-16 10:49:31.000000', 1, 'op1', '{
 }', 2);
 
 
-INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, category_fk)
+INSERT INTO tb_external_operations (id, created_by, created_date, opt_lock, code, name, external_category_fk)
 VALUES (2, 'system', '2021-04-16 10:49:31.000000', 1, 'op2', '{
     "texts": [
         {
@@ -421,7 +421,7 @@ VALUES (2, 'system', '2021-04-16 10:49:31.000000', 1, 'op2', '{
 }', 2);
 
 
-INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, category_fk)
+INSERT INTO tb_external_operations (id, created_by, created_date, opt_lock, code, name, external_category_fk)
 VALUES (3, 'system', '2021-04-16 10:49:31.000000', 1, 'op3', '{
     "texts": [
         {
@@ -431,7 +431,7 @@ VALUES (3, 'system', '2021-04-16 10:49:31.000000', 1, 'op3', '{
     ]
 }', 19);
 
-INSERT INTO tb_operations (id, created_by, created_date, opt_lock, code, name, category_fk)
+INSERT INTO tb_external_operations (id, created_by, created_date, opt_lock, code, name, external_category_fk)
 VALUES (4, 'system', '2021-04-16 10:49:31.000000', 1, 'op4', '{
     "texts": [
         {

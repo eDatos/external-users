@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
@@ -47,11 +47,11 @@ public class CategoryResourceInternalTest {
 
     private MockMvc mockMvc;
 
-    private CategoryEntity cat0;
+    private ExternalCategoryEntity cat0;
 
-    private CategoryEntity cat1;
+    private ExternalCategoryEntity cat1;
 
-    private CategoryEntity cat2;
+    private ExternalCategoryEntity cat2;
 
     @Before
     public void setup() {
@@ -68,7 +68,7 @@ public class CategoryResourceInternalTest {
         InternationalStringVO intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        cat0 = new CategoryEntity();
+        cat0 = new ExternalCategoryEntity();
         cat0.setName(intStr);
         cat0.setCode("001");
         categoryRepository.saveAndFlush(cat0);
@@ -82,7 +82,7 @@ public class CategoryResourceInternalTest {
         intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        cat1 = new CategoryEntity();
+        cat1 = new ExternalCategoryEntity();
         cat1.setName(intStr);
         cat1.setCode("002");
         cat1.setParent(cat0);
@@ -97,7 +97,7 @@ public class CategoryResourceInternalTest {
         intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        cat2 = new CategoryEntity();
+        cat2 = new ExternalCategoryEntity();
         cat2.setName(intStr);
         cat2.setCode("003");
         cat2.setParent(cat1);
@@ -135,7 +135,7 @@ public class CategoryResourceInternalTest {
         InternationalStringVO intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        CategoryEntity cat0b = new CategoryEntity();
+        ExternalCategoryEntity cat0b = new ExternalCategoryEntity();
         cat0b.setName(intStr);
         cat0b.setCode("000b");
         categoryRepository.saveAndFlush(cat0b);

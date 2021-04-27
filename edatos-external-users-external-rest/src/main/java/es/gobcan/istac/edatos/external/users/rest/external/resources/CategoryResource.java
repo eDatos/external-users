@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
@@ -47,7 +47,7 @@ public class CategoryResource extends AbstractResource {
     @Timed
     @PreAuthorize("@secCheckerExternal.canAccessCategory(authentication)")
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
-        CategoryEntity category = categoryService.findCategoryById(id);
+        ExternalCategoryEntity category = categoryService.findCategoryById(id);
         CategoryDto categoryDto = categoryMapper.toDto(category);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(categoryDto));
     }

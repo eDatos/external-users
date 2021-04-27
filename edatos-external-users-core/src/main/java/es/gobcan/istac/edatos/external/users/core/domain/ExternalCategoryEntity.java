@@ -38,18 +38,18 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  * {@code metamac-srm-core:org.siemac.metamac.srm.core.category.domain.CategoryMetamac}.
  */
 @Entity
-@Table(name = "tb_categories")
+@Table(name = "tb_external_categories")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 // jsonb is already defined on a package-level, but for some reason liquibase:diff doesn't detect it, so
 // it needs to be declared on at least one entity for it to work. Refer to
 // https://stackoverflow.com/a/52117748/7611990
 // https://stackoverflow.com/a/56030790/7611990
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
-public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
+public class ExternalCategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_categories")
-    @SequenceGenerator(name = "seq_tb_categories", sequenceName = "seq_tb_categories", allocationSize = 50, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_external_categories")
+    @SequenceGenerator(name = "seq_tb_external_categories", sequenceName = "seq_tb_external_categories", allocationSize = 50, initialValue = 1)
     private Long id;
 
     /**
@@ -87,15 +87,15 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @ManyToOne
     @JoinColumn(name = "parent_fk")
-    private CategoryEntity parent;
+    private ExternalCategoryEntity parent;
 
     @NotNull
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private final Set<CategoryEntity> children = new HashSet<>();
+    private final Set<ExternalCategoryEntity> children = new HashSet<>();
 
     @NotNull
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private final Set<OperationEntity> operations = new HashSet<>();
+    private final Set<ExternalOperationEntity> operations = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -130,11 +130,11 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.name = name;
     }
 
-    public CategoryEntity getParent() {
+    public ExternalCategoryEntity getParent() {
         return parent;
     }
 
-    public void setParent(CategoryEntity newParent) {
+    public void setParent(ExternalCategoryEntity newParent) {
         if (newParent != null && !newParent.children.contains(this)) {
             newParent.children.add(this);
         } else if (this.parent != null) {
@@ -143,46 +143,46 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.parent = newParent;
     }
 
-    public Set<CategoryEntity> getChildren() {
+    public Set<ExternalCategoryEntity> getChildren() {
         return children;
     }
 
-    public void setChildren(Set<CategoryEntity> categories) {
-        for (CategoryEntity category : categories) {
+    public void setChildren(Set<ExternalCategoryEntity> categories) {
+        for (ExternalCategoryEntity category : categories) {
             category.setParent(this);
         }
         this.children.clear();
         this.children.addAll(categories);
     }
 
-    public void addChild(CategoryEntity category) {
+    public void addChild(ExternalCategoryEntity category) {
         category.setParent(this);
         this.children.add(category);
     }
 
-    public void removeChild(CategoryEntity category) {
+    public void removeChild(ExternalCategoryEntity category) {
         category.setParent(null);
         this.children.remove(category);
     }
 
-    public Set<OperationEntity> getOperations() {
+    public Set<ExternalOperationEntity> getOperations() {
         return operations;
     }
 
-    public void setOperations(Set<OperationEntity> operations) {
-        for (OperationEntity operation : operations) {
+    public void setOperations(Set<ExternalOperationEntity> operations) {
+        for (ExternalOperationEntity operation : operations) {
             operation.setCategory(this);
         }
         this.operations.clear();
         this.operations.addAll(operations);
     }
 
-    public void addOperation(OperationEntity operation) {
+    public void addOperation(ExternalOperationEntity operation) {
         operation.setCategory(this);
         this.operations.add(operation);
     }
 
-    public void removeOperation(OperationEntity operation) {
+    public void removeOperation(ExternalOperationEntity operation) {
         operation.setCategory(null);
         this.operations.remove(operation);
     }

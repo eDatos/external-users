@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.service.EDatosApisLocator;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationService;
@@ -33,12 +33,12 @@ public class NotificationServiceImpl implements NotificationService {
     private EDatosApisLocator eDatosApisLocator;
 
     @Override
-    public void createNotificationForPublishInternallyOperation(OperationEntity operation) {
+    public void createNotificationForPublishInternallyOperation(ExternalOperationEntity operation) {
         // TODO EDATOS-3131
     }
 
     @Override
-    public void createNotificationForPublishExternallyOperation(OperationEntity operation) {
+    public void createNotificationForPublishExternallyOperation(ExternalOperationEntity operation) {
         // TODO EDATOS-3131
     }
 

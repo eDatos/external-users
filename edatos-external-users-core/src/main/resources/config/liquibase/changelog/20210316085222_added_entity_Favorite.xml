@@ -1,7 +1,5 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet author="arte" id="1615884742603-0">
         <createSequence incrementBy="50" sequenceName="seq_tb_favorites" startValue="1"/>
     </changeSet>
@@ -19,37 +17,26 @@
             <column name="last_modified_by" type="VARCHAR(50)"/>
             <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="opt_lock" type="BIGINT"/>
-            <column name="category_fk" type="BIGINT"/>
-            <column name="operation_fk" type="BIGINT"/>
+            <column name="external_category_fk" type="BIGINT"/>
+            <column name="external_operation_fk" type="BIGINT"/>
             <column name="external_user_fk" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
     <changeSet author="arte" id="1615884742603-2">
-        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_favorites"
-                                 constraintName="FKpj9683wyvqjq3fx69d0wk9nhd" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id"
-                                 referencedTableName="tb_external_users" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_favorites" constraintName="FKpj9683wyvqjq3fx69d0wk9nhd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
     </changeSet>
     <changeSet author="arte" id="1615884742603-3">
-        <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_favorites"
-                                 constraintName="FKers05xrmvmrgv0nbhs54ysmd4" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id"
-                                 referencedTableName="tb_categories" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="external_category_fk" baseTableName="tb_favorites" constraintName="FKers05xrmvmrgv0nbhs54ysmd4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_categories" validate="true"/>
     </changeSet>
     <changeSet author="arte" id="1615884742603-4">
-        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_favorites"
-                                 constraintName="FKofygq73agw6csd3h9l4i82fu" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id"
-                                 referencedTableName="tb_operations" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="external_operation_fk" baseTableName="tb_favorites" constraintName="FKofygq73agw6csd3h9l4i82fu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_operations" validate="true"/>
     </changeSet>
     <changeSet author="arte" id="1615884742603-5">
-        <addUniqueConstraint columnNames="external_user_fk, category_fk" constraintName="UK6ubfpj9qk6ffa0wsgiqtewdn7"
-                             tableName="tb_favorites"/>
+        <addUniqueConstraint columnNames="external_user_fk, external_category_fk" constraintName="UK6ubfpj9qk6ffa0wsgiqtewdn7" tableName="tb_favorites"/>
     </changeSet>
     <changeSet author="arte" id="1615884742603-6">
-        <addUniqueConstraint columnNames="external_user_fk, operation_fk" constraintName="UKlxjkh55oohstxpley34nth2yh"
-                             tableName="tb_favorites"/>
+        <addUniqueConstraint columnNames="external_user_fk, external_operation_fk" constraintName="UKlxjkh55oohstxpley34nth2yh" tableName="tb_favorites"/>
     </changeSet>
 </databaseChangeLog>

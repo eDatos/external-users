@@ -7,8 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.ProcStatus;
-import org.siemac.metamac.rest.statistical_operations_internal.v1_0.domain.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
@@ -18,10 +16,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Language;
 import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Treatment;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
@@ -90,15 +88,15 @@ public class FavoriteResourceInternalTest {
 
     private ExternalUserEntity user2;
 
-    private CategoryEntity category0a;
-    private CategoryEntity category0b;
-    private CategoryEntity category1;
-    private CategoryEntity category2a;
-    private CategoryEntity category2b;
+    private ExternalCategoryEntity category0a;
+    private ExternalCategoryEntity category0b;
+    private ExternalCategoryEntity category1;
+    private ExternalCategoryEntity category2a;
+    private ExternalCategoryEntity category2b;
 
-    private OperationEntity operation1;
-    private OperationEntity operation2;
-    private OperationEntity operation3;
+    private ExternalOperationEntity operation1;
+    private ExternalOperationEntity operation2;
+    private ExternalOperationEntity operation3;
 
     private FavoriteEntity favorite1;
 
@@ -132,47 +130,47 @@ public class FavoriteResourceInternalTest {
         user2.setLanguage(Language.CATALAN);
         externalUserRepository.saveAndFlush(user2);
 
-        category0a = new CategoryEntity();
+        category0a = new ExternalCategoryEntity();
         category0a.setName(createIntStr(LOCALE, "Categoría abuela 1"));
         category0a.setCode("000a");
         categoryRepository.saveAndFlush(category0a);
 
-        category0b = new CategoryEntity();
+        category0b = new ExternalCategoryEntity();
         category0b.setName(createIntStr(LOCALE, "Categoría abuela 2"));
         category0b.setCode("000b");
         categoryRepository.saveAndFlush(category0b);
 
-        category1 = new CategoryEntity();
+        category1 = new ExternalCategoryEntity();
         category1.setName(createIntStr(LOCALE, "Categoría madre"));
         category1.setCode("001");
         category1.setParent(category0a);
         categoryRepository.saveAndFlush(category1);
 
-        category2a = new CategoryEntity();
+        category2a = new ExternalCategoryEntity();
         category2a.setName(createIntStr(LOCALE, "Categoría hija 1"));
         category2a.setCode("002a");
         category2a.setParent(category1);
         categoryRepository.saveAndFlush(category2a);
 
-        category2b = new CategoryEntity();
+        category2b = new ExternalCategoryEntity();
         category2b.setName(createIntStr(LOCALE, "Categoría hija 2"));
         category2b.setCode("002b");
         category2b.setParent(category1);
         categoryRepository.saveAndFlush(category2b);
 
-        operation1 = new OperationEntity();
+        operation1 = new ExternalOperationEntity();
         operation1.setName(createIntStr(LOCALE, "Operación 1"));
         operation1.setCode("o:001");
         operation1.setCategory(category0a);
         operationRepository.saveAndFlush(operation1);
 
-        operation2 = new OperationEntity();
+        operation2 = new ExternalOperationEntity();
         operation2.setName(createIntStr(LOCALE, "Operación 2"));
         operation2.setCode("o:002");
         operation2.setCategory(category2b);
         operationRepository.saveAndFlush(operation2);
 
-        operation3 = new OperationEntity();
+        operation3 = new ExternalOperationEntity();
         operation3.setName(createIntStr(LOCALE, "Operación 3"));
         operation3.setCode("o:003");
         operation3.setCategory(category2a);

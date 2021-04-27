@@ -5,10 +5,10 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
@@ -45,7 +45,7 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
     }
 
     @Named("categoryFromId")
-    public CategoryEntity categoryFromId(Long id) {
+    public ExternalCategoryEntity categoryFromId(Long id) {
         if (id == null) {
             return null;
         }
@@ -53,7 +53,7 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
     }
 
     @Named("operationFromId")
-    public OperationEntity operationFromId(Long id) {
+    public ExternalOperationEntity operationFromId(Long id) {
         if (id == null) {
             return null;
         }

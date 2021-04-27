@@ -6,21 +6,21 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 
 public interface OperationService {
 
-    OperationEntity findOperationById(Long id);
+    ExternalOperationEntity findOperationById(Long id);
 
-    List<OperationEntity> findAllOperations();
+    List<ExternalOperationEntity> findAllOperations();
 
-    Page<OperationEntity> find(String query, Pageable pageable);
+    Page<ExternalOperationEntity> find(String query, Pageable pageable);
 
-    Page<OperationEntity> find(DetachedCriteria criteria, Pageable pageable);
+    Page<ExternalOperationEntity> find(DetachedCriteria criteria, Pageable pageable);
 
-    OperationEntity createOperation(OperationEntity operation);
+    ExternalOperationEntity createOperation(ExternalOperationEntity operation);
 
-    OperationEntity updateOperation(OperationEntity operation);
+    ExternalOperationEntity updateOperation(ExternalOperationEntity operation);
 
     void deleteOperation(Long operationId);
 

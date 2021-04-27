@@ -14,8 +14,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import es.gobcan.istac.edatos.external.users.EdatosExternalUsersRestTestApp;
-import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
 import es.gobcan.istac.edatos.external.users.core.errors.ExceptionTranslator;
@@ -54,15 +54,15 @@ public class OperationResourceInternalTest {
 
     private MockMvc mockMvc;
 
-    private OperationEntity operation0;
+    private ExternalOperationEntity operation0;
 
-    private OperationEntity operation1;
+    private ExternalOperationEntity operation1;
 
-    private OperationEntity operation2;
+    private ExternalOperationEntity operation2;
 
-    private CategoryEntity category0;
+    private ExternalCategoryEntity category0;
 
-    private CategoryEntity category1;
+    private ExternalCategoryEntity category1;
 
     @Before
     public void setup() {
@@ -79,7 +79,7 @@ public class OperationResourceInternalTest {
         InternationalStringVO intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        category0 = new CategoryEntity();
+        category0 = new ExternalCategoryEntity();
         category0.setName(intStr);
         category0.setCode("001");
         categoryRepository.saveAndFlush(category0);
@@ -93,7 +93,7 @@ public class OperationResourceInternalTest {
         intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        category1 = new CategoryEntity();
+        category1 = new ExternalCategoryEntity();
         category1.setName(intStr);
         category1.setCode("002");
         category1.setParent(category0);
@@ -108,7 +108,7 @@ public class OperationResourceInternalTest {
         intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        operation0 = new OperationEntity();
+        operation0 = new ExternalOperationEntity();
         operation0.setName(intStr);
         operation0.setCode("001");
         operation0.setCategory(category0);
@@ -123,7 +123,7 @@ public class OperationResourceInternalTest {
         intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        operation1 = new OperationEntity();
+        operation1 = new ExternalOperationEntity();
         operation1.setName(intStr);
         operation1.setCode("002");
         operation1.setCategory(category1);
@@ -138,7 +138,7 @@ public class OperationResourceInternalTest {
         intStr = new InternationalStringVO();
         intStr.addText(locStr);
 
-        operation2 = new OperationEntity();
+        operation2 = new ExternalOperationEntity();
         operation2.setName(intStr);
         operation2.setCode("003");
         operation2.setCategory(category1);
