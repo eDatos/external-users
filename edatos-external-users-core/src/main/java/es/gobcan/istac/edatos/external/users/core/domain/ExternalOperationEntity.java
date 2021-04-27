@@ -1,11 +1,15 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -53,6 +57,9 @@ public class ExternalOperationEntity extends AbstractVersionedAndAuditingEntity 
     @JoinColumn(name = "external_category_fk")
     private ExternalCategoryEntity category;
 
+    @ManyToMany(mappedBy = "externalOperations")
+    private Set<CategoryEntity> categories = new HashSet<>();
+
     @Override
     public Long getId() {
         return id;
@@ -98,6 +105,18 @@ public class ExternalOperationEntity extends AbstractVersionedAndAuditingEntity 
 
     public void setCategory(ExternalCategoryEntity category) {
         this.category = category;
+    }
+
+    public String getUrn() {
+        return urn;
+    }
+
+    public void setUrn(String urn) {
+        this.urn = urn;
+    }
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
     }
 
     public static final class Properties {

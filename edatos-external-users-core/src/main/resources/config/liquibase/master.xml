@@ -8,4 +8,5 @@
     <include file="config/liquibase/changelog/20210316085221_added_entity_ExternalCategory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210316085222_added_entity_Favorite.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210412084011_added_entity_DataProtectionPolicy.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210427114832_added_entity_Category.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

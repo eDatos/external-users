@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -96,6 +97,9 @@ public class ExternalCategoryEntity extends AbstractVersionedAndAuditingEntity {
     @NotNull
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final Set<ExternalOperationEntity> operations = new HashSet<>();
+
+    @ManyToMany(mappedBy = "externalCategories")
+    private Set<CategoryEntity> categories = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -185,5 +189,17 @@ public class ExternalCategoryEntity extends AbstractVersionedAndAuditingEntity {
     public void removeOperation(ExternalOperationEntity operation) {
         operation.setCategory(null);
         this.operations.remove(operation);
+    }
+
+    public String getUrn() {
+        return urn;
+    }
+
+    public void setUrn(String urn) {
+        this.urn = urn;
+    }
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
     }
 }
