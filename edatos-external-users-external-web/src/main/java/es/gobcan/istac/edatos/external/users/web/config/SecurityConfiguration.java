@@ -116,6 +116,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(http401UnauthorizedEntryPoint())
         .and()
             .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .ignoringAntMatchers("/api/filtersPublic")
         .and()
             .headers().frameOptions().sameOrigin()
         .and()
@@ -131,6 +132,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/apis/operations-internal/**").permitAll()
                 .antMatchers("/api/data-protection-policy").permitAll()
+                .antMatchers("/api/filtersPublic").permitAll()
                 .antMatchers("/**").authenticated();
         //@formatter:on
     }
