@@ -7,8 +7,8 @@ import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Abstract
 public class FavoriteDto extends AbstractVersionedAndAuditingDto implements Serializable {
 
     private ExternalUserAccountBaseDto externalUser;
-    private OperationDto operation;
-    private CategoryDto category;
+    private ExternalOperationDto operation;
+    private ExternalCategoryDto category;
 
     public ExternalUserAccountBaseDto getExternalUser() {
         return externalUser;
@@ -18,19 +18,19 @@ public class FavoriteDto extends AbstractVersionedAndAuditingDto implements Seri
         this.externalUser = externalUser;
     }
 
-    public OperationDto getOperation() {
+    public ExternalOperationDto getOperation() {
         return operation;
     }
 
-    public void setOperation(OperationDto operation) {
+    public void setOperation(ExternalOperationDto operation) {
         this.operation = operation;
     }
 
-    public CategoryDto getCategory() {
+    public ExternalCategoryDto getCategory() {
         return category;
     }
 
-    public void setCategory(CategoryDto category) {
+    public void setCategory(ExternalCategoryDto category) {
         this.category = category;
     }
 }

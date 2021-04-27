@@ -1,17 +1,19 @@
 package es.gobcan.istac.edatos.external.users.rest.common.dto;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
 
-public class OperationDto extends AbstractVersionedAndAuditingDto implements Serializable {
+public class ExternalCategoryDto extends AbstractVersionedAndAuditingDto {
 
     private String code;
+    private String nestedCode;
     private String urn;
     private InternationalStringDto name;
-    private CategoryDto category;
+    private List<ExternalCategoryDto> children = new ArrayList<>();
 
     public String getCode() {
         return code;
@@ -19,6 +21,14 @@ public class OperationDto extends AbstractVersionedAndAuditingDto implements Ser
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getNestedCode() {
+        return nestedCode;
+    }
+
+    public void setNestedCode(String nestedCode) {
+        this.nestedCode = nestedCode;
     }
 
     public String getUrn() {
@@ -37,11 +47,11 @@ public class OperationDto extends AbstractVersionedAndAuditingDto implements Ser
         this.name = name;
     }
 
-    public CategoryDto getCategory() {
-        return category;
+    public List<ExternalCategoryDto> getChildren() {
+        return children;
     }
 
-    public void setCategory(CategoryDto category) {
-        this.category = category;
+    public void setChildren(List<ExternalCategoryDto> children) {
+        this.children = children;
     }
 }

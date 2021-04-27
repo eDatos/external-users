@@ -17,7 +17,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.service.OperationService;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.OperationDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalOperationDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.OperationMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -40,17 +40,17 @@ public class OperationResource extends AbstractResource {
 
     @GetMapping("/{id}")
     @Timed
-    public ResponseEntity<OperationDto> get(@PathVariable Long id) {
+    public ResponseEntity<ExternalOperationDto> get(@PathVariable Long id) {
         ExternalOperationEntity operation = operationService.findOperationById(id);
-        OperationDto operationDto = operationMapper.toDto(operation);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(operationDto));
+        ExternalOperationDto externalOperationDto = operationMapper.toDto(operation);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalOperationDto));
     }
 
     @GetMapping(params = {"page", "size"})
     @Timed
-    public ResponseEntity<List<OperationDto>> find(String query, Pageable pageable) {
+    public ResponseEntity<List<ExternalOperationDto>> find(String query, Pageable pageable) {
         Page<ExternalOperationEntity> entities = operationService.find(query, pageable);
-        Page<OperationDto> result = entities.map(operationMapper::toDto);
+        Page<ExternalOperationDto> result = entities.map(operationMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return new ResponseEntity<>(result.getContent(), headers, HttpStatus.OK);
     }

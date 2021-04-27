@@ -18,7 +18,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalCategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.StructuralResourcesTreeDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.StructuralResourcesTreeMapper;
@@ -45,17 +45,17 @@ public class CategoryResource extends AbstractResource {
     @GetMapping("/{id}")
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<ExternalCategoryDto> getCategoryById(@PathVariable Long id) {
         ExternalCategoryEntity category = categoryService.findCategoryById(id);
-        CategoryDto categoryDto = categoryMapper.toDto(category);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(categoryDto));
+        ExternalCategoryDto externalCategoryDto = categoryMapper.toDto(category);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalCategoryDto));
     }
 
     @GetMapping
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    public ResponseEntity<List<CategoryDto>> getCategory(Pageable pageable, @RequestParam(required = false) String query) {
-        Page<CategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
+    public ResponseEntity<List<ExternalCategoryDto>> getCategory(Pageable pageable, @RequestParam(required = false) String query) {
+        Page<ExternalCategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
