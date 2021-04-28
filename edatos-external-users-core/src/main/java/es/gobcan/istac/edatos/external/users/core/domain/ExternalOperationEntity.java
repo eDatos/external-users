@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -48,6 +49,7 @@ public class ExternalOperationEntity extends AbstractVersionedAndAuditingEntity 
     @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
 
+    @NaturalId
     @NotNull
     @NotBlank
     @Column(nullable = false, unique = true)

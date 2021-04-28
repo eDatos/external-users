@@ -9,6 +9,11 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
     public static final CommonServiceExceptionType GENERIC_ERROR = create("exception.external_users.generic");
 
     /********
+     * ITEM_RESOURCE
+     ********/
+    public static final CommonServiceExceptionType ITEM_RESOURCE_PARENT_NOT_FOUND = create("exception.external_users.item_resource.parent_not_found");
+
+    /********
      * OPERATION
      ********/
     public static final CommonServiceExceptionType OPERATION_NOT_FOUND = create("exception.external_users.operation.not_found");

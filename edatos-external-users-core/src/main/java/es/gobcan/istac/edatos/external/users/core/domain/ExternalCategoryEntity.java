@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.validator.constraints.NotBlank;
@@ -73,6 +74,7 @@ public class ExternalCategoryEntity extends AbstractVersionedAndAuditingEntity {
      * <p>
      * Example: {@code urn:sdmx:org.sdmx.infomodel.categoryscheme.CategoryScheme=ISTAC:SDMXStatSubMatDomainsWD1(01.000)}.
      */
+    @NaturalId
     @NotNull
     @NotBlank
     @Column(nullable = false, unique = true)
@@ -141,7 +143,7 @@ public class ExternalCategoryEntity extends AbstractVersionedAndAuditingEntity {
     public void setParent(ExternalCategoryEntity newParent) {
         if (newParent != null && !newParent.children.contains(this)) {
             newParent.children.add(this);
-        } else if (this.parent != null) {
+        } else if (newParent == null && this.parent != null) { // TODO(EDATOS-3357: Review correctness
             this.parent.children.remove(this);
         }
         this.parent = newParent;
