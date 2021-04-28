@@ -28,8 +28,8 @@ import { AppAuditInfoComponent } from './components/audit-info/audit-info.compon
 import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
-import { QuillModule } from 'ngx-quill'
-
+import { QuillModule } from 'ngx-quill';
+import { MultiLanguageInputComponent } from './components/multi-language-input/multi-language-input.component';
 
 @NgModule({
     imports: [
@@ -61,7 +61,7 @@ import { QuillModule } from 'ngx-quill'
         ArteEntityListEmptyModule,
         DropdownModule,
         EditorModule,
-        QuillModule
+        QuillModule,
     ],
     providers: [
         FormcontrolStatusService,
@@ -99,9 +99,10 @@ import { QuillModule } from 'ngx-quill'
         ArteEntityListEmptyModule,
         StructuralResourcesTreeModule,
         AppAuditInfoComponent,
-        MultiLanguageEditorComponent
+        MultiLanguageEditorComponent,
+        MultiLanguageInputComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    declarations: [AppAuditInfoComponent, MultiLanguageEditorComponent],
+    declarations: [AppAuditInfoComponent, MultiLanguageEditorComponent, MultiLanguageInputComponent],
 })
 export class SharedModule {}
