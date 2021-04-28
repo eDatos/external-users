@@ -1,14 +1,11 @@
-<?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
-    <changeSet author="arte" id="1614600000806-0">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="arte" id="1614600000000-1">
         <createSequence incrementBy="50" sequenceName="seq_tb_filters" startValue="1"/>
     </changeSet>
-    <changeSet author="arte" id="1614600000806-1">
+    <changeSet author="arte" id="1614600000000-2">
         <createTable tableName="tb_filters">
             <column name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_filterPK"/>
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_filtersPK"/>
             </column>
             <column name="created_by" type="VARCHAR(50)">
                 <constraints nullable="false"/>
@@ -34,14 +31,10 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1614600000806-2">
-        <addUniqueConstraint columnNames="external_user_fk, permalink" constraintName="UK4n6p1lpv7eyksn87tjexncvki"
-                             tableName="tb_filters"/>
+    <changeSet author="arte" id="1614600000000-3">
+        <addUniqueConstraint columnNames="external_user_fk, permalink" constraintName="UKbb7r47wllmag2axml33dxl5fg" tableName="tb_filters"/>
     </changeSet>
-    <changeSet author="arte" id="1614600000806-3">
-        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_filters"
-                                 constraintName="FK8qilav02i9hcsaliys51o3xf8" deferrable="false"
-                                 initiallyDeferred="false" referencedColumnNames="id"
-                                 referencedTableName="tb_external_users" validate="true"/>
+    <changeSet author="arte" id="1614600000000-4">
+        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_filters" constraintName="FK8qilav02i9hcsaliys51o3xf8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
     </changeSet>
 </databaseChangeLog>

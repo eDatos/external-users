@@ -1,0 +1,69 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="arte" id="1619605919000-1">
+        <createSequence incrementBy="50" sequenceName="seq_tb_categories" startValue="1"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-2">
+        <createTable tableName="tb_categories">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_categoriesPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="opt_lock" type="BIGINT"/>
+            <column name="name" type="JSONB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_fk" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-3">
+        <createTable tableName="tb_categories_external_categories">
+            <column name="category_entity_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="external_categories_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-4">
+        <createTable tableName="tb_categories_external_operations">
+            <column name="category_entity_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="external_operations_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-5">
+        <addUniqueConstraint columnNames="external_operations_id" constraintName="UK_nwpyjgistxbvi59g0hofu93g5" tableName="tb_categories_external_operations"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-6">
+        <addUniqueConstraint columnNames="external_categories_id" constraintName="UK_o4imq0qyb923dxtgk8op0b1n3" tableName="tb_categories_external_categories"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-7">
+        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_external_users_roles" constraintName="FK35rp8qvox3xtpksga7retcytt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-8">
+        <addForeignKeyConstraint baseColumnNames="external_categories_id" baseTableName="tb_categories_external_categories" constraintName="FK3uog2rf01fjuq1mh674j9t9yn" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-9">
+        <addForeignKeyConstraint baseColumnNames="category_entity_id" baseTableName="tb_categories_external_operations" constraintName="FK5h5pc41hh05ibep5g0eybceea" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-10">
+        <addForeignKeyConstraint baseColumnNames="category_entity_id" baseTableName="tb_categories_external_categories" constraintName="FKbby8rwma8fjkd0akq4qmmq7qt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-11">
+        <addForeignKeyConstraint baseColumnNames="parent_fk" baseTableName="tb_categories" constraintName="FKhdw7gdcy7c4ejvflekjwtmvci" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1619605919000-12">
+        <addForeignKeyConstraint baseColumnNames="external_operations_id" baseTableName="tb_categories_external_operations" constraintName="FKt6tqr6e7frpkbl6qtn551wbl0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_operations" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

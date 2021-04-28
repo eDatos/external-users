@@ -1,18 +1,16 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -52,22 +50,14 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     private CategoryEntity parent;
 
     @NotNull
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private final Set<CategoryEntity> children = new HashSet<>();
 
-    // @formatter:off
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "tb_category_external_categories",
-               joinColumns = @JoinColumn(name = "category_fk"),
-               inverseJoinColumns = @JoinColumn(name = "external_category_fk"))
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
     private final Set<ExternalCategoryEntity> externalCategories = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "tb_operation_external_operations",
-               joinColumns = @JoinColumn(name = "operation_fk"),
-               inverseJoinColumns = @JoinColumn(name = "external_operation_fk"))
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
     private final Set<ExternalOperationEntity> externalOperations = new HashSet<>();
-    // @formatter:on
 
     @Override
     public Long getId() {
@@ -93,22 +83,30 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     public void setParent(CategoryEntity newParent) {
         if (newParent != null && !newParent.children.contains(this)) {
             newParent.children.add(this);
-        } else if (this.parent != null) {
+        } else if (newParent == null && this.parent != null) { // TODO(EDATOS-3357: Review correctness
             this.parent.children.remove(this);
         }
         this.parent = newParent;
     }
 
-    public Set<CategoryEntity> getChildren() {
-        return children;
+    /**
+     * Do not add/remove elements to this set directly, use the methods designed for it.
+     *
+     * @see #addChild(CategoryEntity)
+     * @see #removeChild(CategoryEntity)
+     *
+     * @return an unmodifiable set.
+     */
+    @SuppressWarnings("java:S1452") // wildcard usage
+    public Set<? extends CategoryEntity> getChildren() {
+        return Collections.unmodifiableSet(children);
     }
 
     public void setChildren(Set<CategoryEntity> categories) {
+        clearChildren();
         for (CategoryEntity category : categories) {
-            category.setParent(this);
+            addChild(category);
         }
-        this.children.clear();
-        this.children.addAll(categories);
     }
 
     public void addChild(CategoryEntity category) {
@@ -121,45 +119,28 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.children.remove(category);
     }
 
-    public void addExternalCategory(ExternalCategoryEntity externalCategory) {
-        externalCategories.add(externalCategory);
-        externalCategory.getCategories().add(this);
-    }
-
-    public void removeExternalCategory(ExternalCategoryEntity externalCategory) {
-        externalCategories.remove(externalCategory);
-        externalCategory.getCategories().remove(this);
-    }
-
-    public void setExternalCategory(Set<ExternalCategoryEntity> externalCategories) {
-        this.externalCategories.clear();
-        for (ExternalCategoryEntity category : externalCategories) {
-            addExternalCategory(category);
+    public void clearChildren() {
+        for (CategoryEntity child : children) {
+            child.setParent(null);
         }
+        children.clear();
     }
 
     public Set<ExternalCategoryEntity> getExternalCategories() {
         return externalCategories;
     }
 
-    public void addExternalOperation(ExternalOperationEntity externalOperation) {
-        externalOperations.add(externalOperation);
-        externalOperation.getCategories().add(this);
-    }
-
-    public void removeExternalOperation(ExternalOperationEntity externalOperation) {
-        externalOperations.remove(externalOperation);
-        externalOperation.getCategories().remove(this);
-    }
-
-    public void setExternalOperation(Set<ExternalOperationEntity> externalOperations) {
-        this.externalOperations.clear();
-        for (ExternalOperationEntity operation : externalOperations) {
-            addExternalOperation(operation);
-        }
+    public void setExternalCategories(Set<ExternalCategoryEntity> externalCategories) {
+        this.externalCategories.clear();
+        this.externalCategories.addAll(externalCategories);
     }
 
     public Set<ExternalOperationEntity> getExternalOperations() {
         return externalOperations;
+    }
+
+    public void setExternalOperations(Set<ExternalOperationEntity> externalOperations) {
+        this.externalOperations.clear();
+        this.externalOperations.addAll(externalOperations);
     }
 }

@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -96,13 +95,6 @@ public class ExternalCategoryEntity extends AbstractVersionedAndAuditingEntity {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private final Set<ExternalCategoryEntity> children = new HashSet<>();
 
-    @NotNull
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private final Set<ExternalOperationEntity> operations = new HashSet<>();
-
-    @ManyToMany(mappedBy = "externalCategories")
-    private Set<CategoryEntity> categories = new HashSet<>();
-
     @Override
     public Long getId() {
         return id;
@@ -171,37 +163,11 @@ public class ExternalCategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.children.remove(category);
     }
 
-    public Set<ExternalOperationEntity> getOperations() {
-        return operations;
-    }
-
-    public void setOperations(Set<ExternalOperationEntity> operations) {
-        for (ExternalOperationEntity operation : operations) {
-            operation.setCategory(this);
-        }
-        this.operations.clear();
-        this.operations.addAll(operations);
-    }
-
-    public void addOperation(ExternalOperationEntity operation) {
-        operation.setCategory(this);
-        this.operations.add(operation);
-    }
-
-    public void removeOperation(ExternalOperationEntity operation) {
-        operation.setCategory(null);
-        this.operations.remove(operation);
-    }
-
     public String getUrn() {
         return urn;
     }
 
     public void setUrn(String urn) {
         this.urn = urn;
-    }
-
-    public Set<CategoryEntity> getCategories() {
-        return categories;
     }
 }

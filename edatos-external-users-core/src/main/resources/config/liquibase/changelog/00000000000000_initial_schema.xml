@@ -100,6 +100,8 @@
 
         <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="admin_audit_event_data" constraintName="fk_admin_audit_event_data_admin_audit_event_event_id"
             referencedColumnNames="event_id" referencedTableName="admin_audit_event" />
+
+        <addUniqueConstraint columnNames="login" constraintName="UC_TB_USUARIOSLOGIN_COL" tableName="tb_usuarios" />
     </changeSet>
 
 </databaseChangeLog>

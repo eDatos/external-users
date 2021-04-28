@@ -1,16 +1,10 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -55,43 +49,27 @@ public class ExternalOperationEntity extends AbstractVersionedAndAuditingEntity 
     @Column(nullable = false, unique = true)
     private String urn;
 
-    @ManyToOne
-    @JoinColumn(name = "external_category_fk")
-    private ExternalCategoryEntity category;
-
-    @ManyToMany(mappedBy = "externalOperations")
-    private Set<CategoryEntity> categories = new HashSet<>();
+    @NotNull
+    @NotBlank
+    @Column(nullable = false)
+    private String externalCategoryUrn;
 
     @Override
     public Long getId() {
         return id;
     }
 
-    /**
-     * The id is not intended to be changed or assigned manually, but
-     * for test purpose it is allowed to assign the id.
-     */
-    protected void setId(Long id) {
-        if ((this.id != null) && !this.id.equals(id)) {
-            throw new IllegalArgumentException("Not allowed to change the id property.");
-        }
+    public void setId(Long id) {
         this.id = id;
     }
 
-    /**
-     * Semantic identifier
-     */
     public String getCode() {
         return code;
     }
 
-    /**
-     * Semantic identifier
-     */
     public void setCode(String code) {
         this.code = code;
     }
-
 
     public InternationalStringVO getName() {
         return name;
@@ -99,14 +77,6 @@ public class ExternalOperationEntity extends AbstractVersionedAndAuditingEntity 
 
     public void setName(InternationalStringVO name) {
         this.name = name;
-    }
-
-    public ExternalCategoryEntity getCategory() {
-        return category;
-    }
-
-    public void setCategory(ExternalCategoryEntity category) {
-        this.category = category;
     }
 
     public String getUrn() {
@@ -117,8 +87,12 @@ public class ExternalOperationEntity extends AbstractVersionedAndAuditingEntity 
         this.urn = urn;
     }
 
-    public Set<CategoryEntity> getCategories() {
-        return categories;
+    public String getExternalCategoryUrn() {
+        return externalCategoryUrn;
+    }
+
+    public void setExternalCategoryUrn(String externalCategoryUrn) {
+        this.externalCategoryUrn = externalCategoryUrn;
     }
 
     public static final class Properties {
