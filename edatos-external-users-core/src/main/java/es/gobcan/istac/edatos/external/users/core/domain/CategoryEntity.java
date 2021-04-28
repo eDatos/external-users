@@ -29,6 +29,10 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  * them and select other categories and operations extracted from eDatos (and represented
  * here by {@link ExternalCategoryEntity} and {@link ExternalOperationEntity}) to be
  * mapped to one of their own created categories.
+ *
+ * Categories can be marked as favorites by external users.
+ *
+ * @see FavoriteEntity
  */
 @Entity
 @Table(name = "tb_categories")

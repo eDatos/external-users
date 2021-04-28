@@ -17,12 +17,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 
 /**
- * Favorites are notifications on both topics and statistical operations that the user can
- * designate to be aware of certain events related to them, like creations, modifications,
- * and deletions.
+ * Favorites are references to categories that the user can designate to be aware of
+ * certain events related to them, like creations, modifications, and deletions.
+ *
+ * @see CategoryEntity
  */
 @Entity
-@Table(name = "tb_favorites", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "external_category_fk"}), @UniqueConstraint(columnNames = {"external_user_fk", "external_operation_fk"})})
+@Table(name = "tb_favorites", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "category_fk"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
@@ -36,13 +37,9 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
     @ManyToOne(optional = false)
     private ExternalUserEntity externalUser;
 
-    @JoinColumn(name = "external_category_fk")
-    @ManyToOne
-    private ExternalCategoryEntity category;
-
-    @JoinColumn(name = "external_operation_fk")
-    @ManyToOne
-    private ExternalOperationEntity operation;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_fk", nullable = false)
+    private CategoryEntity category;
 
     @Override
     public Long getId() {
@@ -61,19 +58,11 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
         this.externalUser = user;
     }
 
-    public ExternalCategoryEntity getCategory() {
+    public CategoryEntity getCategory() {
         return category;
     }
 
-    public void setCategory(ExternalCategoryEntity category) {
+    public void setCategory(CategoryEntity category) {
         this.category = category;
-    }
-
-    public ExternalOperationEntity getOperation() {
-        return operation;
-    }
-
-    public void setOperation(ExternalOperationEntity operation) {
-        this.operation = operation;
     }
 }

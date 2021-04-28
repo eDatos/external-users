@@ -6,8 +6,7 @@ import java.util.List;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.core.service.OperationService;
@@ -37,40 +36,25 @@ public abstract class StructuralResourcesTreeMapper {
 
     public List<StructuralResourcesTreeDto> toDto() {
         List<StructuralResourcesTreeDto> dto = new ArrayList<>();
-        for (ExternalCategoryEntity category : categoryService.getTree()) {
+        for (CategoryEntity category : categoryService.getTree()) {
             dto.add(createTree(category));
         }
         return dto;
     }
 
-    private StructuralResourcesTreeDto createTree(ExternalCategoryEntity category) {
+    private StructuralResourcesTreeDto createTree(CategoryEntity category) {
         StructuralResourcesTreeDto dto = new StructuralResourcesTreeDto();
         dto.setId(category.getId());
         dto.setName(internationalStringVOMapper.toDto(category.getName()));
-        dto.setCode(category.getCode());
         dto.setType("category");
         dto.setSubscribers(favoriteService.getCategorySubscribers().getOrDefault(category.getId(), 0L));
         dto.setChildren(new ArrayList<>());
 
-        for (ExternalOperationEntity op : category.getOperations()) {
-            dto.getChildren().add(fromOperationToStructuralResourcesTreeDto(op));
-        }
-        for (ExternalCategoryEntity cat : category.getChildren()) {
+        for (CategoryEntity cat : category.getChildren()) {
             dto.getChildren().add(createTree(cat));
         }
 
         return dto;
     }
 
-    protected StructuralResourcesTreeDto fromOperationToStructuralResourcesTreeDto(ExternalOperationEntity operation) {
-        StructuralResourcesTreeDto dto = new StructuralResourcesTreeDto();
-
-        dto.setId(operation.getId());
-        dto.setName(internationalStringVOMapper.toDto(operation.getName()));
-        dto.setCode(operation.getCode());
-        dto.setType("operation");
-        dto.setSubscribers(favoriteService.getOperationSubscribers().getOrDefault(operation.getId(), 0L));
-
-        return dto;
-    }
 }

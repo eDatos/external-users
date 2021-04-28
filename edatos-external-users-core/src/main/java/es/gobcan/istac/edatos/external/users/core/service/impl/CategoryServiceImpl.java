@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
@@ -24,33 +24,33 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public ExternalCategoryEntity findCategoryById(Long id) {
+    public CategoryEntity findCategoryById(Long id) {
         return categoryRepository.findOne(id);
     }
 
     @Override
-    public Page<ExternalCategoryEntity> find(String query, Pageable pageable) {
+    public Page<CategoryEntity> find(String query, Pageable pageable) {
         DetachedCriteria criteria = queryUtil.queryToCategoryCriteria(query, pageable);
         return find(criteria, pageable);
     }
 
     @Override
-    public Page<ExternalCategoryEntity> find(DetachedCriteria criteria, Pageable pageable) {
+    public Page<CategoryEntity> find(DetachedCriteria criteria, Pageable pageable) {
         return categoryRepository.findAll(criteria, pageable);
     }
 
     @Override
-    public List<ExternalCategoryEntity> getTree() {
+    public List<CategoryEntity> getTree() {
         return categoryRepository.getByParentIsNull();
     }
 
     @Override
-    public ExternalCategoryEntity createCategory(ExternalCategoryEntity category) {
+    public CategoryEntity createCategory(CategoryEntity category) {
         return categoryRepository.saveAndFlush(category);
     }
 
     @Override
-    public ExternalCategoryEntity updateCategory(ExternalCategoryEntity category) {
+    public CategoryEntity updateCategory(CategoryEntity category) {
         return categoryRepository.saveAndFlush(category);
     }
 

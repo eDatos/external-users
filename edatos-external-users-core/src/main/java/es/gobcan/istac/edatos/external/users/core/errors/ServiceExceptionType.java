@@ -26,12 +26,6 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
     public static final CommonServiceExceptionType QUERY_NOT_SUPPORTED = create("exception.external_users.query.not_supported");
 
     /********
-     * FAVORITE
-     ********/
-    public static final CommonServiceExceptionType FAVORITE_NEED_AT_LEAST_OPERATION_OR_CATEGORY = create("exception.external_users.favorite.need_at_least_operation_or_category");
-    public static final CommonServiceExceptionType FAVORITE_CANNOT_SET_BOTH_OPERATION_AND_CATEGORY = create("exception.external_users.favorite.cannot_set_both_operation_and_category");
-
-    /********
      * LOGIN
      ********/
     public static final CommonServiceExceptionType LOGIN_USER_DISABLED = create("exception.external_users.login.user_disabled");

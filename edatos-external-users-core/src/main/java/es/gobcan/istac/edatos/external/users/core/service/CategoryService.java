@@ -6,15 +6,15 @@ import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 
 public interface CategoryService {
 
-    ExternalCategoryEntity findCategoryById(Long id);
-    Page<ExternalCategoryEntity> find(String query, Pageable pageable);
-    Page<ExternalCategoryEntity> find(DetachedCriteria criteria, Pageable pageable);
-    List<ExternalCategoryEntity> getTree();
-    ExternalCategoryEntity createCategory(ExternalCategoryEntity operation);
-    ExternalCategoryEntity updateCategory(ExternalCategoryEntity operation);
+    CategoryEntity findCategoryById(Long id);
+    Page<CategoryEntity> find(String query, Pageable pageable);
+    Page<CategoryEntity> find(DetachedCriteria criteria, Pageable pageable);
+    List<CategoryEntity> getTree();
+    CategoryEntity createCategory(CategoryEntity operation);
+    CategoryEntity updateCategory(CategoryEntity operation);
     void deleteCategory(Long operationId);
 }
