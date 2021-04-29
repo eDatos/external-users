@@ -1,11 +1,8 @@
 package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import es.gobcan.istac.edatos.external.users.rest.common.dto.StructuralResourcesTreeDto;
-import es.gobcan.istac.edatos.external.users.rest.common.mapper.StructuralResourcesTreeMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -35,12 +32,10 @@ public class CategoryResource extends AbstractResource {
 
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
-    private final StructuralResourcesTreeMapper structuralResourcesTreeMapper;
 
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, StructuralResourcesTreeMapper structuralResourcesTreeMapper) {
+    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
-        this.structuralResourcesTreeMapper = structuralResourcesTreeMapper;
     }
 
     @GetMapping("/{id}")
@@ -64,7 +59,7 @@ public class CategoryResource extends AbstractResource {
     @Timed
     @GetMapping("/tree")
     @PreAuthorize("@secCheckerExternal.canAccessCategory(authentication)")
-    public ResponseEntity<List<StructuralResourcesTreeDto>> getCategoryTree() {
-        return ResponseEntity.ok(structuralResourcesTreeMapper.toDto());
+    public ResponseEntity<List<CategoryDto>> getCategoryTree() {
+        return ResponseEntity.ok(categoryMapper.toDtos(categoryService.getTree()));
     }
 }

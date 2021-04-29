@@ -9,8 +9,18 @@ import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Abstract
 
 public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
+    private Long subscribers;
     private InternationalStringDto name;
+    private List<ExternalItemDto> resources;
     private List<CategoryDto> children = new ArrayList<>();
+
+    public Long getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(Long subscribers) {
+        this.subscribers = subscribers;
+    }
 
     public InternationalStringDto getName() {
         return name;
@@ -18,6 +28,14 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     public void setName(InternationalStringDto name) {
         this.name = name;
+    }
+
+    public List<ExternalItemDto> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<ExternalItemDto> resources) {
+        this.resources = resources;
     }
 
     public List<CategoryDto> getChildren() {

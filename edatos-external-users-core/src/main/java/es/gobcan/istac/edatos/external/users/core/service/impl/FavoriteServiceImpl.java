@@ -23,7 +23,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
-import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
@@ -31,15 +30,13 @@ import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 public class FavoriteServiceImpl implements FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
-    private final OperationRepository operationRepository;
     private final ExternalUserRepository externalUserRepository;
     private final QueryUtil queryUtil;
 
     private final Logger log = LoggerFactory.getLogger(FavoriteServiceImpl.class);
 
-    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, OperationRepository operationRepository, ExternalUserRepository externalUserRepository, QueryUtil queryUtil) {
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, ExternalUserRepository externalUserRepository, QueryUtil queryUtil) {
         this.favoriteRepository = favoriteRepository;
-        this.operationRepository = operationRepository;
         this.externalUserRepository = externalUserRepository;
         this.queryUtil = queryUtil;
     }
