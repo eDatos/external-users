@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -29,7 +30,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  * them and select other categories and operations extracted from eDatos (and represented
  * here by {@link ExternalCategoryEntity} and {@link ExternalOperationEntity}) to be
  * mapped to one of their own created categories.
- *
  * Categories can be marked as favorites by external users.
  *
  * @see FavoriteEntity
@@ -58,10 +58,8 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     private final Set<CategoryEntity> children = new HashSet<>();
 
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
-    private final Set<ExternalCategoryEntity> externalCategories = new HashSet<>();
-
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
-    private final Set<ExternalOperationEntity> externalOperations = new HashSet<>();
+    @JoinTable(name = "tb_categories_external_items", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_item_fk"))
+    private final Set<ExternalItemEntity> externalItems = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -98,7 +96,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      *
      * @see #addChild(CategoryEntity)
      * @see #removeChild(CategoryEntity)
-     *
+     * @see #clearChildren()
      * @return an unmodifiable set.
      */
     @SuppressWarnings("java:S1452") // wildcard usage
@@ -130,21 +128,12 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         children.clear();
     }
 
-    public Set<ExternalCategoryEntity> getExternalCategories() {
-        return externalCategories;
+    public Set<ExternalItemEntity> getExternalItems() {
+        return externalItems;
     }
 
-    public void setExternalCategories(Set<ExternalCategoryEntity> externalCategories) {
-        this.externalCategories.clear();
-        this.externalCategories.addAll(externalCategories);
-    }
-
-    public Set<ExternalOperationEntity> getExternalOperations() {
-        return externalOperations;
-    }
-
-    public void setExternalOperations(Set<ExternalOperationEntity> externalOperations) {
-        this.externalOperations.clear();
-        this.externalOperations.addAll(externalOperations);
+    public void setExternalItems(Set<ExternalItemEntity> externalItems) {
+        this.externalItems.clear();
+        this.externalItems.addAll(externalItems);
     }
 }

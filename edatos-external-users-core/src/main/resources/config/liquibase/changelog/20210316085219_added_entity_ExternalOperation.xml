@@ -1,39 +1,15 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet author="arte" id="1615884739000-1">
-        <createSequence incrementBy="50" sequenceName="seq_tb_external_operations" startValue="1"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739000-2">
         <createTable tableName="tb_external_operations">
-            <column name="id" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_external_operationsPK"/>
-            </column>
-            <column name="created_by" type="VARCHAR(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_date" type="TIMESTAMP WITHOUT TIME ZONE">
-                <constraints nullable="false"/>
-            </column>
-            <column name="last_modified_by" type="VARCHAR(50)"/>
-            <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
-            <column name="opt_lock" type="BIGINT"/>
-            <column name="code" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
             <column name="external_category_urn" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="name" type="JSONB">
-                <constraints nullable="false"/>
-            </column>
-            <column name="urn" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+            <column name="external_item_fk" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_external_operationsPK"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1615884739000-3">
-        <addUniqueConstraint columnNames="code" constraintName="UK1q9lqwul9uxj5ja48jstdnlse" tableName="tb_external_operations"/>
-    </changeSet>
-    <changeSet author="arte" id="1615884739000-4">
-        <addUniqueConstraint columnNames="urn" constraintName="UK_j0fsf308lf5qb3ef0t9ible7l" tableName="tb_external_operations"/>
+    <changeSet author="arte" id="1615884739000-2">
+        <addForeignKeyConstraint baseColumnNames="external_item_fk" baseTableName="tb_external_operations" constraintName="FKljealxicu4sqfabpbq8b0b309" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
     </changeSet>
 </databaseChangeLog>

@@ -15,7 +15,6 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
 
     @Override
     @Mapping(target = "parent", ignore = true)
-    @Mapping(target = "externalCategories", ignore = true)
-    @Mapping(target = "externalOperations", ignore = true)
+    @Mapping(target = "externalItems", ignore = true)
     public abstract CategoryEntity toEntity(CategoryDto dto);
 }
