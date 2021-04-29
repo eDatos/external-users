@@ -663,3 +663,31 @@ INSERT INTO tb_external_operations (external_category_urn, external_item_fk)
 VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', 44);
 
 ------------------------------------------------------------------
+--------------------------- CATEGORIES ---------------------------
+------------------------------------------------------------------
+
+INSERT INTO tb_categories (id, created_by, created_date, opt_lock, name, parent_fk)
+VALUES (1, 'system', '2021-04-16 10:49:31.000000', 1, '{
+    "texts": [
+        {
+            "label": "Categoría padre (tiene una categoría y una operación externa)",
+            "locale": "es"
+        }
+    ]
+}', null);
+
+INSERT INTO tb_categories_external_items(category_fk, external_item_fk)
+VALUES (1, 20), (1, 44);
+
+INSERT INTO tb_categories (id, created_by, created_date, opt_lock, name, parent_fk)
+VALUES (2, 'system', '2021-04-16 10:49:31.000000', 1, '{
+    "texts": [
+        {
+            "label": "Categoría hija (tiene dos categorías)",
+            "locale": "es"
+        }
+    ]
+}', 1);
+
+INSERT INTO tb_categories_external_items(category_fk, external_item_fk)
+VALUES (2, 1), (2, 13);
