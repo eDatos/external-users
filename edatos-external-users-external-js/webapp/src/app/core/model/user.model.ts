@@ -27,6 +27,7 @@ export class User extends BaseVersionedAndAuditingWithDeletionEntity {
         treatment?: any[],
         language?: any[],
         phoneNumber?: string,
+        emailNotificationsEnabled?: boolean,
         roles?: any[]
     ) {
         super();
@@ -41,6 +42,7 @@ export class User extends BaseVersionedAndAuditingWithDeletionEntity {
         this.roles = roles ? roles : null;
         this.treatment = treatment ? treatment : null;
         this.language = language ? language : null;
+        this.emailNotificationsEnabled = emailNotificationsEnabled ? emailNotificationsEnabled : null;
     }
 
     public getFullName(): string {

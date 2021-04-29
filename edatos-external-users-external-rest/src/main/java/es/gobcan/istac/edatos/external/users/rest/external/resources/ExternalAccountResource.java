@@ -11,7 +11,6 @@ import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ChangePasswordDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserDto;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.http.HttpStatus;

@@ -13,7 +13,8 @@
             "treatment": "Tratamiento",
             "language": "Idioma",
             "phoneNumber": "Número teléfono",
-            "organism": "Organismo"
+            "organism": "Organismo",
+            "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario"
         }
     }
 }
