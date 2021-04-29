@@ -2,21 +2,17 @@ import { Type } from 'class-transformer';
 import { InternationalString } from './international-string.model';
 
 export class StructuralResourcesTree {
-    public id: number;
-
-    public code: string;
+    public id: number | null = null;
+    public code: string | null = null;
+    public type: 'category' | 'operation';
 
     @Type(() => InternationalString)
     public name: InternationalString;
 
-    public type: 'category' | 'operation';
-
-    public subscribers: number;
-
     @Type(() => StructuralResourcesTree)
-    public children: StructuralResourcesTree[];
+    public children: StructuralResourcesTree[] = [];
 
-    public getLocalisedName(): string {
+    public getLocalisedName(): string | undefined {
         return this.name.getLocalisedLabel('es');
     }
 }
