@@ -47,7 +47,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
         SharedModule,
         AppRoutingModule,
         TranslateModule.forRoot({
-            missingTranslationHandler: {provide: MissingTranslationHandler, useClass: MissingTranslationHandlerImpl},
+            missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MissingTranslationHandlerImpl },
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
@@ -74,6 +74,11 @@ export function initTranslations(translateService: TranslateService, cookieServi
             provide: HTTP_INTERCEPTORS,
             useClass: AuthExpiredInterceptor,
             multi: true,
+        },
+        {
+            provide: ArteAlertService,
+            useClass: ArteAlertService,
+            deps: [MessageService],
         },
         {
             provide: HTTP_INTERCEPTORS,
