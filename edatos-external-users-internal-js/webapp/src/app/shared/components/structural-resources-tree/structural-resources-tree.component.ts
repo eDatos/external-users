@@ -1,6 +1,7 @@
 import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output } from '@angular/core';
-import { Category, Favorite } from '@app/shared/model';
+import { Category, Favorite, InternationalString } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service/category/category.service';
+import { LanguageService } from '@app/shared/service/language.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
@@ -62,6 +63,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public selectedResources: TreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
     public enableDragAndDrop = false;
+    public allowedLanguages: Observable<string[]>;
 
     private readonly mainLanguageCode: string;
     private tree: Category[] = [];
@@ -72,10 +74,12 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         private alertService: ArteAlertService,
         private categoryService: CategoryService,
         private translateService: TranslateService,
-        private iterableDiffers: IterableDiffers
+        private iterableDiffers: IterableDiffers,
+        private languageService: LanguageService
     ) {
         this.mainLanguageCode = this.translateService.getDefaultLang();
         this.iterableDiffer = iterableDiffers.find([]).create();
+        this.allowedLanguages = languageService.getAllowed();
     }
 
     public ngDoCheck(): void {
@@ -149,13 +153,14 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         node.parent?.children?.splice(node.parent?.children.indexOf(node));
     }
 
-    public saveNodeName(node: TreeNode, content: string) {
-        node.label = content;
+    public saveNodeName(node: TreeNode, name: InternationalString) {
+        node.data.name = name;
+        node.label = name.getLocalisedLabel(this.mainLanguageCode);
         this.disableNodeEdit(node);
     }
 
     public disableNodeEdit(node: TreeNode & { edit?: boolean }) {
-        if (node.label?.trim().length === 0) {
+        if (node.data.name.isEmptyOrBlank()) {
             this.deleteNode(node);
         }
         node.edit = false;

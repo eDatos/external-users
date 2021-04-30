@@ -705,7 +705,9 @@
     },
     "structuralResourcesTree": {
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
-        "subscribedUsers": "Usuarios suscritos: {{amount}}"
+        "subscribedUsers": "Usuarios suscritos: {{amount}}",
+        "editionModal": "Edición multidioma del nombre del recurso",
+        "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre ellos"
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"

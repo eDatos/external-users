@@ -1,3 +1,8 @@
+<p *ngIf="mode === 'edit'" class="text-secondary">
+    <i class="fa fa-info-circle" aria-hidden="true"></i>
+    {{'structuralResourcesTree.helpMessage' | translate}}.
+</p>
+
 <p-tree
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
@@ -14,32 +19,26 @@
         <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
     </ng-template>
     <ng-template *ngIf="mode === 'edit'" let-node pTemplate="default">
-        <span *ngIf="!node.edit" class="label mr-2" (dblclick)="enableNodeEdit(node)">{{node.label}}</span>
-        <label *ngIf="node.edit" class="input-sizer">
-            <!--
-                On the usage of `$any()` for `$event.target` in the blur event, see
-                https://stackoverflow.com/questions/44321326/property-value-does-not-exist-on-type-eventtarget-in-typescript
-
-                On the usage of `$event.stopPropagation()` on keydown events, PrimeNG has another listener on that event
-                that fails when the input element dissapears from the DOM after the text is saved (due to the *ngIf
-                kicking). It seems the exception is harmless; but anyway, $event.stopPropagation() halts the event
-                going up to that listener and prevents it from printing the stacktrace to the console.
-            -->
-            <input
-                [value]="node.label"
-                type="text"
-                name="nodeName"
-                class="mr-2"
-                pInputText
-                arteAutofocus
-                (input)="setInputLength(nodeNameInput)"
-                (focus)="setInputLength(nodeNameInput)"
-                (blur)="saveNodeName(node, $any($event.target).value)"
-                (keydown.escape)="disableNodeEdit(node); $event.stopPropagation()"
-                (keydown.enter)="saveNodeName(node, $event.target.value); $event.stopPropagation()"
-                #nodeNameInput
-            />
-        </label>
+        <span class="label mr-2" (dblclick)="enableNodeEdit(node)">{{node.label}}</span>
+        <p-dialog
+            *ngIf="node.edit"
+            [(visible)]="node.edit"
+            [focusOnShow]="true"
+            [modal]="true"
+            [dismissableMask]="true"
+            [header]="'structuralResourcesTree.editionModal' | translate"
+            [style]="{width: '50vw'}"
+            [resizable]="false"
+            appendTo="body"
+            (visibleChange)="disableNodeEdit(node)"
+        >
+            <app-multi-language-input
+                *ngIf="(allowedLanguages | async) as locales"
+                [ngModel]="node.data.name"
+                [locales]="locales"
+                (onEnterKeyDown)="saveNodeName(node, $event)"
+            ></app-multi-language-input>
+        </p-dialog>
         <button type="button" class="btn btn-primary node-btn-sm mr-2" (click)="addNode(node)">
             <i class="fa fa-plus" aria-hidden="true"></i>
         </button>

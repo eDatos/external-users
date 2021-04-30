@@ -699,7 +699,10 @@
         }
     },
     "structuralResourcesTree": {
-        "noRecordsFound": "No se ha encontrado ningún tema ni operación"
+        "noRecordsFound": "No topic or operation found",
+        "subscribedUsers": "Subscribed users: {{amount}}",
+        "editionModal": "Multilanguage edition of the resource name",
+        "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them."
     },
     "table": {
         "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}"
