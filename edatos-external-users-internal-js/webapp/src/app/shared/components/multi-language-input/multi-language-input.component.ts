@@ -1,11 +1,12 @@
-import { Component, forwardRef, Input } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InternationalString } from '@app/shared/model';
+import { InternationalString, LocalisedString } from '@app/shared/model';
+import * as _ from 'lodash';
 
 @Component({
     selector: 'app-multi-language-input',
     templateUrl: './multi-language-input.component.html',
-    styleUrls: ['./multi-language-input.component.css'],
+    styleUrls: ['./multi-language-input.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -15,53 +16,76 @@ import { InternationalString } from '@app/shared/model';
     ],
 })
 export class MultiLanguageInputComponent implements ControlValueAccessor {
-    onTouched: any = () => {};
-    onChange: any = () => {};
-    isDisabled: boolean = false;
-    value: InternationalString = new InternationalString();
-    mappedValue: any = {};
+    @Input()
+    public locales: string[];
 
     @Input()
-    locales: String[] = [];
+    public isEditMode = true;
 
-    @Input()
-    isEditMode: boolean = true;
+    @Output()
+    public onEnterKeyDown: EventEmitter<InternationalString> = new EventEmitter();
+
+    public isDisabled = false;
+    public value = new InternationalString();
+    public mappedValue: { [key: string]: string } = {};
 
     constructor() {
         this.value.texts = [];
     }
 
-    writeValue(value: InternationalString): void {
-        this.value = value || new InternationalString();
-        this.value.texts = this.value.texts || [];
-        this.mappedValue = {};
-        this.value.texts.forEach((value) => {
-            this.mappedValue[value.locale] = value.label;
-        });
+    public onTouched: any = () => {};
+    public onChange: any = () => {};
+
+    public writeValue(internationalString?: InternationalString): void {
+        // We check for null because this issue with Angular ngModel bug:
+        // https://github.com/angular/angular/issues/14988.
+        if (internationalString) {
+            // The deep cloning is needed because when the ngModel is set to be one-way, we want to avoid
+            // modifications to the object we received. To do that, we need to deeply clone it. Lodash handles
+            // this for us.
+            this.value = _.cloneDeep(internationalString);
+
+            // If locales aren't passed, show those available in the international string.
+            if (this.locales) {
+                // If we receive locales, we need to check for those that are not in the international string and
+                // create them.
+                for (const locale of this.locales) {
+                    this.value.add(internationalString.getLocalisedString(locale) || new LocalisedString(locale, ''));
+                }
+            } else {
+                this.locales = internationalString.getLocales();
+            }
+
+            this.mappedValue = {};
+            for (const val of this.value?.texts) {
+                this.mappedValue[val.locale] = val.label;
+            }
+        }
     }
 
-    registerOnChange(fn: any): void {
+    public registerOnChange(fn: any): void {
         this.onChange = fn;
     }
 
-    registerOnTouched(fn: any): void {
+    public registerOnTouched(fn: any): void {
         this.onTouched = fn;
     }
 
-    setDisabledState?(isDisabled: boolean): void {
+    public setDisabledState?(isDisabled: boolean): void {
         this.isDisabled = isDisabled;
     }
 
-    onEditorChange(event: any, locale: string) {
+    public onEditorChange(event: any, locale: string) {
         this.value.texts.map((val) => {
-            if (val.locale === locale) val.label = event.currentTarget.value;
+            if (val.locale === locale) {
+                val.label = event.currentTarget.value;
+            }
             return val;
         });
         this.mappedValue[locale] = event.currentTarget.value;
-        this.onChange(this.value);
     }
 
-    onEditorTouched(event: any) {
+    public onEditorTouched(event: any) {
         this.onTouched();
     }
 }

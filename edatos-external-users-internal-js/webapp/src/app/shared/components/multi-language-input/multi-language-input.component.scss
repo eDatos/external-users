@@ -1,4 +1,6 @@
-.language-input-list, .single-language-input, input {
+.language-input-list,
+.single-language-input,
+input {
     width: 100%;
 }
 
@@ -12,7 +14,8 @@
     border-bottom: 10px solid transparent;
 }
 
-input, label {
+input,
+label {
     display: table-cell;
 }
 
