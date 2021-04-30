@@ -4,6 +4,11 @@ import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
 
 export class Category extends BaseVersionedAndAuditingEntity {
+    constructor() {
+        super();
+        this.name = new InternationalString();
+    }
+
     public subscribers: number;
 
     @Type(() => InternationalString)
