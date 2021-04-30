@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 
 export type Mode = 'view' | 'select' | 'edit';
 
@@ -78,7 +79,11 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     ) {
         this.mainLanguageCode = this.translateService.getDefaultLang();
         this.iterableDiffer = iterableDiffers.find([]).create();
-        this.allowedLanguages = languageService.getAllowed();
+        // sharedReplay RxJS operator allows for caching the http response, since
+        // languages are not that frequently updated (and can be updated just by
+        // reloading the page, the cache just avoids unnecessary requests every time
+        // a multi-language input component is opened).
+        this.allowedLanguages = languageService.getAllowed().pipe(shareReplay({ bufferSize: 1, refCount: true }));
     }
 
     public ngDoCheck(): void {
