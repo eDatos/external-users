@@ -1,7 +1,6 @@
 import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output } from '@angular/core';
 import { Category, Favorite, InternationalString } from '@app/shared/model';
-import { CategoryService } from '@app/shared/service/category/category.service';
-import { LanguageService } from '@app/shared/service/language.service';
+import { CategoryService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
@@ -168,13 +167,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     public enableNodeEdit(node: TreeNode & { edit?: boolean }) {
         node.edit = true;
-    }
-
-    public setInputLength(inputRef: HTMLInputElement) {
-        // See https://css-tricks.com/auto-growing-inputs-textareas/
-        if (inputRef.parentElement) {
-            inputRef.parentElement.dataset.value = inputRef.value;
-        }
     }
 
     private sort(categories: Category[]): Category[] {

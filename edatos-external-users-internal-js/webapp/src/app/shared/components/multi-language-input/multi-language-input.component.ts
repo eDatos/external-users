@@ -16,6 +16,7 @@ import * as _ from 'lodash';
     ],
 })
 export class MultiLanguageInputComponent implements ControlValueAccessor {
+    // TODO(EDATOS-3357): Document.
     @Input()
     public locales: string[];
 
@@ -37,15 +38,14 @@ export class MultiLanguageInputComponent implements ControlValueAccessor {
     public onChange: any = () => {};
 
     public writeValue(internationalString?: InternationalString): void {
-        // We check for null because this issue with Angular ngModel bug:
+        // We check for null because this bug with Angular ngModel:
         // https://github.com/angular/angular/issues/14988.
         if (internationalString) {
-            // The deep cloning is needed because when the ngModel is set to be one-way, we want to avoid
+            // The deep cloning is needed because when the ngModel is set to be one-way: we want to avoid
             // modifications to the object we received. To do that, we need to deeply clone it. Lodash handles
             // this for us.
             this.value = _.cloneDeep(internationalString);
 
-            // If locales aren't passed, show those available in the international string.
             if (this.locales) {
                 // If we receive locales, we need to check for those that are not in the international string and
                 // create them.
@@ -53,6 +53,7 @@ export class MultiLanguageInputComponent implements ControlValueAccessor {
                     this.value.add(internationalString.getLocalisedString(locale) || new LocalisedString(locale, ''));
                 }
             } else {
+                // If locales aren't passed, show those available in the international string.
                 this.locales = internationalString.getLocales();
             }
 
@@ -76,12 +77,11 @@ export class MultiLanguageInputComponent implements ControlValueAccessor {
     }
 
     public onEditorChange(event: any, locale: string) {
-        this.value.texts.map((val) => {
+        for (const val of this.value.texts) {
             if (val.locale === locale) {
                 val.label = event.currentTarget.value;
             }
-            return val;
-        });
+        }
         this.mappedValue[locale] = event.currentTarget.value;
     }
 
