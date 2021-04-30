@@ -3,6 +3,7 @@
         <label *ngIf="isEditMode || mappedValue[locale]" [for]="locale">{{'enum.localeToLanguage.' + locale.toUpperCase() | translate: {default: locale} }}</label>
         <input
             *ngIf="isEditMode || mappedValue[locale]"
+            pInputText
             type="text"
             [value]="mappedValue[locale]"
             [class.readonly-input]="!isEditMode"

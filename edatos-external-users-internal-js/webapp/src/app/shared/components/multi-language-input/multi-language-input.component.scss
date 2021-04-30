@@ -1,34 +1,23 @@
-.language-input-list,
-.single-language-input,
-input {
-    width: 100%;
-}
-
 .language-input-list {
-    display: table;
-    border-collapse: collapse;
-}
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
 
-.single-language-input {
-    display: table-row;
-    border-bottom: 10px solid transparent;
-}
+    .single-language-input {
+        display: inline-grid;
+        grid-template-columns: minmax(5em, 1fr) 9.5fr;
+        grid-column-gap: 1em;
 
-input,
-label {
-    display: table-cell;
-}
-
-label {
-    padding-right: 10px;
-    text-align: end;
-    font-weight: bold;
-}
-
-.readonly-input {
-    border: none;
-}
-
-.readonly-input:focus-visible {
-    outline: none;
+        label {
+            margin: 0;
+            justify-self: right;
+            align-self: center;
+        }
+        input {
+            width: 100%;
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
 }
