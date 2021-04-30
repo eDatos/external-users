@@ -1,8 +1,6 @@
 import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output } from '@angular/core';
-import { Category, Favorite, Operation } from '@app/shared/model';
-import { StructuralResourcesTree } from '@app/shared/model/structural-resources-tree.model';
+import { Category, Favorite } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service/category/category.service';
-import { OperationService } from '@app/shared/service/operation/operation.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
@@ -52,13 +50,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
      * Emits an event when an element of the tree is selected.
      */
     @Output()
-    public onResourceSelect = new EventEmitter<Category | Operation>();
+    public onResourceSelect = new EventEmitter<Category>();
 
     /**
      * Emits an event when an element of the tree is unselected.
      */
     @Output()
-    public onResourceUnselect = new EventEmitter<Category | Operation>();
+    public onResourceUnselect = new EventEmitter<Category>();
 
     public resources: TreeNode[];
     public selectedResources: TreeNode[] = [];
@@ -66,14 +64,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public enableDragAndDrop = false;
 
     private readonly mainLanguageCode: string;
-    private tree: StructuralResourcesTree[] = [];
+    private tree: Category[] = [];
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: TreeNode[] = [];
 
     constructor(
         private alertService: ArteAlertService,
         private categoryService: CategoryService,
-        private operationService: OperationService,
         private translateService: TranslateService,
         private iterableDiffers: IterableDiffers
     ) {
@@ -149,7 +146,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     public deleteNode(node: TreeNode) {
         this.nodeList.splice(this.nodeList.indexOf(node));
-        node.parent?.children.splice(node.parent?.children.indexOf(node));
+        node.parent?.children?.splice(node.parent?.children.indexOf(node));
     }
 
     public saveNodeName(node: TreeNode, content: string) {
@@ -158,7 +155,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public disableNodeEdit(node: TreeNode & { edit?: boolean }) {
-        if (node.label.trim().length === 0) {
+        if (node.label?.trim().length === 0) {
             this.deleteNode(node);
         }
         node.edit = false;
@@ -169,31 +166,33 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public setInputLength(inputRef: HTMLInputElement) {
-        // see https://css-tricks.com/auto-growing-inputs-textareas/
-        inputRef.parentElement.dataset.value = inputRef.value;
+        // See https://css-tricks.com/auto-growing-inputs-textareas/
+        if (inputRef.parentElement) {
+            inputRef.parentElement.dataset.value = inputRef.value;
+        }
     }
 
-    private sort(categories: StructuralResourcesTree[]): StructuralResourcesTree[] {
-        categories.sort((a, b) => (a.getLocalisedName(this.mainLanguageCode)! < b.getLocalisedName(this.mainLanguageCode)! ? -1 : 1));
+    private sort(categories: Category[]): Category[] {
+        categories.sort((a, b) => (a.name.getLocalisedLabel(this.mainLanguageCode)! < b.name.getLocalisedLabel(this.mainLanguageCode)! ? -1 : 1));
         for (const element of categories) {
             this.sort(element.children);
         }
         return categories;
     }
 
-    private categoryListToTreeNode(categories: StructuralResourcesTree[]): Observable<TreeNode[]> {
+    private categoryListToTreeNode(categories: Category[]): Observable<TreeNode[]> {
         return of(
             categories?.map((category) => {
                 const children: TreeNode[] = [];
                 this.categoryListToTreeNode(category.children).subscribe((treeNodes) => {
                     children.push(...treeNodes);
                 });
-                return category.type === 'category' ? this.categoryToTreeNode(category, children) : this.operationToTreeNode(category);
+                return this.categoryToTreeNode(category, children);
             })
         );
     }
 
-    private categoryToTreeNode(category: StructuralResourcesTree, children: TreeNode[]): TreeNode {
+    private categoryToTreeNode(category: Category, children: TreeNode[]): TreeNode {
         const node = {
             label: category.name.getLocalisedLabel(this.mainLanguageCode),
             collapsedIcon: 'fa fa-folder',
@@ -213,27 +212,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return node;
     }
 
-    private operationToTreeNode(operation: StructuralResourcesTree): TreeNode {
-        const node = {
-            label: operation.name.getLocalisedLabel(this.mainLanguageCode),
-            collapsedIcon: 'fa fa-table',
-            expandedIcon: 'fa fa-table',
-            expanded: true,
-            data: operation,
-            leaf: true,
-            selectable: !this.disabled,
-        };
-
-        if (this.isFavorite(operation)) {
-            this.selectedResources.push(node);
-        }
-        this.nodeList.push(node);
-
-        return node;
-    }
-
-    private isFavorite(resource: StructuralResourcesTree): boolean {
-        return this.favorites?.some((favorite) => favorite.resource?.id === resource.id && favorite.resource.type === resource.type) ?? false;
+    private isFavorite(category: Category): boolean {
+        return this.favorites?.some((favorite) => favorite.category.id === category.id) ?? false;
     }
 
     private setLoadingNode(node: TreeNode) {

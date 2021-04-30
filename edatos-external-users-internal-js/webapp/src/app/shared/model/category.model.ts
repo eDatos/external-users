@@ -1,22 +1,17 @@
+import { ExternalItem } from '@app/shared/model/external-item.model';
 import { InternationalString } from './international-string.model';
 import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
 
 export class Category extends BaseVersionedAndAuditingEntity {
-    public code: string;
-    public nestedCode: string | null = null;
-    public urn: string;
+    public subscribers: number;
 
     @Type(() => InternationalString)
     public name: InternationalString;
 
-    @Type(() => Category)
-    public parent: Category | null = null;
+    @Type(() => ExternalItem)
+    public resources: ExternalItem[];
 
     @Type(() => Category)
-    public children: Category[] = [];
-
-    public get type(): 'category' {
-        return 'category';
-    }
+    public children: Category[];
 }

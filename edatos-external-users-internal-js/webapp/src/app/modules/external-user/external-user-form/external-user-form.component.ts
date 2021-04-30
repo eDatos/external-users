@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ExternalUser, Language, Role, Treatment } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
-import { Category, Favorite, Operation } from '@app/shared/model';
-import { StructuralResourcesTree } from '@app/shared/model/structural-resources-tree.model';
+import { Category, Favorite } from '@app/shared/model';
 import { FavoriteService } from '@app/shared/service';
 import { ArteEventManager, GenericModalService } from 'arte-ng/services';
 import { Subscription } from 'rxjs';
@@ -56,10 +55,10 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         });
     }
 
-    public saveFavorite(resource: Category | Operation): void {
+    public saveFavorite(category: Category): void {
         const favorite = new Favorite();
         favorite.externalUser = this.externalUser;
-        favorite.resource = resource;
+        favorite.category = category;
         this.favoriteService.save(favorite).subscribe(
             () => {
                 this.updateFavorites();
@@ -119,8 +118,8 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    public deleteFavorite(resource: StructuralResourcesTree): void {
-        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.constructor.name.toLowerCase() === resource.type.toLowerCase());
+    public deleteFavorite(category: Category): void {
+        const favorite = this.favorites.find((fav) => fav.category.id === category.id)!;
         this.favoriteService.delete(favorite.id).subscribe(
             () => {
                 this.updateFavorites();
