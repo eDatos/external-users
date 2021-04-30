@@ -1,6 +1,7 @@
 <div class="language-input-list">
     <div *ngFor="let locale of locales" class="single-language-input">
-        <label *ngIf="isEditMode || mappedValue[locale]" [for]="locale">{{'enum.localeToLanguage.' + locale.toUpperCase() | translate: {default: locale} }}</label>
+        <label *ngIf="isEditMode || mappedValue[locale]" [for]="locale"> {{'enum.localeToLanguage.' + locale.toUpperCase() | translate: {default: locale} }} </label>
+        <img class="img-circle" alt="{{locale.toLowerCase()}} flag" src="assets/flag-icons/{{locale.toLowerCase()}}.svg" />
         <input
             *ngIf="isEditMode || mappedValue[locale]"
             pInputText

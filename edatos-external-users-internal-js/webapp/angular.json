@@ -32,6 +32,11 @@
                                 "input": "./src/assets",
                                 "output": "/assets"
                             },
+                            {
+                                "glob": "*.svg",
+                                "input": "node_modules/language-icons/icons",
+                                "output": "/assets/flag-icons/"
+                            },
                             "src/manifest.webmanifest"
                         ],
                         "styles": [
