@@ -16,5 +16,8 @@
             "title": "Suscripciones temáticas"
         },
         "name": "Suscripciones temáticas"
+    },
+    "structuralResourcesTree": {
+        "noRecordsFound": "No se ha encontrado ningún tema ni operación"
     }
 }

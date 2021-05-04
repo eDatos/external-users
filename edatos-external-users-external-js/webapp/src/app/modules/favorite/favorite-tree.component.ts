@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '@app/core/model';
-import { Category, Favorite, Operation } from '@app/shared/model';
-import { FavoriteService } from '@app/shared/service';
+import { Favorite, StructuralResourcesTree } from '@app/shared/model';
+import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
@@ -31,7 +31,7 @@ export class FavoriteTreeComponent implements OnInit {
         this.favorites = this.route.snapshot.data.favorites;
     }
 
-    public saveFavorite(resource: Category | Operation): void {
+    public saveFavorite(resource: StructuralResourcesTree): void {
         const favorite = new Favorite();
         favorite.externalUser = this.user;
         favorite.resource = resource;
@@ -45,8 +45,8 @@ export class FavoriteTreeComponent implements OnInit {
         );
     }
 
-    public deleteFavorite(resource: Category | Operation): void {
-        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.constructor === resource.constructor);
+    public deleteFavorite(resource: StructuralResourcesTree): void {
+        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.constructor.name.toLowerCase() === resource.type.toLowerCase());
         this.favoriteService.delete(favorite.id).subscribe(
             () => {
                 this.updateFavorites();

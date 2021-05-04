@@ -1,10 +1,7 @@
-import { DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User, Role, Treatment, Language } from '@app/core/model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AccountUserService } from '@app/core/service/user';
-import { Subscription } from 'rxjs';
-import { GenericModalService, ArteEventManager } from 'arte-ng/services';
 
 type SignUp = Omit<User, 'id' | 'roles'>;
 
@@ -13,8 +10,8 @@ type SignUp = Omit<User, 'id' | 'roles'>;
     templateUrl: './signup.component.html',
 })
 export class SignupFormComponent implements OnInit {
-    public user: User;
-    public isSaving: Boolean;
+    public user: User = new User();
+    public isSaving: Boolean = false;
     public validUser = false;
     private paramLogin: string;
     public rolesEnum = Role;
@@ -23,17 +20,10 @@ export class SignupFormComponent implements OnInit {
 
     public confirmPassword: string;
 
-    constructor(
-        private accountUserService: AccountUserService,
-        private genericModalService: GenericModalService,
-        private eventManager: ArteEventManager,
-        private route: ActivatedRoute,
-        private router: Router
-    ) {}
+    constructor(private accountUserService: AccountUserService, private router: Router) {}
 
     ngOnInit() {
         this.isSaving = false;
-        this.user = new User();
     }
 
     clear() {
