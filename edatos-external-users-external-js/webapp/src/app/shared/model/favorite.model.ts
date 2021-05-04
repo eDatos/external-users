@@ -6,8 +6,6 @@ import { Operation } from './operation.model';
 import { StructuralResourcesTree } from './structural-resources-tree.model';
 
 export class Favorite extends BaseVersionedAndAuditingEntity {
-    public id?: number;
-
     @Type(() => User)
     public externalUser?: User;
 
