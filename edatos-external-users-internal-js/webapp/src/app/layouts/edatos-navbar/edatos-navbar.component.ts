@@ -26,9 +26,13 @@ export class EdatosNavbarComponent implements OnInit {
         this.scriptService.loadScript(`${navbarScriptUrl}/js/metamac-navbar.js`).subscribe(
             (_) => {
                 this.isLoading = false;
-                MetamacNavBar.loadNavbar({
-                    element: 'edatos-navbar',
-                });
+                if (typeof MetamacNavBar === 'undefined') {
+                    console.warn('Could not load eDatos navbar');
+                } else {
+                    MetamacNavBar.loadNavbar({
+                        element: 'edatos-navbar',
+                    });
+                }
             },
             (err) => {
                 console.error('Error al obtener el navbar', err);
