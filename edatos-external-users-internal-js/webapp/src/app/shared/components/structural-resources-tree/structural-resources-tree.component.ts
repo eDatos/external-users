@@ -10,6 +10,13 @@ import { shareReplay } from 'rxjs/operators';
 
 export type Mode = 'view' | 'select' | 'edit';
 
+export interface CategoryTreeNode extends TreeNode {
+    data: Category;
+    children?: CategoryTreeNode[];
+    edit: boolean;
+    makingRequest?: boolean;
+}
+
 @Component({
     selector: 'app-structural-resources-tree',
     templateUrl: './structural-resources-tree.component.html',
@@ -63,16 +70,18 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     @ViewChild(MultiLanguageInputComponent)
     public languageInputComponent: MultiLanguageInputComponent;
 
-    public resources: TreeNode[];
-    public selectedResources: TreeNode[] = [];
+    public resources: CategoryTreeNode[];
+    public selectedResources: CategoryTreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
     public enableDragAndDrop = false;
     public allowedLanguages: Observable<string[]>;
 
+    public selection = [];
+
     private readonly mainLanguageCode: string;
     private tree: Category[] = [];
     private iterableDiffer: IterableDiffer<Favorite>;
-    private nodeList: TreeNode[] = [];
+    private nodeList: CategoryTreeNode[] = [];
 
     constructor(
         private alertService: ArteAlertService,
@@ -110,7 +119,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public createTree() {
-        this.categoryListToTreeNode(this.tree).subscribe((treeNodes) => {
+        this.categoryListToCategoryTree(this.tree).subscribe((treeNodes) => {
             this.resources = treeNodes;
         });
     }
@@ -125,28 +134,29 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         }
     }
 
-    public onSelect(treeNode: TreeNode) {
+    public onSelect(treeNode: CategoryTreeNode) {
         this.setLoadingNode(treeNode);
         this.onResourceSelect.emit(treeNode.data);
     }
 
-    public onUnselect(treeNode: TreeNode) {
+    public onUnselect(treeNode: CategoryTreeNode) {
         this.setLoadingNode(treeNode);
         this.onResourceUnselect.emit(treeNode.data);
     }
 
-    public addNode(parent?: TreeNode) {
+    public addNode(parent?: CategoryTreeNode) {
         if (parent) {
             if (!parent.children) {
                 parent.children = [];
             }
-            const node: TreeNode = {
+            const node: CategoryTreeNode = {
                 label: '',
                 collapsedIcon: 'fa fa-folder',
                 expandedIcon: 'fa fa-folder-open',
                 expanded: true,
                 data: new Category(),
                 selectable: !this.disabled,
+                edit: false,
             };
             parent.children.push(node);
             this.nodeList.push(node);
@@ -156,25 +166,25 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         }
     }
 
-    public deleteNode(node: TreeNode) {
+    public deleteNode(node: CategoryTreeNode) {
         this.nodeList.splice(this.nodeList.indexOf(node));
         node.parent?.children?.splice(node.parent?.children.indexOf(node));
     }
 
-    public saveNodeName(node: TreeNode, name: InternationalString) {
+    public saveNodeName(node: CategoryTreeNode, name: InternationalString) {
         node.data.name = name;
         node.label = name.getLocalisedLabel(this.mainLanguageCode);
         this.disableNodeEdit(node);
     }
 
-    public disableNodeEdit(node: TreeNode & { edit?: boolean }) {
+    public disableNodeEdit(node: CategoryTreeNode) {
         if (node.data.name.isEmptyOrBlank()) {
             this.deleteNode(node);
         }
         node.edit = false;
     }
 
-    public enableNodeEdit(node: TreeNode & { edit?: boolean }) {
+    public enableNodeEdit(node: CategoryTreeNode) {
         node.edit = true;
     }
 
@@ -186,20 +196,20 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return categories;
     }
 
-    private categoryListToTreeNode(categories: Category[]): Observable<TreeNode[]> {
+    private categoryListToCategoryTree(categories: Category[]): Observable<CategoryTreeNode[]> {
         return of(
             categories?.map((category) => {
-                const children: TreeNode[] = [];
-                this.categoryListToTreeNode(category.children).subscribe((treeNodes) => {
+                const children: CategoryTreeNode[] = [];
+                this.categoryListToCategoryTree(category.children).subscribe((treeNodes) => {
                     children.push(...treeNodes);
                 });
-                return this.categoryToTreeNode(category, children);
+                return this.categoryToCategoryTreeNode(category, children);
             })
         );
     }
 
-    private categoryToTreeNode(category: Category, children: TreeNode[]): TreeNode {
-        const node = {
+    private categoryToCategoryTreeNode(category: Category, children: CategoryTreeNode[]): CategoryTreeNode {
+        const node: CategoryTreeNode = {
             label: category.name.getLocalisedLabel(this.mainLanguageCode),
             collapsedIcon: 'fa fa-folder',
             expandedIcon: 'fa fa-folder-open',
@@ -207,6 +217,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             children,
             data: category,
             selectable: !this.disabled,
+            edit: false,
             makingRequest: false,
         };
 
@@ -222,7 +233,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return this.favorites?.some((favorite) => favorite.category.id === category.id) ?? false;
     }
 
-    private setLoadingNode(node: TreeNode) {
+    private setLoadingNode(node: CategoryTreeNode) {
         node.icon = 'fa fa-spinner fa-spin';
         node.selectable = false;
         if (node.children) {
@@ -232,7 +243,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         }
     }
 
-    private unsetLoadingNode(node: TreeNode) {
+    private unsetLoadingNode(node: CategoryTreeNode) {
         node.icon = null;
         node.selectable = !this.disabled;
         if (node.children) {

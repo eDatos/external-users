@@ -36,48 +36,8 @@
             margin-right: 0;
         }
     }
-
-    // see https://css-tricks.com/auto-growing-inputs-textareas/
-    .input-sizer {
-        display: inline-grid;
-        vertical-align: top;
-        align-items: center;
-        position: relative;
-        margin: 0;
-        min-width: 1em;
-
-        &::after,
-        input {
-            width: auto;
-            min-width: 1em;
-            grid-area: 1 / 2;
-            font: inherit;
-            resize: none;
-            background: none;
-            appearance: none;
-            border: none;
-            overflow-x: visible;
-            border-bottom: 1px solid grey;
-            margin-bottom: -1px;
-        }
-
-        &::after {
-            content: ' ' attr(data-value) '  ';
-            visibility: hidden;
-            white-space: pre-wrap;
-        }
-
-        input:focus {
-            box-shadow: none;
-        }
-    }
 }
 
-@mixin grey {
+.subscribed-users {
     color: #a5a5a5;
-}
-
-.subscribed-users,
-.untitled-node {
-    @include grey;
 }
