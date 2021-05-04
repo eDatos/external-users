@@ -27,8 +27,9 @@
             [modal]="true"
             [dismissableMask]="true"
             [header]="'structuralResourcesTree.editionModal' | translate"
-            [style]="{width: '50vw'}"
             [resizable]="false"
+            [style]="{width: '50vw'}"
+            [contentStyle]="{padding: '1.5em 2em'}"
             appendTo="body"
             (visibleChange)="disableNodeEdit(node)"
         >
@@ -38,7 +39,20 @@
                 [locales]="locales"
                 (onEnterKeyDown)="saveNodeName(node, $event)"
             ></app-multi-language-input>
+            <p-footer>
+                <button type="button" class="btn btn-secondary" (click)="disableNodeEdit(node)">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    <span>Cancelar</span>
+                </button>
+                <button type="button" class="btn btn-primary" (click)="saveNodeName(node, languageInputComponent.value)">
+                    <i class="fa fa-save" aria-hidden="true"></i>
+                    <span>Guardar</span>
+                </button>
+            </p-footer>
         </p-dialog>
+        <button type="button" class="btn btn-info node-btn-sm mr-2">
+            <i class="fa fa-globe" aria-hidden="true"></i>
+        </button>
         <button type="button" class="btn btn-primary node-btn-sm mr-2" (click)="addNode(node)">
             <i class="fa fa-plus" aria-hidden="true"></i>
         </button>

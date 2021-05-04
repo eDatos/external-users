@@ -12,7 +12,8 @@
         }
 
         .ui-treenode .ui-treenode-content:hover .node-btn-sm {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
         }
     }
 

@@ -1,4 +1,5 @@
-import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output } from '@angular/core';
+import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output, ViewChild } from '@angular/core';
+import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input/multi-language-input.component';
 import { Category, Favorite, InternationalString } from '@app/shared/model';
 import { CategoryService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
@@ -58,6 +59,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
      */
     @Output()
     public onResourceUnselect = new EventEmitter<Category>();
+
+    @ViewChild(MultiLanguageInputComponent)
+    public languageInputComponent: MultiLanguageInputComponent;
 
     public resources: TreeNode[];
     public selectedResources: TreeNode[] = [];
