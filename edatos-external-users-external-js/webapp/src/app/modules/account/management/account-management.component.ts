@@ -20,12 +20,7 @@ export class AccountManagementComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
-        this.userService
-            .getLogueado()
-            .toPromise()
-            .then((account) => {
-                this.account = account;
-            });
+        this.account = this.route.snapshot.data.user;
     }
 
     save() {
