@@ -8,3 +8,7 @@
 .app {
     @import './bootstrap.scss';
 }
+
+.footer.istac-footer.istac-footer-small {
+    position: fixed !important;
+}
