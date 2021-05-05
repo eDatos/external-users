@@ -19,10 +19,10 @@
         <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
     </ng-template>
     <ng-template *ngIf="mode === 'edit'" let-node pTemplate="default">
-        <span class="label mr-2" (dblclick)="enableNodeEdit(node)">{{node.label}}</span>
+        <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
         <p-dialog
-            *ngIf="node.edit"
-            [(visible)]="node.edit"
+            *ngIf="node.editMode === 'name'"
+            [visible]="true"
             [focusOnShow]="true"
             [modal]="true"
             [dismissableMask]="true"
@@ -51,8 +51,8 @@
             </p-footer>
         </p-dialog>
         <p-dialog
-            *ngIf="node.remap"
-            [(visible)]="node.remap"
+            *ngIf="node.editMode === 'remap'"
+            [visible]="true"
             [focusOnShow]="true"
             [modal]="true"
             [dismissableMask]="true"
@@ -63,13 +63,13 @@
             appendTo="body"
             (visibleChange)="disableNodeEdit(node)"
         >
-            <app-external-categories-table [externalCategories]="externalCategories" [selectedExternalCategories]="node.data.resources"></app-external-categories-table>
+            <app-external-categories-table #table [externalCategories]="externalCategories" [selectedExternalCategories]="node.data.resources"></app-external-categories-table>
             <p-footer>
                 <button type="button" class="btn btn-secondary">
                     <i class="fa fa-times" aria-hidden="true"></i>
                     <span>Cancelar</span>
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" (click)="saveRemap(node, table.getSelectedResources())">
                     <i class="fa fa-save" aria-hidden="true"></i>
                     <span>Guardar</span>
                 </button>

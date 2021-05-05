@@ -32,4 +32,8 @@ export class ExternalCategoriesTableComponent implements OnInit {
                 .subscribe((categories) => (this.externalCategories = categories));
         }
     }
+
+    public getSelectedResources(): ExternalCategory[] {
+        return this.selectedExternalCategories;
+    }
 }

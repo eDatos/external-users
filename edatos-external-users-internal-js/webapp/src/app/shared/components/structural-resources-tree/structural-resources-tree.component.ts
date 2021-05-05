@@ -4,18 +4,17 @@ import { Category, Favorite, InternationalString } from '@app/shared/model';
 import { ExternalCategory } from '@app/shared/model/external-category.model';
 import { CategoryService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
-import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
 import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { finalize, shareReplay } from 'rxjs/operators';
 
 export type Mode = 'view' | 'select' | 'edit';
 
 export interface CategoryTreeNode extends TreeNode {
     data: Category;
     children?: CategoryTreeNode[];
-    edit: boolean;
+    editMode: 'remap' | 'name' | null;
     makingRequest?: boolean;
 }
 
@@ -166,11 +165,11 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 expanded: true,
                 data: new Category(),
                 selectable: !this.disabled,
-                edit: false,
+                editMode: null,
             };
             parent.children.push(node);
             this.nodeList.push(node);
-            this.enableNodeEdit(node);
+            this.editNodeName(node);
         } else {
             // TODO(EDATOS-3357): What happens when the tree is empty?
         }
@@ -182,25 +181,46 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public saveNodeName(node: CategoryTreeNode, name: InternationalString) {
-        node.data.name = name;
+        const oldName = node.label;
         node.label = name.val;
         this.disableNodeEdit(node);
+        this.setLoadingNode(node, true);
+        this.categoryService
+            .saveOrUpdate({ ...node.data, name })
+            .pipe(
+                finalize(() => {
+                    this.unsetLoadingNode(node, true);
+                })
+            )
+            .subscribe(
+                (category) => {
+                    node.data = category;
+                    node.label = category.name.val;
+                },
+                () => {
+                    node.label = oldName;
+                }
+            );
     }
 
     public disableNodeEdit(node: CategoryTreeNode) {
         if (node.data.name.isEmptyOrBlank()) {
             this.deleteNode(node);
         }
-        node.edit = false;
+        node.editMode = null;
     }
 
-    public enableNodeEdit(node: CategoryTreeNode) {
-        node.edit = true;
+    public editNodeName(node: CategoryTreeNode) {
+        node.editMode = 'name';
     }
 
     public remapNode(node: CategoryTreeNode) {
-        // @ts-ignore
-        node.remap = true;
+        node.editMode = 'remap';
+    }
+
+    public saveRemap(node: CategoryTreeNode, selectedResources: ExternalCategory[]) {
+        node.data.resources = selectedResources;
+        node.editMode = null;
     }
 
     private sort(categories: Category[]): Category[] {
@@ -232,7 +252,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             children,
             data: category,
             selectable: !this.disabled,
-            edit: false,
+            editMode: null,
             makingRequest: false,
         };
 
@@ -248,20 +268,20 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return this.favorites?.some((favorite) => favorite.category.id === category.id) ?? false;
     }
 
-    private setLoadingNode(node: CategoryTreeNode) {
+    private setLoadingNode(node: CategoryTreeNode, setLoadingChildren = true) {
         node.icon = 'fa fa-spinner fa-spin';
         node.selectable = false;
-        if (node.children) {
+        if (node.children && setLoadingChildren) {
             for (const child of node.children) {
                 this.setLoadingNode(child);
             }
         }
     }
 
-    private unsetLoadingNode(node: CategoryTreeNode) {
+    private unsetLoadingNode(node: CategoryTreeNode, setLoadingChildren = true) {
         node.icon = null;
         node.selectable = !this.disabled;
-        if (node.children) {
+        if (node.children && setLoadingChildren) {
             for (const child of node.children) {
                 this.unsetLoadingNode(child);
             }

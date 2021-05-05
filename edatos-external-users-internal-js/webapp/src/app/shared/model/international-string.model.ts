@@ -54,7 +54,7 @@ export class InternationalString {
         return this.texts.map((text) => text.label);
     }
 
-    public get val(): string {
+    public get val(): string | undefined {
         return this.getLocalisedLabel(CURRENT_LANGUAGE);
     }
 }
