@@ -14,7 +14,6 @@ export class FavoriteTreeComponent implements OnInit {
     public inEditMode = false;
     public isSaving = false;
     public isLoading = false;
-    public favorite: Favorite;
     public mainLanguageCode: string;
 
     public user: User;
@@ -46,7 +45,8 @@ export class FavoriteTreeComponent implements OnInit {
     }
 
     public deleteFavorite(resource: StructuralResourcesTree): void {
-        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.constructor.name.toLowerCase() === resource.type.toLowerCase());
+        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.type.toLowerCase() === resource.type.toLowerCase());
+
         this.favoriteService.delete(favorite.id).subscribe(
             () => {
                 this.updateFavorites();
