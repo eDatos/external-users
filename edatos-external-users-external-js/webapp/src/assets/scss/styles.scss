@@ -7,6 +7,7 @@
 
 .app {
     clear: both;
+    padding-bottom: 15px;
 }
 /* BEGIN BOOTSTRAP */
 .btn {
@@ -130,6 +131,10 @@ table.table-sticky-header {
     }
 }
 /* END .no-content */
+
+.footer.istac-footer {
+    position: fixed !important;
+}
 
 @import './_page';
 @import './_forms';
