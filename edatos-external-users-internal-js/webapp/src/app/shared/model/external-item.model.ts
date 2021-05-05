@@ -19,4 +19,8 @@ export class ExternalItem extends BaseVersionedEntity {
     public name: InternationalString;
 
     public type: TypeExternalArtefacts;
+
+    public getLocalisedName(languageCode: string): string | undefined {
+        return this.name?.getLocalisedLabel(languageCode);
+    }
 }

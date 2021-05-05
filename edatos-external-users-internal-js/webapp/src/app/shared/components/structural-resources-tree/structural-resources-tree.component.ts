@@ -1,8 +1,10 @@
-import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output, ViewChild } from '@angular/core';
 import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input/multi-language-input.component';
 import { Category, Favorite, InternationalString } from '@app/shared/model';
+import { ExternalCategory } from '@app/shared/model/external-category.model';
 import { CategoryService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
 import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
@@ -74,11 +76,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public selectedResources: CategoryTreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
     public enableDragAndDrop = false;
-    public allowedLanguages: Observable<string[]>;
+    public allowedLanguages: string[];
+    public externalCategories: ExternalCategory[];
 
-    public selection = [];
-
-    private readonly mainLanguageCode: string;
     private tree: Category[] = [];
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: CategoryTreeNode[] = [];
@@ -88,15 +88,25 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         private categoryService: CategoryService,
         private translateService: TranslateService,
         private iterableDiffers: IterableDiffers,
-        private languageService: LanguageService
+        private languageService: LanguageService,
+        private _changeDetectorRef: ChangeDetectorRef
     ) {
-        this.mainLanguageCode = this.translateService.getDefaultLang();
+        this.translateService.onLangChange.subscribe(() => {
+            this._changeDetectorRef.detectChanges();
+        });
         this.iterableDiffer = iterableDiffers.find([]).create();
         // sharedReplay RxJS operator allows for caching the http response, since
         // languages are not that frequently updated (and can be updated just by
         // reloading the page, the cache just avoids unnecessary requests every time
         // a multi-language input component is opened).
-        this.allowedLanguages = languageService.getAllowed().pipe(shareReplay({ bufferSize: 1, refCount: true }));
+        this.languageService
+            .getAllowed()
+            .pipe(shareReplay({ bufferSize: 1, refCount: true }))
+            .subscribe((languages) => (this.allowedLanguages = languages));
+        this.categoryService
+            .getExternal()
+            .pipe(shareReplay({ bufferSize: 1, refCount: true }))
+            .subscribe((categories) => (this.externalCategories = categories));
     }
 
     public ngDoCheck(): void {
@@ -173,7 +183,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     public saveNodeName(node: CategoryTreeNode, name: InternationalString) {
         node.data.name = name;
-        node.label = name.getLocalisedLabel(this.mainLanguageCode);
+        node.label = name.val;
         this.disableNodeEdit(node);
     }
 
@@ -188,8 +198,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         node.edit = true;
     }
 
+    public remapNode(node: CategoryTreeNode) {
+        // @ts-ignore
+        node.remap = true;
+    }
+
     private sort(categories: Category[]): Category[] {
-        categories.sort((a, b) => (a.name.getLocalisedLabel(this.mainLanguageCode)! < b.name.getLocalisedLabel(this.mainLanguageCode)! ? -1 : 1));
+        categories.sort((a, b) => (a.name.val! < b.name.val! ? -1 : 1));
         for (const element of categories) {
             this.sort(element.children);
         }
@@ -210,7 +225,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     private categoryToCategoryTreeNode(category: Category, children: CategoryTreeNode[]): CategoryTreeNode {
         const node: CategoryTreeNode = {
-            label: category.name.getLocalisedLabel(this.mainLanguageCode),
+            label: category.name.val,
             collapsedIcon: 'fa fa-folder',
             expandedIcon: 'fa fa-folder-open',
             expanded: true,

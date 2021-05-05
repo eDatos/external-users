@@ -34,9 +34,9 @@
             (visibleChange)="disableNodeEdit(node)"
         >
             <app-multi-language-input
-                *ngIf="(allowedLanguages | async) as locales"
+                *ngIf="allowedLanguages"
                 [ngModel]="node.data.name"
-                [locales]="locales"
+                [locales]="allowedLanguages"
                 (onEnterKeyDown)="saveNodeName(node, $event)"
             ></app-multi-language-input>
             <p-footer>
@@ -50,8 +50,33 @@
                 </button>
             </p-footer>
         </p-dialog>
+        <p-dialog
+            *ngIf="node.remap"
+            [(visible)]="node.remap"
+            [focusOnShow]="true"
+            [modal]="true"
+            [dismissableMask]="true"
+            [header]="'structuralResourcesTree.editionModal' | translate"
+            [resizable]="false"
+            [style]="{width: '80vw'}"
+            [contentStyle]="{padding: '1.5em 2em', overflow: 'visible'}"
+            appendTo="body"
+            (visibleChange)="disableNodeEdit(node)"
+        >
+            <app-external-categories-table [externalCategories]="externalCategories" [selectedExternalCategories]="node.data.resources"></app-external-categories-table>
+            <p-footer>
+                <button type="button" class="btn btn-secondary">
+                    <i class="fa fa-times" aria-hidden="true"></i>
+                    <span>Cancelar</span>
+                </button>
+                <button type="button" class="btn btn-primary">
+                    <i class="fa fa-save" aria-hidden="true"></i>
+                    <span>Guardar</span>
+                </button>
+            </p-footer>
+        </p-dialog>
         <button type="button" class="btn btn-info node-btn-sm mr-2">
-            <i class="fa fa-globe" aria-hidden="true"></i>
+            <i class="fa fa-search" aria-hidden="true" (click)="remapNode(node)"></i>
         </button>
         <button type="button" class="btn btn-primary node-btn-sm mr-2" (click)="addNode(node)">
             <i class="fa fa-plus" aria-hidden="true"></i>

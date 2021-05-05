@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { convert } from '@app/core/utils/response-utils';
 import { Category } from '@app/shared/model';
+import { ExternalCategory } from '@app/shared/model/external-category.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -25,5 +26,9 @@ export class CategoryService {
         return this.http
             .get<Category[]>(`${this.resourceUrl}/tree`, { params: { sort: 'id' } })
             .pipe(map((tree) => convert(Category, tree)));
+    }
+
+    public getExternal(): Observable<ExternalCategory[]> {
+        return this.http.get<ExternalCategory[]>(`${this.resourceUrl}/external`).pipe(map((externalCategories) => convert(ExternalCategory, externalCategories)));
     }
 }

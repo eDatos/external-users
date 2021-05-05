@@ -1,10 +1,9 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.siemac.edatos.core.common.exception.EDatosException;
@@ -34,10 +33,10 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
     }
 
     @Override
-    public Set<ExternalCategoryEntity> getCategories() {
+    public List<ExternalCategoryEntity> getCategories() {
         log.info("Making request to SRM: GET categories");
         Categories c = eDatosApisLocator.srmExternal().findCategories("ISTAC", "SDMXStatSubMatDomainsWD1", "01.000", null, null, null, null);
-        Set<ExternalCategoryEntity> categories = new HashSet<>();
+        List<ExternalCategoryEntity> categories = new ArrayList<>();
         List<ItemResource> resources = c.getCategories();
         for (ItemResource resource : resources) {
             categories.add(itemResourceToCategory(resource, resources, categories));
@@ -47,7 +46,7 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
 
     // TODO(EDATOS-3357): This is a mapping between to classes... it would be a great idea to use MapStruct for this,
     //  the dependency needs to be moved from rest-common upwards to core tho.
-    private ExternalCategoryEntity itemResourceToCategory(ItemResource resource, List<ItemResource> resources, Set<ExternalCategoryEntity> categories) {
+    private ExternalCategoryEntity itemResourceToCategory(ItemResource resource, List<ItemResource> resources, List<ExternalCategoryEntity> categories) {
         ExternalCategoryEntity externalCategory = new ExternalCategoryEntity();
 
         if (resource.getParent() != null) {
@@ -79,7 +78,7 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
     private InternationalStringVO internationalStringToVO(InternationalString resource) {
         InternationalStringVO internationalString = new InternationalStringVO();
         internationalString.getTexts()
-                .addAll(resource.getTexts().stream().map(localisedString -> new LocalisedStringVO(localisedString.getLang(), localisedString.getValue())).collect(Collectors.toSet()));
+                .addAll(resource.getTexts().stream().map(localisedString -> new LocalisedStringVO(localisedString.getValue(), localisedString.getLang())).collect(Collectors.toSet()));
         return internationalString;
     }
 }

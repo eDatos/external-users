@@ -17,9 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
+import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalCategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalCategoryMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -32,10 +36,14 @@ public class CategoryResource extends AbstractResource {
 
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
+    private final StructuralResourcesService structuralResourcesService;
+    private final ExternalCategoryMapper externalCategoryMapper;
 
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper) {
+    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, StructuralResourcesService structuralResourcesService, ExternalCategoryMapper externalCategoryMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
+        this.structuralResourcesService = structuralResourcesService;
+        this.externalCategoryMapper = externalCategoryMapper;
     }
 
     @GetMapping("/{id}")
@@ -54,6 +62,14 @@ public class CategoryResource extends AbstractResource {
         Page<CategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return ResponseEntity.ok().headers(headers).body(result.getContent());
+    }
+
+    @GetMapping("/external")
+    @Timed
+    @PreAuthorize("@secChecker.canAccessCategory(authentication)")
+    public ResponseEntity<List<ExternalCategoryDto>> getExternalCategories() {
+        List<ExternalCategoryEntity> result = structuralResourcesService.getCategories();
+        return ResponseEntity.ok(externalCategoryMapper.toDtos(result));
     }
 
     @Timed

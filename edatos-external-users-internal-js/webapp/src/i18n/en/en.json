@@ -148,6 +148,11 @@
     "category": {
         "name": "Topic"
     },
+    "categorySubscriptions": {
+        "home": {
+            "title": "Thematic subscriptions"
+        }
+    },
     "configuration": {
         "filter": "Filter (by prefix)",
         "spring": "Spring configuration",
@@ -156,6 +161,11 @@
             "properties": "Properties"
         },
         "title": "Configuration"
+    },
+    "dataProtectionPolicy": {
+        "home": {
+            "title": "Data protection policy"
+        }
     },
     "edatosExternalUsersApp": {
         "rol": {
@@ -273,21 +283,21 @@
         }
     },
     "enum": {
+        "localeToLanguage": {
+            "CA": "Catalan",
+            "DE": "German",
+            "EN": "English",
+            "ES": "Spanish",
+            "FR": "French",
+            "PT": "Portuguese",
+            "RU": "Russian",
+            "ZH": "Chinese"
+        },
         "procStatus": {
             "DRAFT": "Eraser",
             "EXTERNALLY_PUBLISHED": "Externally published",
             "INTERNALLY_PUBLISHED": "Internally published",
             "label": "Life cycle status"
-        },
-        "localeToLanguage": {
-            "ES": "Spanish",
-            "EN": "English",
-            "CA": "Catalan",
-            "PT": "Portuguese",
-            "RU": "Russian",
-            "ZH": "Chinese",
-            "FR": "French",
-            "DE": "German"
         }
     },
     "error": {
@@ -330,6 +340,14 @@
             "usuario-ldap-no-encontrado": "The specified user was not found"
         },
         "usuario-existe": "The username entered is already in use"
+    },
+    "externalCategoriesTable": {
+        "columns": {
+            "name": "Name",
+            "nestedCode": "Nested code",
+            "urn": "URN"
+        },
+        "noResourceFound": "No external resource found"
     },
     "externalUser": {
         "activado": "Activated",
@@ -518,13 +536,13 @@
                 "apidocs": "API",
                 "audits": "Audit",
                 "configuration": "Configuration",
+                "dataProtectionPolicy": "Data protection policy",
                 "health": "Health",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
                 "main": "Administration",
                 "metrics": "Metrics",
-                "userManagement": "User management",
-                "dataProtectionPolicy": "Data protection policy"
+                "userManagement": "User management"
             },
             "administracion": {
                 "main": "Administration"
@@ -693,18 +711,15 @@
     "operation": {
         "name": "Statistical operation"
     },
-    "dataProtectionPolicy": {
-        "home": {
-            "title": "Data protection policy"
-        }
-    },
     "structuralResourcesTree": {
-        "noRecordsFound": "No topic or operation found",
-        "subscribedUsers": "Subscribed users: {{amount}}",
         "editionModal": "Multilanguage edition of the resource name",
-        "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them."
+        "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
+        "noRecordsFound": "No topic or operation found",
+        "subscribedUsers": "Subscribed users: {{amount}}"
     },
     "table": {
-        "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}"
+        "globalSearchPlaceholder": "Global search",
+        "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}",
+        "pageReport": "{first}–{last} of {totalRecords}"
     }
 }
