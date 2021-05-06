@@ -34,14 +34,8 @@ export class FilterFormComponent implements OnInit {
     public ngOnInit() {
         if (!this.inEditMode) {
             this.titleService.setTitle(this.titleService.getTitle() + ' ' + this.filter.id);
-        } else {
-            this.userService
-                .getLogueado()
-                .toPromise()
-                .then((account) => {
-                    this.account = account;
-                });
         }
+        this.account = this.activatedRoute.snapshot.data.user;
     }
 
     public toggleEditMode(): void {
@@ -59,9 +53,8 @@ export class FilterFormComponent implements OnInit {
     public submit(): void {
         this.toggleIsSaving();
 
-        this.filter.externalUser = this.account;
-
         if (this.filter.id == null) {
+            this.filter.externalUser = this.account;
             this.filterService
                 .save(this.filter)
                 .pipe(finalize(() => this.toggleIsSaving()))
@@ -77,15 +70,6 @@ export class FilterFormComponent implements OnInit {
                     this.toggleEditMode();
                 });
         }
-    }
-
-    private getAccount(): void {
-        this.userService
-            .getLogueado()
-            .toPromise()
-            .then((account) => {
-                this.account = account;
-            });
     }
 
     public delete() {
