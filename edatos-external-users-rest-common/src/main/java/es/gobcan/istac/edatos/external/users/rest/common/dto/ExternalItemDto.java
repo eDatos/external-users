@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.rest.common.dto;
 
-import org.siemac.edatos.core.common.dto.InternationalStringDto;
 import org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum;
 
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedDto;

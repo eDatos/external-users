@@ -1,7 +1,6 @@
 package es.gobcan.istac.edatos.external.users.rest.common.dto;
 
 import org.siemac.edatos.core.common.dto.AuditableDto;
-import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
