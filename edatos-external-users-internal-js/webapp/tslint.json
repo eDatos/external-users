@@ -2,20 +2,41 @@
     "rulesDirectory": ["node_modules/codelyzer"],
     "extends": ["tslint-config-prettier", "tslint-plugin-prettier"],
     "rules": {
+        "ordered-imports": true,
         "prettier": false,
         "class-name": true,
-        "comment-format": [true, "check-space"],
+        "comment-format": [
+            true,
+            "check-space"
+        ],
         "curly": true,
         "eofline": true,
         "forin": true,
-        "indent": [true, "spaces"],
+        "indent": [
+            true,
+            "spaces"
+        ],
         "label-position": true,
-        "max-line-length": [true, 180],
+        "max-line-length": [
+            true,
+            180
+        ],
         "member-access": true,
         "member-ordering": [
             true,
             {
-                "order": ["static-field", "static-method", "instance-field", "instance-method"]
+                "order": [
+                    "public-static-field",
+                    "public-instance-field",
+                    "private-static-field",
+                    "private-instance-field",
+                    "public-constructor",
+                    "public-instance-method",
+                    "protected-constructor",
+                    "protected-instance-method",
+                    "private-constructor",
+                    "private-instance-method"
+                ]
             }
         ],
         "no-arg": true,
