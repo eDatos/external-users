@@ -9,11 +9,6 @@
                 </span>
             </h2>
 
-            <button class="btn btn-dark mr-2" routerLink=".." [disabled]="isSaving || isLoading">
-                <span class="fa fa-arrow-left"></span>
-                <span translate="filter.form.goBack"></span>
-            </button>
-
             <button *ngIf="inEditMode && filter.id" class="btn btn-warning mr-2 d-flex align-items-center" (click)="cancel()" [disabled]="isSaving || isLoading">
                 <arte-spinner class="spinner-btn" *ngIf="isLoading" aria-hidden="true"></arte-spinner>
                 <span *ngIf="!isLoading" class="fa fa-times"></span>
