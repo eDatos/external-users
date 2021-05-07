@@ -55,7 +55,10 @@
     <div class="page-body">
         <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
             <fieldset [disabled]="!inEditMode" arteAutofocus class="page-section">
-                <h3 class="mt-3" translate="externalUser.personalData"></h3>
+                <div class="d-flex align-items-baseline flex-column mb-3">
+                    <h3 class="mt-2 mb-0" translate="externalUser.personalData"></h3>
+                    <small class="text-muted">{{'externalUser.createdDate' | translate}}: {{externalUser.createdDate | date: 'd/M/yyyy, H:mm:ss' }}</small>
+                </div>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
@@ -194,9 +197,6 @@
                     </div>
                 </div>
             </fieldset>
-            <div class="page-section">
-                <app-audit-info *ngIf="userId" [entity]="externalUser"></app-audit-info>
-            </div>
             <fieldset *ngIf="userId && !inEditMode" arteAutofocus class="page-section">
                 <h3 translate="externalUser.home.favorites"></h3>
                 <app-structural-resources-tree

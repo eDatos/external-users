@@ -334,6 +334,7 @@
     "externalUser": {
         "activado": "Activated",
         "created": "User {{ param }}has been created",
+        "createdDate": "Registration date",
         "deactivate": {
             "question": "Are you sure you want to delete user <strong>{{ email }}</strong>?"
         },
