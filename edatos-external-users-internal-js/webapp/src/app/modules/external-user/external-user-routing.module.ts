@@ -26,16 +26,6 @@ export const EXTERNAL_USER_ROUTES: Routes = [
         },
     },
     {
-        path: 'new',
-        canActivate: [UserRouteAccessGuard],
-        // component: ExternalUserFormComponent,
-        redirectTo: '', // TODO(EDATOS-3345): User creation is temporarily deactivated.
-        data: {
-            pageTitle: 'externalUser.home.title',
-            roles: USER_MANAGEMENT_ROLES,
-        },
-    },
-    {
         path: ':id',
         canActivate: [UserRouteAccessGuard],
         component: ExternalUserFormComponent,
