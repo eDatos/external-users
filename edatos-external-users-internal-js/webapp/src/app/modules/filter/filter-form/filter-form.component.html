@@ -59,28 +59,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="filterForm.controls.email">
-                        <div class="form-row">
-                            <label class="form-label col-md-4" for="email">{{ "filter.entity.email" | translate }}</label>
-                            <div class="col-md-8 form-input-container errors-on-hover">
-                                <arte-autocomplete-long-list
-                                    (completeMethod)="updateExternalUserSuggestions($event)"
-                                    [(ngModel)]="filter.externalUser"
-                                    [minLength]="1"
-                                    [properties]="['email']"
-                                    [required]="true"
-                                    [suggestions]="externalUserList"
-                                    id="email"
-                                    name="email"
-                                ></arte-autocomplete-long-list>
-                                <div class="form-errors-messages" *hasErrors="let messages">
-                                    <span *ngFor="let m of messages">{{m}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="filterForm.controls.permalink">
                         <div class="form-row">
                             <label class="form-label col-md-4" for="permalink">{{ "filter.entity.permalink" | translate }}</label>
@@ -92,6 +70,8 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="form-group form-group-inline col-md-6" [formControlStatus]="filterForm.controls.notes">
                         <div class="form-row">
                             <label class="form-label col-md-4" for="notes">{{ "filter.entity.notes" | translate }}</label>
