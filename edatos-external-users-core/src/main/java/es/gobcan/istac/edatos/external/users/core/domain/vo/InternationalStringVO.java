@@ -68,6 +68,6 @@ public class InternationalStringVO implements Serializable {
 
     @Override
     public String toString() {
-        return "InternationalStringVO [texts=" + texts + "]";
+        return texts.toString();
     }
 }

@@ -51,6 +51,6 @@ public class LocalisedStringVO implements Serializable {
 
     @Override
     public String toString() {
-        return "LocalisedStringVO [label=" + label + ", locale=" + locale + "]";
+        return locale + ": " + label;
     }
 }

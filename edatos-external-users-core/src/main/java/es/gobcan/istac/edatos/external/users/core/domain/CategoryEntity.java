@@ -136,4 +136,9 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.externalItems.clear();
         this.externalItems.addAll(externalItems);
     }
+
+    @Override
+    public String toString() {
+        return "CategoryEntity{" + name + '}';
+    }
 }
