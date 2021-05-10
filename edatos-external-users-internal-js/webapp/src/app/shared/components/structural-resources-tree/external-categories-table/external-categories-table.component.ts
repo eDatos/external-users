@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ExternalCategory } from '@app/shared/model/external-category.model';
+import { ExternalCategory } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service';
 import { shareReplay } from 'rxjs/operators';
 

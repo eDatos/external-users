@@ -21,6 +21,7 @@
     </ng-template>
     <ng-template *ngIf="mode === 'edit'" let-node pTemplate="default">
         <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
+        <span class="badge badge-secondary mr-2">{{node.data.resources.length}}</span>
         <p-dialog
             *ngIf="node.editMode === 'name'"
             [visible]="true"

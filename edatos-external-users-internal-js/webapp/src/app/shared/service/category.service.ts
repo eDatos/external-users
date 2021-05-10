@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { convert } from '@app/core/utils/response-utils';
-import { Category } from '@app/shared/model';
-import { ExternalCategory } from '@app/shared/model/external-category.model';
+import { Category, ExternalCategory } from '@app/shared/model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
