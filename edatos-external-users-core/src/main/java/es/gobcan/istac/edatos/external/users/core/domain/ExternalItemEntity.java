@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -113,5 +115,22 @@ public class ExternalItemEntity extends AbstractVersionedEntity {
 
     public void setType(TypeExternalArtefactsEnum type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ExternalItemEntity)) {
+            return false;
+        }
+        ExternalItemEntity that = (ExternalItemEntity) o;
+        return Objects.equals(urn, that.urn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(urn);
     }
 }

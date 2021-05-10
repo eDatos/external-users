@@ -9,6 +9,7 @@ import org.siemac.metamac.rest.structural_resources.v1_0.domain.Categories;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.ItemResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
@@ -29,6 +30,7 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
     }
 
     @Override
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "externalCategories")
     public List<ExternalCategoryEntity> getCategories() {
         log.info("Making request to SRM: GET categories");
         Categories c = eDatosApisLocator.srmExternal().findCategories("ISTAC", "SDMXStatSubMatDomainsWD1", "01.000", null, null, null, null);

@@ -45,12 +45,18 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
 
     @Named("getExternalItemEntitiesFromUrn")
     public Set<ExternalItemEntity> getExternalItemEntitiesFromUrn(List<ExternalItemDto> resources) {
-
         List<String> urns = resources.stream().map(ExternalItemDto::getUrn).filter(Objects::nonNull).collect(Collectors.toList());
-        List<ExternalCategoryEntity> savedExternalCategories = externalCategoryRepository.findAll();
-
-        return structuralResourcesService.getCategories().stream().filter(externalCategory -> urns.contains(externalCategory.getUrn()))
-                .map(externalCategory -> savedExternalCategories.stream().filter(savedExtCat -> Objects.equals(savedExtCat.getUrn(), externalCategory.getUrn())).findAny().orElse(externalCategory))
+        List<ExternalCategoryEntity> inDbExternalCategories = externalCategoryRepository.findAll();
+        // @formatter:off
+        return structuralResourcesService.getCategories().stream()
+                // pick only the selected external categories
+                .filter(externalCategory -> urns.contains(externalCategory.getUrn()))
+                // if the external category was already in db, pick that one; otherwise create a new one (this avoid problems with unique constraints and duplication)
+                .map(newExternalCategory -> inDbExternalCategories.stream()
+                                                                  .filter(inDbExternalCategory -> Objects.equals(inDbExternalCategory.getUrn(), newExternalCategory.getUrn()))
+                                                                  .findAny()
+                                                                  .orElse(newExternalCategory))
                 .collect(Collectors.toSet());
+        // @formatter:on
     }
 }

@@ -46,9 +46,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryEntity> updateTree(List<CategoryEntity> tree) {
-        List<CategoryEntity> categories = categoryRepository.save(tree);
-        categoryRepository.flush();
-        return categories;
+        return categoryRepository.save(tree);
     }
-
 }
