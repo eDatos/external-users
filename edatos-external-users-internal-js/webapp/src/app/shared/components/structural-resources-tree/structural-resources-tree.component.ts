@@ -210,8 +210,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         node.editMode = null;
     }
 
-    public save(): void {
-        this.categoryService.updateTree(this.resources.map((node) => node.data)).subscribe();
+    public save(): Observable<Category[]> {
+        return this.categoryService.updateTree(this.resources.map((node) => node.data));
     }
 
     public onNodeDrop(event: { dragNode: CategoryTreeNode; dropNode: CategoryTreeNode } & ({ index: number } | { dropIndex: number })) {
