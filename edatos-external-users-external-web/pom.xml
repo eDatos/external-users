@@ -18,11 +18,6 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.gobcan.istac.edatos-external-users</groupId>
-			<artifactId>edatos-external-users-public-rest</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>es.gobcan.istac.edatos-external-users</groupId>
 			<artifactId>edatos-external-users-external-rest</artifactId>
 		</dependency>
         <dependency>
