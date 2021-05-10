@@ -11,6 +11,10 @@
             <span class="fa fa-arrow-left"></span>
             <span translate="entity.action.back"></span>
         </button>
+        <button *ngIf="treeMode === 'edit'" class="btn btn-primary" (click)="save()" routerLink="..">
+            <span class="fa fa-save"></span>
+            <span translate="entity.action.save"></span>
+        </button>
     </div>
     <div class="page-body">
         <div class="mt-4">

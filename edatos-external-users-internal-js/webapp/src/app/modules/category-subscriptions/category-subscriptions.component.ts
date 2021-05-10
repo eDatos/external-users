@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Mode } from '@app/shared/components/structural-resources-tree';
+import { Mode, StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree';
 
 @Component({
     selector: 'app-category-subscriptions',
@@ -10,10 +10,17 @@ import { Mode } from '@app/shared/components/structural-resources-tree';
 export class CategorySubscriptionsComponent implements OnInit {
     public treeMode: Mode = 'view';
 
+    @ViewChild(StructuralResourcesTreeComponent)
+    public tree: StructuralResourcesTreeComponent;
+
     constructor(private activatedRoute: ActivatedRoute) {
         const lastUrlSegment = this.activatedRoute.snapshot.url[this.activatedRoute.snapshot.url.length - 1]?.path;
         this.treeMode = lastUrlSegment === 'edit' ? 'edit' : 'view';
     }
 
     public ngOnInit(): void {}
+
+    public save(): void {
+        this.tree.save();
+    }
 }

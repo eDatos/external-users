@@ -6,6 +6,7 @@
 <p-tree
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
+    (onNodeDrop)="onNodeDrop($event)"
     [(selection)]="selectedResources"
     [value]="resources"
     [selectionMode]="selectionMode"

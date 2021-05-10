@@ -22,26 +22,14 @@ export class CategoryService {
         return this.http.get<Category[]>(`${this.resourceUrl}`).pipe(map((category) => convert(Category, category)));
     }
 
-    public save(category: Category): Observable<Category> {
-        return this.http.post<Category>(this.resourceUrl, category).pipe(map((cat) => convert(Category, cat)));
-    }
-
-    public update(category: Category): Observable<Category> {
-        return this.http.put<Category>(this.resourceUrl, category).pipe(map((cat) => convert(Category, cat)));
-    }
-
-    public saveOrUpdate(category: Category): Observable<Category> {
-        if (category.id) {
-            return this.update(category);
-        } else {
-            return this.save(category);
-        }
-    }
-
     public getTree(): Observable<Category[]> {
         return this.http
             .get<Category[]>(`${this.resourceUrl}/tree`, { params: { sort: 'id' } })
             .pipe(map((tree) => convert(Category, tree)));
+    }
+
+    public updateTree(tree: Category[]): Observable<Category[]> {
+        return this.http.put<Category[]>(`${this.resourceUrl}/tree`, tree).pipe(map((categories) => convert(Category, categories)));
     }
 
     public getExternal(): Observable<ExternalCategory[]> {

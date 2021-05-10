@@ -1,14 +1,17 @@
 import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output, ViewChild } from '@angular/core';
-import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input/multi-language-input.component';
-import { Category, Favorite, InternationalString } from '@app/shared/model';
-import { ExternalCategory } from '@app/shared/model/external-category.model';
+import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input';
+import { Category, ExternalCategory, Favorite, InternationalString } from '@app/shared/model';
 import { CategoryService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
+import * as _ from 'lodash';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
-import { finalize, shareReplay } from 'rxjs/operators';
+import { shareReplay } from 'rxjs/operators';
 
+/**
+ * @see StructuralResourcesTreeComponent#mode
+ */
 export type Mode = 'view' | 'select' | 'edit';
 
 export interface CategoryTreeNode extends TreeNode {
@@ -78,7 +81,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public allowedLanguages: string[];
     public externalCategories: ExternalCategory[];
 
-    private tree: Category[] = [];
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: CategoryTreeNode[] = [];
 
@@ -121,14 +123,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     public ngOnInit(): void {
         this.setMode();
-        this.categoryService.getTree().subscribe((categories) => {
-            this.tree = this.sort(categories);
-            this.createTree();
+        this.categoryService.getTree().subscribe((tree) => {
+            this.createTree(this.sort(tree));
         });
     }
 
-    public createTree() {
-        this.categoryListToCategoryTree(this.tree).subscribe((treeNodes) => {
+    public createTree(tree: Category[]) {
+        this.categoryListToCategoryTree(tree).subscribe((treeNodes) => {
             this.resources = treeNodes;
         });
     }
@@ -164,10 +165,12 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 expandedIcon: 'fa fa-folder-open',
                 expanded: true,
                 data: new Category(),
+                children: [],
                 selectable: !this.disabled,
                 editMode: null,
             };
             parent.children.push(node);
+            parent.data.children.push(node.data);
             this.nodeList.push(node);
             this.editNodeName(node);
         } else {
@@ -176,31 +179,15 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public deleteNode(node: CategoryTreeNode) {
-        this.nodeList.splice(this.nodeList.indexOf(node));
-        node.parent?.children?.splice(node.parent?.children.indexOf(node));
+        _.pull(this.nodeList, node);
+        _.pull(node.parent?.children, node);
+        _.pull(node.parent?.data?.children, node.data);
     }
 
     public saveNodeName(node: CategoryTreeNode, name: InternationalString) {
-        const oldName = node.label;
+        node.data.name = name;
         node.label = name.val;
         this.disableNodeEdit(node);
-        this.setLoadingNode(node, true);
-        this.categoryService
-            .saveOrUpdate({ ...node.data, name })
-            .pipe(
-                finalize(() => {
-                    this.unsetLoadingNode(node, true);
-                })
-            )
-            .subscribe(
-                (category) => {
-                    node.data = category;
-                    node.label = category.name.val;
-                },
-                () => {
-                    node.label = oldName;
-                }
-            );
     }
 
     public disableNodeEdit(node: CategoryTreeNode) {
@@ -221,6 +208,30 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public saveRemap(node: CategoryTreeNode, selectedResources: ExternalCategory[]) {
         node.data.resources = selectedResources;
         node.editMode = null;
+    }
+
+    public save(): void {
+        this.categoryService.updateTree(this.resources.map((node) => node.data)).subscribe();
+    }
+
+    public onNodeDrop(event: { dragNode: CategoryTreeNode; dropNode: CategoryTreeNode } & ({ index: number } | { dropIndex: number })) {
+        // This function is executed *before* the tree is reorganized, meaning we can't rely on the node information
+        // itself to know who is it's parent.
+        //
+        // By the way the PrimeNG tree works, we receive two main elements: the node that was selected and dragged
+        // and the drop node. The dropNode can be a parent or a sibling depending of the field present in the event obj:
+        //  - If the event object contains an 'index' property, dropNode it's the parent of the dragged node.
+        //  - If the event object contains a 'dropIndex' property, dropNode it's a sibling of the dragged node, and the
+        //    parent of dropNode will be the same as ours.
+        //
+        // In both cases, 'index' and 'dropIndex' represent the position where the dragged node is in the list.
+        if (event.hasOwnProperty('index')) {
+            _.pull(event.dragNode.parent?.data?.children, event.dragNode.data);
+            event.dropNode.data?.children?.push(event.dragNode.data);
+        } else {
+            _.pull(event.dragNode.parent?.data?.children, event.dragNode.data);
+            event.dropNode.parent?.data?.children?.push(event.dragNode.data);
+        }
     }
 
     private sort(categories: Category[]): Category[] {

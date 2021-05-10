@@ -4,19 +4,14 @@ import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
 
 export class Category extends BaseVersionedAndAuditingEntity {
-    constructor() {
-        super();
-        this.name = new InternationalString();
-    }
-
-    public subscribers: number;
+    public subscribers = 0;
 
     @Type(() => InternationalString)
-    public name: InternationalString;
+    public name = new InternationalString();
 
     @Type(() => ExternalItem)
-    public resources: ExternalItem[];
+    public resources: ExternalItem[] = [];
 
     @Type(() => Category)
-    public children: Category[];
+    public children: Category[] = [];
 }
