@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotBlank;
+import org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum;
 
 /**
  * A statistical operation is the basic statistical activity planning unit. A statistical
@@ -20,6 +21,11 @@ import org.hibernate.validator.constraints.NotBlank;
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 @PrimaryKeyJoinColumn(name="external_item_fk")
 public class ExternalOperationEntity extends ExternalItemEntity {
+
+    public ExternalOperationEntity() {
+        type = TypeExternalArtefactsEnum.STATISTICAL_OPERATION;
+    }
+
     @NotNull
     @NotBlank
     @Column(nullable = false)

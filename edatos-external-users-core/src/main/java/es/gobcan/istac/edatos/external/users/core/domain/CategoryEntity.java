@@ -59,7 +59,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private final Set<CategoryEntity> children = new HashSet<>();
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "tb_categories_external_items", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_item_fk"))
     private final Set<ExternalItemEntity> externalItems = new HashSet<>();
 

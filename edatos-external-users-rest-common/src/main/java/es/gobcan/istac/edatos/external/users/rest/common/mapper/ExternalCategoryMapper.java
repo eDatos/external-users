@@ -1,7 +1,6 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
@@ -20,8 +19,6 @@ public abstract class ExternalCategoryMapper implements EntityMapper<ExternalCat
     public abstract ExternalCategoryDto toDto(ExternalCategoryEntity entity);
 
     @Override
-    @Mapping(target = "parent", ignore = true)
-    @Mapping(target = "children", ignore = true)
     public abstract ExternalCategoryEntity toEntity(ExternalCategoryDto dto);
 
     public ExternalCategoryDto getFromUrn(String urn) {

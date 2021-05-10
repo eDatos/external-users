@@ -12,8 +12,8 @@ VALUES (1, 1, '1', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (1, null);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (1);
 
 ------------------------------------------------------------------
 
@@ -27,8 +27,8 @@ VALUES (2, 1, '1.1', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (2, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (2);
 
 ------------------------------------------------------------------
 
@@ -42,8 +42,8 @@ VALUES (3, 1, '1.2', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.2', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (3, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (3);
 
 ------------------------------------------------------------------
 
@@ -57,8 +57,8 @@ VALUES (4, 1, '1.3', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.3', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (4, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (4);
 
 ------------------------------------------------------------------
 
@@ -72,8 +72,8 @@ VALUES (5, 1, '1.4', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.4', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (5, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (5);
 
 ------------------------------------------------------------------
 
@@ -87,8 +87,8 @@ VALUES (6, 1, '1.5', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.5', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (6, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (6);
 
 ------------------------------------------------------------------
 
@@ -102,8 +102,8 @@ VALUES (7, 1, '1.6', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.6', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (7, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (7);
 
 ------------------------------------------------------------------
 
@@ -117,8 +117,8 @@ VALUES (8, 1, '1.7', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.7', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (8, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (8);
 
 ------------------------------------------------------------------
 
@@ -132,8 +132,8 @@ VALUES (9, 1, '1.8', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.8', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (9, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (9);
 
 ------------------------------------------------------------------
 
@@ -147,8 +147,8 @@ VALUES (10, 1, '1.9', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.9', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (10, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (10);
 
 ------------------------------------------------------------------
 
@@ -162,8 +162,8 @@ VALUES (11, 1, '1.10', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.10', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (11, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (11);
 
 ------------------------------------------------------------------
 
@@ -177,8 +177,8 @@ VALUES (12, 1, '1.11', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.11', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (12, 1);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (12);
 
 ------------------------------------------------------------------
 
@@ -192,8 +192,8 @@ VALUES (13, 1, '2', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (13, null);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (13);
 
 ------------------------------------------------------------------
 
@@ -207,8 +207,8 @@ VALUES (14, 1, '2.1', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.1', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (14, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (14);
 
 ------------------------------------------------------------------
 
@@ -222,8 +222,8 @@ VALUES (15, 1, '2.2', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.2', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (15, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (15);
 
 ------------------------------------------------------------------
 
@@ -237,8 +237,8 @@ VALUES (16, 1, '2.3', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.3', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (16, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (16);
 
 ------------------------------------------------------------------
 
@@ -252,8 +252,8 @@ VALUES (17, 1, '2.4', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (17, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (17);
 
 ------------------------------------------------------------------
 
@@ -267,8 +267,8 @@ VALUES (18, 1, '2.4.1', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.1', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (18, 17);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (18);
 
 ------------------------------------------------------------------
 
@@ -282,8 +282,8 @@ VALUES (19, 1, '2.4.2', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (19, 17);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (19);
 
 ------------------------------------------------------------------
 
@@ -297,8 +297,8 @@ VALUES (20, 1, '2.4.3', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.3', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (20, 17);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (20);
 
 ------------------------------------------------------------------
 
@@ -312,8 +312,8 @@ VALUES (21, 1, '2.4.4', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.4', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (21, 17);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (21);
 
 ------------------------------------------------------------------
 
@@ -327,8 +327,8 @@ VALUES (22, 1, '2.4.5', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.5', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (22, 17);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (22);
 
 ------------------------------------------------------------------
 
@@ -342,8 +342,8 @@ VALUES (23, 1, '2.4.6', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.6', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (23, 17);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (23);
 
 ------------------------------------------------------------------
 
@@ -357,8 +357,8 @@ VALUES (24, 1, '2.5', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.5', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (24, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (24);
 
 ------------------------------------------------------------------
 
@@ -372,8 +372,8 @@ VALUES (25, 1, '2.6', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.6', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (25, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (25);
 
 ------------------------------------------------------------------
 
@@ -387,8 +387,8 @@ VALUES (26, 1, '2.7', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.7', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (26, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (26);
 
 ------------------------------------------------------------------
 
@@ -402,8 +402,8 @@ VALUES (27, 1, '2.8', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.8', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (27, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (27);
 
 ------------------------------------------------------------------
 
@@ -417,8 +417,8 @@ VALUES (28, 1, '2.9', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.9', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (28, 13);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (28);
 
 ------------------------------------------------------------------
 
@@ -432,8 +432,8 @@ VALUES (29, 1, '3', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (29, null);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (29);
 
 ------------------------------------------------------------------
 
@@ -447,8 +447,8 @@ VALUES (30, 1, '3.1', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.1', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (30, 29);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (30);
 
 ------------------------------------------------------------------
 
@@ -462,8 +462,8 @@ VALUES (31, 1, '3.2', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.2', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (31, 29);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (31);
 
 ------------------------------------------------------------------
 
@@ -477,8 +477,8 @@ VALUES (32, 1, '3.3', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (32, 29);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (32);
 
 ------------------------------------------------------------------
 
@@ -492,8 +492,8 @@ VALUES (33, 1, '3.3.1', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3.1', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (33, 32);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (33);
 
 ------------------------------------------------------------------
 
@@ -507,8 +507,8 @@ VALUES (34, 1, '3.3.2', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3.2', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (34, 32);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (34);
 
 ------------------------------------------------------------------
 
@@ -522,8 +522,8 @@ VALUES (35, 1, '3.3.3', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3.3', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (35, 32);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (35);
 
 ------------------------------------------------------------------
 
@@ -537,8 +537,8 @@ VALUES (36, 1, '3.3.4', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3.4', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (36, 32);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (36);
 
 ------------------------------------------------------------------
 
@@ -552,8 +552,8 @@ VALUES (37, 1, '3.3.5', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3.5', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (37, 32);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (37);
 
 ------------------------------------------------------------------
 
@@ -567,8 +567,8 @@ VALUES (38, 1, '3.3.6', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3.6', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (38, 32);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (38);
 
 ------------------------------------------------------------------
 
@@ -582,8 +582,8 @@ VALUES (39, 1, '3.3.7', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.3.7', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (39, 32);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (39);
 
 ------------------------------------------------------------------
 
@@ -597,8 +597,8 @@ VALUES (40, 1, '3.4', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).3.4', 'structuralResources#category');
 
-INSERT INTO tb_external_categories(external_item_fk, parent_fk)
-VALUES (40, 29);
+INSERT INTO tb_external_categories(external_item_fk)
+VALUES (40);
 
 ------------------------------------------------------------------
 ----------------------- EXTERNAL OPERATIONS ----------------------

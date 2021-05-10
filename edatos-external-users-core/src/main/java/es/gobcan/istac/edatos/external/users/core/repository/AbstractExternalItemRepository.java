@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
@@ -11,4 +13,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalItemEntity;
  */
 @NoRepositoryBean
 public interface AbstractExternalItemRepository<T extends ExternalItemEntity> extends JpaRepository<T, Long> {
+
+    Optional<T> getByUrn(String urn);
 }
