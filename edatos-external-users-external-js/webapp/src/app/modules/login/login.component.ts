@@ -23,8 +23,9 @@ export class LoginComponent implements OnInit {
             this.principal.identity().then(() => this.navigateToFilter());
         });
     }
+
     private navigateToFilter() {
-        this.router.navigate(['filter']);
+        this.router.navigate(['favorite']);
     }
 
     public navigateToSignup() {
