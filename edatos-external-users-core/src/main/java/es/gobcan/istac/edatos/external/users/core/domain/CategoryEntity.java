@@ -53,8 +53,10 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @JoinColumn(name = "parent_fk")
     private CategoryEntity parent;
 
+    // DO NOT set orphanRemoval = true in this field, otherwise constraint errors produced by unwanted Hibernate
+    // delete sql statements may occur when the tree is updated.
     @NotNull
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private final Set<CategoryEntity> children = new HashSet<>();
 
     @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REMOVE, CascadeType.REFRESH}, orphanRemoval = true)
@@ -83,11 +85,6 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     }
 
     public void setParent(CategoryEntity newParent) {
-        if (newParent != null && !newParent.children.contains(this)) {
-            newParent.children.add(this);
-        } else if (newParent == null && this.parent != null) { // TODO(EDATOS-3357: Review correctness
-            this.parent.children.remove(this);
-        }
         this.parent = newParent;
     }
 
@@ -140,5 +137,19 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @Override
     public String toString() {
         return "CategoryEntity{" + name + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof CategoryEntity))
+            return false;
+        return id != null && id.equals(((CategoryEntity) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

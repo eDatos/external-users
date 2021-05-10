@@ -45,17 +45,10 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity createCategory(CategoryEntity category) {
-        return categoryRepository.saveAndFlush(category);
+    public List<CategoryEntity> updateTree(List<CategoryEntity> tree) {
+        List<CategoryEntity> categories = categoryRepository.save(tree);
+        categoryRepository.flush();
+        return categories;
     }
 
-    @Override
-    public CategoryEntity updateCategory(CategoryEntity category) {
-        return categoryRepository.saveAndFlush(category);
-    }
-
-    @Override
-    public void deleteCategory(Long categoryId) {
-        categoryRepository.delete(categoryId);
-    }
 }

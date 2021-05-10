@@ -66,11 +66,6 @@ public class ExternalCategoryEntity extends ExternalItemEntity {
     }
 
     public void setParent(ExternalCategoryEntity newParent) {
-        if (newParent != null && !newParent.children.contains(this)) {
-            newParent.children.add(this);
-        } else if (newParent == null && this.parent != null) { // TODO(EDATOS-3357: Review correctness
-            this.parent.children.remove(this);
-        }
         this.parent = newParent;
     }
 

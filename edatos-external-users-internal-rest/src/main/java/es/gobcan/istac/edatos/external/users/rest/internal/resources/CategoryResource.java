@@ -66,16 +66,6 @@ public class CategoryResource extends AbstractResource {
         return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
 
-    @Timed
-    @PutMapping
-    @PreAuthorize("@secChecker.canUpdateCategory(authentication)")
-    public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto category) {
-        throw new IllegalStateException();
-        //CategoryEntity categoryEntity = categoryMapper.toEntity(category);
-        //CategoryDto response = categoryMapper.toDto(categoryService.updateCategory(categoryEntity));
-        //return ResponseEntity.ok(response);
-    }
-
     @GetMapping("/external")
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
@@ -89,5 +79,14 @@ public class CategoryResource extends AbstractResource {
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
     public ResponseEntity<List<CategoryDto>> getCategoryTree() {
         return ResponseEntity.ok(categoryMapper.toDtos(categoryService.getTree()));
+    }
+
+    @Timed
+    @PutMapping("/tree")
+    @PreAuthorize("@secChecker.canUpdateCategoryTree(authentication)")
+    public ResponseEntity<List<CategoryDto>> updateCategoryTree(@RequestBody List<CategoryDto> tree) {
+        List<CategoryEntity> categories = categoryMapper.toEntities(tree);
+        List<CategoryDto> response = categoryMapper.toDtos(categoryService.updateTree(categories));
+        return ResponseEntity.ok(response);
     }
 }

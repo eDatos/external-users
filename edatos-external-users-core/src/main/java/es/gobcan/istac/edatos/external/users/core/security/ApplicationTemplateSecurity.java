@@ -18,7 +18,11 @@ public class ApplicationTemplateSecurity {
         return this.isAdmin(authentication);
     }
 
-    public boolean canUpdateCategory(Authentication authentication) {
+    public boolean canCreateCategory(Authentication authentication) {
+        return this.isAdmin(authentication);
+    }
+
+    public boolean canUpdateCategoryTree(Authentication authentication) {
         return this.isAdmin(authentication);
     }
 
