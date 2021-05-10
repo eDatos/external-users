@@ -194,8 +194,6 @@
         <module>edatos-external-users-internal-web</module>
         <module>edatos-external-users-external-rest</module>
         <module>edatos-external-users-external-web</module>
-        <module>edatos-external-users-public-rest</module>
-        <module>edatos-external-users-public-web</module>
       </modules>
     </profile>
     <profile>
