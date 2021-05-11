@@ -1,5 +1,5 @@
 export class ProfileInfo {
-    activeProfiles: string[];
-    ribbonEnv: string;
-    inProduction: boolean;
+    activeProfiles: string[] = [];
+    ribbonEnv: string | null = null;
+    inProduction: boolean = false;
 }

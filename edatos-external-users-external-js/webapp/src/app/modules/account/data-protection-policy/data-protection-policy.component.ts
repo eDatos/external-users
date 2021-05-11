@@ -1,27 +1,22 @@
 import { Component } from '@angular/core';
 import { DEFAULT_LANG } from '@app/app.constants';
-import { DataProtectionPolicy } from '@app/shared/model/data-protection-policy.model';
+import { Principal } from '@app/core/service';
 import { TranslateService } from '@ngx-translate/core';
 import { DataProtectionPolicyService } from './data-protection-policy.service';
 
 @Component({
-  selector: 'app-data-protection-policy',
-  templateUrl: './data-protection-policy.component.html',
-  styleUrls: []
+    selector: 'app-data-protection-policy',
+    templateUrl: './data-protection-policy.component.html',
+    styleUrls: ['./data-protection-policy.component.scss'],
 })
 export class DataProtectionPolicyComponent {
+    dataProtectionPolicy: string = '';
 
-  dataProtectionPolicy: DataProtectionPolicy = new DataProtectionPolicy();
-  isEditMode: boolean = false;
-  locales: string[] = [];
-
-  constructor(dataProtectionPolicyService: DataProtectionPolicyService, translateService: TranslateService) {
-    this.locales = [translateService.getDefaultLang()];
-    dataProtectionPolicyService.getDataProtectionPolicy().subscribe(dataProtectionPolicy => {
-      this.dataProtectionPolicy = dataProtectionPolicy;
-      if(!dataProtectionPolicy.value.getLocalisedLabel(this.locales[0])) {
-        this.locales = [DEFAULT_LANG];
-      }
-    });
-  }
+    constructor(dataProtectionPolicyService: DataProtectionPolicyService, translateService: TranslateService, principal: Principal) {
+        principal.identity();
+        dataProtectionPolicyService.getDataProtectionPolicy().subscribe((dataProtectionPolicy) => {
+            this.dataProtectionPolicy =
+                dataProtectionPolicy.value.getLocalisedLabel(translateService.getDefaultLang()) || dataProtectionPolicy.value.getLocalisedLabel(DEFAULT_LANG);
+        });
+    }
 }

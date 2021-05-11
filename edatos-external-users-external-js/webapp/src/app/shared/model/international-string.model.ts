@@ -6,9 +6,9 @@ export class InternationalString extends BaseVersionedEntity implements BaseEnti
     public id?: number;
 
     @Type(() => LocalisedString)
-    public texts?: LocalisedString[];
+    public texts?: LocalisedString[] = [];
 
-    public getLocalisedLabel(locale: string): string {
+    public getLocalisedLabel(locale: string): string | undefined {
         return this.texts?.find((localisedString) => localisedString.locale === locale)?.label;
     }
 }

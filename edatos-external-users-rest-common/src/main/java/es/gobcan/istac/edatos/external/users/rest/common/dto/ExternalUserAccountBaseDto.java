@@ -22,6 +22,7 @@ public class ExternalUserAccountBaseDto extends AbstractVersionedAndAuditingAndL
     private String phoneNumber;
 
     private String organism;
+    private boolean emailNotificationsEnabled;
 
     @Override
     public Long getId() {
@@ -97,6 +98,14 @@ public class ExternalUserAccountBaseDto extends AbstractVersionedAndAuditingAndL
         this.organism = organism;
     }
 
+    public boolean isEmailNotificationsEnabled() {
+        return emailNotificationsEnabled;
+    }
+
+    public void setEmailNotificationsEnabled(boolean emailNotificationsEnabled) {
+        this.emailNotificationsEnabled = emailNotificationsEnabled;
+    }
+
     public void updateFrom(ExternalUserAccountBaseDto source) {
         this.id = source.getId();
         this.name = source.getName();
@@ -107,6 +116,7 @@ public class ExternalUserAccountBaseDto extends AbstractVersionedAndAuditingAndL
         this.language = source.getLanguage();
         this.phoneNumber = source.getPhoneNumber();
         this.organism = source.getOrganism();
+        this.emailNotificationsEnabled = source.isEmailNotificationsEnabled();
         this.setOptLock(source.getOptLock());
         this.setCreatedDate(source.getCreatedDate());
         this.setCreatedBy(source.getCreatedBy());

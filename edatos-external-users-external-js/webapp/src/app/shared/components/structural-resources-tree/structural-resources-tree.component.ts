@@ -1,7 +1,6 @@
 import { Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output } from '@angular/core';
 import { Category, Favorite, Operation, StructuralResourcesTree } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service/category/category.service';
-import { OperationService } from '@app/shared/service/operation/operation.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
@@ -15,7 +14,7 @@ type Mode = 'view' | 'select';
 })
 export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     @Input()
-    public favorites: Favorite[];
+    public favorites?: Favorite[];
 
     /**
      * If true, the elements on the tree become unselectable. On 'view' mode is true by default.
@@ -45,22 +44,18 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     @Output()
     public onResourceUnselect = new EventEmitter<Category | Operation>();
 
-    public resources: TreeNode[];
+    public resources: TreeNode[] = [];
     public selectedResources: TreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
 
     private mainLanguageCode: string;
-    private tree: StructuralResourcesTree[];
+    private tree: StructuralResourcesTree[] = [];
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: TreeNode[] = [];
 
-    constructor(
-        private categoryService: CategoryService,
-        private operationService: OperationService,
-        private translateService: TranslateService,
-        private iterableDiffers: IterableDiffers
-    ) {
-        this.iterableDiffer = iterableDiffers.find([]).create(null);
+    constructor(private categoryService: CategoryService, private translateService: TranslateService, private iterableDiffers: IterableDiffers) {
+        this.mainLanguageCode = this.translateService.getDefaultLang();
+        this.iterableDiffer = iterableDiffers.find([]).create();
     }
 
     public ngDoCheck(): void {
@@ -71,7 +66,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public ngOnInit(): void {
-        this.mainLanguageCode = this.translateService.getDefaultLang();
         this.setMode();
         this.categoryService.getTree().subscribe((categories) => {
             this.tree = this.sort(categories);
@@ -117,7 +111,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     private categoryListToTreeNode(categories: StructuralResourcesTree[]): Observable<TreeNode[]> {
         return of(
             categories?.map((category) => {
-                const children = [];
+                const children: TreeNode[] = [];
 
                 this.categoryListToTreeNode(category.children).subscribe((treeNodes) => {
                     children.push(...treeNodes);
@@ -168,7 +162,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     private isFavorite(resource: StructuralResourcesTree): boolean {
-        return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.constructor.name.toLowerCase() === resource.type.toLowerCase());
+        return this.favorites?.some((favorite) => favorite.resource?.id === resource.id && favorite.resource.type === resource.type) ?? false;
     }
 
     private setLoadingNode(node: TreeNode) {

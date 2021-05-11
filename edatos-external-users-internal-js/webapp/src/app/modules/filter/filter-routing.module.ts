@@ -27,15 +27,6 @@ export const FILTER_ROUTES: Routes = [
         canActivate: [UserRouteAccessGuard],
     },
     {
-        path: 'new',
-        component: FilterFormComponent,
-        data: {
-            roles: FILTER_ROLES,
-            pageTitle: 'filter.form.new',
-        },
-        canActivate: [UserRouteAccessGuard],
-    },
-    {
         path: ':id',
         component: FilterFormComponent,
         resolve: {

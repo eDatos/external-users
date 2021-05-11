@@ -12,9 +12,9 @@ import { LazyLoadEvent } from 'primeng/api';
     templateUrl: './filter-list.component.html',
 })
 export class FilterListComponent implements OnInit {
-    public filters: Filter[];
-    public totalItems: number;
-    public itemsPerPage: number;
+    public filters: Filter[] = [];
+    public totalItems: number | null = null;
+    public itemsPerPage?: number;
     public columns: any = [
         {
             fieldName: 'name',
@@ -42,7 +42,7 @@ export class FilterListComponent implements OnInit {
         },
     ];
     private page: any;
-    private reverse: boolean;
+    private reverse?: boolean;
     private predicate: any;
 
     constructor(private filterService: FilterService, private activatedRoute: ActivatedRoute, private router: Router, private filterSearch: FilterFilter) {
@@ -83,7 +83,7 @@ export class FilterListComponent implements OnInit {
     }
 
     public loadData(e: LazyLoadEvent) {
-        this.page = e.first / e.rows + 1;
+        this.page = e.first! / e.rows! + 1;
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
             this.predicate = this.filterSearch.fromCamelCaseToSnakeCase(e.sortField);

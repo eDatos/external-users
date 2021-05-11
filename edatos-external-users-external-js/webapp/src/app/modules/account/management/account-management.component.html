@@ -48,11 +48,11 @@
                         </div>
                     </div>
 
-                    <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="settingsForm.controls.surname2">
+                    <div class="form-group form-group-inline col-md-6" [formControlStatus]="settingsForm.controls.surname2">
                         <div class="form-row">
                             <label class="form-label col-md-4" translate="signup.form.surname2" for="surname2"></label>
                             <div class="col-md-8 form-input-container errors-on-hover">
-                                <arte-input id="surname2" name="surname2" [(ngModel)]="account.surname2" [maxlength]="255" [required]="true"></arte-input>
+                                <arte-input id="surname2" name="surname2" [(ngModel)]="account.surname2" [maxlength]="255"></arte-input>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <span *ngFor="let m of messages">{{m}}</span>
                                 </div>
@@ -65,6 +65,23 @@
                             <label class="form-label col-md-4" translate="signup.form.email" for="email"></label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input id="email" name="email" [(ngModel)]="account.email" [required]="true" [minlength]="3" [maxlength]="255" [email]="true"> </arte-input>
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <li *ngFor="let m of messages">{{m}}</li>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="settingsForm.controls.enableEmailNotifications">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="signup.form.enableEmailNotifications"></label>
+                            <div class="col-md-8 form-input-container errors-on-hover">
+                                <arte-tri-input-switch
+                                    [disabled]="!isEditMode()"
+                                    [(ngModel)]="account.emailNotificationsEnabled"
+                                    [required]="true"
+                                    name="emailNotificationsEnabled"
+                                ></arte-tri-input-switch>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <li *ngFor="let m of messages">{{m}}</li>
                                 </div>

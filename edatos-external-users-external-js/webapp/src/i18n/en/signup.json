@@ -13,7 +13,8 @@
             "treatment": "Treatment",
             "language": "Language",
             "phoneNumber": "Phone number",
-            "organism": "Organism"
+            "organism": "Organism",
+            "enableEmailNotifications": "Enable email notifications for this user"
         }
     }
 }

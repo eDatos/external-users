@@ -4,6 +4,7 @@ import { AccountManagementComponent } from './account-management.component';
 import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
 import { NgModule } from '@angular/core';
 import { Role } from '@app/core/model';
+import { UserResolver } from '@app/core/resolver';
 
 export const accountManagementRoutes: Routes = [
     {
@@ -13,6 +14,9 @@ export const accountManagementRoutes: Routes = [
             pageTitle: 'account.title',
             roles: [Role.USER],
         },
+        resolve: {
+            user: UserResolver,
+        },
         canActivate: [UserRouteAccessGuard],
     },
     {
@@ -21,6 +25,9 @@ export const accountManagementRoutes: Routes = [
         data: {
             pageTitle: 'account.title',
             roles: [Role.USER],
+        },
+        resolve: {
+            user: UserResolver,
         },
         canActivate: [UserRouteAccessGuard],
     },
