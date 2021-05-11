@@ -116,6 +116,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(http401UnauthorizedEntryPoint())
         .and()
             .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .ignoringAntMatchers("/api/login")
+            .ignoringAntMatchers("/api/filters")
         .and()
             .headers().frameOptions().sameOrigin()
         .and()
