@@ -33,7 +33,7 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
     @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "externalCategories")
     public List<ExternalCategoryEntity> getCategories() {
         log.info("Making request to SRM: GET categories");
-        Categories c = eDatosApisLocator.srmExternal().findCategories("ISTAC", "SDMXStatSubMatDomainsWD1", "01.000", null, null, null, null);
+        Categories c = eDatosApisLocator.srmExternal().findCategories("~all", "~all", "~all", null, null, String.valueOf(Integer.MAX_VALUE), null);
         List<ExternalCategoryEntity> categories = new ArrayList<>();
         List<ItemResource> resources = c.getCategories();
         for (ItemResource resource : resources) {
