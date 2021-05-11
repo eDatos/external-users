@@ -1,10 +1,14 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Optional;
 
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
+import es.gobcan.istac.edatos.external.users.core.service.validator.LoginValidator;
+import es.gobcan.istac.edatos.external.users.core.util.RandomUtil;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -30,14 +34,17 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     private final FilterRepository filterRepository;
     private final QueryUtil queryUtil;
 
+    @Autowired
+    private ExternalUserValidator externalUserValidator;
+
+    @Autowired
+    private LoginValidator loginValidator;
+
     public ExternalUserServiceImpl(ExternalUserRepository externalUserRepository, FilterRepository filterRepository, QueryUtil queryUtil) {
         this.externalUserRepository = externalUserRepository;
         this.filterRepository = filterRepository;
         this.queryUtil = queryUtil;
     }
-
-    @Autowired
-    private ExternalUserValidator externalUserValidator;
 
     @Override
     public ExternalUserEntity create(ExternalUserEntity user) {
@@ -124,4 +131,33 @@ public class ExternalUserServiceImpl implements ExternalUserService {
         user.setPassword(passwordEncoder);
         externalUserRepository.saveAndFlush(user);
     }
+
+    @Override
+    public Optional<ExternalUserEntity> recoverExternalUserAccountPassword(String email) {
+        loginValidator.validate(email);
+        return externalUserRepository.findOneByEmailIgnoreCaseAndDeletionDateIsNull(email).map(user -> {
+            user.setResetKey(RandomUtil.generateResetKey());
+            user.setResetDate(ZonedDateTime.now());
+            return externalUserRepository.save(user);
+        });
+    }
+
+    @Override
+    public Optional<ExternalUserEntity> completePasswordReset(String newPassword, String key) {
+        return findOneByResetKey(key).map(user -> {
+            user.setPassword(SecurityUtils.passwordEncoder(newPassword));
+            user.setResetKey(null);
+            user.setResetDate(null);
+            return externalUserRepository.save(user);
+        });
+    }
+
+    @Override
+    public Optional<ExternalUserEntity> findOneByResetKey(String key) {
+        return externalUserRepository.findOneByResetKeyAndDeletionDateIsNull(key).filter(user -> {
+            ZonedDateTime thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(30);
+            return user.getResetDate().isAfter(thirtyMinutesAgo);
+        });
+    }
+
 }

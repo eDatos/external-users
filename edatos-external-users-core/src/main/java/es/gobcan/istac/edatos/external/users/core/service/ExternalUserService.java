@@ -5,6 +5,8 @@ import org.springframework.data.domain.Pageable;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 
+import java.util.Optional;
+
 public interface ExternalUserService {
 
     ExternalUserEntity create(ExternalUserEntity user);
@@ -23,4 +25,8 @@ public interface ExternalUserService {
 
     ExternalUserEntity getUsuarioWithAuthorities();
     void updateExternalUserAccountPassword(ExternalUserEntity user, String oldPassword, String password);
+
+    Optional<ExternalUserEntity> recoverExternalUserAccountPassword(String email);
+    Optional<ExternalUserEntity> completePasswordReset(String newPassword, String key);
+    Optional<ExternalUserEntity> findOneByResetKey(String key);
 }
