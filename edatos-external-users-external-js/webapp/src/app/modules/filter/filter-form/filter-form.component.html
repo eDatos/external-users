@@ -61,14 +61,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="filterForm.controls.permalink">
+                    <div *ngIf="!inEditMode" class="form-group form-group-inline col-md-6">
                         <div class="form-row">
                             <label class="form-label col-md-4" for="permalink">{{ "filter.entity.permalink" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
-                                <arte-input id="permalink" name="permalink" [(ngModel)]="filter.permalink" [maxlength]="255" [required]="true"></arte-input>
-                                <div class="form-errors-messages" *hasErrors="let messages">
-                                    <span *ngFor="let m of messages">{{m}}</span>
-                                </div>
+                                <arte-input id="permalink" name="permalink" [(ngModel)]="filter.permalink"></arte-input>
                             </div>
                         </div>
                     </div>

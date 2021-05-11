@@ -47,6 +47,8 @@ public class FilterResource extends AbstractResource {
 
     private final AuditEventPublisher auditPublisher;
 
+    private static final String PERMALINK_PATH = "https://visualizer/data.html?permalink=";
+
     public FilterResource(FilterService filterService, FilterMapper filterMapper, AuditEventPublisher auditPublisher) {
         this.filterService = filterService;
         this.filterMapper = filterMapper;
@@ -58,7 +60,13 @@ public class FilterResource extends AbstractResource {
     @PreAuthorize("@secCheckerExternal.canAccessFilters(authentication)")
     public ResponseEntity<FilterDto> getFilterById(@PathVariable Long id) {
         FilterDto filterDto = filterMapper.toDto(filterService.find(id));
+        String permalink = filterDto.getPermalink();
+        filterDto.setPermalink(getPermalinkUrl(permalink));
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(filterDto));
+    }
+
+    private String getPermalinkUrl(String permalink) {
+        return PERMALINK_PATH + permalink;
     }
 
     @GetMapping

@@ -21,9 +21,11 @@ public class ApplicationProperties {
 
     public static class Metadata {
 
+        private static final String PERMALINK_PATH = "https://visualizer/data.html?permalink=";
         private String endpoint;
         private String metamacNavbarKey;
         private String metamacFaviconUrlKey;
+        private String metamacPortalVisualizer;
 
         public String getEndpoint() {
             return endpoint;
@@ -48,9 +50,18 @@ public class ApplicationProperties {
         public void setMetamacFaviconUrlKey(String metamacFaviconUrlKey) {
             this.metamacFaviconUrlKey = metamacFaviconUrlKey;
         }
+
+        public String getMetamacPortalVisualizer() {
+            return PERMALINK_PATH;
+        }
+
+        public void setMetamacPortalVisualizer(String metamacPortalVisualizer) {
+            this.metamacPortalVisualizer = metamacPortalVisualizer;
+        }
     }
 
     public static class Endpoint {
+
         // Required
         private String appUrl;
 

@@ -7,7 +7,7 @@ VALUES (1, 'system', '2021-05-06 11:10:17.234000', 'system',
 INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
                         last_access_date, name, notes, permalink, external_user_fk)
 VALUES (2, 'system', '2021-05-06 11:30:54.247000', 'system',
-        '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'perma43', 'texto con link',
+        '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'permalink', 'notas',
         'https://visualizer/data.html?permalink=1iehlgx1d7od76vr11r31d11j5o', 1);
 INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
                         last_access_date, name, notes, permalink, external_user_fk)
@@ -18,7 +18,7 @@ VALUES (3, 'system', '2021-05-06 11:10:17.234000', 'system',
 INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
                         last_access_date, name, notes, permalink, external_user_fk)
 VALUES (4, 'system', '2021-05-06 11:30:54.247000', 'system',
-        '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'perma43', 'texto con link',
+        '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'permalink', 'notas',
         'https://visualizer/data.html?permalink=1iehlgx1d7od76vr11r31d11j5o', 2);
 
 INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
@@ -30,6 +30,6 @@ VALUES (5, 'system', '2021-05-06 11:10:17.234000', 'system',
 INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
                         last_access_date, name, notes, permalink, external_user_fk)
 VALUES (6, 'system', '2021-05-06 11:30:54.247000', 'system',
-        '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'perma43', 'texto con link',
+        '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'permalink', 'notas',
         'https://visualizer/data.html?permalink=1iehlgx1d7od76vr11r31d11j5o', 52);
 
