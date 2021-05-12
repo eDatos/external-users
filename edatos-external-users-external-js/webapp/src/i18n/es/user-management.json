@@ -6,7 +6,7 @@
             "title": "Usuarios",
             "createLabel": "Añadir nuevo usuario",
             "createOrEditLabel": "Crear o editar un usuario",
-            "includeDeleted": "Incluir eliminados"
+            "includeDeleted": "Incluir desactivados"
         },
         "created": "Se ha creado el usuario {{ param }}",
         "updated": "Se ha actualizado el usuario {{ param }}",
