@@ -66,7 +66,9 @@ public class FilterResource extends AbstractResource {
     @PreAuthorize("@secCheckerExternal.canAccessFilters(authentication)")
     public ResponseEntity<FilterDto> getFilterById(@PathVariable Long id) {
         FilterDto filterDto = filterMapper.toDto(filterService.find(id));
-        loginValidator.checkUserAuthenticated(filterDto.getExternalUser().getEmail());
+        if (filterDto != null) {
+            loginValidator.checkUserAuthenticated(filterDto.getExternalUser().getEmail());
+        }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(filterDto));
     }
 
