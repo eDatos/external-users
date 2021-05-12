@@ -13,7 +13,6 @@ export class Principal {
     constructor(private authServerProvider: AuthServerProvider) {}
 
     authenticate(identity) {
-        console.log('Who i am? ', identity);
         this.userIdentity = identity;
         this.authenticationState.next(this.userIdentity);
     }
