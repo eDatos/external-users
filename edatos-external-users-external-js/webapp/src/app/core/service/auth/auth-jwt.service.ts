@@ -34,14 +34,10 @@ export class AuthServerProvider {
     }
 
     logout(): Observable<any> {
-        console.log('Hi! im there. In logout');
         return new Observable((observer) => {
             this.$localStorage.clear(TOKEN_AUTH_NAME);
             this.$sessionStorage.clear(TOKEN_AUTH_NAME);
             this.cookieService.remove(JHI_TOKEN_AUTH_NAME);
-            console.log('LOCALSTORAGE', this.$localStorage);
-            console.log('SESSIONSTORAGE', this.$sessionStorage);
-            console.log('COOCKIESERVICE', this.cookieService);
             observer.complete();
         });
     }
