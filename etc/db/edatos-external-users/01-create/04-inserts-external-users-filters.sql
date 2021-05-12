@@ -31,12 +31,25 @@ INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_mod
 VALUES (5, 'system', '2021-05-06 11:10:17.234000', 'system',
         '2021-05-06 11:23:54.257000', 2, '2021-05-06 11:10:17.219000',
         'Índice censal de ocupación según indicadores por islas, provincias y comunidades', 'índice censal',
-        'ekfnsqu5ue31woq1vmwhev9xn', 52);
+        'ekfnsqu5ue31woq1vmwhev9xn', 3);
 
 INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
                         last_access_date, name, notes, permalink, external_user_fk)
 VALUES (6, 'system', '2021-05-06 11:30:54.247000', 'system',
         '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'Visitantes en las islas',
         'El número de visitantes en las islas',
-        '1ofnp6ihvgdv8qx11d8t96092m', 52);
+        '1ofnp6ihvgdv8qx11d8t96092m', 3);
 
+INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
+                        last_access_date, name, notes, permalink, external_user_fk)
+VALUES (7, 'system', '2021-05-06 11:10:17.234000', 'system',
+        '2021-05-06 11:23:54.257000', 2, '2021-05-06 11:10:17.219000',
+        'Índice censal de ocupación según indicadores por islas, provincias y comunidades', 'índice censal',
+        'ekfnsqu5ue31woq1vmwhev9xn', 4);
+
+INSERT INTO tb_filters (id, created_by, created_date, last_modified_by, last_modified_date, opt_lock,
+                        last_access_date, name, notes, permalink, external_user_fk)
+VALUES (8, 'system', '2021-05-06 11:30:54.247000', 'system',
+        '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'Visitantes en las islas',
+        'El número de visitantes en las islas',
+        '1ofnp6ihvgdv8qx11d8t96092m', 4);

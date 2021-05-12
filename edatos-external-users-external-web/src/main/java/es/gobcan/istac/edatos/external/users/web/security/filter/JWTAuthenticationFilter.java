@@ -30,7 +30,7 @@ import java.util.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    public static final String JHI_AUTHENTICATIONTOKEN = "authenticationtoken";
+    public static final String JHI_AUTHENTICATIONTOKEN = "jhi-authenticationtoken";
     public static final String ROOT_PATH = "/";
 
     private final AuthenticationProvider authenticationManager;
