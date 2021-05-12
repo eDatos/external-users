@@ -10,6 +10,7 @@ public class ApplicationProperties {
 
     private final Metadata metadata = new Metadata();
     private final Endpoint endpoint = new Endpoint();
+    private final Metamac metamac = new Metamac();
 
     public Metadata getMetadata() {
         return metadata;
@@ -19,13 +20,15 @@ public class ApplicationProperties {
         return endpoint;
     }
 
+    public Metamac getMetamac() {
+        return metamac;
+    }
+
     public static class Metadata {
 
-        private static final String PERMALINK_PATH = "https://visualizer/data.html?permalink=";
         private String endpoint;
         private String metamacNavbarKey;
         private String metamacFaviconUrlKey;
-        private String metamacPortalVisualizer;
 
         public String getEndpoint() {
             return endpoint;
@@ -51,6 +54,15 @@ public class ApplicationProperties {
             this.metamacFaviconUrlKey = metamacFaviconUrlKey;
         }
 
+    }
+
+    public static class Metamac {
+
+        private static final String PERMALINK_PATH = "https://estadisticas.arte-consultores.com/istac/visualizer/data.html?permalink=";
+
+        private String metamacPortalVisualizer;
+
+        // TODO-3338 it is pending to add the property in the database
         public String getMetamacPortalVisualizer() {
             return PERMALINK_PATH;
         }
@@ -58,6 +70,7 @@ public class ApplicationProperties {
         public void setMetamacPortalVisualizer(String metamacPortalVisualizer) {
             this.metamacPortalVisualizer = metamacPortalVisualizer;
         }
+
     }
 
     public static class Endpoint {

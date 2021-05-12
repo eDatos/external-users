@@ -6,7 +6,7 @@
             "createdDate": "Fecha de creación",
             "name": "Nombre",
             "notes": "Notas",
-            "permalink": "Permalink"
+            "permalink": "URL"
         },
         "form": {
             "cancel": "Cancelar",

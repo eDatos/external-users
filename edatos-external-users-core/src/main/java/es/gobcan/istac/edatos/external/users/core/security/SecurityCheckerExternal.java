@@ -21,10 +21,6 @@ public class SecurityCheckerExternal {
         return this.isExternalUser(authentication);
     }
 
-    public boolean canCreateFilters(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
     public boolean canUpdateFilters(Authentication authentication) {
         return this.isExternalUser(authentication);
     }
