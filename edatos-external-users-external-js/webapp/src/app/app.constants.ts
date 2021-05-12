@@ -17,7 +17,7 @@ export const ERROR_ALERT_KEY = 'alert-errors';
 export const LANG_KEY = 'lang';
 export const DEFAULT_LANG = 'es';
 
-export const DEFAULT_PATH = '/favorite';
+export const DEFAULT_PATH = '/login';
 
 export const ITEMS_PER_PAGE = 20;
 export const PAGINATION_OPTIONS = [5, 10, 15, 20];
