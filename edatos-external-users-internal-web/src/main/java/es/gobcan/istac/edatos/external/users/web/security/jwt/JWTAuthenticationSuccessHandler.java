@@ -22,7 +22,7 @@ import io.github.jhipster.config.JHipsterProperties;
 public class JWTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     public static final String TOKEN = "token";
-    public static final String JHI_AUTHENTICATIONTOKEN = "authenticationtoken";
+    public static final String JHI_AUTHENTICATIONTOKEN = "jhi-authenticationtoken";
     public static final String ROOT_PATH = "/";
 
     private Environment env;

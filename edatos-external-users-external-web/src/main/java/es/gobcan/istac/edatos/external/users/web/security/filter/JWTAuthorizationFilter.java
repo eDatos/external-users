@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String JHI_AUTHENTICATIONTOKEN = "authenticationtoken";
+    public static final String JHI_AUTHENTICATIONTOKEN = "jhi-authenticationtoken";
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
     private final TokenProvider tokenProvider;
