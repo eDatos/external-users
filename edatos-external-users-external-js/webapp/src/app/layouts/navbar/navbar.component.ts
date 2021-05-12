@@ -43,6 +43,7 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         this.collapseNavbar();
+        console.log('Im here, prelogout');
         this.loginService.logout();
     }
 

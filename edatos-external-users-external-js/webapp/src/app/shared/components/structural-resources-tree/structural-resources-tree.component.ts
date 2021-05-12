@@ -83,7 +83,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     public createTree() {
         this.categoryListToTreeNode(this.tree).subscribe((treeNodes) => {
-            console.log('treeNodes', treeNodes);
             this.resources = treeNodes;
         });
     }

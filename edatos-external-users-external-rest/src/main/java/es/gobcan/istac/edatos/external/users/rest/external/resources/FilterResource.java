@@ -5,8 +5,11 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
+import es.gobcan.istac.edatos.external.users.core.service.validator.LoginValidator;
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -47,10 +50,15 @@ public class FilterResource extends AbstractResource {
 
     private final AuditEventPublisher auditPublisher;
 
-    public FilterResource(FilterService filterService, FilterMapper filterMapper, AuditEventPublisher auditPublisher) {
+    private final LoginValidator loginValidator;
+
+    private static final String PERMALINK_PATH = "https://visualizer/data.html?permalink=";
+
+    public FilterResource(FilterService filterService, FilterMapper filterMapper, AuditEventPublisher auditPublisher, LoginValidator loginValidator) {
         this.filterService = filterService;
         this.filterMapper = filterMapper;
         this.auditPublisher = auditPublisher;
+        this.loginValidator = loginValidator;
     }
 
     @GetMapping("/{id}")
@@ -58,7 +66,12 @@ public class FilterResource extends AbstractResource {
     @PreAuthorize("@secCheckerExternal.canAccessFilters(authentication)")
     public ResponseEntity<FilterDto> getFilterById(@PathVariable Long id) {
         FilterDto filterDto = filterMapper.toDto(filterService.find(id));
+        loginValidator.checkUserAuthenticated(filterDto.getExternalUser().getEmail());
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(filterDto));
+    }
+
+    private String getPermalinkUrl(String permalink) {
+        return PERMALINK_PATH + permalink;
     }
 
     @GetMapping
@@ -111,4 +124,5 @@ public class FilterResource extends AbstractResource {
         auditPublisher.publish(AuditConstants.FILTER_DELETION, id.toString());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
 }

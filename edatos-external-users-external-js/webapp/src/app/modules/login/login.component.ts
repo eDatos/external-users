@@ -16,7 +16,9 @@ export class LoginComponent implements OnInit {
         this.credentials = new Credentials();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        console.log('hello');
+    }
 
     login() {
         this.accountUserService.login(this.credentials).subscribe((foo: any) => {

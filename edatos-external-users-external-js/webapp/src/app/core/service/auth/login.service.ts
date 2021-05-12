@@ -15,6 +15,7 @@ export class LoginService {
             .toPromise()
             .then(() => {
                 this.principal.authenticate(null);
+                console.log('Im here, AFTER logou.  ', this.principal);
                 this.router.navigate(['login']);
             });
     }

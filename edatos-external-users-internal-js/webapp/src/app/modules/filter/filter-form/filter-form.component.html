@@ -43,7 +43,10 @@
             <fieldset class="d-flex flex-column" [disabled]="!inEditMode || isLoading" arteAutofocus>
                 <legend class="pt-3 mb-0">{{ "filter.form.legend" | translate }}</legend>
                 <small class="text-muted mb-3 mt-0" style="padding-top: -2em">
-                    {{ filter.externalUser.getFullName() }} <a [href]="'mailto:' + filter.externalUser.email">&lt;{{filter.externalUser.email}}&gt;</a>
+                    {{ filter.externalUser.getFullName() }}
+                    <a [href]="'mailto:' + filter.externalUser.email"
+                        >&lt;{{filter.externalUser.email}}&gt; . {{"filter.entity.lastAccessDate" | translate }} : {{filter.lastAccessDate | date: 'dd/MM/yyyy HH:mm:ss'}}</a
+                    >
                 </small>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="filterForm.controls.name">
