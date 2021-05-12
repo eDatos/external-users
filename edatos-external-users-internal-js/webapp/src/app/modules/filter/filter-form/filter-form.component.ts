@@ -6,6 +6,7 @@ import { ExternalUserService } from '@app/core/service';
 import { Filter } from '@app/shared/model';
 import { FilterService } from '@app/shared/service';
 import { finalize } from 'rxjs/operators';
+import { ConfigService } from '@app/config';
 
 @Component({
     selector: 'app-filter-form',
@@ -24,7 +25,8 @@ export class FilterFormComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
         private router: Router,
-        private externalUserService: ExternalUserService
+        private externalUserService: ExternalUserService,
+        private configService: ConfigService
     ) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
         this.userId = this.activatedRoute.snapshot.queryParams['id'];
@@ -87,6 +89,11 @@ export class FilterFormComponent implements OnInit {
 
     public updateExternalUserSuggestions(event) {
         this.loadExternalUsersList(event);
+    }
+
+    public getVisualizerPath(): string {
+        const config = this.configService.getConfig();
+        return config.metamac.visualizerPath;
     }
 
     private loadExternalUsersList(event?) {

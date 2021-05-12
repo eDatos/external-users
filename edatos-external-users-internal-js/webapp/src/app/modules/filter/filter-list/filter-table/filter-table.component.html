@@ -9,7 +9,7 @@
     <ng-template pTemplate="body" let-filter>
         <tr [routerLink]="['/filter', filter.id]">
             <td>{{filter.name}}</td>
-            <td>{{filter.permalink}}</td>
+            <td><a href="{{getVisualizerPath() + filter.permalink}}" target="_blan">{{getVisualizerPath() + filter.permalink}}</a></td>
             <td>{{filter.lastAccessDate}}</td>
         </tr>
     </ng-template>
