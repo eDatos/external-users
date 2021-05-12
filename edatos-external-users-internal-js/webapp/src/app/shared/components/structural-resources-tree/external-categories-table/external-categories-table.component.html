@@ -1,0 +1,52 @@
+<p-table
+    #table
+    selectionMode="multiple"
+    [value]="externalCategories"
+    [(selection)]="selectedExternalCategories"
+    [loading]="!externalCategories"
+    [paginator]="true"
+    [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="'table.pageReport' | translate"
+    [rows]="10"
+    [rowsPerPageOptions]="[10,25,50]"
+    [rowHover]="true"
+    [filterDelay]="0"
+    [globalFilterFields]="['name.val','nestedCode']"
+    [scrollable]="true"
+    scrollHeight="40vh"
+    dataKey="urn"
+>
+    <ng-template pTemplate="caption">
+        <div class="ui-table-globalfilter-container">
+            <input pInputText type="text" (input)="table.filterGlobal($any($event.target).value, 'contains')" [placeholder]="'table.globalSearchPlaceholder' | translate" />
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th scope="col">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th scope="col" pSortableColumn="name.val">{{'externalCategoriesTable.columns.name' | translate}}<p-sortIcon field="name.val"> </p-sortIcon></th>
+            <th scope="col" pSortableColumn="nestedCode">{{'externalCategoriesTable.columns.nestedCode' | translate}}<p-sortIcon field="nestedCode"></p-sortIcon></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-resource>
+        <tr class="ui-selectable-row">
+            <td>
+                <p-tableCheckbox [value]="resource"></p-tableCheckbox>
+            </td>
+            <td>{{resource.name.val}}</td>
+            <td>{{resource.nestedCode}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="2">{{'externalCategoriesTable.noResourceFound' | translate}}</td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <ul>
+            <li *ngFor="let externalCategory of selectedExternalCategories" style="text-align: left">{{externalCategory.name.val}}</li>
+        </ul>
+    </ng-template>
+</p-table>

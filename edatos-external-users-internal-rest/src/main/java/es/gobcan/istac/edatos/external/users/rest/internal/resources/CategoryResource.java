@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,11 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
+import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
-import es.gobcan.istac.edatos.external.users.rest.common.dto.StructuralResourcesTreeDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalCategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
-import es.gobcan.istac.edatos.external.users.rest.common.mapper.StructuralResourcesTreeMapper;
+import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalCategoryMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 
@@ -34,12 +38,14 @@ public class CategoryResource extends AbstractResource {
 
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
-    private final StructuralResourcesTreeMapper structuralResourcesTreeMapper;
+    private final StructuralResourcesService structuralResourcesService;
+    private final ExternalCategoryMapper externalCategoryMapper;
 
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, StructuralResourcesTreeMapper structuralResourcesTreeMapper) {
+    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, StructuralResourcesService structuralResourcesService, ExternalCategoryMapper externalCategoryMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
-        this.structuralResourcesTreeMapper = structuralResourcesTreeMapper;
+        this.structuralResourcesService = structuralResourcesService;
+        this.externalCategoryMapper = externalCategoryMapper;
     }
 
     @GetMapping("/{id}")
@@ -47,8 +53,8 @@ public class CategoryResource extends AbstractResource {
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
     public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
         CategoryEntity category = categoryService.findCategoryById(id);
-        CategoryDto categoryDto = categoryMapper.toDto(category);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(categoryDto));
+        CategoryDto externalCategoryDto = categoryMapper.toDto(category);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalCategoryDto));
     }
 
     @GetMapping
@@ -60,10 +66,27 @@ public class CategoryResource extends AbstractResource {
         return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
 
+    @GetMapping("/external")
+    @Timed
+    @PreAuthorize("@secChecker.canAccessCategory(authentication)")
+    public ResponseEntity<List<ExternalCategoryDto>> getExternalCategories() {
+        List<ExternalCategoryEntity> result = structuralResourcesService.getCategories();
+        return ResponseEntity.ok(externalCategoryMapper.toDtos(result));
+    }
+
     @Timed
     @GetMapping("/tree")
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    public ResponseEntity<List<StructuralResourcesTreeDto>> getCategoryTree() {
-        return ResponseEntity.ok(structuralResourcesTreeMapper.toDto());
+    public ResponseEntity<List<CategoryDto>> getCategoryTree() {
+        return ResponseEntity.ok(categoryMapper.toDtos(categoryService.getTree()));
+    }
+
+    @Timed
+    @PutMapping("/tree")
+    @PreAuthorize("@secChecker.canUpdateCategoryTree(authentication)")
+    public ResponseEntity<List<CategoryDto>> updateCategoryTree(@RequestBody List<CategoryDto> tree) {
+        List<CategoryEntity> categories = categoryMapper.toEntities(tree);
+        List<CategoryDto> response = categoryMapper.toDtos(categoryService.updateTree(categories));
+        return ResponseEntity.ok(response);
     }
 }

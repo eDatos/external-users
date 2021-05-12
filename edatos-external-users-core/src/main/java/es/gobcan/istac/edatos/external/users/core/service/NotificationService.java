@@ -1,10 +1,10 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 
 public interface NotificationService {
 
-    void createNotificationForPublishInternallyOperation(OperationEntity operation);
+    void createNotificationForPublishInternallyOperation(ExternalOperationEntity operation);
 
-    void createNotificationForPublishExternallyOperation(OperationEntity operation);
+    void createNotificationForPublishExternallyOperation(ExternalOperationEntity operation);
 }

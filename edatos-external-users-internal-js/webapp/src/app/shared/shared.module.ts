@@ -12,11 +12,14 @@ import { FormcontrolStatusService } from 'arte-ng/directives';
 import { GenericModalService } from 'arte-ng/services';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgArrayPipesModule } from 'ngx-pipes';
+import { QuillModule } from 'ngx-quill';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipsModule } from 'primeng/chips';
+import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
 import { FileUploadModule } from 'primeng/fileupload';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ListboxModule } from 'primeng/listbox';
@@ -26,10 +29,6 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { AppAuditInfoComponent } from './components/audit-info/audit-info.component';
 import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
-import { DropdownModule } from 'primeng/dropdown';
-import { EditorModule } from 'primeng/editor';
-import { QuillModule } from 'ngx-quill'
-
 
 @NgModule({
     imports: [
@@ -61,7 +60,7 @@ import { QuillModule } from 'ngx-quill'
         ArteEntityListEmptyModule,
         DropdownModule,
         EditorModule,
-        QuillModule
+        QuillModule,
     ],
     providers: [
         FormcontrolStatusService,
@@ -99,7 +98,7 @@ import { QuillModule } from 'ngx-quill'
         ArteEntityListEmptyModule,
         StructuralResourcesTreeModule,
         AppAuditInfoComponent,
-        MultiLanguageEditorComponent
+        MultiLanguageEditorComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     declarations: [AppAuditInfoComponent, MultiLanguageEditorComponent],

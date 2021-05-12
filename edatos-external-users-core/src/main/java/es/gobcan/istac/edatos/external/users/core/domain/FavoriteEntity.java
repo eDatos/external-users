@@ -17,12 +17,13 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 
 /**
- * Favorites are notifications on both topics and statistical operations that the user can
- * designate to be aware of certain events related to them, like creations, modifications,
- * and deletions.
+ * Favorites are references to categories that the user can designate to be aware of
+ * certain events related to them, like creations, modifications, and deletions.
+ *
+ * @see CategoryEntity
  */
 @Entity
-@Table(name = "tb_favorites", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "category_fk"}), @UniqueConstraint(columnNames = {"external_user_fk", "operation_fk"})})
+@Table(name = "tb_favorites", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "category_fk"})})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
@@ -36,13 +37,9 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
     @ManyToOne(optional = false)
     private ExternalUserEntity externalUser;
 
-    @JoinColumn(name = "category_fk")
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "category_fk", nullable = false)
     private CategoryEntity category;
-
-    @JoinColumn(name = "operation_fk")
-    @ManyToOne
-    private OperationEntity operation;
 
     @Override
     public Long getId() {
@@ -67,13 +64,5 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
     public void setCategory(CategoryEntity category) {
         this.category = category;
-    }
-
-    public OperationEntity getOperation() {
-        return operation;
-    }
-
-    public void setOperation(OperationEntity operation) {
-        this.operation = operation;
     }
 }

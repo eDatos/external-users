@@ -18,6 +18,14 @@ public class ApplicationTemplateSecurity {
         return this.isAdmin(authentication);
     }
 
+    public boolean canCreateCategory(Authentication authentication) {
+        return this.isAdmin(authentication);
+    }
+
+    public boolean canUpdateCategoryTree(Authentication authentication) {
+        return this.isAdmin(authentication);
+    }
+
     public boolean canAccessFilters(Authentication authentication) {
         return this.isAdmin(authentication);
     }
@@ -109,11 +117,11 @@ public class ApplicationTemplateSecurity {
     public boolean canAccessConfig(Authentication authentication) {
         return this.isAdmin(authentication);
     }
-    
+
     public boolean canAccessDataProtectionPolicy(Authentication authentication) {
         return this.isAdmin(authentication);
     }
-    
+
     public boolean canUpdateDataProtectionPolicy(Authentication authentication) {
         return this.isAdmin(authentication);
     }

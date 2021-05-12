@@ -19,35 +19,30 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
-import es.gobcan.istac.edatos.external.users.core.repository.OperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
-import es.gobcan.istac.edatos.external.users.core.service.validator.FavoriteValidator;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
 @Service
 public class FavoriteServiceImpl implements FavoriteService {
 
     private final FavoriteRepository favoriteRepository;
-    private final OperationRepository operationRepository;
     private final ExternalUserRepository externalUserRepository;
-    private final FavoriteValidator favoriteValidator;
     private final QueryUtil queryUtil;
 
     private final Logger log = LoggerFactory.getLogger(FavoriteServiceImpl.class);
 
-    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, OperationRepository operationRepository, FavoriteValidator favoriteValidator, ExternalUserRepository externalUserRepository,
-            QueryUtil queryUtil) {
+    public FavoriteServiceImpl(FavoriteRepository favoriteRepository, ExternalUserRepository externalUserRepository, QueryUtil queryUtil) {
         this.favoriteRepository = favoriteRepository;
-        this.operationRepository = operationRepository;
-        this.favoriteValidator = favoriteValidator;
         this.externalUserRepository = externalUserRepository;
         this.queryUtil = queryUtil;
     }
 
     @Override
     public FavoriteEntity create(FavoriteEntity favorite) {
-        favoriteValidator.validate(favorite);
         if (favorite.getCategory() != null) {
             create(favorite.getExternalUser(), favorite.getCategory());
             return favoriteRepository.findByExternalUserAndCategory(favorite.getExternalUser(), favorite.getCategory()).get();
@@ -59,11 +54,6 @@ public class FavoriteServiceImpl implements FavoriteService {
     private void create(ExternalUserEntity externalUser, CategoryEntity parent) {
         if (favoriteRepository.findByExternalUser(externalUser).stream().map(FavoriteEntity::getCategory).noneMatch(cat -> Objects.equals(cat, parent))) {
             favoriteRepository.save(newFavorite(externalUser, parent));
-        }
-        for (OperationEntity operation : operationRepository.getByCategory(parent)) {
-            if (favoriteRepository.findByExternalUser(externalUser).stream().map(FavoriteEntity::getOperation).noneMatch(op -> Objects.equals(op, operation))) {
-                favoriteRepository.save(newFavorite(externalUser, operation));
-            }
         }
         for (CategoryEntity child : parent.getChildren()) {
             create(externalUser, child);
@@ -77,16 +67,8 @@ public class FavoriteServiceImpl implements FavoriteService {
         return favorite;
     }
 
-    private FavoriteEntity newFavorite(ExternalUserEntity externalUser, OperationEntity operation) {
-        FavoriteEntity favorite = new FavoriteEntity();
-        favorite.setExternalUser(externalUser);
-        favorite.setOperation(operation);
-        return favorite;
-    }
-
     @Override
     public FavoriteEntity update(FavoriteEntity favorite) {
-        favoriteValidator.validate(favorite);
         return favoriteRepository.saveAndFlush(favorite);
     }
 
@@ -126,12 +108,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public void delete(FavoriteEntity favorite) {
-        if (favorite.getCategory() != null) {
-            delete(favorite.getExternalUser(), favorite.getCategory());
-        } else {
-            // operation favorites doesn't have children
-            favoriteRepository.delete(favorite);
-        }
+        delete(favorite.getExternalUser(), favorite.getCategory());
     }
 
     @Override
@@ -140,17 +117,8 @@ public class FavoriteServiceImpl implements FavoriteService {
         return favoriteRepository.getCategorySubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
     }
 
-    @Override
-    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "operations")
-    public Map<Long, Long> getOperationSubscribers() {
-        return favoriteRepository.getOperationSubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
-    }
-
     public void delete(ExternalUserEntity externalUser, CategoryEntity parent) {
         favoriteRepository.deleteByExternalUserAndCategory(externalUser, parent);
-        for (OperationEntity operation : operationRepository.getByCategory(parent)) {
-            favoriteRepository.deleteByExternalUserAndOperation(externalUser, operation);
-        }
         for (CategoryEntity child : parent.getChildren()) {
             delete(externalUser, child);
         }

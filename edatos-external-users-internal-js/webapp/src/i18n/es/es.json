@@ -148,6 +148,11 @@
     "category": {
         "name": "Tema"
     },
+    "categorySubscriptions": {
+        "home": {
+            "title": "Suscripciones temáticas"
+        }
+    },
     "configuration": {
         "filter": "Filtro (por prefijo)",
         "spring": "Spring configuration",
@@ -156,6 +161,11 @@
             "properties": "Propiedades"
         },
         "title": "Configuración"
+    },
+    "dataProtectionPolicy": {
+        "home": {
+            "title": "Política de protección de datos"
+        }
     },
     "edatosExternalUsersApp": {
         "rol": {
@@ -273,21 +283,21 @@
         }
     },
     "enum": {
+        "localeToLanguage": {
+            "CA": "Catalán",
+            "DE": "Alemán",
+            "EN": "Inglés",
+            "ES": "Español",
+            "FR": "Francés",
+            "PT": "Portugués",
+            "RU": "Ruso",
+            "ZH": "Chino"
+        },
         "procStatus": {
             "DRAFT": "Borrador",
             "EXTERNALLY_PUBLISHED": "Publicado externamente",
             "INTERNALLY_PUBLISHED": "Publicado internamente",
             "label": "Estado del ciclo de vida"
-        },
-        "localeToLanguage": {
-            "ES": "Español",
-            "EN": "Inglés",
-            "CA": "Catalán",
-            "PT": "Portugués",
-            "RU": "Ruso",
-            "ZH": "Chino",
-            "FR": "Francés",
-            "DE": "Alemán"
         }
     },
     "error": {
@@ -330,6 +340,14 @@
             "usuario-ldap-no-encontrado": "No se ha encontrado el usuario especificado"
         },
         "usuario-existe": "El nombre de usuario introducido ya está siendo usado"
+    },
+    "externalCategoriesTable": {
+        "columns": {
+            "name": "Nombre",
+            "nestedCode": "Código anidado",
+            "urn": "URN"
+        },
+        "noResourceFound": "No se ha encontrado ningún recurso externo"
     },
     "externalUser": {
         "activado": "Activado",
@@ -464,11 +482,6 @@
         },
         "name": "Favorito"
     },
-    "thematicSubscriptions": {
-        "home": {
-            "title": "Suscripciones temáticas"
-        }
-    },
     "filter": {
         "entity": {
             "email": "Email",
@@ -524,13 +537,13 @@
                 "apidocs": "API",
                 "audits": "Auditoría",
                 "configuration": "Configuración",
+                "dataProtectionPolicy": "Política de protección de datos",
                 "health": "Salud",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
                 "main": "Administración",
                 "metrics": "Métricas",
-                "userManagement": "Gestión de usuarios",
-                "dataProtectionPolicy": "Política de protección de datos"
+                "userManagement": "Gestión de usuarios"
             },
             "administracion": {
                 "main": "Administración"
@@ -699,16 +712,15 @@
     "operation": {
         "name": "Operación estadística"
     },
-    "dataProtectionPolicy": {
-        "home": {
-            "title": "Política de protección de datos"
-        }
-    },
     "structuralResourcesTree": {
+        "editionModal": "Edición multidioma del nombre del recurso",
+        "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre ellos",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
         "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },
     "table": {
-        "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"
+        "globalSearchPlaceholder": "Búsqueda global",
+        "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}",
+        "pageReport": "{first}–{last} de {totalRecords}"
     }
 }

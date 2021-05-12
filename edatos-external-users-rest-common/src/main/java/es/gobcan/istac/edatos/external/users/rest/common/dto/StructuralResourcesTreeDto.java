@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.siemac.edatos.core.common.dto.AuditableDto;
-import org.siemac.edatos.core.common.dto.InternationalStringDto;
 
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 

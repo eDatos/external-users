@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ResponseWrapper } from '@app/core/utils/response-utils';
 import { FavoriteFilter } from '@app/modules/favorite/favorite-search/favorite-search';
-import { Favorite } from '@app/shared/model/favorite.model';
-import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
+import { Favorite } from '@app/shared/model';
+import { FavoriteService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { LazyLoadEvent } from 'primeng/api';
 
