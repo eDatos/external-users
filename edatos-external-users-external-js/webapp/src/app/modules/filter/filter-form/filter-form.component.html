@@ -49,7 +49,8 @@
                 <legend class="pt-3">{{ "filter.form.legend" | translate }}</legend>
                 <p *ngIf="!inEditMode">
                     <small class="text-muted mb-3 mt-0" style="padding-top: -2em"
-                        >{{ "filter.entity.lastAccessDate" | translate }}: {{filter.lastAccessDate | date: 'dd/MM/yyyy HH:mm:ss'}}</small
+                        >{{ "filter.entity.lastAccessDate" | translate }}: {{filter.lastAccessDate | date: 'dd/MM/yyyy HH:mm:ss'}}. {{ "filter.entity.createdDate" | translate }}:
+                        {{filter.createdDate | date: 'dd/MM/yyyy HH:mm:ss'}}</small
                     >
                 </p>
                 <div class="row">
@@ -74,7 +75,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group form-group-inline col-md-8" [formControlStatus]="filterForm.controls.notes">
+                    <div class="form-group form-group-inline col-md-12" [formControlStatus]="filterForm.controls.notes">
                         <div class="form-row">
                             <label class="form-label col-md-6" for="notes">{{ "filter.entity.notes" | translate }}</label>
                             <div class="col-md-12 form-input-container errors-on-hover">
@@ -95,11 +96,6 @@
                         </div>
                     </div>
                 </div>
-                <p>
-                    <small class="text-muted mb-3 mt-0" style="padding-top: -2em"
-                        >{{ "filter.entity.createdDate" | translate }}: {{filter.createdDate | date: 'dd/MM/yyyy HH:mm:ss'}}</small
-                    >
-                </p>
             </fieldset>
         </form>
     </div>
