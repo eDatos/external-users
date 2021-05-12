@@ -475,7 +475,7 @@
             "lastAccessDate": "Fecha de último acceso",
             "name": "Nombre",
             "notes": "Notas",
-            "permalink": "Permalink"
+            "permalink": "URL"
         },
         "form": {
             "cancel": "Cancelar",

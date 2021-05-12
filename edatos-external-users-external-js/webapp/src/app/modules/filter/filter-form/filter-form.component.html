@@ -48,7 +48,9 @@
             <fieldset class="page-section" [disabled]="!inEditMode || isLoading" arteAutofocus>
                 <legend class="pt-3">{{ "filter.form.legend" | translate }}</legend>
                 <p *ngIf="!inEditMode">
-                    <small>{{ "filter.entity.lastAccessDate" | translate }} {{filter.lastAccessDate | date: 'dd/MM/yyyy HH:mm:ss'}}</small>
+                    <small class="text-muted mb-3 mt-0" style="padding-top: -2em"
+                        >{{ "filter.entity.lastAccessDate" | translate }} {{filter.lastAccessDate | date: 'dd/MM/yyyy HH:mm:ss'}}</small
+                    >
                 </p>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="filterForm.controls.name">

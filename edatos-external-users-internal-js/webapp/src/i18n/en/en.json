@@ -470,7 +470,7 @@
             "lastAccessDate": "Last Access Date",
             "name": "First Name",
             "notes": "Notes",
-            "permalink": "Permalink"
+            "permalink": "URL"
         },
         "form": {
             "cancel": "Cancel",
