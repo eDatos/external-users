@@ -370,7 +370,7 @@
             "createOrEditLabel": "Crear o editar un usuario",
             "favorites": "Favoritos",
             "filters": "Filtros",
-            "includeDeleted": "Incluir eliminados",
+            "includeDeleted": "Incluir desactivados",
             "title": "Usuarios"
         },
         "language": "Idioma",
@@ -390,7 +390,7 @@
         "roles": "Roles",
         "status": {
             "active": "Activo",
-            "deleted": "Eliminado",
+            "deactivated": "Desactivado",
             "name": "Estado"
         },
         "surname1": "Primer apellido",
