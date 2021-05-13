@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '@app/core/model';
-import { Favorite, StructuralResourcesTree } from '@app/shared/model';
+import { Category, Favorite } from '@app/shared/model';
 import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { Category } from '../../../../../../edatos-external-users-internal-js/webapp/src/app/shared/model';
 
 @Component({
     selector: 'app-favorite-tree',
