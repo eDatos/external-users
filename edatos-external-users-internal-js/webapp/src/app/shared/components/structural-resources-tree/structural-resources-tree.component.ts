@@ -7,7 +7,7 @@ import { ArteAlertService } from 'arte-ng/services';
 import * as _ from 'lodash';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { finalize, shareReplay } from 'rxjs/operators';
 
 /**
  * @see StructuralResourcesTreeComponent#mode
@@ -16,6 +16,7 @@ export type Mode = 'view' | 'select' | 'edit';
 
 export interface CategoryTreeNode extends TreeNode {
     data: Category;
+    parent?: CategoryTreeNode;
     children?: CategoryTreeNode[];
     editMode: 'remap' | 'name' | null;
     makingRequest?: boolean;
@@ -74,12 +75,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     @ViewChild(MultiLanguageInputComponent)
     public languageInputComponent: MultiLanguageInputComponent;
 
-    public resources: CategoryTreeNode[];
+    public tree: CategoryTreeNode[];
     public selectedResources: CategoryTreeNode[] = [];
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
     public enableDragAndDrop = false;
     public allowedLanguages: string[];
     public externalCategories: ExternalCategory[];
+    public loading = false;
 
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: CategoryTreeNode[] = [];
@@ -105,7 +107,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             .pipe(shareReplay({ bufferSize: 1, refCount: true }))
             .subscribe((languages) => (this.allowedLanguages = languages));
         this.categoryService
-            .getExternal()
+            .getExternalCategories()
             .pipe(shareReplay({ bufferSize: 1, refCount: true }))
             .subscribe((categories) => (this.externalCategories = categories));
     }
@@ -129,8 +131,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public createTree(tree: Category[]) {
+        this.nodeList = [];
         this.categoryListToCategoryTree(tree).subscribe((treeNodes) => {
-            this.resources = treeNodes;
+            this.tree = treeNodes;
         });
     }
 
@@ -155,39 +158,59 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public addNode(parent?: CategoryTreeNode) {
+        const node: CategoryTreeNode = {
+            label: '',
+            collapsedIcon: 'fa fa-folder',
+            expandedIcon: 'fa fa-folder-open',
+            expanded: true,
+            data: new Category(),
+            children: [],
+            selectable: !this.disabled,
+            editMode: null,
+        };
         if (parent) {
             if (!parent.children) {
                 parent.children = [];
             }
-            const node: CategoryTreeNode = {
-                label: '',
-                collapsedIcon: 'fa fa-folder',
-                expandedIcon: 'fa fa-folder-open',
-                expanded: true,
-                data: new Category(),
-                children: [],
-                selectable: !this.disabled,
-                editMode: null,
-            };
             parent.children.push(node);
             parent.data.children.push(node.data);
-            this.nodeList.push(node);
-            this.editNodeName(node);
         } else {
-            // TODO(EDATOS-3357): What happens when the tree is empty?
+            this.tree.push(node);
         }
+        this.nodeList.push(node);
+        this.editNodeName(node);
     }
 
     public deleteNode(node: CategoryTreeNode) {
         _.pull(this.nodeList, node);
-        _.pull(node.parent?.children, node);
-        _.pull(node.parent?.data?.children, node.data);
+        if (node.parent) {
+            _.pull(node.parent.children, node);
+            _.pull(node.parent.data?.children, node.data);
+        } else {
+            _.pull(this.tree, node);
+        }
+        if (node.data.id) {
+            this.categoryService
+                .deleteCategory(node.data.id)
+                .pipe(finalize(() => this.unsetLoadingNode(node)))
+                .subscribe(() => this.ngOnInit());
+        }
     }
 
     public saveNodeName(node: CategoryTreeNode, name: InternationalString) {
-        node.data.name = name;
-        node.label = name.val;
+        const oldName = node.data.name;
+        this.setNodeNameFromInternationalString(node, name);
         this.disableNodeEdit(node);
+        this.setLoadingNode(node, false);
+
+        const saveOrUpdateCategory = node.data.id != null ? this.categoryService.createCategory : this.categoryService.updateCategory;
+
+        saveOrUpdateCategory(node.data, node.parent?.data)
+            .pipe(finalize(() => this.unsetLoadingNode(node, false)))
+            .subscribe({
+                next: (category) => (node.data = category),
+                error: () => this.setNodeNameFromInternationalString(node, oldName),
+            });
     }
 
     public disableNodeEdit(node: CategoryTreeNode) {
@@ -206,12 +229,17 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public saveRemap(node: CategoryTreeNode, selectedResources: ExternalCategory[]) {
+        const oldSelectedResources = node.data.resources;
         node.data.resources = selectedResources;
         node.editMode = null;
-    }
-
-    public save(): Observable<Category[]> {
-        return this.categoryService.updateTree(this.resources.map((node) => node.data));
+        this.setLoadingNode(node, false);
+        this.categoryService
+            .updateCategory(node.data, node.parent?.data)
+            .pipe(finalize(() => this.unsetLoadingNode(node, false)))
+            .subscribe({
+                next: (category) => (node.data = category),
+                error: () => (node.data.resources = oldSelectedResources),
+            });
     }
 
     public onNodeDrop(event: { dragNode: CategoryTreeNode; dropNode: CategoryTreeNode } & ({ index: number } | { dropIndex: number })) {
@@ -225,13 +253,24 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         //    parent of dropNode will be the same as ours.
         //
         // In both cases, 'index' and 'dropIndex' represent the position where the dragged node is in the list.
+        let parent: CategoryTreeNode;
         if (event.hasOwnProperty('index')) {
-            _.pull(event.dragNode.parent?.data?.children, event.dragNode.data);
-            event.dropNode.data?.children?.push(event.dragNode.data);
+            parent = event.dropNode;
         } else {
-            _.pull(event.dragNode.parent?.data?.children, event.dragNode.data);
-            event.dropNode.parent?.data?.children?.push(event.dragNode.data);
+            parent = event.dropNode.parent;
         }
+        parent?.data.children.push(event.dragNode.data);
+        _.pull(event.dragNode.parent?.data.children, event.dragNode.data);
+        this.loading = true;
+        this.categoryService
+            .updateTree(this.tree.map((node) => node.data))
+            .pipe(finalize(() => (this.loading = false)))
+            .subscribe((tree) => this.createTree(this.sort(tree)));
+    }
+
+    private setNodeNameFromInternationalString(node: CategoryTreeNode, name: InternationalString) {
+        node.data.name = name;
+        node.label = name.val;
     }
 
     private sort(categories: Category[]): Category[] {

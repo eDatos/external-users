@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
@@ -47,5 +48,23 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryEntity> updateTree(List<CategoryEntity> tree) {
         return categoryRepository.save(tree);
+    }
+
+    @Override
+    public CategoryEntity createCategory(CategoryEntity category) {
+        return categoryRepository.saveAndFlush(category);
+    }
+
+    @Override
+    public CategoryEntity updateCategory(CategoryEntity category) {
+        return categoryRepository.saveAndFlush(category);
+    }
+
+    @Override
+    public Optional<CategoryEntity> delete(Long id) {
+        if (id != null) {
+            return categoryRepository.deleteById(id);
+        }
+        return Optional.empty();
     }
 }

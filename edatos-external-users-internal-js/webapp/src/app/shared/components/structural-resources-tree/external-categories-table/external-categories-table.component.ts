@@ -27,7 +27,7 @@ export class ExternalCategoriesTableComponent implements OnInit {
     public ngOnInit(): void {
         if (!this.externalCategories) {
             this.categoryService
-                .getExternal()
+                .getExternalCategories()
                 .pipe(shareReplay({ bufferSize: 1, refCount: true }))
                 .subscribe((categories) => (this.externalCategories = categories));
         }

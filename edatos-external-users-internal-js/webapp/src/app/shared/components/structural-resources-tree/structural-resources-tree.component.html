@@ -3,17 +3,22 @@
     {{'structuralResourcesTree.helpMessage' | translate}}.
 </p>
 
+<button (click)="addNode()" *ngIf="mode === 'edit'" class="btn btn-link">
+    <span class="fa fa-plus"></span>
+    <span translate="structuralResourcesTree.addNewNode"></span>
+</button>
+
 <p-tree
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
     (onNodeDrop)="onNodeDrop($event)"
     [(selection)]="selectedResources"
-    [value]="resources"
+    [loading]="!tree || loading"
     [selectionMode]="selectionMode"
     [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
     [draggableNodes]="enableDragAndDrop"
     [droppableNodes]="enableDragAndDrop"
-    [loading]="!resources"
+    [value]="tree"
 >
     <ng-template *ngIf="mode === 'view'" let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;

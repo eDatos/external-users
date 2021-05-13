@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { convert } from '@app/core/utils/response-utils';
 import { Category, ExternalCategory } from '@app/shared/model';
@@ -27,11 +27,31 @@ export class CategoryService {
             .pipe(map((tree) => convert(Category, tree)));
     }
 
-    public updateTree(tree: Category[]): Observable<Category[]> {
-        return this.http.put<Category[]>(`${this.resourceUrl}/tree`, tree).pipe(map((categories) => convert(Category, categories)));
+    public updateTree(categories: Category[]): Observable<Category[]> {
+        return this.http.put<Category[]>(`${this.resourceUrl}/tree`, categories).pipe(map((cat) => convert(Category, cat)));
     }
 
-    public getExternal(): Observable<ExternalCategory[]> {
-        return this.http.get<ExternalCategory[]>(`${this.resourceUrl}/external`).pipe(map((externalCategories) => convert(ExternalCategory, externalCategories)));
+    public createCategory(category: Category, parent?: Category): Observable<Category> {
+        let options = {};
+        if (parent) {
+            options = { params: { parentId: parent.id } };
+        }
+        return this.http.post<Category>(this.resourceUrl, category, options).pipe(map((cat) => convert(Category, cat)));
+    }
+
+    public updateCategory(category: Category, parent?: Category): Observable<Category> {
+        let options = {};
+        if (parent) {
+            options = { params: { parentId: parent.id } };
+        }
+        return this.http.put<Category>(this.resourceUrl, category, options).pipe(map((cat) => convert(Category, cat)));
+    }
+
+    public deleteCategory(id: number): Observable<HttpResponse<void>> {
+        return this.http.delete<void>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    public getExternalCategories(): Observable<ExternalCategory[]> {
+        return this.http.get<ExternalCategory[]>(`${this.resourceUrl}/external-categories`).pipe(map((externalCategories) => convert(ExternalCategory, externalCategories)));
     }
 }
