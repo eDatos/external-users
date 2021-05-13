@@ -32,9 +32,6 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1619605919000-4">
-        <addUniqueConstraint columnNames="external_item_fk" constraintName="UK_ojf8guh1ulama15ss6yixbo6i" tableName="tb_categories_external_items"/>
-    </changeSet>
     <changeSet author="arte" id="1619605919000-5">
         <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_categories_external_items" constraintName="FK350peo522parsl4jaxuijfitj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
     </changeSet>
