@@ -1,20 +1,15 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import org.siemac.metamac.rest.common.v1_0.domain.InternationalString;
 import org.siemac.metamac.rest.structural_resources.v1_0.domain.Categories;
-import org.siemac.metamac.rest.structural_resources.v1_0.domain.ItemResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
-import es.gobcan.istac.edatos.external.users.core.domain.vo.LocalisedStringVO;
+import es.gobcan.istac.edatos.external.users.core.mapper.ItemResourceMapper;
 import es.gobcan.istac.edatos.external.users.core.service.EDatosApisLocator;
 import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
 
@@ -24,39 +19,23 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
     private final Logger log = LoggerFactory.getLogger(StructuralResourcesServiceImpl.class);
 
     private final EDatosApisLocator eDatosApisLocator;
+    /**
+     * Amount of resources that can be obtained in a request.
+     */
+    private static final String LIMIT = String.valueOf(Integer.MAX_VALUE);
 
-    public StructuralResourcesServiceImpl(EDatosApisLocator eDatosApisLocator) {
+    private final ItemResourceMapper itemResourceMapper;
+
+    public StructuralResourcesServiceImpl(EDatosApisLocator eDatosApisLocator, ItemResourceMapper itemResourceMapper) {
         this.eDatosApisLocator = eDatosApisLocator;
+        this.itemResourceMapper = itemResourceMapper;
     }
 
     @Override
     @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "externalCategories")
     public List<ExternalCategoryEntity> getCategories() {
-        log.info("Making request to SRM: GET categories");
-        Categories c = eDatosApisLocator.srmExternal().findCategories("~all", "~all", "~all", null, null, String.valueOf(Integer.MAX_VALUE), null);
-        List<ExternalCategoryEntity> categories = new ArrayList<>();
-        List<ItemResource> resources = c.getCategories();
-        for (ItemResource resource : resources) {
-            categories.add(itemResourceToExternalCategory(resource));
-        }
-        return categories;
-    }
-
-    private ExternalCategoryEntity itemResourceToExternalCategory(ItemResource resource) {
-        ExternalCategoryEntity externalCategory = new ExternalCategoryEntity();
-
-        externalCategory.setCode(resource.getId());
-        externalCategory.setNestedCode(resource.getNestedId());
-        externalCategory.setUrn(resource.getUrn());
-        externalCategory.setName(internationalStringToVO(resource.getName()));
-
-        return externalCategory;
-    }
-
-    private InternationalStringVO internationalStringToVO(InternationalString resource) {
-        InternationalStringVO internationalString = new InternationalStringVO();
-        internationalString.getTexts()
-                .addAll(resource.getTexts().stream().map(localisedString -> new LocalisedStringVO(localisedString.getValue(), localisedString.getLang())).collect(Collectors.toSet()));
-        return internationalString;
+        log.info("Making request to Structural Resources Manager to GET all the categories");
+        Categories categories = eDatosApisLocator.srmExternal().findCategories("~all", "~all", "~all", null, null, LIMIT, null);
+        return itemResourceMapper.toExternalCategoryEntities(categories);
     }
 }

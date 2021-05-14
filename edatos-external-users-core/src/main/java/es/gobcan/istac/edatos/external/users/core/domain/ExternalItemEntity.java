@@ -1,6 +1,8 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Convert;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -76,6 +79,9 @@ public class ExternalItemEntity extends AbstractVersionedEntity {
     @Convert(converter = TypeExternalArtefactsEnumConverter.class)
     protected TypeExternalArtefactsEnum type;
 
+    @ManyToMany(mappedBy = "externalItems")
+    protected final Set<CategoryEntity> categories = new HashSet<>();
+
     @Override
     public Long getId() {
         return id;
@@ -115,6 +121,10 @@ public class ExternalItemEntity extends AbstractVersionedEntity {
 
     public void setType(TypeExternalArtefactsEnum type) {
         this.type = type;
+    }
+
+    public Set<CategoryEntity> getCategories() {
+        return categories;
     }
 
     @Override

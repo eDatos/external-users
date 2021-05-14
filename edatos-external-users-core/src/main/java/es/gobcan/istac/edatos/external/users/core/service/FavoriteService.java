@@ -3,11 +3,11 @@ package es.gobcan.istac.edatos.external.users.core.service;
 import java.util.List;
 import java.util.Map;
 
-import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 
@@ -23,4 +23,5 @@ public interface FavoriteService {
     void delete(FavoriteEntity favorite);
     Map<Long, Long> getCategorySubscribers();
     List<FavoriteEntity> findByExternalUser();
+    List<FavoriteEntity> findByCategory(CategoryEntity category);
 }

@@ -22,7 +22,11 @@ public class ApplicationTemplateSecurity {
         return this.isAdmin(authentication);
     }
 
-    public boolean canUpdateCategoryTree(Authentication authentication) {
+    public boolean canUpdateCategory(Authentication authentication) {
+        return this.isAdmin(authentication);
+    }
+
+    public boolean canDeleteCategory(Authentication authentication) {
         return this.isAdmin(authentication);
     }
 
