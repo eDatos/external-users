@@ -1,0 +1,16 @@
+{
+    "issues": {
+        "entity": {
+            "email": "Email",
+            "surname1": "Apellido 1",
+            "surname2": "Apellido 2",
+            "name": "Nombre",
+            "subject": "Asunto",
+            "message": "Mensaje"
+        },
+        "home": {
+            "title": "Incidencias"
+        },
+        "name": "Incidencia"
+    }
+}
