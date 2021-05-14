@@ -1,14 +1,59 @@
-import { BaseVersionedEntity, BaseEntity } from 'arte-ng/model';
-import { LocalisedString } from './localised-string.model';
+import { CURRENT_LANGUAGE } from '@app/core/service';
 import { Type } from 'class-transformer';
-
-export class InternationalString extends BaseVersionedEntity implements BaseEntity {
-    public id?: number;
-
+import * as _ from 'lodash';
+import { LocalisedString } from './localised-string.model';
+export class InternationalString {
     @Type(() => LocalisedString)
-    public texts?: LocalisedString[] = [];
+    public texts: LocalisedString[] = [];
 
     public getLocalisedLabel(locale: string): string | undefined {
-        return this.texts?.find((localisedString) => localisedString.locale === locale)?.label;
+        return this.texts.find((localisedString) => localisedString.locale === locale)?.label;
+    }
+
+    public getLocalisedString(locale: string): LocalisedString | undefined {
+        return this.texts.find((localisedString) => localisedString.locale === locale);
+    }
+
+    public isEmptyOrBlank(): boolean {
+        return this.texts.length === 0 || this.texts.every((text) => text.label.trim().length === 0);
+    }
+
+    public has(locale: string): boolean {
+        return !!this.getLocalisedString(locale);
+    }
+
+    public add(locale: string, label: string): void;
+    public add(text: LocalisedString): void;
+    public add(textOrLocale: string | LocalisedString, label?: string): void {
+        if (textOrLocale instanceof LocalisedString) {
+            const localisedString = this.getLocalisedString(textOrLocale.locale);
+            if (!localisedString) {
+                this.texts.push(textOrLocale);
+            } else {
+                localisedString.label = textOrLocale.label;
+            }
+        } else {
+            if (this.has(textOrLocale)) {
+                this.getLocalisedString(textOrLocale).label = label;
+            } else {
+                this.texts.push(new LocalisedString(textOrLocale, label));
+            }
+        }
+    }
+
+    public remove(locale: string): void {
+        _.remove(this.texts, (text) => text.locale === locale);
+    }
+
+    public getLocales(): string[] {
+        return this.texts.map((text) => text.locale);
+    }
+
+    public getLabels(): string[] {
+        return this.texts.map((text) => text.label);
+    }
+
+    public get val(): string | undefined {
+        return this.getLocalisedLabel(CURRENT_LANGUAGE);
     }
 }

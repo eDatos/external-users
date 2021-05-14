@@ -1,4 +1,4 @@
-import { ExternalUser } from '@app/core/model';
+import { User } from '@app/core/model';
 import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
 
@@ -9,6 +9,6 @@ export class Filter extends BaseVersionedAndAuditingEntity {
     public lastAccessDate: Date;
     public notes: string | null = null;
 
-    @Type(() => ExternalUser)
-    public externalUser: ExternalUser;
+    @Type(() => User)
+    public externalUser: User;
 }
