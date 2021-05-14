@@ -388,7 +388,7 @@
             "createOrEditLabel": "Create or edit a user",
             "favorites": "Favorites",
             "filters": "Filters",
-            "includeDeleted": "Include Deleted",
+            "includeDeleted": "Include deactivated",
             "title": "Users"
         },
         "language": "Language",
@@ -408,7 +408,7 @@
         "roles": "Roles",
         "status": {
             "active": "Active",
-            "deleted": "Removed",
+            "deactivated": "Deactivated",
             "name": "State"
         },
         "surname1": "Surname",
@@ -488,7 +488,7 @@
             "lastAccessDate": "Last Access Date",
             "name": "First Name",
             "notes": "Notes",
-            "permalink": "Permalink"
+            "permalink": "URL"
         },
         "form": {
             "cancel": "Cancel",

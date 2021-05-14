@@ -5,6 +5,7 @@ import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
 import { Filter } from '@app/shared/model';
 import { FilterService } from '@app/shared/service';
 import { LazyLoadEvent } from 'primeng/api';
+import { ConfigService } from '@app/config';
 
 @Component({
     selector: 'app-filter-table',
@@ -49,7 +50,7 @@ export class FilterTableComponent implements OnInit {
     private sortPredicate = 'created_date';
     private reverse = false;
 
-    constructor(private filterService: FilterService) {}
+    constructor(private filterService: FilterService, private configService: ConfigService) {}
 
     public ngOnInit(): void {
         this.loadAll();
@@ -88,5 +89,10 @@ export class FilterTableComponent implements OnInit {
     public onSuccess(response: ResponseWrapper<Filter[]>) {
         this.filterAmount = response.totalCount();
         this.filters = response.body;
+    }
+
+    public getVisualizerPath(): string {
+        const config = this.configService.getConfig();
+        return config.metamac.visualizerPath;
     }
 }

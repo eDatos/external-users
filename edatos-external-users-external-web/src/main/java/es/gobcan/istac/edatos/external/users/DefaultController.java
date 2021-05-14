@@ -32,6 +32,8 @@ public class DefaultController {
 
     private String faviconUrl;
 
+    private String visualizerPath;
+
     @PostConstruct
     public void init() {
         // TODO EDATOS-3215 y EDATOS-3266 Pendiente de cambio : this.faviconUrl = this.metadataService.retrieveFaviconUrl();
@@ -44,6 +46,7 @@ public class DefaultController {
         log.debug("DefaultController: Contextpath = {}  ServletPath = {}", request.getContextPath(), request.getServletPath());
         Map<String, Object> model = new HashMap<>();
         model.put("endpoint", applicationProperties.getEndpoint());
+        model.put("metamac", applicationProperties.getMetamac());
         model.put("faviconUrl", this.faviconUrl);
         model.put("headerHtml", htmlService.getHeaderHtml());
         model.put("footerHtml", htmlService.getFooterHtml());

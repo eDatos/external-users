@@ -4,10 +4,10 @@
             <label translate="filter.search.name"></label>
             <arte-input
                 (keyup)="filter()"
-                [(ngModel)]="filters.user"
+                [(ngModel)]="filters.name"
                 [attr.aria-label]="'filter.search.name' | translate"
-                name="filterUserSearch"
-                [placeholder]="'filter.search.placeholderForUserSearch'"
+                name="filterNameSearch"
+                [placeholder]="'filter.search.placeholderForFilterNameSearch'"
             ></arte-input>
         </div>
         <div class="form-group col-md-3 ac-ui-unfluid">
@@ -21,10 +21,10 @@
         <div class="form-group col-md-5">
             <arte-input
                 (keyup)="filter()"
-                [(ngModel)]="filters.name"
+                [(ngModel)]="filters.user"
                 [attr.aria-label]="'filter.search.name' | translate"
-                name="filterNameSearch"
-                [placeholder]="'filter.search.placeholderForFilterNameSearch'"
+                name="filterUserSearch"
+                [placeholder]="'filter.search.placeholderForUserSearch'"
             ></arte-input>
         </div>
     </div>

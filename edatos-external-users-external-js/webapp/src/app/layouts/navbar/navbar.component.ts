@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { VERSION } from '@app/app.constants';
 import { AccountUserService, LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
 import { DeleteConfirmDialogComponent } from '@app/modules/account';
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit {
         private principal: Principal,
         private profileService: ProfileService,
         private genericModalService: GenericModalService,
-        private userService: AccountUserService
+        private userService: AccountUserService,
+        private router: Router
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
@@ -44,6 +46,7 @@ export class NavbarComponent implements OnInit {
     logout() {
         this.collapseNavbar();
         this.loginService.logout();
+        this.router.navigate(['login']);
     }
 
     toggleNavbar() {
