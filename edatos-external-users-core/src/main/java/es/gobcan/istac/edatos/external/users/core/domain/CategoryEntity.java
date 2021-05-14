@@ -50,6 +50,14 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
 
+    /**
+     * Determines the position of the node in the tree. Starts at 0, meaning it will be the first,
+     * just below it's parent if it has one, or the first of the root.
+     */
+    @NotNull
+    @Column(nullable = false)
+    private Integer index = 0;
+
     @ManyToOne
     @JoinColumn(name = "parent_fk")
     private CategoryEntity parent;
@@ -79,6 +87,14 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     public void setName(InternationalStringVO name) {
         this.name = name;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public CategoryEntity getParent() {

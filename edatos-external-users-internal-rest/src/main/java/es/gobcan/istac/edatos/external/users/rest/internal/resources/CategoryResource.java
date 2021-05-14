@@ -91,8 +91,7 @@ public class CategoryResource extends AbstractResource {
     @PreAuthorize("@secChecker.canUpdateCategory(authentication)")
     public ResponseEntity<List<CategoryDto>> updateCategory(@RequestBody List<CategoryDto> category) {
         List<CategoryEntity> categoryEntity = categoryMapper.toEntities(category);
-        categoryService.updateTree(categoryEntity);
-        List<CategoryDto> response = categoryMapper.toDtos(categoryService.getTree());
+        List<CategoryDto> response = categoryMapper.toDtos(categoryService.updateTree(categoryEntity));
         return ResponseEntity.ok(response);
     }
 

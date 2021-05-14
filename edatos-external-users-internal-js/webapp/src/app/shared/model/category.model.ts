@@ -6,6 +6,8 @@ import { InternationalString } from './international-string.model';
 export class Category extends BaseVersionedAndAuditingEntity {
     public subscribers = 0;
 
+    public index = 0;
+
     @Type(() => InternationalString)
     public name = new InternationalString();
 

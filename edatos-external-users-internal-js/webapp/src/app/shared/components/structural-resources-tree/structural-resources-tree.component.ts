@@ -126,7 +126,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public ngOnInit(): void {
         this.setMode();
         this.categoryService.getTree().subscribe((tree) => {
-            this.createTree(this.sort(tree));
+            this.createTree(tree);
         });
     }
 
@@ -172,9 +172,11 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             if (!parent.children) {
                 parent.children = [];
             }
+            node.data.index = parent.children.length;
             parent.children.push(node);
             parent.data.children.push(node.data);
         } else {
+            node.data.index = this.tree.length;
             this.tree.push(node);
         }
         this.nodeList.push(node);
@@ -203,7 +205,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         this.disableNodeEdit(node);
         this.setLoadingNode(node, false);
 
-        const saveOrUpdateCategory = node.data.id != null ? this.categoryService.createCategory : this.categoryService.updateCategory;
+        const saveOrUpdateCategory = (node.data.id != null ? this.categoryService.createCategory : this.categoryService.updateCategory).bind(this.categoryService);
 
         saveOrUpdateCategory(node.data, node.parent?.data)
             .pipe(finalize(() => this.unsetLoadingNode(node, false)))
@@ -243,29 +245,12 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public onNodeDrop(event: { dragNode: CategoryTreeNode; dropNode: CategoryTreeNode } & ({ index: number } | { dropIndex: number })) {
-        // This function is executed *before* the tree is reorganized, meaning we can't rely on the node information
-        // itself to know who is it's parent.
-        //
-        // By the way the PrimeNG tree works, we receive two main elements: the node that was selected and dragged
-        // and the drop node. The dropNode can be a parent or a sibling depending of the field present in the event obj:
-        //  - If the event object contains an 'index' property, dropNode it's the parent of the dragged node.
-        //  - If the event object contains a 'dropIndex' property, dropNode it's a sibling of the dragged node, and the
-        //    parent of dropNode will be the same as ours.
-        //
-        // In both cases, 'index' and 'dropIndex' represent the position where the dragged node is in the list.
-        let parent: CategoryTreeNode;
-        if (event.hasOwnProperty('index')) {
-            parent = event.dropNode;
-        } else {
-            parent = event.dropNode.parent;
-        }
-        parent?.data.children.push(event.dragNode.data);
-        _.pull(event.dragNode.parent?.data.children, event.dragNode.data);
+        this.reconstructTree(this.tree);
         this.loading = true;
         this.categoryService
             .updateTree(this.tree.map((node) => node.data))
             .pipe(finalize(() => (this.loading = false)))
-            .subscribe((tree) => this.createTree(this.sort(tree)));
+            .subscribe((tree) => this.createTree(tree));
     }
 
     private setNodeNameFromInternationalString(node: CategoryTreeNode, name: InternationalString) {
@@ -273,23 +258,17 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         node.label = name.val;
     }
 
-    private sort(categories: Category[]): Category[] {
-        categories.sort((a, b) => (a.name.val! < b.name.val! ? -1 : 1));
-        for (const element of categories) {
-            this.sort(element.children);
-        }
-        return categories;
-    }
-
     private categoryListToCategoryTree(categories: Category[]): Observable<CategoryTreeNode[]> {
         return of(
-            categories?.map((category) => {
-                const children: CategoryTreeNode[] = [];
-                this.categoryListToCategoryTree(category.children).subscribe((treeNodes) => {
-                    children.push(...treeNodes);
-                });
-                return this.categoryToCategoryTreeNode(category, children);
-            })
+            categories
+                ?.map((category) => {
+                    const children: CategoryTreeNode[] = [];
+                    this.categoryListToCategoryTree(category.children).subscribe((treeNodes) => {
+                        children.push(...treeNodes);
+                    });
+                    return this.categoryToCategoryTreeNode(category, children);
+                })
+                .sort((a, b) => (a.data.index < b.data.index ? -1 : 1))
         );
     }
 
@@ -351,6 +330,16 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 this.selectionMode = 'single';
                 this.enableDragAndDrop = true;
                 break;
+        }
+    }
+
+    private reconstructTree(tree: CategoryTreeNode[]) {
+        for (const [index, node] of tree.entries()) {
+            node.data.index = index;
+            node.data.children = node.children.map((child) => child.data);
+        }
+        for (const node of tree) {
+            this.reconstructTree(node.children);
         }
     }
 }

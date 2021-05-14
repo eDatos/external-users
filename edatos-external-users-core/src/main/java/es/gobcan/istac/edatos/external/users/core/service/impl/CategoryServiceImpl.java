@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryEntity> updateTree(List<CategoryEntity> tree) {
-        return categoryRepository.save(tree);
+        tree = categoryRepository.save(new HashSet<>(tree));
+        categoryRepository.flush();
+        return tree;
     }
 
     @Override

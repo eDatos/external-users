@@ -19,6 +19,9 @@
             <column name="name" type="JSONB">
                 <constraints nullable="false"/>
             </column>
+            <column name="index" type="int4">
+                <constraints nullable="false"/>
+            </column>
             <column name="parent_fk" type="BIGINT"/>
         </createTable>
     </changeSet>

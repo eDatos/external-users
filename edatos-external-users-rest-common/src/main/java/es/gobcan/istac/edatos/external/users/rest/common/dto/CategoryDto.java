@@ -9,6 +9,7 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     private Long subscribers;
     private InternationalStringDto name;
+    private Integer index;
     private List<ExternalItemDto> resources;
     private List<CategoryDto> children = new ArrayList<>();
 
@@ -26,6 +27,14 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     public void setName(InternationalStringDto name) {
         this.name = name;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public List<ExternalItemDto> getResources() {
