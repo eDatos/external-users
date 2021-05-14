@@ -9,6 +9,11 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
     public static final CommonServiceExceptionType GENERIC_ERROR = create("exception.external_users.generic");
 
     /********
+     * CATEGORY
+     ********/
+    public static final CommonServiceExceptionType CANNOT_DELETE_CATEGORY_IF_IT_HAS_SUBSCRIBERS = create("exception.external_users.category.cannot_delete_category_if_it_has_subscribers");
+
+    /********
      * OPERATION
      ********/
     public static final CommonServiceExceptionType OPERATION_NOT_FOUND = create("exception.external_users.operation.not_found");

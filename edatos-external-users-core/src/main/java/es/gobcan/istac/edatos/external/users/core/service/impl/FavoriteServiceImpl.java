@@ -5,12 +5,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import es.gobcan.istac.edatos.external.users.core.domain.*;
-import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
-import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
@@ -22,7 +18,9 @@ import org.springframework.stereotype.Service;
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.FavoriteRepository;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
@@ -107,14 +105,19 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "categories")
+    public Map<Long, Long> getCategorySubscribers() {
+        return favoriteRepository.getCategoriesSubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
+    }
+
+    @Override
     public void delete(FavoriteEntity favorite) {
         delete(favorite.getExternalUser(), favorite.getCategory());
     }
 
     @Override
-    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "categories")
-    public Map<Long, Long> getCategorySubscribers() {
-        return favoriteRepository.getCategorySubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
+    public List<FavoriteEntity> findByCategory(CategoryEntity category) {
+        return this.favoriteRepository.findByCategory(category);
     }
 
     public void delete(ExternalUserEntity externalUser, CategoryEntity parent) {

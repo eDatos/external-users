@@ -192,27 +192,23 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             _.pull(this.tree, node);
         }
         if (node.data.id) {
+            this.loading = true;
             this.categoryService
                 .deleteCategory(node.data.id)
-                .pipe(finalize(() => this.unsetLoadingNode(node)))
-                .subscribe(() => this.ngOnInit());
+                .pipe(
+                    finalize(() => {
+                        this.ngOnInit();
+                        this.loading = false;
+                    })
+                )
+                .subscribe();
         }
     }
 
     public saveNodeName(node: CategoryTreeNode, name: InternationalString) {
-        const oldName = node.data.name;
         this.setNodeNameFromInternationalString(node, name);
         this.disableNodeEdit(node);
-        this.setLoadingNode(node, false);
-
-        const saveOrUpdateCategory = (node.data.id != null ? this.categoryService.createCategory : this.categoryService.updateCategory).bind(this.categoryService);
-
-        saveOrUpdateCategory(node.data, node.parent?.data)
-            .pipe(finalize(() => this.unsetLoadingNode(node, false)))
-            .subscribe({
-                next: (category) => (node.data = category),
-                error: () => this.setNodeNameFromInternationalString(node, oldName),
-            });
+        this.updateTree();
     }
 
     public disableNodeEdit(node: CategoryTreeNode) {
@@ -231,26 +227,31 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public saveRemap(node: CategoryTreeNode, selectedResources: ExternalCategory[]) {
-        const oldSelectedResources = node.data.resources;
         node.data.resources = selectedResources;
         node.editMode = null;
-        this.setLoadingNode(node, false);
-        this.categoryService
-            .updateCategory(node.data, node.parent?.data)
-            .pipe(finalize(() => this.unsetLoadingNode(node, false)))
-            .subscribe({
-                next: (category) => (node.data = category),
-                error: () => (node.data.resources = oldSelectedResources),
-            });
+        this.updateTree();
     }
 
     public onNodeDrop(event: { dragNode: CategoryTreeNode; dropNode: CategoryTreeNode } & ({ index: number } | { dropIndex: number })) {
-        this.reconstructTree(this.tree);
         this.loading = true;
+        this.reconstructTree(this.tree);
         this.categoryService
             .updateTree(this.tree.map((node) => node.data))
             .pipe(finalize(() => (this.loading = false)))
-            .subscribe((tree) => this.createTree(tree));
+            .subscribe({
+                next: (tree) => this.createTree(tree),
+                error: () => this.ngOnInit(),
+            });
+    }
+
+    private updateTree() {
+        this.categoryService
+            .updateTree(this.tree.map((node) => node.data))
+            .pipe(finalize(() => (this.loading = false)))
+            .subscribe({
+                next: (tree) => this.createTree(tree),
+                error: () => this.ngOnInit(),
+            });
     }
 
     private setNodeNameFromInternationalString(node: CategoryTreeNode, name: InternationalString) {

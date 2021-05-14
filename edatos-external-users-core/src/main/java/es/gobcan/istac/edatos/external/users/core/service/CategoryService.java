@@ -16,7 +16,5 @@ public interface CategoryService {
     Page<CategoryEntity> find(DetachedCriteria criteria, Pageable pageable);
     List<CategoryEntity> getTree();
     List<CategoryEntity> updateTree(List<CategoryEntity> tree);
-    CategoryEntity createCategory(CategoryEntity category);
-    CategoryEntity updateCategory(CategoryEntity category);
     Optional<CategoryEntity> delete(Long id);
 }

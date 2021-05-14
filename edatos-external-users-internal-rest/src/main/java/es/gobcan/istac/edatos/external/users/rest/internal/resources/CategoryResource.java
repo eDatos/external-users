@@ -11,7 +11,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -92,24 +91,6 @@ public class CategoryResource extends AbstractResource {
     public ResponseEntity<List<CategoryDto>> updateCategory(@RequestBody List<CategoryDto> category) {
         List<CategoryEntity> categoryEntity = categoryMapper.toEntities(category);
         List<CategoryDto> response = categoryMapper.toDtos(categoryService.updateTree(categoryEntity));
-        return ResponseEntity.ok(response);
-    }
-
-    @Timed
-    @PostMapping
-    @PreAuthorize("@secChecker.canCreateCategory(authentication)")
-    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto category, @RequestParam(required = false) Long parentId) {
-        CategoryEntity categoryEntity = categoryMapper.toEntity(category, parentId);
-        CategoryDto response = categoryMapper.toDto(categoryService.createCategory(categoryEntity));
-        return ResponseEntity.ok(response);
-    }
-
-    @Timed
-    @PutMapping
-    @PreAuthorize("@secChecker.canUpdateCategory(authentication)")
-    public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto category, @RequestParam(required = false) Long parentId) {
-        CategoryEntity categoryEntity = categoryMapper.toEntity(category, parentId);
-        CategoryDto response = categoryMapper.toDto(categoryService.updateCategory(categoryEntity));
         return ResponseEntity.ok(response);
     }
 

@@ -20,9 +20,8 @@ import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesSer
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalItemDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
-import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
-@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {GenericMapperResolver.class, InternationalStringVOMapper.class, ExternalItemMapper.class})
+@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {InternationalStringVOMapper.class, ExternalItemMapper.class})
 public abstract class CategoryMapper implements EntityMapper<CategoryDto, CategoryEntity> {
 
     @Autowired

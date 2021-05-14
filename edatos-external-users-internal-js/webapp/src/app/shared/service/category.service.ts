@@ -31,22 +31,6 @@ export class CategoryService {
         return this.http.put<Category[]>(`${this.resourceUrl}/tree`, categories).pipe(map((cat) => convert(Category, cat)));
     }
 
-    public createCategory(category: Category, parent?: Category): Observable<Category> {
-        let options = {};
-        if (parent) {
-            options = { params: { parentId: parent.id } };
-        }
-        return this.http.post<Category>(this.resourceUrl, category, options).pipe(map((cat) => convert(Category, cat)));
-    }
-
-    public updateCategory(category: Category, parent?: Category): Observable<Category> {
-        let options = {};
-        if (parent) {
-            options = { params: { parentId: parent.id } };
-        }
-        return this.http.put<Category>(this.resourceUrl, category, options).pipe(map((cat) => convert(Category, cat)));
-    }
-
     public deleteCategory(id: number): Observable<HttpResponse<void>> {
         return this.http.delete<void>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }

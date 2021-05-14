@@ -3,6 +3,7 @@ package es.gobcan.istac.edatos.external.users.core.domain;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -168,5 +169,9 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public Stream<CategoryEntity> flattened() {
+        return Stream.concat(Stream.of(this), children.stream().flatMap(CategoryEntity::flattened));
     }
 }
