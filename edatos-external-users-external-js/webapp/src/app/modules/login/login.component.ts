@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     }
 
     private navigateToFilter() {
-        this.router.navigate(['favorite']);
+        this.router.navigate(['filter']);
     }
 
     public navigateToSignup() {

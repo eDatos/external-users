@@ -31,13 +31,13 @@ public class DefaultController {
     private final Logger log = LoggerFactory.getLogger(DefaultController.class);
 
     private String faviconUrl;
-
-    private String visualizerPath;
+    private String navbarUrl;
 
     @PostConstruct
     public void init() {
         // TODO EDATOS-3215 y EDATOS-3266 Pendiente de cambio : this.faviconUrl = this.metadataService.retrieveFaviconUrl();
         this.faviconUrl = metadataService.findProperty(applicationProperties.getMetadata().getMetamacFaviconUrlKey());
+        this.navbarUrl = metadataService.findProperty(applicationProperties.getMetadata().getMetamacNavbarPathKey());
     }
 
     @RequestMapping(value = {"", "/index.html", "/**/{path:[^\\.]*}"})
@@ -48,7 +48,7 @@ public class DefaultController {
         model.put("endpoint", applicationProperties.getEndpoint());
         model.put("metamac", applicationProperties.getMetamac());
         model.put("faviconUrl", this.faviconUrl);
-        model.put("headerHtml", htmlService.getHeaderHtml());
+        model.put("headerHtml", htmlService.getHeaderHtml(navbarUrl));
         model.put("footerHtml", htmlService.getFooterHtml());
 
         Map<String, Object> flashMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);

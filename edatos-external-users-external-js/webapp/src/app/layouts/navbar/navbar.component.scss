@@ -12,26 +12,21 @@ Navbar
 }
 
 .navbar {
-    background-color: $istac-blue;
+    background-color: $istac-gray;
     padding-left: $page-padding-left;
     padding-right: $page-padding-right;
     .dropdown-item.active,
     .dropdown-item.active:focus,
     .dropdown-item.active:hover {
-        background-color: $istac-blue-dark;
+        background-color: $istac-gray-dark;
     }
     ul.navbar-nav {
         .nav-item {
             white-space: nowrap;
             &.active {
-                background: $istac-blue-dark;
+                background: $istac-gray-dark;
             }
         }
-    }
-    .unsubscribe-dialog {
-        color: #6c757dc7;
-        cursor: pointer;
-        font-size: smaller;
     }
 }
 

@@ -156,6 +156,7 @@ logging:
 application:
     metadata:
         metamacFaviconUrlKey: metamac.app.style.favicon.url
+        metamacNavbarPathKey: metamac.app.style.header.url
         metamacPortalVisualizer: metamac.portal.web.external.visualizer
     endpoint:
         # Required: Aplication URL
