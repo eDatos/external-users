@@ -3,6 +3,7 @@ package es.gobcan.istac.edatos.external.users.core.domain;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -49,6 +51,14 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
 
+    /**
+     * Determines the position of the node in the tree. Starts at 0, meaning it will be the first,
+     * just below it's parent if it has one, or the first of the root.
+     */
+    @NotNull
+    @Column(nullable = false)
+    private Integer index = 0;
+
     @ManyToOne
     @JoinColumn(name = "parent_fk")
     private CategoryEntity parent;
@@ -59,7 +69,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private final Set<CategoryEntity> children = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinTable(name = "tb_categories_external_items", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_item_fk"))
     private final Set<ExternalItemEntity> externalItems = new HashSet<>();
 
@@ -78,6 +88,14 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     public void setName(InternationalStringVO name) {
         this.name = name;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 
     public CategoryEntity getParent() {
@@ -151,5 +169,9 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public Stream<CategoryEntity> flattened() {
+        return Stream.concat(Stream.of(this), children.stream().flatMap(CategoryEntity::flattened));
     }
 }

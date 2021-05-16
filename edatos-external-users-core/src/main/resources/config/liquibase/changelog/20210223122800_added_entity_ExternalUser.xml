@@ -55,7 +55,7 @@
     <changeSet author="arte" id="1614083280000-4">
         <addUniqueConstraint columnNames="email" constraintName="UC_TB_EXTERNAL_USERSEMAIL_COL" tableName="tb_external_users"/>
     </changeSet>
-     <changeSet author="Francisco Cruz (generated)" id="1619687374470-8">
+     <changeSet author="arte" id="1614083280000-5">
         <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_external_users_roles" constraintName="FK35rp8qvox3xtpksga7retcytt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
     </changeSet>
 </databaseChangeLog>

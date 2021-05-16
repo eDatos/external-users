@@ -1,7 +1,11 @@
-import { BaseVersionedEntity, BaseEntity } from 'arte-ng/model';
+export class LocalisedString {
+    public label: string;
+    public locale: string;
 
-export class LocalisedString extends BaseVersionedEntity implements BaseEntity {
-    constructor(public id?: number, public label?: string, public locale?: string, public isUnmodifiable?: Boolean) {
-        super();
+    constructor();
+    constructor(locale: string, label: string);
+    constructor(locale?: string, label?: string) {
+        this.label = label;
+        this.locale = locale;
     }
 }

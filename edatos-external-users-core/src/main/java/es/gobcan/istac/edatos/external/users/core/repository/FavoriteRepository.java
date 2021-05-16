@@ -21,9 +21,10 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
     Page<FavoriteEntity> findAll(DetachedCriteria criteria, Pageable pageable);
     List<FavoriteEntity> findAll(DetachedCriteria criteria);
     List<FavoriteEntity> findByExternalUser(ExternalUserEntity user);
+    List<FavoriteEntity> findByCategory(CategoryEntity category);
     Optional<FavoriteEntity> findByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
     void deleteByExternalUserAndCategory(ExternalUserEntity externalUser, CategoryEntity category);
 
     @Query("select new org.apache.commons.lang3.tuple.ImmutablePair(e.category.id, count(e)) from FavoriteEntity e group by e.category")
-    List<ImmutablePair<Long, Long>> getCategorySubscribers();
+    List<ImmutablePair<Long, Long>> getCategoriesSubscribers();
 }

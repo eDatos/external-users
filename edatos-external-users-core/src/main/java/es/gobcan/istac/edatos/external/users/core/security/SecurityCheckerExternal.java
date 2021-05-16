@@ -29,6 +29,10 @@ public class SecurityCheckerExternal {
         return this.isExternalUser(authentication);
     }
 
+    public boolean canUpdateCategoryTree(Authentication authentication) {
+        return this.isExternalUser(authentication);
+    }
+
     public boolean canAccessFavorites(Authentication authentication) {
         return this.isExternalUser(authentication);
     }
