@@ -8,6 +8,7 @@ import { Principal } from '@app/core/service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
     credentials: Credentials;
@@ -25,7 +26,7 @@ export class LoginComponent implements OnInit {
     }
 
     private navigateToFilter() {
-        this.router.navigate(['favorite']);
+        this.router.navigate(['filter']);
     }
 
     public navigateToSignup() {
