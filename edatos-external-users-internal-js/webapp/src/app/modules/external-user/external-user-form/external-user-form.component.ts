@@ -160,7 +160,6 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
             this.router.navigate(['..']);
         }
         this.toggleEditTreeMode();
-        console.log('HOLAA', this.inEditTreeMode);
     }
 
     private updateFavorites() {
