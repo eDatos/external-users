@@ -369,6 +369,10 @@
                 "fullname": "Enter name or surname",
                 "language": "Enter user languages"
             },
+            "labels": {
+                "fullname": "Name or surname",
+                "language": "Language"
+            },
             "rolEnum": {
                 "label": "Role"
             },
@@ -488,7 +492,8 @@
             "lastAccessDate": "Last Access Date",
             "name": "First Name",
             "notes": "Notes",
-            "permalink": "URL"
+            "permalink": "URL",
+            "owner": "Owner"
         },
         "form": {
             "cancel": "Cancel",
@@ -509,7 +514,9 @@
             "name": "Search filters",
             "placeholder": "Enter user name or email",
             "placeholderForFilterNameSearch": "",
-            "placeholderForUserSearch": ""
+            "placeholderForUserSearch": "",
+            "filterNameLabel": "Filter name",
+            "filterExternalUserLabel": "External user name"
         }
     },
     "global": {

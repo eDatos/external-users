@@ -369,6 +369,10 @@
                 "fullname": "Introduzca nombre o apellidos",
                 "language": "Introduzca idiomas del usuario"
             },
+            "labels": {
+                "fullname": "Nombre o apellidos",
+                "language": "Idioma"
+            },
             "rolEnum": {
                 "label": "Rol"
             },
@@ -488,28 +492,31 @@
             "lastAccessDate": "Fecha de último acceso",
             "name": "Nombre",
             "notes": "Notas",
-            "permalink": "URL"
+            "permalink": "URL",
+            "owner": "Propietario"
         },
         "form": {
             "cancel": "Cancelar",
-            "delete": "Eliminar filtro",
-            "edit": "Editar filtro",
+            "delete": "Eliminar consulta",
+            "edit": "Editar consulta",
             "goBack": "Volver al listado",
-            "legend": "Detalles del filtro",
-            "new": "Crear un nuevo filtro",
-            "save": "Guardar filtro"
+            "legend": "Detalles de la consulta personalizada",
+            "new": "Crear una nueva consulta personalizada",
+            "save": "Guardar consulta"
         },
         "home": {
-            "createLabel": "Crear filtro",
-            "title": "Filtros"
+            "createLabel": "Crear consulta personalizada",
+            "title": "Consultas personalizadas"
         },
-        "name": "Filtro",
+        "name": "Consulta personalizada",
         "search": {
-            "includeFromDeactivatedUsers": "Incluir filtros de usuarios desactivados",
-            "name": "Buscar filtros",
+            "includeFromDeactivatedUsers": "Consultas de usuarios desactivados",
+            "name": "Buscar consultas personalizadas",
             "placeholder": "",
-            "placeholderForFilterNameSearch": "Buscar filtros por nombre",
-            "placeholderForUserSearch": "Buscar filtros por datos del usuario (nombre, apellidos, email)"
+            "placeholderForFilterNameSearch": "Buscar consultas por nombre",
+            "placeholderForUserSearch": "Buscar consultas por datos del usuario (nombre, apellidos, email)",
+            "filterNameLabel": "Nombre de consulta personalizada",
+            "filterExternalUserLabel": "Nombre de usuario externo"
         }
     },
     "global": {
