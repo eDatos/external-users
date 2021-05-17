@@ -28,11 +28,11 @@ export class FilterListComponent implements OnInit {
             },
         },
         {
-            fieldName: 'email',
+            fieldName: 'externalUserOwner',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.entity.email',
+                translatePath: 'filter.entity.owner',
             },
         },
         {
@@ -41,6 +41,14 @@ export class FilterListComponent implements OnInit {
             header: {
                 handler: 'translate',
                 translatePath: 'filter.entity.lastAccessDate',
+            },
+        },
+        {
+            fieldName: 'creationDate',
+            sortable: true,
+            header: {
+                handler: 'translate',
+                translatePath: 'entity.audits.createdDate',
             },
         },
     ];
