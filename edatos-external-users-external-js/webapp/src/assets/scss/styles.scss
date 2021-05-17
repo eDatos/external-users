@@ -136,5 +136,14 @@ footer.istac-footer {
     position: fixed !important;
 }
 
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-header,
+.modal-footer {
+    background: #f8f8f8;
+}
+
 @import './_page';
 @import './_forms';

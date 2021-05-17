@@ -1,6 +1,7 @@
 {
     "global": {
         "title": "EDatos External Users",
+        "version": "Versión",
         "yes": "Sí",
         "no": "No",
         "browsehappy": "Está usando un navegador <strong>no actualizado</strong>. Por favor, <a href=\"http://browsehappy.com/?locale=en\">actualice su navegador</a> para mejorar su experiencia.",
@@ -78,7 +79,8 @@
             "publishExternally": "Publicar externamente",
             "change-password": "Cambiar contraseña",
             "data-protection-policy": "Política de protección de datos",
-            "unsubscribe": "Darse de baja"
+            "unsubscribe": "Darse de baja",
+            "about": "Acerca de"
         },
         "delete": {
             "title": "Confirmar operación de borrado"

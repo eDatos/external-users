@@ -83,8 +83,4 @@ export class SignupFormComponent implements OnInit {
     private onSaveError() {
         this.isSaving = false;
     }
-
-    public navigateToSignup() {
-        this.router.navigate(['login']);
-    }
 }

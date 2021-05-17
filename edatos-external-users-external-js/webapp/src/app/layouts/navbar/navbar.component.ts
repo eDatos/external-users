@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { VERSION } from '@app/app.constants';
 import { AccountUserService, LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
-import { DeleteConfirmDialogComponent } from '@app/modules/account';
+import { AboutDialogComponent, DeleteConfirmDialogComponent } from '@app/modules/account';
 import { GenericModalService } from 'arte-ng/services';
 
 @Component({
@@ -14,7 +13,6 @@ export class NavbarComponent implements OnInit {
     inProduction: boolean;
     public isCorrectlyLogged: boolean;
     public isNavbarCollapsed: boolean;
-    public version: string;
     public account: any;
 
     constructor(
@@ -26,7 +24,6 @@ export class NavbarComponent implements OnInit {
         private userService: AccountUserService,
         private router: Router
     ) {
-        this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
     }
 
@@ -72,5 +69,9 @@ export class NavbarComponent implements OnInit {
             this.collapseNavbar();
             this.loginService.logout();
         }
+    }
+
+    public openAboutDialog() {
+        this.genericModalService.open(AboutDialogComponent as Component, { user: this.account }, { container: '.app' });
     }
 }
