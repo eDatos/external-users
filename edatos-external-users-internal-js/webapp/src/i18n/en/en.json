@@ -350,6 +350,8 @@
         "columns": {
             "name": "Name",
             "nestedCode": "Nested code",
+            "schemaCode": "Schema code",
+            "schemaVersion": "Schema version",
             "urn": "URN"
         },
         "noResourceFound": "No external resource found"
@@ -723,10 +725,11 @@
         "editionModal": "Multilanguage edition of the resource name",
         "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
         "noRecordsFound": "No topic or operation found",
+        "remapModal": "Select topics",
         "subscribedUsers": "Subscribed users: {{amount}}"
     },
     "table": {
-        "globalSearchPlaceholder": "Global search",
+        "globalSearchPlaceholder": "Enter search terms",
         "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}",
         "pageReport": "{first}–{last} of {totalRecords}"
     }

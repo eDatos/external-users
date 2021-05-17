@@ -133,14 +133,6 @@
         }
     }
 
-    .ui-table-globalfilter-container {
-        float: right;
-
-        input {
-            width: 200px;
-        }
-    }
-
     .ui-datepicker {
         min-width: 25em;
 
@@ -230,6 +222,40 @@
                     font-weight: bold;
                 }
             }
+        }
+    }
+}
+
+::ng-deep {
+    .ui-table-globalfilter-container {
+        display: flex;
+
+        input {
+            width: 300px;
+        }
+    }
+
+    .ui-table-thead > tr > th {
+        border: 0 none;
+        text-align: left;
+
+        &.ui-filter-column {
+            border-top: 1px solid #c8c8c8;
+        }
+
+        &:first-child {
+            width: 3em;
+            text-align: center;
+        }
+    }
+
+    .ui-table-tbody > tr > td {
+        border: 0 none;
+        cursor: auto;
+
+        &:first-child {
+            width: 3em;
+            text-align: center;
         }
     }
 }

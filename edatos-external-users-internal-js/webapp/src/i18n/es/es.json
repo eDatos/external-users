@@ -350,6 +350,8 @@
         "columns": {
             "name": "Nombre",
             "nestedCode": "Código anidado",
+            "schemaCode": "Código del esquema",
+            "schemaVersion": "Versión del esquema",
             "urn": "URN"
         },
         "noResourceFound": "No se ha encontrado ningún recurso externo"
@@ -723,10 +725,11 @@
         "editionModal": "Edición multidioma del nombre del recurso",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
+        "remapModal": "Seleccionar temas",
         "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },
     "table": {
-        "globalSearchPlaceholder": "Búsqueda global",
+        "globalSearchPlaceholder": "Introducir términos de búsqueda",
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}",
         "pageReport": "{first}–{last} de {totalRecords}"
     }

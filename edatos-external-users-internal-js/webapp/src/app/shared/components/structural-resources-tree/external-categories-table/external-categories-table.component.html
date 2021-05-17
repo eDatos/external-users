@@ -26,8 +26,22 @@
             <th scope="col">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th scope="col" pSortableColumn="name.val">{{'externalCategoriesTable.columns.name' | translate}}<p-sortIcon field="name.val"> </p-sortIcon></th>
-            <th scope="col" pSortableColumn="nestedCode">{{'externalCategoriesTable.columns.nestedCode' | translate}}<p-sortIcon field="nestedCode"></p-sortIcon></th>
+            <th pSortableColumn="schema.code" scope="col">
+                {{'externalCategoriesTable.columns.schemaCode' | translate}}
+                <p-sortIcon field="schema.code"></p-sortIcon>
+            </th>
+            <th pSortableColumn="schema.version" scope="col">
+                {{'externalCategoriesTable.columns.schemaVersion' | translate}}
+                <p-sortIcon field="schema.version"></p-sortIcon>
+            </th>
+            <th scope="col" pSortableColumn="name.val">
+                {{'externalCategoriesTable.columns.name' | translate}}
+                <p-sortIcon field="name.val"></p-sortIcon>
+            </th>
+            <th scope="col" pSortableColumn="nestedCode">
+                {{'externalCategoriesTable.columns.nestedCode' | translate}}
+                <p-sortIcon field="nestedCode"></p-sortIcon>
+            </th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-resource>
@@ -35,18 +49,21 @@
             <td>
                 <p-tableCheckbox [value]="resource"></p-tableCheckbox>
             </td>
+            <td>{{resource.schema.code}}</td>
+            <td>{{resource.schema.version}}</td>
             <td>{{resource.name.val}}</td>
             <td>{{resource.nestedCode}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
         <tr>
-            <td colspan="2">{{'externalCategoriesTable.noResourceFound' | translate}}</td>
+            <td colspan="3">{{'externalCategoriesTable.noResourceFound' | translate}}</td>
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
+        <h3 style="text-align: left">Temas seleccionados</h3>
         <ul>
-            <li *ngFor="let externalCategory of selectedExternalCategories" style="text-align: left">{{externalCategory.name.val}}</li>
+            <li *ngFor="let externalCategory of selectedExternalCategories" style="text-align: left; font-weight: normal">{{externalCategory.name.val}}</li>
         </ul>
     </ng-template>
 </p-table>
