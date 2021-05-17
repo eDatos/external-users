@@ -1,7 +1,25 @@
 <div class="page">
-    <div class="page-header"></div>
+    <div class="page-header">
+        <div class="page-header-top">
+            <h2 class="page-header-title">
+                <span class="page-header-title-text" translate="issues.name"></span>
+            </h2>
+            <ng-container>
+                <button type="submit" form="issues-form" [disabled]="isSaving" class="btn btn-primary">
+                    <span class="fa fa-floppy-o"></span>
+                    <span translate="entity.action.save"></span>
+                </button>
+            </ng-container>
+            <ng-container>
+                <button type="submit" class="btn btn-default" (click)="navigateGoBack()">
+                    <span class="fa fa-undo"></span>
+                    <span translate="issues.action.goBack"></span>
+                </button>
+            </ng-container>
+        </div>
+    </div>
     <div class="page-body">
-        <form class="page-form" id="issues-form" name="issuesForm" role="form" novalidate #issuesForm="ngForm" autocomplete="off">
+        <form class="page-form" id="issues-form" name="issuesForm" role="form" (ngSubmit)="submit()" novalidate #issuesForm="ngForm" autocomplete="off">
             <fieldset class="page-section" arteAutofocus>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6 required">
@@ -13,7 +31,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group form-group-inline col-md-6">
+                    <div class="form-group form-group-inline col-md-6 required">
                         <div class="form-row">
                             <label class="form-label col-md-4" for="surname1">{{ "issues.entity.surname1" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
@@ -24,7 +42,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group form-group-inline col-md-6 required">
+                    <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
                             <label class="form-label col-md-4" for="surname2">{{ "issues.entity.surname2" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
@@ -33,7 +51,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group form-group-inline col-md-6">
+                    <div class="form-group form-group-inline col-md-6 required">
                         <div class="form-row">
                             <label class="form-label col-md-4" for="email">{{ "issues.entity.email" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
@@ -48,23 +66,30 @@
                         <div class="form-row">
                             <label class="form-label col-md-4" for="subject">{{ "issues.entity.subject" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
-                                <arte-input id="subject" name="subject" [(ngModel)]="issues.subject" [maxlength]="255" [required]="true"></arte-input>
+                                <arte-input id="subject" name="subject" [(ngModel)]="issues.subject" [maxlength]="255" [required]="true" ></arte-input>
                                 <!-- TODO: error messages -->
                             </div>
                         </div>
                     </div>
                     <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
-                            <label class="form-label col-md-4" for="email">{{ "issues.entity.email" | translate }}</label>
+                            <label class="form-label col-md-4" for="workplace">{{ "issues.entity.workplace" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
-                                Aquí va un selector
+                                <arte-autocomplete-enum
+                                    name="workplace"
+                                    [multiple]="false"
+                                    [(ngModel)]="issues.workplace"
+                                    [suggestionsEnum]="workplaceEnum"
+                                    [translationPath]="'issues.workplace.'"
+                                >
+                                </arte-autocomplete-enum>
                                 <!-- TODO: error messages -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group form-group-inline col-md-12">
+                    <div class="form-group form-group-inline col-md-12 required">
                         <div class="form-row">
                             <label class="form-label col-md-12" for="notes">{{ "issues.entity.message" | translate }}</label>
                             <div class="col-md-12 form-input-container errors-on-hover">
@@ -77,6 +102,7 @@
                                     name="message"
                                     [(ngModel)]="issues.message"
                                     [maxlength]="4000"
+                                    [required]="true"
                                 ></textarea>
                                 <!-- TODO: error messages -->
                             </div>
