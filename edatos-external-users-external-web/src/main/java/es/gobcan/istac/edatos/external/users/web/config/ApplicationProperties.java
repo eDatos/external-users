@@ -29,7 +29,6 @@ public class ApplicationProperties {
         private String endpoint;
         private String metamacNavbarKey;
         private String metamacFaviconUrlKey;
-        private String metamacNavbarPathKey;
 
         public String getEndpoint() {
             return endpoint;
@@ -53,14 +52,6 @@ public class ApplicationProperties {
 
         public void setMetamacFaviconUrlKey(String metamacFaviconUrlKey) {
             this.metamacFaviconUrlKey = metamacFaviconUrlKey;
-        }
-
-        public String getMetamacNavbarPathKey() {
-            return metamacNavbarPathKey;
-        }
-
-        public void setMetamacNavbarPathKey(String metamacNavbarPathKey) {
-            this.metamacNavbarPathKey = metamacNavbarPathKey;
         }
 
     }
