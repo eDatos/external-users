@@ -558,7 +558,9 @@
                 "logs": "Logs",
                 "main": "Administración",
                 "metrics": "Métricas",
-                "userManagement": "Gestión de usuarios"
+                "userManagement": "Gestión de usuarios",
+                "treeTopicsAdministration": "Administrar árbol de temas",
+                "reportIssue": "Informar de una incidencia"
             },
             "administracion": {
                 "main": "Administración"
