@@ -12,6 +12,7 @@ Navbar
 }
 
 .navbar {
+    min-height: $navbar-height;
     background-color: $istac-gray;
     padding-left: $page-padding-left;
     padding-right: $page-padding-right;
