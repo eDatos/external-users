@@ -25,16 +25,14 @@ public class EDatosApisLocator {
     public NoticesV1_0 getNoticesRestInternalFacadeV10() throws EDatosException {
         if (noticesV10 == null) {
             String baseApi = metadataConfigurationService.retrieveNoticesInternalApiUrlBase();
-            noticesV10 = JAXRSClientFactory.create(baseApi, NoticesV1_0.class, null, true); // true to do thread safe
+            noticesV10 = JAXRSClientFactory.create(baseApi, NoticesV1_0.class, null, true);
         }
-        // reset thread context
         WebClient.client(noticesV10).reset();
         WebClient.client(noticesV10).accept("application/xml");
-
         return noticesV10;
     }
 
-    public SrmRestExternalFacadeV10 srmExternal() throws EDatosException {
+    public SrmRestExternalFacadeV10 srmExternal() {
         if (srmV10 == null) {
             String baseApiUrl = metadataConfigurationService.retrieveSrmExternalApiUrlBase();
             log.info("Setting SRM external API base URL to '{}'", baseApiUrl);

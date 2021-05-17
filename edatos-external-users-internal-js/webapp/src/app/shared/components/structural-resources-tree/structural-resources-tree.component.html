@@ -3,17 +3,22 @@
     {{'structuralResourcesTree.helpMessage' | translate}}.
 </p>
 
+<button (click)="addNode()" *ngIf="mode === 'edit'" class="btn btn-link">
+    <span class="fa fa-plus"></span>
+    <span translate="structuralResourcesTree.addNewNode"></span>
+</button>
+
 <p-tree
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
     (onNodeDrop)="onNodeDrop($event)"
     [(selection)]="selectedResources"
-    [value]="resources"
+    [loading]="!tree || loading"
     [selectionMode]="selectionMode"
     [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
     [draggableNodes]="enableDragAndDrop"
     [droppableNodes]="enableDragAndDrop"
-    [loading]="!resources"
+    [value]="tree"
 >
     <ng-template *ngIf="mode === 'view'" let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
@@ -21,6 +26,7 @@
     </ng-template>
     <ng-template *ngIf="mode === 'edit'" let-node pTemplate="default">
         <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
+        <span class="subscribed-users mr-2">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
         <span class="badge badge-secondary mr-2">{{node.data.resources.length}}</span>
         <p-dialog
             *ngIf="node.editMode === 'name'"
@@ -58,7 +64,7 @@
             [focusOnShow]="true"
             [modal]="true"
             [dismissableMask]="true"
-            [header]="'structuralResourcesTree.editionModal' | translate"
+            [header]="'structuralResourcesTree.remapModal' | translate"
             [resizable]="false"
             [style]="{width: '80vw'}"
             [contentStyle]="{padding: '1.5em 2em', overflow: 'visible'}"
@@ -67,7 +73,7 @@
         >
             <app-external-categories-table #table [externalCategories]="externalCategories" [selectedExternalCategories]="node.data.resources"></app-external-categories-table>
             <p-footer>
-                <button type="button" class="btn btn-secondary">
+                <button (click)="disableNodeEdit(node)" class="btn btn-secondary" type="button">
                     <i class="fa fa-times" aria-hidden="true"></i>
                     <span>Cancelar</span>
                 </button>

@@ -13,15 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalItemEntity;
+import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalCategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalItemDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
-import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
-@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {GenericMapperResolver.class, InternationalStringVOMapper.class, ExternalItemMapper.class})
+@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {InternationalStringVOMapper.class, ExternalItemMapper.class})
 public abstract class CategoryMapper implements EntityMapper<CategoryDto, CategoryEntity> {
 
     @Autowired
@@ -33,6 +33,9 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     @Autowired
     ExternalCategoryRepository externalCategoryRepository;
 
+    @Autowired
+    CategoryRepository categoryRepository;
+
     @Override
     @Mapping(target = "subscribers", expression = "java(favoriteService.getCategorySubscribers().getOrDefault(entity.getId(), 0L))")
     @Mapping(target = "resources", source = "entity.externalItems")
@@ -42,6 +45,10 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     @Mapping(target = "parent", ignore = true)
     @Mapping(target = "externalItems", source = "dto.resources", qualifiedByName = "getExternalItemEntitiesFromUrn")
     public abstract CategoryEntity toEntity(CategoryDto dto);
+
+    @Mapping(target = "parent", expression = "java(parentId != null ? categoryRepository.getOne(parentId) : null)")
+    @Mapping(target = "externalItems", source = "dto.resources", qualifiedByName = "getExternalItemEntitiesFromUrn")
+    public abstract CategoryEntity toEntity(CategoryDto dto, Long parentId);
 
     @Named("getExternalItemEntitiesFromUrn")
     public Set<ExternalItemEntity> getExternalItemEntitiesFromUrn(List<ExternalItemDto> resources) {

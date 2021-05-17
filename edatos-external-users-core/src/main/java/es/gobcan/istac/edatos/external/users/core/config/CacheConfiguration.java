@@ -1,7 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -17,8 +15,6 @@ import org.springframework.web.context.WebApplicationContext;
 @Configuration
 @EnableCaching
 public class CacheConfiguration {
-
-    private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
 
     @Bean("requestScopedCacheManager")
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)

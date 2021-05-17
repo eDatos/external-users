@@ -5,3 +5,8 @@
 export const LANGUAGES: string[] = ['es'];
 
 export const DEFAULT_LANGUAGE = 'es';
+export let CURRENT_LANGUAGE = '';
+
+export function setCurrentLanguage(lang: string): void {
+    CURRENT_LANGUAGE = lang;
+}

@@ -10,7 +10,8 @@
         "action": {
             "forgottenPassword": "Pulse aquí para establecer una nueva",
             "signup": "Registrar nueva cuenta",
-            "signin": "Iniciar sesión"
+            "signin": "Iniciar sesión",
+            "goBack": "Volver"
         }
     }
 }
