@@ -148,6 +148,11 @@
     "category": {
         "name": "Topic"
     },
+    "categoryMasterTree": {
+        "home": {
+            "title": "Edit the category master tree"
+        }
+    },
     "categorySubscriptions": {
         "home": {
             "title": "Thematic subscriptions"
@@ -536,6 +541,7 @@
             "admin": {
                 "apidocs": "API",
                 "audits": "Audit",
+                "categoryMasterTree": "Master category tree",
                 "configuration": "Configuration",
                 "dataProtectionPolicy": "Data protection policy",
                 "health": "Health",
@@ -713,6 +719,7 @@
         "name": "Statistical operation"
     },
     "structuralResourcesTree": {
+        "addNewNode": "Add root node",
         "editionModal": "Multilanguage edition of the resource name",
         "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
         "noRecordsFound": "No topic or operation found",

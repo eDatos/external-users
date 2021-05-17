@@ -148,6 +148,11 @@
     "category": {
         "name": "Tema"
     },
+    "categoryMasterTree": {
+        "home": {
+            "title": "Editar árbol maestro de categorías"
+        }
+    },
     "categorySubscriptions": {
         "home": {
             "title": "Suscripciones temáticas"
@@ -536,6 +541,7 @@
             "admin": {
                 "apidocs": "API",
                 "audits": "Auditoría",
+                "categoryMasterTree": "Árbol maestro de categorías",
                 "configuration": "Configuración",
                 "dataProtectionPolicy": "Política de protección de datos",
                 "health": "Salud",
@@ -713,11 +719,11 @@
         "name": "Operación estadística"
     },
     "structuralResourcesTree": {
+        "addNewNode": "Añadir nodo raíz",
         "editionModal": "Edición multidioma del nombre del recurso",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
-        "subscribedUsers": "Usuarios suscritos: {{amount}}",
-        "addNewNode": "Añadir nodo"
+        "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },
     "table": {
         "globalSearchPlaceholder": "Búsqueda global",

@@ -21,6 +21,7 @@ import {
     MetricsMonitoringModalComponent,
     MetricsService,
 } from '.';
+import { CategoryMasterTreeComponent } from './category-master-tree/category-master-tree.component';
 
 @NgModule({
     imports: [
@@ -33,7 +34,17 @@ import {
         ArteAuditInfoModule,
         ArteTriInputSwitchModule,
     ],
-    declarations: [AuditsComponent, LogsComponent, ConfigurationComponent, HealthCheckComponent, HealthModalComponent, MetricsMonitoringComponent, MetricsMonitoringModalComponent, DataProtectionPolicyComponent],
+    declarations: [
+        AuditsComponent,
+        LogsComponent,
+        ConfigurationComponent,
+        HealthCheckComponent,
+        HealthModalComponent,
+        MetricsMonitoringComponent,
+        MetricsMonitoringModalComponent,
+        DataProtectionPolicyComponent,
+        CategoryMasterTreeComponent,
+    ],
     entryComponents: [HealthModalComponent, MetricsMonitoringModalComponent],
     providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService, DataProtectionPolicyService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
