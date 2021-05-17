@@ -26,6 +26,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     public favorites: Favorite[];
 
     public inEditMode = false;
+    public inEditTreeMode = false;
 
     private subscription: Subscription;
 
@@ -40,6 +41,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     ) {
         const lastUrlSegment = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
         this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
+        this.inEditTreeMode = this.inEditTreeMode || lastUrlSegment === 'new';
     }
 
     public ngOnInit() {
@@ -67,6 +69,15 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
                 this.updateFavorites();
             }
         );
+    }
+
+    public saveTree() {
+        if (this.userId) {
+            this.load(this.userId);
+        } else {
+            this.router.navigate(['..']);
+        }
+        this.toggleEditTreeMode();
     }
 
     public load(id: number) {
@@ -136,6 +147,19 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public edit() {
         this.toggleEditMode();
+    }
+
+    public toggleEditTreeMode() {
+        this.inEditTreeMode = !this.inEditTreeMode;
+    }
+
+    public editTree() {
+        if (this.userId) {
+            this.load(this.userId);
+        } else {
+            this.router.navigate(['..']);
+        }
+        this.toggleEditTreeMode();
     }
 
     private updateFavorites() {

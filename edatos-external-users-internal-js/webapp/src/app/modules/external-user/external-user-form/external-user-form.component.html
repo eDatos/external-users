@@ -20,12 +20,6 @@
         </h2>
         <div class="page-header-btns">
             <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                <button (click)="edit()" *ngIf="!inEditMode && !externalUser.deletionDate" class="btn btn-secondary" type="button">
-                    <span class="fa fa-pencil"></span>
-                    <span translate="entity.action.edit"></span>
-                </button>
-            </ng-container>
-            <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
                 <button *ngIf="inEditMode" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary" form="edit-form" type="submit">
                     <span class="fa fa-floppy-o"></span>
                     <span translate="entity.action.save"></span>
@@ -53,6 +47,14 @@
     </div>
 
     <div class="page-body">
+        <div class="page-header-btns float-right button-edit">
+            <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
+                <button (click)="edit()" *ngIf="!inEditMode && !externalUser.deletionDate" class="btn btn-secondary" type="button">
+                    <span class="fa fa-pencil"></span>
+                    <span translate="entity.action.edit"></span>
+                </button>
+            </ng-container>
+        </div>
         <form class="page-form" id="edit-form" name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" autocomplete="off">
             <fieldset [disabled]="!inEditMode" arteAutofocus class="page-section">
                 <div class="d-flex align-items-baseline flex-column mb-3">
@@ -197,15 +199,30 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset *ngIf="userId && !inEditMode" arteAutofocus class="page-section">
-                <h3 translate="externalUser.home.favorites"></h3>
-                <app-structural-resources-tree
-                    (onResourceSelect)="saveFavorite($event)"
-                    (onResourceUnselect)="deleteFavorite($event)"
-                    [favorites]="favorites"
-                ></app-structural-resources-tree>
-            </fieldset>
         </form>
+        <fieldset *ngIf="userId && !inEditMode" arteAutofocus class="page-section">
+            <div class="page-header-btns float-right" *ngIf="!inEditMode">
+                <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
+                    <button (click)="editTree()" *ngIf="!inEditTreeMode && !externalUser.deletionDate" class="btn btn-secondary" type="button">
+                        <span class="fa fa-pencil"></span>
+                        <span translate="entity.action.edit"></span>
+                    </button>
+                </ng-container>
+                <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
+                    <button (click)="saveTree()" *ngIf="inEditTreeMode" [disabled]="!inEditTreeMode || isSaving" class="btn btn-primary btn-save" type="button">
+                        <span class="fa fa-floppy-o"></span>
+                        <span translate="entity.action.save"></span>
+                    </button>
+                </ng-container>
+            </div>
+            <h3 class="button-tree" translate="externalUser.home.favorites"></h3>
+            <app-structural-resources-tree
+                [disabled]="!inEditTreeMode"
+                (onResourceSelect)="saveFavorite($event)"
+                (onResourceUnselect)="deleteFavorite($event)"
+                [favorites]="favorites"
+            ></app-structural-resources-tree>
+        </fieldset>
         <div *ngIf="userId && !inEditMode" class="page-section">
             <div class="d-flex align-items-baseline justify-content-between">
                 <h3 class="mt-3" translate="externalUser.home.filters"></h3>
