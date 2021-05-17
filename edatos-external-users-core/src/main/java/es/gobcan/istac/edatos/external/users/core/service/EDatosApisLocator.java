@@ -32,7 +32,7 @@ public class EDatosApisLocator {
         return noticesV10;
     }
 
-    public SrmRestExternalFacadeV10 srmExternal() throws EDatosException {
+    public SrmRestExternalFacadeV10 srmExternal() {
         if (srmV10 == null) {
             String baseApiUrl = metadataConfigurationService.retrieveSrmExternalApiUrlBase();
             log.info("Setting SRM external API base URL to '{}'", baseApiUrl);

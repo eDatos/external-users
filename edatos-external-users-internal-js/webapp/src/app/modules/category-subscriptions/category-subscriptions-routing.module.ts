@@ -13,14 +13,6 @@ export const CATEGORY_SUBSCRIPTIONS_ROUTES: Routes = [
         },
         canActivate: [UserRouteAccessGuard],
     },
-    {
-        path: 'edit',
-        component: CategorySubscriptionsComponent,
-        data: {
-            pageTitle: 'categorySubscriptions.home.title',
-        },
-        canActivate: [UserRouteAccessGuard],
-    },
 ];
 
 @NgModule({

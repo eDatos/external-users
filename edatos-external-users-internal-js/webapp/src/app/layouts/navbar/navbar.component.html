@@ -63,6 +63,12 @@
                         </a>
                     </li>
                     <li>
+                        <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/admin/category-master-tree" routerLinkActive="active">
+                            <i aria-hidden="true" class="fa fa-fw fa-sitemap"></i>
+                            <span translate="global.menu.admin.categoryMasterTree"></span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" routerLink="/admin/data-protection-policy" routerLinkActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-file" aria-hidden="true"></i>
                             <span translate="global.menu.admin.dataProtectionPolicy"></span>
