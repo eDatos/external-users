@@ -43,6 +43,7 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
         USER,
         USER_ID,
         EXTERNAL_USER_NAME,
+        USER_DELETION_DATE,
         EMAIL,
         PERMALINK,
         CREATED_DATE,
@@ -94,14 +95,22 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.NAME).sortable()
                 .withEntityProperty(ENTITY_FIELD_NAME)
                 .build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.USER)
                 .withCriterionConverter(new SqlCriterionBuilder())
                 .build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .longRestrictionProcessor()
                 .withQueryProperty(QueryProperty.USER_ID)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".id")
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .dateRestrictionProcessor()
+                .withQueryProperty(QueryProperty.USER_DELETION_DATE)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".deletionDate")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()

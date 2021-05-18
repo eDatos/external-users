@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
+import * as _ from 'lodash';
 
 @Injectable()
 export class FilterFilter extends BaseEntityFilter implements EntityFilter {
@@ -15,7 +16,7 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
     }
 
     public getCriterias() {
-        const criterias = [];
+        const criterias = ['USER_DELETION_DATE IS_NULL'];
         if (this.name) {
             criterias.push(`NAME ILIKE '%${this.escapeSingleQuotes(this.name)}%'`);
         }
@@ -26,7 +27,7 @@ export class FilterFilter extends BaseEntityFilter implements EntityFilter {
             criterias.push(`USER_ID EQ ${this.userId}`);
         }
         if (this.includeFromDeletedUsers) {
-            criterias.push(`USER_DELETION_DATE IS_NULL`);
+            _.pull(criterias, 'USER_DELETION_DATE IS_NULL');
         }
         if (this.lastAccessDate) {
             criterias.push(`LAST_ACCESS_DATE EQ '%${this.escapeSingleQuotes(this.lastAccessDate.toString())}%'`);
