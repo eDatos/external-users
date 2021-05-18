@@ -1,0 +1,46 @@
+{
+    "issues": {
+        "entity": {
+            "email": "Email",
+            "surname1": "Apellido 1",
+            "surname2": "Apellido 2",
+            "name": "Nombre",
+            "subject": "Asunto",
+            "message": "Mensaje",
+            "workplace": "Lugar de trabajo"
+        },
+        "placeholder": {
+            "email": "Introduzca email",
+            "surname1": "Introduzca primer apellido",
+            "surname2": "Introduzca segundo apellido",
+            "name": "Introduzca nombre",
+            "subject": "Introduzca asunto de la incidencia",
+            "message": "Detalle aquí el motivo de la incidencia",
+            "workplace": "Selecciones lugar de trabajo"
+        },
+        "home": {
+            "title": "Incidencias",
+            "titleMenu": "Informar de una incidencia"
+        },
+        "name": "Incidencia",
+        "action": {
+            "goBack": "Volver"
+        },
+        "workplace": {
+            "UNIVERSIDAD": "Universidad",
+            "OTROS": "Otros",
+            "ASOCIACIONES_EMPRESARIALES": "Asociaciones empresariales",
+            "EMPRENDEDOR": "Emprendedor",
+            "ESTUDIANTE": "Estudiante",
+            "MEDIO_COMUNICACION": "Medio de comunicación",
+            "ORGANISMO_PUBLICO": "Organismo público",
+            "PARTICULAR": "Particular"
+        },
+        "messages": {
+            "onSuccessSumary": "Creación de incidencia",
+            "onSuccess": "Incidencia creada correctamente",
+            "onFailSumary": "Creación de incidencia",
+            "onFail": "Error al crear la incidencia"
+        }
+    }
+}

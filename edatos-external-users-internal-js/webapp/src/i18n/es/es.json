@@ -560,7 +560,7 @@
                 "metrics": "Métricas",
                 "userManagement": "Gestión de usuarios",
                 "treeTopicsAdministration": "Administrar árbol de temas",
-                "reportIssue": "Informar de una incidencia"
+                "consultIssues": "Consultar incidencias"
             },
             "administracion": {
                 "main": "Administración"

@@ -560,7 +560,7 @@
                 "metrics": "Metrics",
                 "userManagement": "User management",
                 "treeTopicsAdministration": "Manage topics tree",
-                "reportIssue": "Report an issue"
+                "consultIssues": "Consult issues"
             },
             "administracion": {
                 "main": "Administration"
