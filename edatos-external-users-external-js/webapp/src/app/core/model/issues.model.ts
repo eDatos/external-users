@@ -5,7 +5,8 @@ export class Issues extends BaseVersionedAndAuditingEntity {
     public name?: string;
     public surname1?: string;
     public surname2?: string;
-    public password?: string;
+    public subject?: string;
+    public message?: string;
     public email?: string;
     public workplace?: WorkplaceEnum;
 }
