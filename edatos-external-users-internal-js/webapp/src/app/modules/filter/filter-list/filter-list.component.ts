@@ -28,7 +28,7 @@ export class FilterListComponent implements OnInit {
             },
         },
         {
-            fieldName: 'externalUserOwner',
+            fieldName: 'externalUserName',
             sortable: true,
             header: {
                 handler: 'translate',
@@ -44,7 +44,7 @@ export class FilterListComponent implements OnInit {
             },
         },
         {
-            fieldName: 'creationDate',
+            fieldName: 'createdDate',
             sortable: true,
             header: {
                 handler: 'translate',
@@ -84,6 +84,7 @@ export class FilterListComponent implements OnInit {
             ...transitionParams,
         };
         this.router.navigate(['/filter'], { replaceUrl: true, queryParams });
+        this.ngOnInit();
     }
 
     public loadData(e: LazyLoadEvent) {

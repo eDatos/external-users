@@ -42,6 +42,7 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
         NAME,
         USER,
         USER_ID,
+        EXTERNAL_USER_NAME,
         EMAIL,
         PERMALINK,
         CREATED_DATE,
@@ -113,6 +114,12 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.EMAIL)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".email")
+                .build());
+        registerOrderProcessor(OrderProcessorBuilder
+                .orderProcessor()
+                .withQueryProperty(QueryProperty.EXTERNAL_USER_NAME)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".name")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()
