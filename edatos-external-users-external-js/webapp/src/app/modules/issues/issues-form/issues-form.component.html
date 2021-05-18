@@ -5,7 +5,7 @@
                 <span class="page-header-title-text" translate="issues.name"></span>
             </h2>
             <ng-container>
-                <button type="submit" form="issues-form" [disabled]="isSaving" class="btn btn-primary">
+                <button type="submit" form="issues-form" [disabled]="issuesForm.form.invalid || isSaving" class="btn btn-primary">
                     <span class="fa fa-floppy-o"></span>
                     <span translate="entity.action.save"></span>
                 </button>
@@ -27,7 +27,9 @@
                             <label class="form-label col-md-4" for="name">{{ "issues.entity.name" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input id="name" name="name" [(ngModel)]="issues.name" [maxlength]="255" [required]="true"></arte-input>
-                                <!-- TODO: error messages -->
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <span *ngFor="let m of messages">{{m}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -36,7 +38,9 @@
                             <label class="form-label col-md-4" for="surname1">{{ "issues.entity.surname1" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input id="surname1" name="surname1" [(ngModel)]="issues.surname1" [maxlength]="255" [required]="true"></arte-input>
-                                <!-- TODO: error messages -->
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <span *ngFor="let m of messages">{{m}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -56,7 +60,9 @@
                             <label class="form-label col-md-4" for="email">{{ "issues.entity.email" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input id="email" name="email" [(ngModel)]="issues.email" [maxlength]="255" [required]="true"></arte-input>
-                                <!-- TODO: error messages -->
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <span *ngFor="let m of messages">{{m}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -67,7 +73,9 @@
                             <label class="form-label col-md-4" for="subject">{{ "issues.entity.subject" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
                                 <arte-input id="subject" name="subject" [(ngModel)]="issues.subject" [maxlength]="255" [required]="true" ></arte-input>
-                                <!-- TODO: error messages -->
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <span *ngFor="let m of messages">{{m}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,7 +112,9 @@
                                     [maxlength]="4000"
                                     [required]="true"
                                 ></textarea>
-                                <!-- TODO: error messages -->
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <span *ngFor="let m of messages">{{m}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,8 @@
             "workplace": "Selecciones lugar de trabajo"
         },
         "home": {
-            "title": "Incidencias"
+            "title": "Incidencias",
+            "titleMenu": "Informar de una incidencia"
         },
         "name": "Incidencia",
         "action": {

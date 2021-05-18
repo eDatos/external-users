@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.rest.common.dto;
 
+import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Workplace;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
 
 public class IssuesDto extends AbstractVersionedAndAuditingDto{
@@ -13,6 +14,7 @@ public class IssuesDto extends AbstractVersionedAndAuditingDto{
     
     private String subject;
     private String message;
+    private Workplace workplace;
     
 	public String getEmail() {
 		return email;
@@ -60,6 +62,14 @@ public class IssuesDto extends AbstractVersionedAndAuditingDto{
 	
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public Workplace getWorkplace() {
+		return workplace;
+	}
+
+	public void setWorkplace(Workplace workplace) {
+		this.workplace = workplace;
 	}
 
 }

@@ -32,6 +32,6 @@ public class IssuesResource extends AbstractResource {
 	public ResponseEntity<IssuesDto> createIssue(@RequestBody IssuesDto dto) {
     	IssuesEntity issuesEntity = issuesMapper.toEntity(dto);
     	issuesService.create(issuesEntity);
-    	return ResponseEntity.ok().build();
+    	return ResponseEntity.ok(issuesMapper.toDto(issuesEntity));
     }
 }
