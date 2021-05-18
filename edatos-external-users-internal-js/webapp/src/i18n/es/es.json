@@ -730,7 +730,7 @@
         "name": "Operación estadística"
     },
     "structuralResourcesTree": {
-        "addNewNode": "Añadir nodo raíz",
+        "addNewNode": "Añadir tema",
         "editionModal": "Edición multidioma del nombre del recurso",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",

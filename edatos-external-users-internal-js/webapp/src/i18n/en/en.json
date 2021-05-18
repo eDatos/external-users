@@ -730,7 +730,7 @@
         "name": "Statistical operation"
     },
     "structuralResourcesTree": {
-        "addNewNode": "Add root node",
+        "addNewNode": "Add topic",
         "editionModal": "Multilanguage edition of the resource name",
         "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
         "noRecordsFound": "No topic or operation found",
