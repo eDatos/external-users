@@ -2,6 +2,7 @@ package es.gobcan.istac.edatos.external.users.core.domain;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -158,17 +159,20 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof CategoryEntity))
-            return false;
-        return id != null && id.equals(((CategoryEntity) o).getId());
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof CategoryEntity)) {
+            return false;
+        }
+        CategoryEntity that = (CategoryEntity) o;
+        return Objects.equals(id, that.id);
     }
 
     public Stream<CategoryEntity> flattened() {
