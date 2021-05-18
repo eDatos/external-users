@@ -7,6 +7,7 @@ import { Category, Favorite } from '@app/shared/model';
 import { FavoriteService } from '@app/shared/service';
 import { ArteEventManager, GenericModalService } from 'arte-ng/services';
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { ExternalUserDeleteDialogComponent } from '../external-user-delete-dialog.component';
 
 @Component({
@@ -25,8 +26,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     public treatmentEnum = Treatment;
     public favorites: Favorite[];
 
-    public inEditMode = false;
-    public inEditTreeMode = false;
+    public editMode: 'user' | 'favorites' | null = null;
 
     private subscription: Subscription;
 
@@ -38,11 +38,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         private eventManager: ArteEventManager,
         private route: ActivatedRoute,
         private router: Router
-    ) {
-        const lastUrlSegment = this.route.snapshot.url[this.route.snapshot.url.length - 1].path;
-        this.inEditMode = this.inEditMode || lastUrlSegment === 'new';
-        this.inEditTreeMode = this.inEditTreeMode || lastUrlSegment === 'new';
-    }
+    ) {}
 
     public ngOnInit() {
         this.isSaving = false;
@@ -61,14 +57,10 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         const favorite = new Favorite();
         favorite.externalUser = this.externalUser;
         favorite.category = category;
-        this.favoriteService.save(favorite).subscribe(
-            () => {
-                this.updateFavorites();
-            },
-            (error) => {
-                this.updateFavorites();
-            }
-        );
+        this.favoriteService
+            .save(favorite)
+            .pipe(finalize(() => this.updateFavorites()))
+            .subscribe();
     }
 
     public saveTree() {
@@ -77,12 +69,12 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         } else {
             this.router.navigate(['..']);
         }
-        this.toggleEditTreeMode();
+        this.disabledEdit();
     }
 
     public load(id: number) {
         if (id) {
-            if (!this.inEditMode) {
+            if (this.editMode !== 'user') {
                 this.updateFavorites();
             }
             this.externalUserService.get(id).subscribe((user) => {
@@ -99,7 +91,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         } else {
             this.router.navigate(['..']);
         }
-        this.toggleEditMode();
+        this.disabledEdit();
     }
 
     public save() {
@@ -115,9 +107,10 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
                 () => this.onSaveError()
             );
         }
+        this.disabledEdit();
     }
 
-    public delete() {
+    public deactivate() {
         this.genericModalService.open(ExternalUserDeleteDialogComponent as Component, { user: this.externalUser }, { container: '.app' });
     }
 
@@ -131,34 +124,22 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
 
     public deleteFavorite(category: Category): void {
         const favorite = this.favorites.find((fav) => fav.category.id === category.id)!;
-        this.favoriteService.delete(favorite.id).subscribe(
-            () => {
-                this.updateFavorites();
-            },
-            (error) => {
-                this.updateFavorites();
-            }
-        );
+        this.favoriteService
+            .delete(favorite.id)
+            .pipe(finalize(() => this.updateFavorites()))
+            .subscribe();
     }
 
-    public toggleEditMode() {
-        this.inEditMode = !this.inEditMode;
+    public disabledEdit() {
+        this.editMode = null;
     }
 
-    public disabledEditTree() {
-        this.inEditMode = false;
-    }
-
-    public edit() {
-        this.toggleEditMode();
-    }
-
-    public toggleEditTreeMode() {
-        this.inEditTreeMode = !this.inEditTreeMode;
+    public editUserData() {
+        this.editMode = 'user';
     }
 
     public editTree() {
-        this.toggleEditTreeMode();
+        this.editMode = 'favorites';
         if (this.userId) {
             this.load(this.userId);
         } else {
@@ -176,7 +157,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.eventManager.broadcast({ name: 'userListModification', content: 'OK' });
         this.externalUser = result;
         this.isSaving = false;
-        this.toggleEditMode();
+        this.disabledEdit();
         this.router.navigate(['/external-users', this.externalUser.id]);
     }
 
