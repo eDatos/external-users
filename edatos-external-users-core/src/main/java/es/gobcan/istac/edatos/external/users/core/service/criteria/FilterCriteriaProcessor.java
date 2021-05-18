@@ -42,6 +42,8 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
         NAME,
         USER,
         USER_ID,
+        EXTERNAL_USER_NAME,
+        USER_DELETION_DATE,
         EMAIL,
         PERMALINK,
         CREATED_DATE,
@@ -93,14 +95,22 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.NAME).sortable()
                 .withEntityProperty(ENTITY_FIELD_NAME)
                 .build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.USER)
                 .withCriterionConverter(new SqlCriterionBuilder())
                 .build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .longRestrictionProcessor()
                 .withQueryProperty(QueryProperty.USER_ID)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".id")
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder
+                .dateRestrictionProcessor()
+                .withQueryProperty(QueryProperty.USER_DELETION_DATE)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".deletionDate")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()
@@ -113,6 +123,12 @@ public class FilterCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.EMAIL)
                 .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
                 .withEntityProperty(ENTITY_FIELD_USER + ".email")
+                .build());
+        registerOrderProcessor(OrderProcessorBuilder
+                .orderProcessor()
+                .withQueryProperty(QueryProperty.EXTERNAL_USER_NAME)
+                .withAlias(ENTITY_FIELD_USER, ENTITY_FIELD_USER)
+                .withEntityProperty(ENTITY_FIELD_USER + ".name")
                 .build());
         registerRestrictionProcessor(RestrictionProcessorBuilder
                 .stringRestrictionProcessor()
