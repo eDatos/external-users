@@ -41,12 +41,7 @@
     <div class="page-body">
         <form class="page-form" id="filter-form" name="filterForm" role="form" novalidate #filterForm="ngForm" autocomplete="off">
             <fieldset class="d-flex flex-column" [disabled]="!inEditMode || isLoading" arteAutofocus>
-                <legend class="pt-3 mb-0">{{ "filter.form.legend" | translate }}</legend>
-                <small class="text-muted mb-3 mt-0" style="padding-top: -2em">
-                    {{ filter.externalUser.getFullName() }}
-                    <a [href]="'mailto:' + filter.externalUser.email">&lt;{{filter.externalUser.email}}&gt;</a><br />
-                    {{"filter.entity.lastAccessDate" | translate }}: {{filter.lastAccessDate | date: 'dd/MM/yyyy HH:mm:ss'}}
-                </small>
+                <legend class="pt-3">{{ "filter.form.legend" | translate }}</legend>
                 <div class="row">
                     <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="filterForm.controls.name">
                         <div class="form-row">

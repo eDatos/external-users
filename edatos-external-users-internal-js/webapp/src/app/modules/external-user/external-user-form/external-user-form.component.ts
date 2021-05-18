@@ -145,6 +145,10 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.inEditMode = !this.inEditMode;
     }
 
+    public disabledEditTree() {
+        this.inEditMode = false;
+    }
+
     public edit() {
         this.toggleEditMode();
     }
@@ -154,12 +158,12 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public editTree() {
+        this.toggleEditTreeMode();
         if (this.userId) {
             this.load(this.userId);
         } else {
             this.router.navigate(['..']);
         }
-        this.toggleEditTreeMode();
     }
 
     private updateFavorites() {
