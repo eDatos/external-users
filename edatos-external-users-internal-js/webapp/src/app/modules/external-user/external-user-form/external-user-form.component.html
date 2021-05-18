@@ -209,7 +209,7 @@
                     </button>
                 </ng-container>
                 <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                    <button (click)="saveTree()" *ngIf="inEditTreeMode" [disabled]="!inEditTreeMode || isSaving" class="btn btn-primary btn-save" type="button">
+                    <button (click)="saveTree()" *ngIf="inEditTreeMode" [disabled]="!inEditTreeMode" class="btn btn-primary btn-save" type="button">
                         <span class="fa fa-floppy-o"></span>
                         <span translate="entity.action.save"></span>
                     </button>
@@ -217,7 +217,7 @@
             </div>
             <h3 class="button-tree" translate="externalUser.home.favorites"></h3>
             <app-structural-resources-tree
-                [disabled]="!inEditTreeMode"
+                [disabled]="disabledEditTree()"
                 (onResourceSelect)="saveFavorite($event)"
                 (onResourceUnselect)="deleteFavorite($event)"
                 [favorites]="favorites"
