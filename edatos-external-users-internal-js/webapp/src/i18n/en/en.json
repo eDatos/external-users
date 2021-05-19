@@ -354,7 +354,8 @@
             "schemaVersion": "Schema version",
             "urn": "URN"
         },
-        "noResourceFound": "No external resource found"
+        "noResourceFound": "No external resource found",
+        "title": "Selected topics"
     },
     "externalUser": {
         "activado": "Activated",

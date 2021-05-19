@@ -1,33 +1,61 @@
 :host ::ng-deep {
-    .ui-table-globalfilter-container {
-        display: flex;
+    p-table {
+        .search-wrapper {
+            display: flex;
 
-        input {
-            width: 300px;
-        }
-    }
+            input {
+                width: 100%;
+            }
 
-    .ui-table-thead > tr > th {
-        border: 0 none;
-        text-align: left;
-
-        &.ui-filter-column {
-            border-top: 1px solid #c8c8c8;
+            input:focus[pInputText] {
+                box-shadow: none;
+            }
         }
 
-        &:first-child {
-            width: 3em;
-            text-align: center;
+        .ui-table-thead > tr > th {
+            border: 0 none;
+            text-align: left;
+
+            &.ui-filter-column {
+                border-top: 1px solid #c8c8c8;
+            }
+
+            &:first-child {
+                width: 3em;
+                text-align: center;
+            }
         }
-    }
 
-    .ui-table-tbody > tr > td {
-        border: 0 none;
-        cursor: auto;
+        .ui-table-tbody > tr > td {
+            border: 0 none;
+            cursor: auto;
 
-        &:first-child {
-            width: 3em;
-            text-align: center;
+            &:first-child {
+                width: 3em;
+                text-align: center;
+            }
+        }
+
+        .ui-table-summary {
+            background-color: white;
+            text-align: left;
+        }
+
+        .summary-title {
+            font-weight: bold;
+            margin-bottom: 0.6em;
+        }
+
+        .summary-item {
+            font-weight: normal;
+        }
+
+        .text-secondary {
+            color: #a5a5a5;
+        }
+
+        .font-italic {
+            font-style: italic;
         }
     }
 }

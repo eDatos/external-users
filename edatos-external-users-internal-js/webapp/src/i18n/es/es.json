@@ -354,7 +354,8 @@
             "schemaVersion": "Versión del esquema",
             "urn": "URN"
         },
-        "noResourceFound": "No se ha encontrado ningún recurso externo"
+        "noResourceFound": "No se ha encontrado ningún recurso externo",
+        "title": "Temas seleccionados"
     },
     "externalUser": {
         "activado": "Activado",

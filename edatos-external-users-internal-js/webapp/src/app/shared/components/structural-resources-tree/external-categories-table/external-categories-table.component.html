@@ -17,7 +17,7 @@
     dataKey="urn"
 >
     <ng-template pTemplate="caption">
-        <div class="ui-table-globalfilter-container">
+        <div class="search-wrapper">
             <input pInputText type="text" (input)="table.filterGlobal($any($event.target).value, 'contains')" [placeholder]="'table.globalSearchPlaceholder' | translate" />
         </div>
     </ng-template>
@@ -61,9 +61,17 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
-        <h3 style="text-align: left">Temas seleccionados</h3>
-        <ul>
-            <li *ngFor="let externalCategory of selectedExternalCategories" style="text-align: left; font-weight: normal">{{externalCategory.name.val}}</li>
-        </ul>
+        <h3 class="summary-title">{{ 'externalCategoriesTable.title' | translate }}</h3>
+        <ng-container *ngIf="selectedExternalCategories?.length !== 0; else nothingSelected">
+            <ul class="summary-list">
+                <li *ngFor="let externalCategory of selectedExternalCategories" class="summary-item">
+                    <span class="text-secondary">({{externalCategory.schema.code}}, {{externalCategory.schema.version}})</span>&nbsp;
+                    <span>{{externalCategory.name.val}}</span>
+                </li>
+            </ul>
+        </ng-container>
+        <ng-template #nothingSelected>
+            <span class="summary-item text-secondary font-italic">No hay ningún tema seleccionado</span>
+        </ng-template>
     </ng-template>
 </p-table>
