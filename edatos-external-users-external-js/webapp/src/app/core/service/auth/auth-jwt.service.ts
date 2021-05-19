@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
-import { CookieService } from 'ngx-cookie';
+import { CookieService } from 'ngx-cookie-service';
 import { TOKEN_AUTH_NAME, JHI_TOKEN_AUTH_NAME } from '@app/app.constants';
 
 @Injectable()
@@ -37,7 +37,7 @@ export class AuthServerProvider {
         return new Observable((observer) => {
             this.$localStorage.clear(TOKEN_AUTH_NAME);
             this.$sessionStorage.clear(TOKEN_AUTH_NAME);
-            this.cookieService.remove(TOKEN_AUTH_NAME);
+            this.cookieService.delete(TOKEN_AUTH_NAME, '/');
             observer.complete();
         });
     }
