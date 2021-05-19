@@ -42,7 +42,7 @@
                 </div>
                 <div class="page-header-btns button-edit">
                     <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                        <button (click)="editUserData()" *ngIf="editMode !== 'user'" [disabled]="editMode && editMode !== 'user'" class="btn btn-secondary" type="button">
+                        <button (click)="editUserData()" *ngIf="$any(editMode) !== 'user'" [disabled]="editMode && editMode !== 'user'" class="btn btn-secondary" type="button">
                             <span class="fa fa-pencil"></span>
                             <span translate="entity.action.edit"></span>
                         </button>
@@ -200,7 +200,7 @@
         <fieldset *ngIf="userId" arteAutofocus class="page-section">
             <div class="page-header-btns float-right">
                 <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                    <button (click)="editTree()" *ngIf="editMode !== 'favorites'" [disabled]="editMode && editMode !== 'favorites'" class="btn btn-secondary" type="button">
+                    <button (click)="editTree()" *ngIf="$any(editMode) !== 'favorites'" [disabled]="editMode && editMode !== 'favorites'" class="btn btn-secondary" type="button">
                         <span class="fa fa-pencil"></span>
                         <span translate="entity.action.edit"></span>
                     </button>
