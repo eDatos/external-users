@@ -33,8 +33,8 @@ export class AuthInterceptor implements HttpInterceptor {
                 headers = headers.append('Authorization', 'Bearer ' + tokenFromCookie);
 
                 /*
-                Si se borrar la cookie y el token se guarda en session storage, al abrir una nueva pesta�a en el navegador la primera petici�n a la API dar� un 401
-                y en consecuencia el navegador redireccionar� a la ruta ra�z de la aplicaci�n.
+                Si se borrar la cookie y el token se guarda en session storage, al abrir una nueva pestaña en el navegador la primera petición a la API dará un 401
+                y en consecuencia el navegador redireccionará a la ruta raíz de la aplicación.
                 */
                 //const config = this.configService.getConfig();
                 //this.cookieService.remove(TOKEN_AUTH_NAME, { path: this.getLocation(config.endpoint.appUrl).pathname });
