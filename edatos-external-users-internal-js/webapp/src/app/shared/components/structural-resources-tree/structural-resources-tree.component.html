@@ -9,22 +9,32 @@
 </button>
 
 <p-tree
+    *ngIf="mode === 'view' || mode === 'select'"
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
-    (onNodeDrop)="onNodeDrop($event)"
     [(selection)]="selectedResources"
     [loading]="!tree || loading"
     [selectionMode]="selectionMode"
     [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
-    [draggableNodes]="enableDragAndDrop"
-    [droppableNodes]="enableDragAndDrop"
     [value]="tree"
 >
-    <ng-template *ngIf="mode === 'view'" let-node pTemplate="default">
+    <ng-template let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
         <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
     </ng-template>
-    <ng-template *ngIf="mode === 'edit'" let-node pTemplate="default">
+</p-tree>
+
+<p-tree
+    (onNodeDrop)="onNodeDrop($event)"
+    *ngIf="mode === 'edit'"
+    [draggableNodes]="true"
+    [droppableNodes]="true"
+    [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
+    [loading]="!tree || loading"
+    [selectionMode]="selectionMode"
+    [value]="tree"
+>
+    <ng-template let-node pTemplate="default">
         <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
         <span class="subscribed-users mr-2">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
         <span class="badge badge-secondary mr-2">{{node.data.resources.length}}</span>
