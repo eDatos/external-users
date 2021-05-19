@@ -68,7 +68,7 @@ public class CategoryServiceImpl implements CategoryService {
         // but I'm not sure yet, and so I can't pinpoint the exact issue that is causing this bug.
         //
         // So, for now, the fix comes as simple as flushing the changes to DB after saving and then updating
-        // the tree from the database data (though calling refresh). It's a slow operation, for sure, but given that
+        // the tree from the database data (through calling refresh). It's a slow operation, for sure, but given that
         // the tree is not updated frequently it should not be that much of a bottleneck.
         entityManager.flush();
         for (CategoryEntity category : saved) {
