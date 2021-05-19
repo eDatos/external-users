@@ -9,6 +9,11 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
     public static final CommonServiceExceptionType GENERIC_ERROR = create("exception.external_users.generic");
 
     /********
+     * CATEGORY
+     ********/
+    public static final CommonServiceExceptionType CANNOT_DELETE_CATEGORY_IF_IT_HAS_SUBSCRIBERS = create("exception.external_users.category.cannot_delete_category_if_it_has_subscribers");
+
+    /********
      * OPERATION
      ********/
     public static final CommonServiceExceptionType OPERATION_NOT_FOUND = create("exception.external_users.operation.not_found");
@@ -19,12 +24,6 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
      * QUERY
      ********/
     public static final CommonServiceExceptionType QUERY_NOT_SUPPORTED = create("exception.external_users.query.not_supported");
-
-    /********
-     * FAVORITE
-     ********/
-    public static final CommonServiceExceptionType FAVORITE_NEED_AT_LEAST_OPERATION_OR_CATEGORY = create("exception.external_users.favorite.need_at_least_operation_or_category");
-    public static final CommonServiceExceptionType FAVORITE_CANNOT_SET_BOTH_OPERATION_AND_CATEGORY = create("exception.external_users.favorite.cannot_set_both_operation_and_category");
 
     /********
      * LOGIN
@@ -39,6 +38,7 @@ public class ServiceExceptionType extends CommonServiceExceptionType {
     public static final CommonServiceExceptionType EXTERNAL_USER_CREATE = create("exception.external_users.create");
     public static final CommonServiceExceptionType EXTERNAL_USER_DELETED = create("exception.external_users.deleted");
     public static final CommonServiceExceptionType EXTERNAL_USER_DEACTIVATE = create("exception.external_users.deactivate");
+    public static final CommonServiceExceptionType EXTERNAL_USER_DEAUTHENTICATED = create("exception.external_users.deauthenticated");
 
     /********
      * PASSWORD

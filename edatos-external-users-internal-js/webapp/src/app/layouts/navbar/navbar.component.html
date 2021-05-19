@@ -1,9 +1,5 @@
 <nav class="navbar navbar-dark navbar-expand-lg">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <img class="logo-img" src="assets/images/logo-arte.png" alt="Logo" />
-        <!--<span translate="global.title" class="navbar-title"></span>-->
-        <span class="navbar-version">{{version}}</span>
-    </a>
+    <span class="navbar-version">{{version}}</span>
 
     <button
         class="navbar-toggler"
@@ -26,9 +22,9 @@
                 </a>
             </li>
             <li>
-                <a class="nav-link btn" routerLink="thematic-subscriptions" routerLinkActive="active">
+                <a class="nav-link btn" routerLink="category-subscriptions" routerLinkActive="active">
                     <i aria-hidden="true" class="fa fa-star"></i>
-                    <span>{{ 'thematicSubscriptions.home.title' | translate }}</span>
+                    <span>{{ 'categorySubscriptions.home.title' | translate }}</span>
                 </a>
             </li>
             <li>
@@ -45,6 +41,25 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
                     <li>
+                        <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/admin/category-master-tree" routerLinkActive="active">
+                            <i aria-hidden="true" class="fa fa-fw fa-sitemap"></i>
+                            <span translate="global.menu.admin.treeTopicsAdministration"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/admin/reportIssue" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-bullhorn" aria-hidden="true"></i>
+                            <span translate="global.menu.admin.consultIssues"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/admin/data-protection-policy" routerLinkActive="active" (click)="collapseNavbar()">
+                            <i class="fa fa-fw fa-file" aria-hidden="true"></i>
+                            <span translate="global.menu.admin.dataProtectionPolicy"></span>
+                        </a>
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    <li>
                         <a class="dropdown-item" routerLink="/admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-tachometer" aria-hidden="true"></i>
                             <span translate="global.menu.admin.metrics"></span>
@@ -60,12 +75,6 @@
                         <a class="dropdown-item" routerLink="/admin/configuration" routerLinkActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-list" aria-hidden="true"></i>
                             <span translate="global.menu.admin.configuration"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="/admin/data-protection-policy" routerLinkActive="active" (click)="collapseNavbar()">
-                            <i class="fa fa-fw fa-file" aria-hidden="true"></i>
-                            <span translate="global.menu.admin.dataProtectionPolicy"></span>
                         </a>
                     </li>
                     <li>

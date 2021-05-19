@@ -1,16 +1,19 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -20,30 +23,22 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
 
 /**
- * Categories are commonly known as 'subjects' or 'areas'. They represent a standardized way to group together other
- * semantic related subjects or statistical operations. In EDatos the categories are handled through the
- * structural resources manager.
- * <p>
- * This class uses a subset of attributes extracted from
- * <p>
- * {@code metamac-srm-core:org.siemac.metamac.srm.core.category.domain.CategoryMetamac}.
+ * This category entity represents our own categories, so the technicians can create
+ * them and select other categories and operations extracted from eDatos (and represented
+ * here by {@link ExternalCategoryEntity} and {@link ExternalOperationEntity}) to be
+ * mapped to one of their own created categories.
+ * Categories can be marked as favorites by external users.
+ *
+ * @see FavoriteEntity
  */
 @Entity
 @Table(name = "tb_categories")
 @Cache(usage = CacheConcurrencyStrategy.NONE)
-// jsonb is already defined on a package-level, but for some reason liquibase:diff doesn't detect it, so
-// it needs to be declared on at least one entity for it to work. Refer to
-// https://stackoverflow.com/a/52117748/7611990
-// https://stackoverflow.com/a/56030790/7611990
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
@@ -51,38 +46,32 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @SequenceGenerator(name = "seq_tb_categories", sequenceName = "seq_tb_categories", allocationSize = 50, initialValue = 1)
     private Long id;
 
-    /**
-     * The code of the category. For example: 060, or 060_010_030.
-     */
-    @NotNull
-    @Column(nullable = false)
-    private String code;
-
-    /**
-     * The nested code splits the codes from all the levels by a dot. For example: 060.060_010.060_010_030.
-     */
-    @Column(unique = true)
-    private String nestedCode;
-
-    /**
-     * The category name. I.e.: "Forestry and hunting"
-     */
     @NotNull
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb", nullable = false)
     private InternationalStringVO name;
 
+    /**
+     * Determines the position of the node in the tree. Starts at 0, meaning it will be the first,
+     * just below it's parent if it has one, or the first of the root.
+     */
+    @NotNull
+    @Column(nullable = false)
+    private Integer index = 0;
+
     @ManyToOne
     @JoinColumn(name = "parent_fk")
     private CategoryEntity parent;
 
+    // DO NOT set orphanRemoval = true in this field, otherwise constraint errors produced by unwanted Hibernate
+    // delete sql statements may occur when the tree is updated.
     @NotNull
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private final Set<CategoryEntity> children = new HashSet<>();
 
-    @NotNull
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private final Set<OperationEntity> operations = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinTable(name = "tb_categories_external_items", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_item_fk"))
+    private final Set<ExternalItemEntity> externalItems = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -93,22 +82,6 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getNestedCode() {
-        return nestedCode;
-    }
-
-    public void setNestedCode(String nestedCode) {
-        this.nestedCode = nestedCode;
-    }
-
     public InternationalStringVO getName() {
         return name;
     }
@@ -117,29 +90,40 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.name = name;
     }
 
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
     public CategoryEntity getParent() {
         return parent;
     }
 
     public void setParent(CategoryEntity newParent) {
-        if (newParent != null && !newParent.children.contains(this)) {
-            newParent.children.add(this);
-        } else if (this.parent != null) {
-            this.parent.children.remove(this);
-        }
         this.parent = newParent;
     }
 
-    public Set<CategoryEntity> getChildren() {
-        return children;
+    /**
+     * Do not add/remove elements to this set directly, use the methods designed for it.
+     *
+     * @see #addChild(CategoryEntity)
+     * @see #removeChild(CategoryEntity)
+     * @see #clearChildren()
+     * @return an unmodifiable set.
+     */
+    @SuppressWarnings("java:S1452") // wildcard usage
+    public Set<? extends CategoryEntity> getChildren() {
+        return Collections.unmodifiableSet(children);
     }
 
     public void setChildren(Set<CategoryEntity> categories) {
+        clearChildren();
         for (CategoryEntity category : categories) {
-            category.setParent(this);
+            addChild(category);
         }
-        this.children.clear();
-        this.children.addAll(categories);
     }
 
     public void addChild(CategoryEntity category) {
@@ -152,25 +136,42 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         this.children.remove(category);
     }
 
-    public Set<OperationEntity> getOperations() {
-        return operations;
-    }
-
-    public void setOperations(Set<OperationEntity> operations) {
-        for (OperationEntity operation : operations) {
-            operation.setCategory(this);
+    public void clearChildren() {
+        for (CategoryEntity child : children) {
+            child.setParent(null);
         }
-        this.operations.clear();
-        this.operations.addAll(operations);
+        children.clear();
     }
 
-    public void addOperation(OperationEntity operation) {
-        operation.setCategory(this);
-        this.operations.add(operation);
+    public Set<ExternalItemEntity> getExternalItems() {
+        return externalItems;
     }
 
-    public void removeOperation(OperationEntity operation) {
-        operation.setCategory(null);
-        this.operations.remove(operation);
+    public void setExternalItems(Set<ExternalItemEntity> externalItems) {
+        this.externalItems.clear();
+        this.externalItems.addAll(externalItems);
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryEntity{" + name + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof CategoryEntity))
+            return false;
+        return id != null && id.equals(((CategoryEntity) o).getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
+    public Stream<CategoryEntity> flattened() {
+        return Stream.concat(Stream.of(this), children.stream().flatMap(CategoryEntity::flattened));
     }
 }

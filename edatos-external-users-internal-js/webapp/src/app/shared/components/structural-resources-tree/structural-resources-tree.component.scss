@@ -1,20 +1,40 @@
 :host ::ng-deep .ui-tree {
     .ui-tree-container {
         padding-left: 1.2em;
+
+        .ui-treenode .ui-treenode-content .ui-treenode-label.ui-state-highlight {
+            color: inherit;
+            background-color: inherit;
+        }
+
+        .ui-treenode .ui-treenode-content .ui-tree-toggler {
+            margin-left: -1.125em;
+        }
+
+        .ui-treenode .ui-treenode-content:hover .node-btn-sm {
+            display: inline-flex;
+            align-items: center;
+        }
     }
 
-    .ui-tree-container .ui-treenode .ui-treenode-content .ui-treenode-label.ui-state-highlight {
-        color: inherit;
-        background-color: inherit;
+    .ui-inputtext {
+        padding: 0;
+        background: none;
+        float: none;
+        width: auto;
+        height: 100%;
     }
 
-    .ui-tree-container .ui-treenode .ui-treenode-content .ui-tree-toggler {
-        margin-left: -1.125em;
-    }
+    .node-btn-sm {
+        display: none;
+        padding: 0.1rem 0.3rem;
+        font-size: 0.7rem;
+        line-height: 1.2;
+        border-radius: 0.2rem;
 
-    .ui-tree-container .ui-treenode .ui-treenode-content {
-        //display: flex;
-        //align-items: baseline;
+        .fa {
+            margin-right: 0;
+        }
     }
 }
 

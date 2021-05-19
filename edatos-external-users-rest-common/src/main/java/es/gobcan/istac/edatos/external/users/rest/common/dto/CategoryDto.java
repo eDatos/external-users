@@ -3,31 +3,22 @@ package es.gobcan.istac.edatos.external.users.rest.common.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.siemac.edatos.core.common.dto.InternationalStringDto;
-
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
 
 public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
-    private String code;
-    private String nestedCode;
+    private Long subscribers;
     private InternationalStringDto name;
+    private Integer index;
+    private List<ExternalItemDto> resources;
     private List<CategoryDto> children = new ArrayList<>();
 
-    public String getCode() {
-        return code;
+    public Long getSubscribers() {
+        return subscribers;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getNestedCode() {
-        return nestedCode;
-    }
-
-    public void setNestedCode(String nestedCode) {
-        this.nestedCode = nestedCode;
+    public void setSubscribers(Long subscribers) {
+        this.subscribers = subscribers;
     }
 
     public InternationalStringDto getName() {
@@ -36,6 +27,22 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     public void setName(InternationalStringDto name) {
         this.name = name;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public List<ExternalItemDto> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<ExternalItemDto> resources) {
+        this.resources = resources;
     }
 
     public List<CategoryDto> getChildren() {

@@ -1,6 +1,8 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service;
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
+import es.gobcan.istac.edatos.external.users.core.service.validator.CategoryValidator;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
 @Service
@@ -17,10 +20,12 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final QueryUtil queryUtil;
+    private final CategoryValidator categoryValidator;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, QueryUtil queryUtil) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, QueryUtil queryUtil, CategoryValidator categoryValidator) {
         this.categoryRepository = categoryRepository;
         this.queryUtil = queryUtil;
+        this.categoryValidator = categoryValidator;
     }
 
     @Override
@@ -45,17 +50,23 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryEntity createCategory(CategoryEntity category) {
-        return categoryRepository.saveAndFlush(category);
+    public List<CategoryEntity> updateTree(List<CategoryEntity> tree) {
+        categoryValidator.checkCategoriesWithSubscribers(tree, categoryRepository.findAll());
+        tree = categoryRepository.save(new HashSet<>(tree));
+        categoryRepository.flush();
+        return tree;
     }
 
     @Override
-    public CategoryEntity updateCategory(CategoryEntity category) {
-        return categoryRepository.saveAndFlush(category);
-    }
-
-    @Override
-    public void deleteCategory(Long categoryId) {
-        categoryRepository.delete(categoryId);
+    public Optional<CategoryEntity> delete(Long id) {
+        if (id != null) {
+            CategoryEntity category = categoryRepository.getOne(id);
+            if (category != null) {
+                categoryValidator.checkCategoriesWithSubscribers(category);
+                categoryRepository.delete(category);
+                return Optional.of(category);
+            }
+        }
+        return Optional.empty();
     }
 }

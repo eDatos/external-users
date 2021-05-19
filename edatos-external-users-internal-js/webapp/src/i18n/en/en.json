@@ -148,6 +148,16 @@
     "category": {
         "name": "Topic"
     },
+    "categoryMasterTree": {
+        "home": {
+            "title": "Edit the category master tree"
+        }
+    },
+    "categorySubscriptions": {
+        "home": {
+            "title": "Thematic subscriptions"
+        }
+    },
     "configuration": {
         "filter": "Filter (by prefix)",
         "spring": "Spring configuration",
@@ -156,6 +166,11 @@
             "properties": "Properties"
         },
         "title": "Configuration"
+    },
+    "dataProtectionPolicy": {
+        "home": {
+            "title": "Data protection policy"
+        }
     },
     "edatosExternalUsersApp": {
         "rol": {
@@ -273,21 +288,21 @@
         }
     },
     "enum": {
+        "localeToLanguage": {
+            "CA": "Catalan",
+            "DE": "German",
+            "EN": "English",
+            "ES": "Spanish",
+            "FR": "French",
+            "PT": "Portuguese",
+            "RU": "Russian",
+            "ZH": "Chinese"
+        },
         "procStatus": {
             "DRAFT": "Eraser",
             "EXTERNALLY_PUBLISHED": "Externally published",
             "INTERNALLY_PUBLISHED": "Internally published",
             "label": "Life cycle status"
-        },
-        "localeToLanguage": {
-            "ES": "Spanish",
-            "EN": "English",
-            "CA": "Catalan",
-            "PT": "Portuguese",
-            "RU": "Russian",
-            "ZH": "Chinese",
-            "FR": "French",
-            "DE": "German"
         }
     },
     "error": {
@@ -331,9 +346,20 @@
         },
         "usuario-existe": "The username entered is already in use"
     },
+    "externalCategoriesTable": {
+        "columns": {
+            "name": "Name",
+            "nestedCode": "Nested code",
+            "schemaCode": "Schema code",
+            "schemaVersion": "Schema version",
+            "urn": "URN"
+        },
+        "noResourceFound": "No external resource found"
+    },
     "externalUser": {
         "activado": "Activated",
         "created": "User {{ param }}has been created",
+        "createdDate": "Registration date",
         "deactivate": {
             "question": "Are you sure you want to delete user <strong>{{ email }}</strong>?"
         },
@@ -349,6 +375,10 @@
             "placeholders": {
                 "fullname": "Enter name or surname",
                 "language": "Enter user languages"
+            },
+            "labels": {
+                "fullname": "Name or surname",
+                "language": "Language"
             },
             "rolEnum": {
                 "label": "Role"
@@ -369,7 +399,7 @@
             "createOrEditLabel": "Create or edit a user",
             "favorites": "Favorites",
             "filters": "Filters",
-            "includeDeleted": "Include Deleted",
+            "includeDeleted": "Include deactivated",
             "title": "Users"
         },
         "language": "Language",
@@ -389,7 +419,7 @@
         "roles": "Roles",
         "status": {
             "active": "Active",
-            "deleted": "Removed",
+            "deactivated": "Deactivated",
             "name": "State"
         },
         "surname1": "Surname",
@@ -469,7 +499,8 @@
             "lastAccessDate": "Last Access Date",
             "name": "First Name",
             "notes": "Notes",
-            "permalink": "Permalink"
+            "permalink": "URL",
+            "owner": "Owner"
         },
         "form": {
             "cancel": "Cancel",
@@ -490,7 +521,9 @@
             "name": "Search filters",
             "placeholder": "Enter user name or email",
             "placeholderForFilterNameSearch": "",
-            "placeholderForUserSearch": ""
+            "placeholderForUserSearch": "",
+            "filterNameLabel": "Filter name",
+            "filterExternalUserLabel": "External user name"
         }
     },
     "global": {
@@ -517,14 +550,17 @@
             "admin": {
                 "apidocs": "API",
                 "audits": "Audit",
+                "categoryMasterTree": "Master category tree",
                 "configuration": "Configuration",
+                "dataProtectionPolicy": "Data protection policy",
                 "health": "Health",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
                 "main": "Administration",
                 "metrics": "Metrics",
                 "userManagement": "User management",
-                "dataProtectionPolicy": "Data protection policy"
+                "treeTopicsAdministration": "Manage topics tree",
+                "consultIssues": "Consult issues"
             },
             "administracion": {
                 "main": "Administration"
@@ -693,15 +729,17 @@
     "operation": {
         "name": "Statistical operation"
     },
-    "dataProtectionPolicy": {
-        "home": {
-            "title": "Data protection policy"
-        }
-    },
     "structuralResourcesTree": {
-        "noRecordsFound": "No se ha encontrado ningún tema ni operación"
+        "addNewNode": "Add topic",
+        "editionModal": "Multilanguage edition of the resource name",
+        "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
+        "noRecordsFound": "No topic or operation found",
+        "remapModal": "Select topics",
+        "subscribedUsers": "Subscribed users: {{amount}}"
     },
     "table": {
-        "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}"
+        "globalSearchPlaceholder": "Enter search terms",
+        "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}",
+        "pageReport": "{first}–{last} of {totalRecords}"
     }
 }

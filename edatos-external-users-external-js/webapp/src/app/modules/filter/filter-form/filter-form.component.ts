@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfigService } from '@app/config';
 import { Filter } from '@app/core/model';
-import { AccountUserService } from '@app/core/service';
 import { FilterService } from '@app/shared/service';
 import { finalize } from 'rxjs/operators';
 
@@ -18,11 +18,11 @@ export class FilterFormComponent implements OnInit {
     public account: any;
 
     constructor(
-        private userService: AccountUserService,
         private filterService: FilterService,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
-        private router: Router
+        private router: Router,
+        private configService: ConfigService
     ) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
         this.activatedRoute.url.subscribe((segments) => {
@@ -36,6 +36,11 @@ export class FilterFormComponent implements OnInit {
             this.titleService.setTitle(this.titleService.getTitle() + ' ' + this.filter.id);
         }
         this.account = this.activatedRoute.snapshot.data.user;
+    }
+
+    public getVisualizerPath(): string {
+        const config = this.configService.getConfig();
+        return config.metamac.visualizerPath;
     }
 
     public toggleEditMode(): void {

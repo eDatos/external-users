@@ -21,15 +21,15 @@ public class SecurityCheckerExternal {
         return this.isExternalUser(authentication);
     }
 
-    public boolean canCreateFilters(Authentication authentication) {
-        return this.isExternalUser(authentication);
-    }
-
     public boolean canUpdateFilters(Authentication authentication) {
         return this.isExternalUser(authentication);
     }
 
     public boolean canDeleteFilters(Authentication authentication) {
+        return this.isExternalUser(authentication);
+    }
+
+    public boolean canUpdateCategoryTree(Authentication authentication) {
         return this.isExternalUser(authentication);
     }
 

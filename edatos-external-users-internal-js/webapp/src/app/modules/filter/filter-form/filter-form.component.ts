@@ -6,6 +6,7 @@ import { ExternalUserService } from '@app/core/service';
 import { Filter } from '@app/shared/model';
 import { FilterService } from '@app/shared/service';
 import { finalize } from 'rxjs/operators';
+import { ConfigService } from '@app/config';
 
 @Component({
     selector: 'app-filter-form',
@@ -17,17 +18,18 @@ export class FilterFormComponent implements OnInit {
     public isLoading = false;
     public filter: Filter;
     public externalUserList: ExternalUser[];
-    public userId: string;
+    public userId: number;
 
     constructor(
         private filterService: FilterService,
         private activatedRoute: ActivatedRoute,
         private titleService: Title,
         private router: Router,
-        private externalUserService: ExternalUserService
+        private externalUserService: ExternalUserService,
+        private configService: ConfigService
     ) {
         this.filter = this.activatedRoute.snapshot.data['filter'] ?? new Filter();
-        this.userId = this.activatedRoute.snapshot.queryParams['id'];
+        this.userId = parseInt(this.activatedRoute.snapshot.queryParams['id'], 10);
         this.loadExternalUsersList();
         this.activatedRoute.url.subscribe((segments) => {
             const lastUrlSegment = segments[segments.length - 1].path;
@@ -89,12 +91,16 @@ export class FilterFormComponent implements OnInit {
         this.loadExternalUsersList(event);
     }
 
+    public getVisualizerPath(): string {
+        const config = this.configService.getConfig();
+        return config.metamac.visualizerPath;
+    }
+
     private loadExternalUsersList(event?) {
         this.externalUserService.find(event ? { query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` } : undefined).subscribe((results) => {
             this.externalUserList = results.body;
             if (this.userId) {
-                // tslint:disable-next-line:triple-equals
-                this.filter.externalUser = this.externalUserList.filter((user) => user.id == this.userId)?.[0];
+                this.filter.externalUser = this.externalUserList.filter((user) => user.id === this.userId)?.[0];
             }
         });
     }

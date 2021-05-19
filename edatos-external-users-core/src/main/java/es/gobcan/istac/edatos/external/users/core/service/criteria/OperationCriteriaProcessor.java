@@ -4,7 +4,7 @@ import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 import com.arte.libs.grammar.orm.jpa.criteria.OrderProcessorBuilder;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 
 public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
 
@@ -16,7 +16,7 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
     }
 
     public OperationCriteriaProcessor() {
-        super(OperationEntity.class);
+        super(ExternalOperationEntity.class);
     }
 
     @Override
@@ -27,33 +27,33 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
         // In the internal and external API the search by ID correspond to a search by CODE.
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.ID).sortable()
-                .withEntityProperty(OperationEntity.Properties.CODE).build());
+                .withEntityProperty(ExternalOperationEntity.Properties.CODE).build());
         registerOrderProcessor(
                 OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.ID)
-                .withEntityProperty(OperationEntity.Properties.CODE)
+                .withEntityProperty(ExternalOperationEntity.Properties.CODE)
                 .build());
 
         registerRestrictionProcessor(RestrictionProcessorBuilder.stringRestrictionProcessor()
                 .withQueryProperty(QueryProperty.CODE).sortable()
-                .withEntityProperty(OperationEntity.Properties.CODE).build());
+                .withEntityProperty(ExternalOperationEntity.Properties.CODE).build());
         registerOrderProcessor(
                 OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.CODE)
-                .withEntityProperty(OperationEntity.Properties.CODE)
+                .withEntityProperty(ExternalOperationEntity.Properties.CODE)
                 .build());
 
         // TODO(EDATOS-3294): Criteria processors don't work with json/jsonb fields.
         registerOrderProcessor(
                 OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.NAME)
-                .withEntityProperty(OperationEntity.Properties.NAME)
+                .withEntityProperty(ExternalOperationEntity.Properties.NAME)
                 .build());
 
         registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
                 .withQueryProperty(QueryProperty.CATEGORY_ID)
-                .withAlias(OperationEntity.Properties.CATEGORY, OperationEntity.Properties.CATEGORY)
-                .withEntityProperty(OperationEntity.Properties.CATEGORY + ".id")
+                .withAlias(ExternalOperationEntity.Properties.CATEGORY, ExternalOperationEntity.Properties.CATEGORY)
+                .withEntityProperty(ExternalOperationEntity.Properties.CATEGORY + ".id")
                 .build());
         //@formatter:on
     }

@@ -1,9 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.domain.vo;
 
 import java.io.Serializable;
-
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
+import java.util.Objects;
 
 public class LocalisedStringVO implements Serializable {
 
@@ -39,23 +37,20 @@ public class LocalisedStringVO implements Serializable {
         if (this == o) {
             return true;
         }
-
         if (!(o instanceof LocalisedStringVO)) {
             return false;
         }
-
         LocalisedStringVO that = (LocalisedStringVO) o;
-
-        return new EqualsBuilder().append(label, that.label).append(locale, that.locale).isEquals();
+        return Objects.equals(label, that.label) && Objects.equals(locale, that.locale);
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(label).append(locale).toHashCode();
+        return Objects.hash(label, locale);
     }
 
     @Override
     public String toString() {
-        return "LocalisedStringVO [label=" + label + ", locale=" + locale + "]";
+        return locale + ": " + label;
     }
 }

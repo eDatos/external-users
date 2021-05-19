@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 import { CookieService } from 'ngx-cookie';
-import { TOKEN_AUTH_NAME } from '@app/app.constants';
+import { TOKEN_AUTH_NAME, JHI_TOKEN_AUTH_NAME } from '@app/app.constants';
 
 @Injectable()
 export class AuthServerProvider {

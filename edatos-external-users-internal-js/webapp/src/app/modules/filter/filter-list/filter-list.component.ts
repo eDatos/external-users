@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ResponseWrapper } from '@app/core/utils/response-utils';
 import { FilterFilter } from '@app/modules/filter/filter-search/filter-search';
-import { Filter } from '@app/shared/model/filter.model';
-import { FilterService } from '@app/shared/service/filter/filter.service';
+import { Filter } from '@app/shared/model';
+import { FilterService } from '@app/shared/service';
 import { ArteEventManager } from 'arte-ng/services';
 import { LazyLoadEvent } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -28,11 +28,11 @@ export class FilterListComponent implements OnInit {
             },
         },
         {
-            fieldName: 'email',
+            fieldName: 'externalUserName',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.entity.email',
+                translatePath: 'filter.entity.owner',
             },
         },
         {
@@ -41,6 +41,14 @@ export class FilterListComponent implements OnInit {
             header: {
                 handler: 'translate',
                 translatePath: 'filter.entity.lastAccessDate',
+            },
+        },
+        {
+            fieldName: 'createdDate',
+            sortable: true,
+            header: {
+                handler: 'translate',
+                translatePath: 'entity.audits.createdDate',
             },
         },
     ];
@@ -76,6 +84,8 @@ export class FilterListComponent implements OnInit {
             ...transitionParams,
         };
         this.router.navigate(['/filter'], { replaceUrl: true, queryParams });
+        this.processUrlParams();
+        this.loadAll();
     }
 
     public loadData(e: LazyLoadEvent) {

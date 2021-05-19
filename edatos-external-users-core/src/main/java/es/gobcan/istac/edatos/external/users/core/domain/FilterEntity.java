@@ -25,7 +25,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVers
 /**
  * Filters are visualizations the user saved to consult them later. They work through permalinks, that contains
  * information about the visualization (i.e. the selected dimensions and categories). This entity saves extra info that
- * can be obtained though permalinks (i.e. {@link #dataset}) to save time and avoid server overload.
+ * can be obtained though permalinks to save time and avoid server overload.
  */
 @Entity
 @Table(name = "tb_filters", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "permalink"})})

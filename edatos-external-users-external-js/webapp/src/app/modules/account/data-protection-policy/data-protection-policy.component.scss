@@ -1,0 +1,7 @@
+.data-protection-policy {
+    padding: 20px 0px;
+}
+
+:host ::ng-deep .data-protection-policy img {
+    max-width: 100%;
+}

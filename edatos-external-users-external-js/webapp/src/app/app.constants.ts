@@ -11,12 +11,13 @@ export const VERSION = _VERSION;
 export const DEBUG_INFO_ENABLED = _DEBUG_INFO_ENABLED;
 export const AVAILABLE_LANGUAGES = _AVAILABLE_LANGUAGES;
 export const TOKEN_AUTH_NAME = 'authenticationtoken';
+export const JHI_TOKEN_AUTH_NAME = 'jhi-authenticationtoken';
 export const BASE_DECIMAL = 10;
 export const ERROR_ALERT_KEY = 'alert-errors';
 export const LANG_KEY = 'lang';
 export const DEFAULT_LANG = 'es';
 
-export const DEFAULT_PATH = '/favorite';
+export const DEFAULT_PATH = '/filter';
 
 export const ITEMS_PER_PAGE = 20;
 export const PAGINATION_OPTIONS = [5, 10, 15, 20];

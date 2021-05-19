@@ -4,8 +4,11 @@
     <include file="config/liquibase/changelog/20180117115714_added_function_lower_unaccent.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210223122800_added_entity_ExternalUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210301120000_added_entity_Filter.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210316085219_added_entity_Operation.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210316085221_added_entity_Category.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20210316085222_added_entity_Favorite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210316084510_added_entity_ExternalItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210316085219_added_entity_ExternalOperation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210316085221_added_entity_ExternalCategory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210428113159_added_entity_Category.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210412084011_added_entity_DataProtectionPolicy.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210428114744_added_entity_Favorite.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210513083239_added_entity_Issues.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

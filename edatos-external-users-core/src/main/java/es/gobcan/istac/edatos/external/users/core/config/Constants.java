@@ -14,8 +14,6 @@ public final class Constants {
 
     public static final String SPRING_PROFILE_DEV = "dev";
 
-    public static final String REMOVE_ORPHAN_FILES_CRON = "0 0 0 ? * SUN";
-
     public static final String NAME_ATTRIBUTE_LANG = "lang";
 
     public static final String DEFAULT_LANG = "es";

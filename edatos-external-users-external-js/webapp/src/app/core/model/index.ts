@@ -6,3 +6,4 @@ export * from './gender.model';
 export * from './treatment.model';
 export * from './credentials.model';
 export * from './filter.model';
+export * from './issues.model';

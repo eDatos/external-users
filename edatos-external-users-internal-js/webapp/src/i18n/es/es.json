@@ -148,6 +148,16 @@
     "category": {
         "name": "Tema"
     },
+    "categoryMasterTree": {
+        "home": {
+            "title": "Editar árbol maestro de categorías"
+        }
+    },
+    "categorySubscriptions": {
+        "home": {
+            "title": "Suscripciones temáticas"
+        }
+    },
     "configuration": {
         "filter": "Filtro (por prefijo)",
         "spring": "Spring configuration",
@@ -156,6 +166,11 @@
             "properties": "Propiedades"
         },
         "title": "Configuración"
+    },
+    "dataProtectionPolicy": {
+        "home": {
+            "title": "Política de protección de datos"
+        }
     },
     "edatosExternalUsersApp": {
         "rol": {
@@ -273,21 +288,21 @@
         }
     },
     "enum": {
+        "localeToLanguage": {
+            "CA": "Catalán",
+            "DE": "Alemán",
+            "EN": "Inglés",
+            "ES": "Español",
+            "FR": "Francés",
+            "PT": "Portugués",
+            "RU": "Ruso",
+            "ZH": "Chino"
+        },
         "procStatus": {
             "DRAFT": "Borrador",
             "EXTERNALLY_PUBLISHED": "Publicado externamente",
             "INTERNALLY_PUBLISHED": "Publicado internamente",
             "label": "Estado del ciclo de vida"
-        },
-        "localeToLanguage": {
-            "ES": "Español",
-            "EN": "Inglés",
-            "CA": "Catalán",
-            "PT": "Portugués",
-            "RU": "Ruso",
-            "ZH": "Chino",
-            "FR": "Francés",
-            "DE": "Alemán"
         }
     },
     "error": {
@@ -331,9 +346,20 @@
         },
         "usuario-existe": "El nombre de usuario introducido ya está siendo usado"
     },
+    "externalCategoriesTable": {
+        "columns": {
+            "name": "Nombre",
+            "nestedCode": "Código anidado",
+            "schemaCode": "Código del esquema",
+            "schemaVersion": "Versión del esquema",
+            "urn": "URN"
+        },
+        "noResourceFound": "No se ha encontrado ningún recurso externo"
+    },
     "externalUser": {
         "activado": "Activado",
         "created": "Se ha creado el usuario {{ param }}",
+        "createdDate": "Fecha de registro",
         "deactivate": {
             "question": "¿Seguro que desea desactivar el usuario <strong>{{ email }}</strong>?"
         },
@@ -349,6 +375,10 @@
             "placeholders": {
                 "fullname": "Introduzca nombre o apellidos",
                 "language": "Introduzca idiomas del usuario"
+            },
+            "labels": {
+                "fullname": "Nombre o apellidos",
+                "language": "Idioma"
             },
             "rolEnum": {
                 "label": "Rol"
@@ -369,7 +399,7 @@
             "createOrEditLabel": "Crear o editar un usuario",
             "favorites": "Favoritos",
             "filters": "Filtros",
-            "includeDeleted": "Incluir eliminados",
+            "includeDeleted": "Incluir desactivados",
             "title": "Usuarios"
         },
         "language": "Idioma",
@@ -389,7 +419,7 @@
         "roles": "Roles",
         "status": {
             "active": "Activo",
-            "deleted": "Eliminado",
+            "deactivated": "Desactivado",
             "name": "Estado"
         },
         "surname1": "Primer apellido",
@@ -463,39 +493,37 @@
         },
         "name": "Favorito"
     },
-    "thematicSubscriptions": {
-        "home": {
-            "title": "Suscripciones temáticas"
-        }
-    },
     "filter": {
         "entity": {
             "email": "Email",
             "lastAccessDate": "Fecha de último acceso",
             "name": "Nombre",
             "notes": "Notas",
-            "permalink": "Permalink"
+            "permalink": "URL",
+            "owner": "Propietario"
         },
         "form": {
             "cancel": "Cancelar",
-            "delete": "Eliminar filtro",
-            "edit": "Editar filtro",
+            "delete": "Eliminar consulta",
+            "edit": "Editar consulta",
             "goBack": "Volver al listado",
-            "legend": "Detalles del filtro",
-            "new": "Crear un nuevo filtro",
-            "save": "Guardar filtro"
+            "legend": "Detalles de la consulta personalizada",
+            "new": "Crear una nueva consulta personalizada",
+            "save": "Guardar consulta"
         },
         "home": {
-            "createLabel": "Crear filtro",
-            "title": "Filtros"
+            "createLabel": "Crear consulta personalizada",
+            "title": "Consultas personalizadas"
         },
-        "name": "Filtro",
+        "name": "Consulta personalizada",
         "search": {
-            "includeFromDeactivatedUsers": "Incluir filtros de usuarios desactivados",
-            "name": "Buscar filtros",
+            "includeFromDeactivatedUsers": "Consultas de usuarios desactivados",
+            "name": "Buscar consultas personalizadas",
             "placeholder": "",
-            "placeholderForFilterNameSearch": "Buscar filtros por nombre",
-            "placeholderForUserSearch": "Buscar filtros por datos del usuario (nombre, apellidos, email)"
+            "placeholderForFilterNameSearch": "Buscar consultas por nombre",
+            "placeholderForUserSearch": "Buscar consultas por datos del usuario (nombre, apellidos, email)",
+            "filterNameLabel": "Nombre de consulta personalizada",
+            "filterExternalUserLabel": "Nombre de usuario externo"
         }
     },
     "global": {
@@ -522,14 +550,17 @@
             "admin": {
                 "apidocs": "API",
                 "audits": "Auditoría",
+                "categoryMasterTree": "Árbol maestro de categorías",
                 "configuration": "Configuración",
+                "dataProtectionPolicy": "Política de protección de datos",
                 "health": "Salud",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
                 "main": "Administración",
                 "metrics": "Métricas",
                 "userManagement": "Gestión de usuarios",
-                "dataProtectionPolicy": "Política de protección de datos"
+                "treeTopicsAdministration": "Administrar árbol de temas",
+                "consultIssues": "Consultar incidencias"
             },
             "administracion": {
                 "main": "Administración"
@@ -698,16 +729,17 @@
     "operation": {
         "name": "Operación estadística"
     },
-    "dataProtectionPolicy": {
-        "home": {
-            "title": "Política de protección de datos"
-        }
-    },
     "structuralResourcesTree": {
+        "addNewNode": "Añadir tema",
+        "editionModal": "Edición multidioma del nombre del recurso",
+        "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
+        "remapModal": "Seleccionar temas",
         "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },
     "table": {
-        "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}"
+        "globalSearchPlaceholder": "Introducir términos de búsqueda",
+        "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}",
+        "pageReport": "{first}–{last} de {totalRecords}"
     }
 }
