@@ -1,8 +1,9 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+
+import javax.persistence.EntityManager;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
@@ -21,11 +22,13 @@ public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
     private final QueryUtil queryUtil;
     private final CategoryValidator categoryValidator;
+    private final EntityManager entityManager;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, QueryUtil queryUtil, CategoryValidator categoryValidator) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository, QueryUtil queryUtil, CategoryValidator categoryValidator, EntityManager entityManager) {
         this.categoryRepository = categoryRepository;
         this.queryUtil = queryUtil;
         this.categoryValidator = categoryValidator;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -52,9 +55,27 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryEntity> updateTree(List<CategoryEntity> tree) {
         categoryValidator.checkCategoriesWithSubscribers(tree, categoryRepository.findAll());
-        tree = categoryRepository.save(new HashSet<>(tree));
-        categoryRepository.flush();
-        return tree;
+        List<CategoryEntity> saved = categoryRepository.save(tree);
+
+        // During development there was a bug that would cause the server to return stale data of the tree
+        // structure. When the user drag and drops a node, the entire tree is updated. This would go as expected
+        // until the tree was saved and the data was returned: it turns out that while it was correctly saved to
+        // the database, Hibernate (for some reason) would return stale data of the tree. For example, if an
+        // entire branch from the tree was dragged upwards in the hierarchy, Hibernate would return the new changes
+        // plus the old ones, meaning we would have that branch duplicated (under the new AND the old parent).
+        //
+        // I think the problem comes from the Hibernate cache (not sure whether the first or second level one),
+        // but I'm not sure yet, and so I can't pinpoint the exact issue that is causing this bug.
+        //
+        // So, for now, the fix comes as simple as flushing the changes to DB after saving and then updating
+        // the tree from the database data (though calling refresh). It's a slow operation, for sure, but given that
+        // the tree is not updated frequently it should not be that much of a bottleneck.
+        entityManager.flush();
+        for (CategoryEntity category : saved) {
+            entityManager.refresh(category);
+        }
+
+        return saved;
     }
 
     @Override

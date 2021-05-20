@@ -46,10 +46,6 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     @Mapping(target = "externalItems", source = "dto.resources", qualifiedByName = "getExternalItemEntitiesFromUrn")
     public abstract CategoryEntity toEntity(CategoryDto dto);
 
-    @Mapping(target = "parent", expression = "java(parentId != null ? categoryRepository.getOne(parentId) : null)")
-    @Mapping(target = "externalItems", source = "dto.resources", qualifiedByName = "getExternalItemEntitiesFromUrn")
-    public abstract CategoryEntity toEntity(CategoryDto dto, Long parentId);
-
     @Named("getExternalItemEntitiesFromUrn")
     public Set<ExternalItemEntity> getExternalItemEntitiesFromUrn(List<ExternalItemDto> resources) {
         List<String> urns = resources.stream().map(ExternalItemDto::getUrn).filter(Objects::nonNull).collect(Collectors.toList());

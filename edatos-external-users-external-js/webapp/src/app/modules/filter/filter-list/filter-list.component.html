@@ -16,7 +16,7 @@
                         [value]="filters"
                         [rows]="itemsPerPage"
                         [totalRecords]="totalItems"
-                        tableStyleClass="page-table table-has-pointer-rows"
+                        tableStyleClass="page-table table-has-pointer-rows table-layou-fixed"
                         (onLazyLoad)="loadData($event)"
                     >
                         <ng-template pTemplate="body" let-filter>

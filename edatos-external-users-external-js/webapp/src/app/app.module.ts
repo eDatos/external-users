@@ -17,7 +17,7 @@ import { NavbarComponent } from './layouts/navbar';
 import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { CookieService } from 'ngx-cookie';
+import { CookieService } from 'ngx-cookie-service';
 import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 import { ArteTableService } from 'arte-ng';
