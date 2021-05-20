@@ -4,12 +4,11 @@ import { InternationalString } from './international-string.model';
 
 /**
  * This enum is a subset from the one located at
- * {@link
- * https://git.arte-consultores.com/istac/edatos-core-common/blob/master/src/main/java/org/siemac/edatos/core/common/enume/TypeExternalArtefactsEnum.java|edatos-core-common}.
+ * {@link https://git.arte-consultores.com/istac/edatos-core-common/blob/master/src/main/java/org/siemac/edatos/core/common/enume/TypeExternalArtefactsEnum.java|edatos-core-common}.
  */
 export enum TypeExternalArtefacts {
-    CATEGORY = 'structuralResources#category',
-    STATISTICAL_OPERATION = 'statisticalOperations#operation',
+    CATEGORY = 'CATEGORY',
+    STATISTICAL_OPERATION = 'STATISTICAL_OPERATION',
 }
 
 export class ExternalItem extends BaseVersionedEntity {

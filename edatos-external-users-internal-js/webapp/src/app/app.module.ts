@@ -16,7 +16,7 @@ import { TranslateModule, TranslateLoader, TranslateService, MissingTranslationH
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthServerProvider } from './core/service/auth';
-import { AuthInterceptor, AuthExpiredInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
+import { AuthInterceptor, AuthExpiredInterceptor, ErrorHandlerInterceptor, ClassToPlainInterceptor } from './core/interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { AppRoutingModule } from './app-routing.module';
@@ -65,7 +65,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
         SharedModule,
         AppRoutingModule,
         TranslateModule.forRoot({
-            missingTranslationHandler: {provide: MissingTranslationHandler, useClass: MissingTranslationHandlerImpl},
+            missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MissingTranslationHandlerImpl },
             loader: {
                 provide: TranslateLoader,
                 useFactory: createTranslateLoader,
@@ -105,6 +105,11 @@ export function initTranslations(translateService: TranslateService, cookieServi
         {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorHandlerInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ClassToPlainInterceptor,
             multi: true,
         },
         MessageService,
