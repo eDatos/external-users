@@ -12,12 +12,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root',
 })
 export class AuthInterceptor implements HttpInterceptor {
-    constructor(
-        private localStorage: LocalStorageService,
-        private sessionStorage: SessionStorageService,
-        private cookieService: CookieService,
-        private configService: ConfigService
-    ) {}
+    constructor(private localStorage: LocalStorageService, private sessionStorage: SessionStorageService, private cookieService: CookieService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let headers: HttpHeaders = req.headers;
@@ -60,11 +55,5 @@ export class AuthInterceptor implements HttpInterceptor {
         } else {
             this.sessionStorage.store(TOKEN_AUTH_NAME, jwt);
         }
-    }
-
-    private getLocation(href) {
-        const l = document.createElement('a');
-        l.href = href;
-        return l;
     }
 }
