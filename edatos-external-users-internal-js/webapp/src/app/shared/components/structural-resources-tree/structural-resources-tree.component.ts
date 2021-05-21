@@ -289,8 +289,10 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
                     this.categoryListToCategoryTree(category.children).subscribe((treeNodes) => {
                         children.push(...treeNodes);
                     });
-                    for (const externalOperation of category.operations) {
-                        children.push(this.externalOperationToTreeNode(externalOperation));
+                    if (this.mode !== 'edit') {
+                        for (const externalOperation of category.operations) {
+                            children.push(this.externalOperationToTreeNode(externalOperation));
+                        }
                     }
                     return this.categoryToCategoryTreeNode(category, children);
                 })
