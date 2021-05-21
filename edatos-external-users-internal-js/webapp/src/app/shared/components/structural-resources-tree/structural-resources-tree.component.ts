@@ -12,7 +12,7 @@ import { finalize, shareReplay } from 'rxjs/operators';
 /**
  * @see StructuralResourcesTreeComponent#mode
  */
-export type Mode = 'view' | 'select' | 'edit';
+export type Mode = 'view' | 'select' | 'simpleSelect' | 'edit';
 
 export interface CategoryTreeNode extends TreeNode {
     data: Category;
@@ -34,6 +34,12 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
      */
     @Input()
     public favorites?: Favorite[];
+
+    /**
+     * List of category nodes, which has been selected in a previous instance. Used to preselect categories on the tree
+     */
+    @Input()
+    public preselectedResources?: CategoryTreeNode[];
 
     /**
      * If true, the elements on the tree become unselectable. On 'view' mode is true by default.
@@ -135,6 +141,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         this.categoryListToCategoryTree(tree).subscribe((treeNodes) => {
             this.tree = treeNodes;
         });
+        
     }
 
     public updateSelection() {
@@ -148,13 +155,17 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public onSelect(treeNode: CategoryTreeNode) {
-        this.setLoadingNode(treeNode);
-        this.onResourceSelect.emit(treeNode.data);
+        if (this.mode !== 'simpleSelect') {
+            this.setLoadingNode(treeNode);
+            this.onResourceSelect.emit(treeNode.data);
+        }
     }
 
     public onUnselect(treeNode: CategoryTreeNode) {
-        this.setLoadingNode(treeNode);
-        this.onResourceUnselect.emit(treeNode.data);
+        if (this.mode !== 'simpleSelect') {
+            this.setLoadingNode(treeNode);
+            this.onResourceUnselect.emit(treeNode.data);
+        }
     }
 
     public addNode(parent?: CategoryTreeNode) {
@@ -289,6 +300,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         if (this.isFavorite(category)) {
             this.selectedResources.push(node);
         }
+        if (this.isPreselected(category)) {
+            this.selectedResources.push(node);
+        }
         this.nodeList.push(node);
 
         return node;
@@ -296,6 +310,10 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     private isFavorite(category: Category): boolean {
         return this.favorites?.some((favorite) => favorite.category.id === category.id) ?? false;
+    }
+
+    private isPreselected(category: Category): boolean {
+        return this.preselectedResources?.some((resource) => resource.data.id === category.id) ?? false;
     }
 
     private setLoadingNode(node: CategoryTreeNode, setLoadingChildren = true) {
@@ -325,6 +343,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 this.disabled = true;
                 break;
             case 'select':
+            case 'simpleSelect':
                 this.selectionMode = 'checkbox';
                 break;
             case 'edit':
