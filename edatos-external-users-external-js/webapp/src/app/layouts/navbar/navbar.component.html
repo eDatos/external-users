@@ -1,10 +1,4 @@
 <nav class="navbar navbar-dark navbar-expand-lg">
-    <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-        <img class="logo-img" src="assets/images/logo-arte.png" alt="Logo" />
-        <!--<span translate="global.title" class="navbar-title"></span>-->
-        <span class="navbar-version">{{version}}</span>
-    </a>
-
     <button
         class="navbar-toggler"
         type="button"
@@ -21,18 +15,46 @@
     <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
         <ul *ngIf="isCorrectlyLogged" class="navbar-nav ml-auto">
             <li>
-                <a class="nav-link btn" routerLink="favorite" routerLinkActive="active">
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <span translate="favorite.home.title"></span>
-                </a>
-            </li>
-            <li>
                 <a class="nav-link btn" routerLink="filter" routerLinkActive="active">
                     <i class="fa fa-filter" aria-hidden="true"></i>
                     <span translate="filter.home.title"></span>
                 </a>
             </li>
-
+            <li>
+                <a class="nav-link btn" routerLink="favorite" routerLinkActive="active">
+                    <i class="fa fa-star" aria-hidden="true"></i>
+                    <span translate="favorite.home.title"></span>
+                </a>
+            </li>
+            <li *ngIf="isCorrectlyLogged" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+                <a class="nav-link dropdown-toggle btn" ngbDropdownToggle id="admin-menu">
+                    <span>
+                        <i class="fa fa-info" aria-hidden="true"></i>
+                        <b class="caret"></b>
+                    </span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
+                    <li>
+                        <a class="dropdown-item" routerLink="/issues-new" routerLinkActive="active">
+                            <i class="fa fa-fw fa-bullhorn" aria-hidden="true"></i>
+                            <span translate="issues.home.titleMenu"></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/data-protection-policy" routerLinkActive="active">
+                            <i class="fa fa-fw fa-file" aria-hidden="true"></i>
+                            <span translate="entity.action.data-protection-policy"></span>
+                        </a>
+                    </li>
+                    <hr />
+                    <li>
+                        <a class="dropdown-item dialog-btn-pointer" (click)="openAboutDialog()" routerLinkActive="active">
+                            <i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>
+                            <span translate="entity.action.about"></span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
             <li *ngIf="isCorrectlyLogged" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
                 <a class="nav-link dropdown-toggle btn" ngbDropdownToggle id="admin-menu">
                     <span>
@@ -54,13 +76,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item" routerLink="/data-protection-policy" routerLinkActive="active">
-                            <i class="fa" aria-hidden="true"></i>
-                            <span translate="entity.action.data-protection-policy"></span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item unsubscribe-dialog" (click)="openDeleteDialog()" routerLinkActive="active">
+                        <a class="dropdown-item dialog-btn-pointer" (click)="openDeleteDialog()" routerLinkActive="active">
                             <i class="fa" aria-hidden="true"></i>
                             <span translate="entity.action.unsubscribe"></span>
                         </a>

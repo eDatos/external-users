@@ -12,24 +12,25 @@ Navbar
 }
 
 .navbar {
+    min-height: $navbar-content-height;
     position: fixed;
     top: $primary-navbar-height;
     z-index: $secondary-navbar-zindex;
     width: 100%;
     height: $secondary-navbar-height;
-    background-color: $istac-blue;
+    background-color: $istac-gray;
     padding-left: $page-padding-left;
     padding-right: $page-padding-right;
     .dropdown-item.active,
     .dropdown-item.active:focus,
     .dropdown-item.active:hover {
-        background-color: $istac-blue-dark;
+        background-color: $istac-gray-dark;
     }
     ul.navbar-nav {
         .nav-item {
             white-space: nowrap;
             &.active {
-                background: $istac-blue-dark;
+                background: $istac-gray-dark;
             }
         }
     }

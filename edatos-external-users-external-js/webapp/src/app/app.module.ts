@@ -17,13 +17,13 @@ import { NavbarComponent } from './layouts/navbar';
 import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { CookieService } from 'ngx-cookie';
+import { CookieService } from 'ngx-cookie-service';
 import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 import { ArteTableService } from 'arte-ng';
 import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
-import { DeleteConfirmDialogComponent } from './modules/account';
+import { AboutDialogComponent, DeleteConfirmDialogComponent } from './modules/account';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');
@@ -37,7 +37,8 @@ export function initTranslations(translateService: TranslateService, cookieServi
 }
 
 @NgModule({
-    declarations: [AppComponent, NavbarComponent, ErrorComponent, DeleteConfirmDialogComponent],
+    declarations: [AppComponent, NavbarComponent, ErrorComponent, DeleteConfirmDialogComponent, AboutDialogComponent],
+    entryComponents: [DeleteConfirmDialogComponent, AboutDialogComponent],
     imports: [
         BrowserModule,
         ErrorRoutingModule,

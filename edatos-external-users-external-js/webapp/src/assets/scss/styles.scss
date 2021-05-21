@@ -9,6 +9,11 @@
     clear: both;
     padding-bottom: 15px;
 }
+
+.fa.fa-istac-home {
+    margin-bottom: 5px;
+}
+
 /* BEGIN BOOTSTRAP */
 .btn {
     &.btn-frameless {
@@ -134,6 +139,15 @@ table.table-sticky-header {
 
 footer.istac-footer {
     position: fixed !important;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-header,
+.modal-footer {
+    background: #f8f8f8;
 }
 
 @import './_page';

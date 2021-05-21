@@ -10,7 +10,8 @@
         "action": {
             "forgottenPassword": "Forgotten password",
             "signup": "Sign up",
-            "signin": "Sign in"
+            "signin": "Sign in",
+            "goBack": "Go back"
         }
     }
 }

@@ -14,15 +14,15 @@ export const EXTERNAL_USER_ROLES = [Role.ADMINISTRADOR];
 export class PermissionService {
     constructor(private principal: Principal) {}
 
-    puedeNavegarUserManagement(): boolean {
+    public puedeNavegarUserManagement(): boolean {
         return this.principal.rolesRutaMatchesRolesUsuario(USER_MANAGEMENT_ROLES);
     }
 
-    puedeNavegarHerramientas(): boolean {
+    public puedeNavegarHerramientas(): boolean {
         return this.principal.rolesRutaMatchesRolesUsuario(HERRAMIENTAS_ROLES);
     }
 
-    puedeNavegarAdministracion(): boolean {
+    public puedeNavegarAdministracion(): boolean {
         return this.principal.rolesRutaMatchesRolesUsuario(ADMINISTRACION_ROLES);
     }
 }

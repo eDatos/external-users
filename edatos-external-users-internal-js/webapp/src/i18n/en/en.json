@@ -377,6 +377,10 @@
                 "fullname": "Enter name or surname",
                 "language": "Enter user languages"
             },
+            "labels": {
+                "fullname": "Name or surname",
+                "language": "Language"
+            },
             "rolEnum": {
                 "label": "Role"
             },
@@ -496,7 +500,8 @@
             "lastAccessDate": "Last Access Date",
             "name": "First Name",
             "notes": "Notes",
-            "permalink": "URL"
+            "permalink": "URL",
+            "owner": "Owner"
         },
         "form": {
             "cancel": "Cancel",
@@ -517,7 +522,9 @@
             "name": "Search filters",
             "placeholder": "Enter user name or email",
             "placeholderForFilterNameSearch": "",
-            "placeholderForUserSearch": ""
+            "placeholderForUserSearch": "",
+            "filterNameLabel": "Filter name",
+            "filterExternalUserLabel": "External user name"
         }
     },
     "global": {
@@ -552,7 +559,9 @@
                 "logs": "Logs",
                 "main": "Administration",
                 "metrics": "Metrics",
-                "userManagement": "User management"
+                "userManagement": "User management",
+                "treeTopicsAdministration": "Manage topics tree",
+                "consultIssues": "Consult issues"
             },
             "administracion": {
                 "main": "Administration"
@@ -722,7 +731,7 @@
         "name": "Statistical operation"
     },
     "structuralResourcesTree": {
-        "addNewNode": "Add root node",
+        "addNewNode": "Add topic",
         "editionModal": "Multilanguage edition of the resource name",
         "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
         "noRecordsFound": "No topic or operation found",

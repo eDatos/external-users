@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-filter-list',
     templateUrl: './filter-list.component.html',
+    styleUrls: ['./filter-list.component.scss'],
 })
 export class FilterListComponent implements OnInit {
     public filters?: Filter[];
@@ -28,11 +29,11 @@ export class FilterListComponent implements OnInit {
             },
         },
         {
-            fieldName: 'email',
+            fieldName: 'externalUserName',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'filter.entity.email',
+                translatePath: 'filter.entity.owner',
             },
         },
         {
@@ -41,6 +42,14 @@ export class FilterListComponent implements OnInit {
             header: {
                 handler: 'translate',
                 translatePath: 'filter.entity.lastAccessDate',
+            },
+        },
+        {
+            fieldName: 'createdDate',
+            sortable: true,
+            header: {
+                handler: 'translate',
+                translatePath: 'entity.audits.createdDate',
             },
         },
     ];
@@ -76,6 +85,8 @@ export class FilterListComponent implements OnInit {
             ...transitionParams,
         };
         this.router.navigate(['/filter'], { replaceUrl: true, queryParams });
+        this.processUrlParams();
+        this.loadAll();
     }
 
     public loadData(e: LazyLoadEvent) {

@@ -64,6 +64,14 @@ const APP_ROUTES: Routes = [
         },
     },
     {
+        path: 'issues-new',
+        loadChildren: () => import('./modules/issues/issues.module').then((m) => m.IssuesModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: USER,
+        },
+    },
+    {
         path: '**',
         redirectTo: 'notfound',
     },

@@ -23,8 +23,9 @@
                         <ng-template pTemplate="body" let-filter>
                             <tr [routerLink]="['../filter', filter.id]">
                                 <td>{{filter.name}}</td>
-                                <td>{{filter.externalUser.email}}</td>
+                                <td>{{filter.externalUser.name}} {{filter.externalUser.surname1}} {{filter.externalUser.surname2}}</td>
                                 <td>{{filter.lastAccessDate}}</td>
+                                <td>{{filter.createdDate}}</td>
                             </tr>
                         </ng-template>
                     </arte-table>
