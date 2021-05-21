@@ -8,33 +8,33 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
     @Type(() => ExternalUser)
     public externalUser: ExternalUser;
 
-    @Type(() => ExternalOperation)
-    private operation: ExternalOperation | null;
-
     @Type(() => Category)
     private category: Category | null;
 
+    @Type(() => ExternalOperation)
+    private externalOperation: ExternalOperation | null;
+
     public get resource(): Category | ExternalOperation | undefined {
-        return this.category || this.operation;
+        return this.category || this.externalOperation;
     }
 
     public set resource(resource: Category | ExternalOperation) {
         if (resource.favoriteType === 'category') {
             this.category = resource;
-            this.operation = null;
-        } else if (resource.favoriteType === 'operation') {
-            this.operation = resource;
+            this.externalOperation = null;
+        } else if (resource.favoriteType === 'externalOperation') {
+            this.externalOperation = resource;
             this.category = null;
         } else {
             throw new Error('Unrecognized favorite type');
         }
     }
 
-    public get favoriteType(): 'category' | 'operation' | undefined {
+    public get favoriteType(): 'category' | 'externalOperation' | undefined {
         return this.resource?.favoriteType;
     }
 
     public getLocalisedName(languageCode: string): string | undefined {
-        return (this.category || this.operation)?.name?.getLocalisedLabel(languageCode);
+        return (this.category || this.externalOperation)?.name?.getLocalisedLabel(languageCode);
     }
 }

@@ -35,7 +35,7 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
     @Override
     @Mapping(target = "externalUser", source = "externalUser.id", qualifiedByName = "externalUserFromId")
     @Mapping(target = "category", source = "category.id", qualifiedByName = "categoryFromId")
-    @Mapping(target = "operation", source = "operation.id", qualifiedByName = "externalOperationFromId")
+    @Mapping(target = "externalOperation", source = "externalOperation.id", qualifiedByName = "externalOperationFromId")
     public abstract FavoriteEntity toEntity(FavoriteDto dto);
 
     @Named("externalUserFromId")

@@ -50,7 +50,7 @@
     <ng-template let-node pTemplate="default">
         <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
         <span class="subscribed-users mr-2">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
-        <span class="badge badge-secondary mr-2">{{node.data.resources.length}}</span>
+        <span class="badge badge-secondary mr-2">{{node.data.externalCategories.length}}</span>
         <p-dialog
             *ngIf="node.editMode === 'name'"
             [visible]="true"
@@ -94,7 +94,11 @@
             appendTo="body"
             (visibleChange)="disableNodeEdit(node)"
         >
-            <app-external-categories-table #table [externalCategories]="externalCategories" [selectedExternalCategories]="node.data.resources"></app-external-categories-table>
+            <app-external-categories-table
+                #table
+                [externalCategories]="externalCategories"
+                [selectedExternalCategories]="node.data.externalCategories"
+            ></app-external-categories-table>
             <p-footer>
                 <button (click)="disableNodeEdit(node)" class="btn btn-secondary" type="button">
                     <i class="fa fa-times" aria-hidden="true"></i>

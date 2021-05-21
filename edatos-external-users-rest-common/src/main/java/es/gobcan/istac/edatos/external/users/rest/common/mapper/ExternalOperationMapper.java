@@ -23,6 +23,5 @@ public abstract class ExternalOperationMapper implements EntityMapper<ExternalOp
 
     @Override
     @Mapping(target = "externalCategoryUrn", source = "dto.category.urn")
-    @Mapping(target = "categories", ignore = true)
     public abstract ExternalOperationEntity toEntity(ExternalOperationDto dto);
 }

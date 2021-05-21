@@ -46,7 +46,7 @@ export class ExternalCategory extends ExternalItem {
 
 export class ExternalOperation extends ExternalItem {
     @Exclude()
-    public readonly favoriteType = 'operation';
+    public readonly favoriteType = 'externalOperation';
 
     public externalCategoryUrn: string;
     public subscribers = 0;

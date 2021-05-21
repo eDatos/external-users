@@ -248,7 +248,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
 
     public saveRemap(node: CategoryTreeNode, selectedResources: ExternalCategory[]) {
         if (node.data instanceof Category) {
-            node.data.resources = selectedResources;
+            node.data.externalCategories = selectedResources;
         }
         node.editMode = null;
         this.updateTree();
@@ -290,7 +290,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
                         children.push(...treeNodes);
                     });
                     if (this.mode !== 'edit') {
-                        for (const externalOperation of category.operations) {
+                        for (const externalOperation of category.externalOperations) {
                             children.push(this.externalOperationToTreeNode(externalOperation));
                         }
                     }
@@ -342,7 +342,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     }
 
     private unsetLoadingNode(node: CategoryTreeNode, setLoadingChildren = true) {
-        if (node.data.favoriteType === 'operation') {
+        if (node.data.favoriteType === 'externalOperation') {
             node.icon = 'fa fa-table';
         } else {
             node.icon = null;

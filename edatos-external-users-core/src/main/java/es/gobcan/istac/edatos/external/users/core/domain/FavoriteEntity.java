@@ -32,7 +32,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVers
 @Table(name = "tb_favorites", uniqueConstraints = {
     // @formatter:off
     @UniqueConstraint(columnNames = {"external_user_fk", "category_fk"}),
-    @UniqueConstraint(columnNames = {"external_user_fk", "operation_fk"}),
+    @UniqueConstraint(columnNames = {"external_user_fk", "external_operation_fk"}),
     // @formatter:on
 })
 @Cache(usage = CacheConcurrencyStrategy.NONE)
@@ -53,8 +53,8 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
     private CategoryEntity category;
 
     @ManyToOne
-    @JoinColumn(name = "operation_fk")
-    private ExternalOperationEntity operation;
+    @JoinColumn(name = "external_operation_fk")
+    private ExternalOperationEntity externalOperation;
 
     @Override
     public Long getId() {
@@ -81,12 +81,12 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
         this.category = category;
     }
 
-    public ExternalOperationEntity getOperation() {
-        return operation;
+    public ExternalOperationEntity getExternalOperation() {
+        return externalOperation;
     }
 
-    public void setOperation(ExternalOperationEntity operation) {
-        this.operation = operation;
+    public void setExternalOperation(ExternalOperationEntity operation) {
+        this.externalOperation = operation;
     }
 
     @Override

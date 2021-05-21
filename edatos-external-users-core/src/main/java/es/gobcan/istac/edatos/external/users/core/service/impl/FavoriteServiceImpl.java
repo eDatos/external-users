@@ -58,10 +58,10 @@ public class FavoriteServiceImpl implements FavoriteService {
         if (favoriteRepository.findByExternalUser(externalUser).stream().map(FavoriteEntity::getCategory).noneMatch(cat -> Objects.equals(cat, parent))) {
             favoriteRepository.save(newFavorite(externalUser, parent));
         }
-        List<String> urns = parent.getExternalItems().stream().map(ExternalItemEntity::getUrn).collect(Collectors.toList());
+        List<String> urns = parent.getExternalCategories().stream().map(ExternalItemEntity::getUrn).collect(Collectors.toList());
         List<ExternalOperationEntity> operations = externalOperationRepository.findByExternalCategoryUrnIn(urns);
         for (ExternalOperationEntity operation : operations) {
-            if (favoriteRepository.findByExternalUser(externalUser).stream().map(FavoriteEntity::getOperation).noneMatch(op -> Objects.equals(op, operation))) {
+            if (favoriteRepository.findByExternalUser(externalUser).stream().map(FavoriteEntity::getExternalOperation).noneMatch(op -> Objects.equals(op, operation))) {
                 favoriteRepository.save(newFavorite(externalUser, operation));
             }
         }
@@ -80,7 +80,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     private FavoriteEntity newFavorite(ExternalUserEntity externalUser, ExternalOperationEntity operation) {
         FavoriteEntity favorite = new FavoriteEntity();
         favorite.setExternalUser(externalUser);
-        favorite.setOperation(operation);
+        favorite.setExternalOperation(operation);
         return favorite;
     }
 
@@ -151,10 +151,10 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     public void delete(ExternalUserEntity externalUser, CategoryEntity parent) {
         favoriteRepository.deleteByExternalUserAndCategory(externalUser, parent);
-        List<String> urns = parent.getExternalItems().stream().map(ExternalItemEntity::getUrn).collect(Collectors.toList());
+        List<String> urns = parent.getExternalCategories().stream().map(ExternalItemEntity::getUrn).collect(Collectors.toList());
         List<ExternalOperationEntity> operations = externalOperationRepository.findByExternalCategoryUrnIn(urns);
         for (ExternalOperationEntity operation : operations) {
-            favoriteRepository.deleteByExternalUserAndOperation(externalUser, operation);
+            favoriteRepository.deleteByExternalUserAndExternalOperation(externalUser, operation);
         }
         for (CategoryEntity child : parent.getChildren()) {
             delete(externalUser, child);

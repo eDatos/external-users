@@ -1,7 +1,6 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalItemEntity;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalItemDto;
@@ -14,6 +13,5 @@ public abstract class ExternalItemMapper implements EntityMapper<ExternalItemDto
     public abstract ExternalItemDto toDto(ExternalItemEntity entity);
 
     @Override
-    @Mapping(target = "categories", ignore = true)
     public abstract ExternalItemEntity toEntity(ExternalItemDto dto);
 }
