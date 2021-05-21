@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,13 +19,22 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedAndAuditingEntity;
 
 /**
- * Favorites are references to categories that the user can designate to be aware of
+ * Favorites are references to certain items that the user can designate to be aware of
  * certain events related to them, like creations, modifications, and deletions.
- *
- * @see CategoryEntity
+ * <p>
+ * In this case, a favorite can be a reference to:
+ * <ul>
+ * <li>a {@link CategoryEntity}.
+ * <li>an {@link ExternalOperationEntity}.
+ * </ul>
  */
 @Entity
-@Table(name = "tb_favorites", uniqueConstraints = {@UniqueConstraint(columnNames = {"external_user_fk", "category_fk"})})
+@Table(name = "tb_favorites", uniqueConstraints = {
+    // @formatter:off
+    @UniqueConstraint(columnNames = {"external_user_fk", "category_fk"}),
+    @UniqueConstraint(columnNames = {"external_user_fk", "operation_fk"}),
+    // @formatter:on
+})
 @Cache(usage = CacheConcurrencyStrategy.NONE)
 public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
@@ -37,9 +48,13 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
     @ManyToOne(optional = false)
     private ExternalUserEntity externalUser;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "category_fk", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "category_fk")
     private CategoryEntity category;
+
+    @ManyToOne
+    @JoinColumn(name = "operation_fk")
+    private ExternalOperationEntity operation;
 
     @Override
     public Long getId() {
@@ -64,5 +79,30 @@ public class FavoriteEntity extends AbstractVersionedAndAuditingEntity {
 
     public void setCategory(CategoryEntity category) {
         this.category = category;
+    }
+
+    public ExternalOperationEntity getOperation() {
+        return operation;
+    }
+
+    public void setOperation(ExternalOperationEntity operation) {
+        this.operation = operation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof FavoriteEntity)) {
+            return false;
+        }
+        FavoriteEntity that = (FavoriteEntity) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

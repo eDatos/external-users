@@ -1,13 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExternalUser, Language, Role, Treatment } from '@app/core/model';
 import { PermissionService } from '@app/core/service/auth';
 import { ExternalUserService } from '@app/core/service/user';
-import { Category, Favorite } from '@app/shared/model';
+import { Category, ExternalOperation, Favorite } from '@app/shared/model';
 import { FavoriteService } from '@app/shared/service';
 import { ArteEventManager, GenericModalService } from 'arte-ng/services';
 import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { ExternalUserDeleteDialogComponent } from '../external-user-delete-dialog.component';
+import { StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree';
 
 @Component({
     selector: 'app-external-user-form',
@@ -28,6 +30,9 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     public inEditMode = false;
 
     private subscription: Subscription;
+
+    @ViewChild(StructuralResourcesTreeComponent)
+    public tree: StructuralResourcesTreeComponent;
 
     constructor(
         private externalUserService: ExternalUserService,
@@ -55,18 +60,14 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         });
     }
 
-    public saveFavorite(category: Category): void {
+    public saveFavorite(resource: Category | ExternalOperation): void {
         const favorite = new Favorite();
         favorite.externalUser = this.externalUser;
-        favorite.category = category;
-        this.favoriteService.save(favorite).subscribe(
-            () => {
-                this.updateFavorites();
-            },
-            (error) => {
-                this.updateFavorites();
-            }
-        );
+        favorite.resource = resource;
+        this.favoriteService
+            .save(favorite)
+            .pipe(finalize(() => this.updateFavorites()))
+            .subscribe();
     }
 
     public load(id: number) {
@@ -118,16 +119,12 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
         this.subscription.unsubscribe();
     }
 
-    public deleteFavorite(category: Category): void {
-        const favorite = this.favorites.find((fav) => fav.category.id === category.id)!;
-        this.favoriteService.delete(favorite.id).subscribe(
-            () => {
-                this.updateFavorites();
-            },
-            (error) => {
-                this.updateFavorites();
-            }
-        );
+    public deleteFavorite(resource: Category | ExternalOperation): void {
+        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.favoriteType === resource.favoriteType)!;
+        this.favoriteService
+            .delete(favorite.id)
+            .pipe(finalize(() => this.updateFavorites()))
+            .subscribe();
     }
 
     public toggleEditMode() {

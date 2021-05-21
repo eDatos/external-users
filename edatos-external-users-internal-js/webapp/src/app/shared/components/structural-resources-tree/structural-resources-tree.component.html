@@ -9,7 +9,7 @@
 </button>
 
 <p-tree
-    *ngIf="mode === 'view' || mode === 'select'"
+    *ngIf="mode === 'view'"
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
     [(selection)]="selectedResources"
@@ -23,6 +23,19 @@
         <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
     </ng-template>
 </p-tree>
+
+<p-tree
+    *ngIf="mode === 'select'"
+    (onNodeSelect)="onSelect($event.node)"
+    (onNodeUnselect)="onUnselect($event.node)"
+    [(selection)]="selectedResources"
+    [loading]="!tree || loading"
+    [selectionMode]="selectionMode"
+    [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
+    [value]="tree"
+    [propagateSelectionUp]="propagateSelection"
+    [propagateSelectionDown]="propagateSelection"
+></p-tree>
 
 <p-tree
     (onNodeDrop)="onNodeDrop($event)"

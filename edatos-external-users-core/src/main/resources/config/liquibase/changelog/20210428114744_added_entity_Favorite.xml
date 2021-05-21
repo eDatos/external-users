@@ -16,9 +16,8 @@
             <column name="last_modified_by" type="VARCHAR(50)"/>
             <column name="last_modified_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
             <column name="opt_lock" type="BIGINT"/>
-            <column name="category_fk" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
+            <column name="category_fk" type="BIGINT"/>
+            <column name="operation_fk" type="BIGINT"/>
             <column name="external_user_fk" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -28,9 +27,15 @@
         <addUniqueConstraint columnNames="external_user_fk, category_fk" constraintName="UK6ubfpj9qk6ffa0wsgiqtewdn7" tableName="tb_favorites"/>
     </changeSet>
     <changeSet author="arte" id="1619606864000-4">
-        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_favorites" constraintName="FKlm71lrp5m3tcq3m6nixx1xmrn" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
+        <addUniqueConstraint columnNames="external_user_fk, operation_fk" constraintName="UKlxjkh55oohstxpley34nth2yh" tableName="tb_favorites"/>
     </changeSet>
     <changeSet author="arte" id="1619606864000-5">
+        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_favorites" constraintName="FKlm71lrp5m3tcq3m6nixx1xmrn" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1619606864000-6">
         <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_favorites" constraintName="FKqo0wh8cx29bg7gkw8x336g8k7" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="arte" id="1619606864000-7">
+        <addForeignKeyConstraint baseColumnNames="operation_fk" baseTableName="tb_favorites" constraintName="FK3qneh0tp2rx2g3l5otwvvuo81" deferrable="false" initiallyDeferred="false" referencedColumnNames="external_item_fk" referencedTableName="tb_external_operations" validate="true"/>
     </changeSet>
 </databaseChangeLog>

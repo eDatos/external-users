@@ -1,10 +1,11 @@
 import { BaseVersionedEntity } from 'arte-ng/model';
-import { Type, TypeOptions } from 'class-transformer';
+import { Exclude, Type, TypeOptions } from 'class-transformer';
 import { InternationalString } from './international-string.model';
 
 /**
  * This enum is a subset from the one located at
- * {@link https://git.arte-consultores.com/istac/edatos-core-common/blob/master/src/main/java/org/siemac/edatos/core/common/enume/TypeExternalArtefactsEnum.java|edatos-core-common}.
+ * {@link
+ * https://git.arte-consultores.com/istac/edatos-core-common/blob/master/src/main/java/org/siemac/edatos/core/common/enume/TypeExternalArtefactsEnum.java|edatos-core-common}.
  */
 export enum TypeExternalArtefacts {
     CATEGORY = 'CATEGORY',
@@ -12,6 +13,7 @@ export enum TypeExternalArtefacts {
 }
 
 export class ExternalItem extends BaseVersionedEntity {
+    public id: number;
     public code: string;
     public urn: string;
 
@@ -35,10 +37,24 @@ export class ExternalItem extends BaseVersionedEntity {
 
 export class ExternalCategory extends ExternalItem {
     public nestedCode: string;
+
+    constructor() {
+        super();
+        this.type = TypeExternalArtefacts.CATEGORY;
+    }
 }
 
 export class ExternalOperation extends ExternalItem {
+    @Exclude()
+    public readonly favoriteType = 'operation';
+
     public externalCategoryUrn: string;
+    public subscribers = 0;
+
+    constructor() {
+        super();
+        this.type = TypeExternalArtefacts.STATISTICAL_OPERATION;
+    }
 }
 
 /**

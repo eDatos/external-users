@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output, ViewChild } from '@angular/core';
 import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input';
-import { Category, ExternalCategory, Favorite, InternationalString } from '@app/shared/model';
+import { Category, ExternalCategory, ExternalOperation, Favorite, InternationalString } from '@app/shared/model';
 import { CategoryService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
@@ -13,9 +13,10 @@ import { finalize, shareReplay } from 'rxjs/operators';
  * @see StructuralResourcesTreeComponent#mode
  */
 export type Mode = 'view' | 'select' | 'edit';
+export type FavoriteResource = Category | ExternalOperation;
 
 export interface CategoryTreeNode extends TreeNode {
-    data: Category;
+    data: FavoriteResource;
     parent?: CategoryTreeNode;
     children?: CategoryTreeNode[];
     editMode: 'remap' | 'name' | null;
@@ -30,7 +31,7 @@ export interface CategoryTreeNode extends TreeNode {
 export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     /**
      * The list of favorites. The selection of the tree is automatically updated when favorites
-     * are added or removed.
+     * are added or removed. Only works in 'select' {@link mode}.
      */
     @Input()
     public favorites?: Favorite[];
@@ -51,8 +52,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
      * the selected favorites are synchronized. This is the default mode.
      *
      * If set to 'view', the tree shows the structural resources without any checkbox and
-     * they are not selectable. {@link StructuralResourcesTreeComponent#favorites} is not
-     * required.
+     * they are not selectable.
      *
      * If set to 'edit', the tree allows to create, delete, and move around nodes. This
      * mode it's meant to map the elements of the tree to categories and operations.
@@ -61,16 +61,23 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     public mode: Mode = 'select';
 
     /**
-     * Emits an event when an element of the tree is selected.
+     * Determines whether the selection of a parent node propagates down to its descendants, and
+     * whether the selection of all children propagates up to its parents. Only works in 'select' {@link mode}.
      */
-    @Output()
-    public onResourceSelect = new EventEmitter<Category>();
+    @Input()
+    public propagateSelection: boolean;
 
     /**
-     * Emits an event when an element of the tree is unselected.
+     * Emits an event when an element of the tree is selected. Only works in 'select' {@link mode}.
      */
     @Output()
-    public onResourceUnselect = new EventEmitter<Category>();
+    public onResourceSelect = new EventEmitter<FavoriteResource>();
+
+    /**
+     * Emits an event when an element of the tree is unselected. Only works in 'select' {@link mode}.
+     */
+    @Output()
+    public onResourceUnselect = new EventEmitter<FavoriteResource>();
 
     @ViewChild(MultiLanguageInputComponent)
     public languageInputComponent: MultiLanguageInputComponent;
@@ -158,12 +165,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public addNode(parent?: CategoryTreeNode) {
+        const category = new Category();
         const node: CategoryTreeNode = {
             label: '',
             collapsedIcon: 'fa fa-folder',
             expandedIcon: 'fa fa-folder-open',
             expanded: true,
-            data: new Category(),
+            data: category,
             children: [],
             selectable: !this.disabled,
             editMode: null,
@@ -172,11 +180,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             if (!parent.children) {
                 parent.children = [];
             }
-            node.data.index = parent.children.length;
             parent.children.push(node);
-            parent.data.children.push(node.data);
+            category.index = parent.children.length;
+            if (parent.data instanceof Category) {
+                parent.data.children.push(category);
+            }
         } else {
-            node.data.index = this.tree.length;
+            category.index = this.tree.length;
             this.tree.push(node);
         }
         this.nodeList.push(node);
@@ -187,7 +197,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         _.pull(this.nodeList, node);
         if (node.parent) {
             _.pull(node.parent.children, node);
-            _.pull(node.parent.data?.children, node.data);
+            if (node.parent.data instanceof Category) {
+                _.pull(node.parent.data?.children, node.data);
+            }
         } else {
             _.pull(this.tree, node);
         }
@@ -227,7 +239,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     public saveRemap(node: CategoryTreeNode, selectedResources: ExternalCategory[]) {
-        node.data.resources = selectedResources;
+        if (node.data instanceof Category) {
+            node.data.resources = selectedResources;
+        }
         node.editMode = null;
         this.updateTree();
     }
@@ -236,7 +250,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         this.loading = true;
         this.reconstructTree(this.tree);
         this.categoryService
-            .updateTree(this.tree.map((node) => node.data))
+            .updateTree(this.tree.map((node) => node.data as Category))
             .pipe(finalize(() => (this.loading = false)))
             .subscribe({
                 next: (tree) => this.createTree(tree),
@@ -246,7 +260,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     private updateTree() {
         this.categoryService
-            .updateTree(this.tree.map((node) => node.data))
+            .updateTree(this.tree.map((node) => node.data as Category))
             .pipe(finalize(() => (this.loading = false)))
             .subscribe({
                 next: (tree) => this.createTree(tree),
@@ -267,9 +281,18 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                     this.categoryListToCategoryTree(category.children).subscribe((treeNodes) => {
                         children.push(...treeNodes);
                     });
+                    for (const externalOperation of category.operations) {
+                        children.push(this.externalOperationToTreeNode(externalOperation));
+                    }
                     return this.categoryToCategoryTreeNode(category, children);
                 })
-                .sort((a, b) => (a.data.index < b.data.index ? -1 : 1))
+                .sort((a, b) => {
+                    if (a.data instanceof Category && b.data instanceof Category) {
+                        return a.data.index < b.data.index ? -1 : 1;
+                    } else {
+                        return a.data.name.val < b.data.name.val ? -1 : 1;
+                    }
+                })
         );
     }
 
@@ -294,8 +317,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
         return node;
     }
 
-    private isFavorite(category: Category): boolean {
-        return this.favorites?.some((favorite) => favorite.category.id === category.id) ?? false;
+    private isFavorite(resource: Category | ExternalOperation): boolean {
+        return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.favoriteType === resource.favoriteType) ?? false;
     }
 
     private setLoadingNode(node: CategoryTreeNode, setLoadingChildren = true) {
@@ -309,7 +332,11 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     }
 
     private unsetLoadingNode(node: CategoryTreeNode, setLoadingChildren = true) {
-        node.icon = null;
+        if (node.data.favoriteType === 'operation') {
+            node.icon = 'fa fa-table';
+        } else {
+            node.icon = null;
+        }
         node.selectable = !this.disabled;
         if (node.children && setLoadingChildren) {
             for (const child of node.children) {
@@ -326,6 +353,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
                 break;
             case 'select':
                 this.selectionMode = 'checkbox';
+                this.propagateSelection = true;
                 break;
             case 'edit':
                 this.selectionMode = 'single';
@@ -336,11 +364,31 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
 
     private reconstructTree(tree: CategoryTreeNode[]) {
         for (const [index, node] of tree.entries()) {
-            node.data.index = index;
-            node.data.children = node.children.map((child) => child.data);
+            if (node.data instanceof Category) {
+                node.data.index = index;
+                node.data.children = node.children.filter((child) => child.data instanceof Category).map((child) => child.data as Category);
+            }
         }
         for (const node of tree) {
             this.reconstructTree(node.children);
         }
+    }
+
+    private externalOperationToTreeNode(externalOperation: ExternalOperation): CategoryTreeNode {
+        const node = {
+            label: externalOperation.name.val,
+            icon: 'fa fa-table',
+            data: externalOperation,
+            selectable: !this.disabled,
+            editMode: null,
+            makingRequest: false,
+        };
+
+        if (this.isFavorite(externalOperation)) {
+            this.selectedResources.push(node);
+        }
+        this.nodeList.push(node);
+
+        return node;
     }
 }

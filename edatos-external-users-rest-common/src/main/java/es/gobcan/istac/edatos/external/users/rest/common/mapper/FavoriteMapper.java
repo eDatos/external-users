@@ -6,9 +6,11 @@ import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalOperationRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FavoriteDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
@@ -23,6 +25,9 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ExternalOperationRepository externalOperationRepository;
+
     @Override
     @Mapping(target = "externalUser", source = "externalUser", qualifiedByName = "externalUserToBaseDto")
     public abstract FavoriteDto toDto(FavoriteEntity entity);
@@ -30,6 +35,7 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
     @Override
     @Mapping(target = "externalUser", source = "externalUser.id", qualifiedByName = "externalUserFromId")
     @Mapping(target = "category", source = "category.id", qualifiedByName = "categoryFromId")
+    @Mapping(target = "operation", source = "operation.id", qualifiedByName = "externalOperationFromId")
     public abstract FavoriteEntity toEntity(FavoriteDto dto);
 
     @Named("externalUserFromId")
@@ -46,5 +52,13 @@ public abstract class FavoriteMapper implements EntityMapper<FavoriteDto, Favori
             return null;
         }
         return categoryRepository.findOne(id);
+    }
+
+    @Named("externalOperationFromId")
+    public ExternalOperationEntity externalOperationFromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        return externalOperationRepository.findOne(id);
     }
 }

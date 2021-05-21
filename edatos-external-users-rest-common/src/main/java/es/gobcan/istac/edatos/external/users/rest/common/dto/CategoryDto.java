@@ -12,6 +12,7 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
     private Integer index;
     private List<ExternalItemDto> resources;
     private List<CategoryDto> children = new ArrayList<>();
+    private List<ExternalOperationDto> operations = new ArrayList<>();
 
     public Long getSubscribers() {
         return subscribers;
@@ -51,5 +52,13 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     public void setChildren(List<CategoryDto> children) {
         this.children = children;
+    }
+
+    public List<ExternalOperationDto> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<ExternalOperationDto> operations) {
+        this.operations = operations;
     }
 }
