@@ -12,9 +12,9 @@ import es.gobcan.istac.edatos.external.users.core.repository.ExternalItemReposit
 
 /**
  * Our categories make references to external categories though a many-to-many relationship.
- * When a category stops referencing a external category, and this external category does not have
+ * When a category stops referencing an external category, and this external category does not have
  * any relation to any other of our own categories, then it can be deleted so no unused items are
- * in the db.
+ * left in the db.
  */
 @Component
 public class DeleteUnreferencedExternalItems {
@@ -27,7 +27,7 @@ public class DeleteUnreferencedExternalItems {
     }
 
     @Transactional
-    @Scheduled(cron = "0 3 * * * *") // At 03:00
+    @Scheduled(cron = "0 0 3 * * *") // Every day at 03:00
     public void execute() {
         LOG.info("Starting to clean unreferenced external items...");
         long unreferenced = 0;

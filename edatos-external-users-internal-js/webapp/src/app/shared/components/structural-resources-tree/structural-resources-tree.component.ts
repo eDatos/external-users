@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input';
 import { Category, ExternalCategory, Favorite, InternationalString } from '@app/shared/model';
 import { CategoryService, LanguageService } from '@app/shared/service';
@@ -27,7 +27,7 @@ export interface CategoryTreeNode extends TreeNode {
     templateUrl: './structural-resources-tree.component.html',
     styleUrls: ['./structural-resources-tree.component.scss'],
 })
-export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
+export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChanges {
     /**
      * The list of favorites. The selection of the tree is automatically updated when favorites
      * are added or removed.
@@ -116,6 +116,14 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
             .getExternalCategories()
             .pipe(shareReplay({ bufferSize: 1, refCount: true }))
             .subscribe((categories) => (this.externalCategories = categories));
+    }
+
+    public ngOnChanges(changes: SimpleChanges) {
+        if (changes.disabled) {
+            for (const node of this.nodeList) {
+                node.selectable = !this.disabled;
+            }
+        }
     }
 
     public ngDoCheck(): void {

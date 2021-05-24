@@ -216,7 +216,7 @@
             </div>
             <h3 class="button-tree" translate="externalUser.home.favorites"></h3>
             <app-structural-resources-tree
-                [disabled]="this.editMode !== 'favorites'"
+                [disabled]="editMode !== 'favorites'"
                 (onResourceSelect)="saveFavorite($event)"
                 (onResourceUnselect)="deleteFavorite($event)"
                 [favorites]="favorites"

@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 @Component({
     selector: 'app-external-user-list',
     templateUrl: './external-user-list.component.html',
+    styleUrls: ['./external-user-list.component.scss'],
 })
 export class ExternalUserListComponent implements OnInit, OnDestroy {
     public totalItems: any;

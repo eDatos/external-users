@@ -34,21 +34,21 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-					<li>
-						<a class="dropdown-item" routerLink="/issues-new" routerLinkActive="active">
-						    <i class="fa fa-fw fa-bullhorn" aria-hidden="true"></i>
-						    <span translate="issues.home.titleMenu"></span>
-					    </a>
-					</li>
+                    <li>
+                        <a class="dropdown-item" routerLink="/issues-new" routerLinkActive="active">
+                            <i class="fa fa-fw fa-bullhorn" aria-hidden="true"></i>
+                            <span translate="issues.home.titleMenu"></span>
+                        </a>
+                    </li>
                     <li>
                         <a class="dropdown-item" routerLink="/data-protection-policy" routerLinkActive="active">
                             <i class="fa fa-fw fa-file" aria-hidden="true"></i>
                             <span translate="entity.action.data-protection-policy"></span>
                         </a>
                     </li>
-                    <hr/>
+                    <hr />
                     <li>
-                        <a class="dropdown-item" (click)="openAboutDialog()" routerLinkActive="active">
+                        <a class="dropdown-item dialog-btn-pointer" (click)="openAboutDialog()" routerLinkActive="active">
                             <i class="fa fa-fw fa-info-circle" aria-hidden="true"></i>
                             <span translate="entity.action.about"></span>
                         </a>
@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-item unsubscribe-dialog" (click)="openDeleteDialog()" routerLinkActive="active">
+                        <a class="dropdown-item dialog-btn-pointer" (click)="openDeleteDialog()" routerLinkActive="active">
                             <i class="fa" aria-hidden="true"></i>
                             <span translate="entity.action.unsubscribe"></span>
                         </a>
