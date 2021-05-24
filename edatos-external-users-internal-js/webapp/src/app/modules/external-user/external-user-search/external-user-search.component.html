@@ -1,6 +1,6 @@
 <div class="page-filters">
     <div class="form-row">
-        <div class="form-group col-md-5">
+        <div class="form-group col-md-3">
             <label translate="externalUser.filters.labels.fullname"></label>
             <arte-input
                 [(ngModel)]="filters.fullname"
@@ -10,6 +10,39 @@
                 (keyup)="filter()"
             ></arte-input>
         </div>
+        <div class="form-group col-md-2">
+            <label translate="externalUser.filters.labels.categories"></label>
+            <div class="p-grid ui-fluid">
+                <div class="ui-inputgroup">
+                    <button pButton type="button" icon="pi pi-plus" class="ui-button-info" (click)="openCategoryModal()"></button>
+                    <input id="selectedCategoriesText" type="text" pInputText [ngModel]="categoriesSelectedInfo()" readonly />
+                    <button pButton type="button" icon="pi pi-times" class="ui-button-secondary" (click)="resetCategories()"></button>
+                </div>
+            </div>
+            <p-dialog
+                *ngIf="isSelectingCategory()"
+                [visible]="true"
+                [focusOnShow]="true"
+                [modal]="true"
+                [dismissableMask]="true"
+                [header]="'externalUser.filters.labels.categories' | translate"
+                [resizable]="false"
+                [style]="{width: '80vw'}"
+                [contentStyle]="{padding: '1.5em 2em', overflow: 'visible', 'max-height': '50vh', 'overflow-y': 'auto'}"
+                styleClass="ui-fluid"
+                appendTo="body"
+                (visibleChange)="closeCategoryModal()"
+            >
+                <app-structural-resources-tree [disabled]="false" mode="simpleSelect" [preselectedResources]="selectedCategoryResources"></app-structural-resources-tree>
+                <p-footer>
+                    <button type="button" class="btn btn-primary" (click)="selectCategories()">
+                        <i class="fa fa-hand-o-up" aria-hidden="true"></i>
+                        <span translate="entity.action.select"></span>
+                    </button>
+                </p-footer>
+            </p-dialog>
+        </div>
+
         <div class="form-group col-md-3">
             <label translate="externalUser.filters.labels.language"></label>
             <arte-autocomplete-enum

@@ -11,6 +11,7 @@ import { FilterModule } from '@app/modules/filter';
 import { SharedModule } from '@app/shared';
 import { ArteAuditInfoModule, ArteAutocompleteModule, ArteEntityListEmptyModule, ArteSpinnerModule, ArteTableModule, ArteTriInputSwitchModule } from 'arte-ng';
 import { ArteDirectivesModule } from 'arte-ng/directives';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
     declarations: [ExternalUserSearchComponent, ExternalUserListComponent, ExternalUserFormComponent, ExternalUserDeleteDialogComponent],
@@ -28,6 +29,7 @@ import { ArteDirectivesModule } from 'arte-ng/directives';
         ArteAuditInfoModule,
         FavoriteModule,
         FilterModule,
+        DialogModule,
     ],
     providers: [ExternalUserService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
