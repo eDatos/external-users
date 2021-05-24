@@ -32,15 +32,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
             criterias.push(`DELETION_DATE IS_NULL`);
         }
         if (this.categories?.length > 0) {
-            let criteria = ``;
-            this.categories.forEach((categoryId) => {
-                if (criteria != ``)
-                    criteria += ` OR `;
-                criteria += `FAVORITES EQ ${categoryId}`;
-            });
-            criterias.push(criteria);
-
-            //criterias.push(`FAVORITES EQ (${this.categories.join(',')})`)
+            criterias.push(`FAVORITES IN (${this.categories.join(',')})`)
         }
         return criterias;
     }
