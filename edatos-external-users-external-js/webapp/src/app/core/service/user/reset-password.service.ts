@@ -16,6 +16,7 @@ export class ResetPasswordService {
     }
 
     changePasswordReset(keyAndPassword: KeyAndPassword): Observable<String> {
+        console.log('ENTRO AL SERVICIO', keyAndPassword);
         return this.http.post<String>(`${this.resourceUrl}/change-password`, keyAndPassword).pipe(map((res) => convert(String, res)));
     }
 

@@ -4,13 +4,12 @@ import { ResetPasswordFinishComponent } from './reset-password-finish.component'
 
 export const passwordResetFinishRoutes: Routes = [
     {
-        path: 'portal/recuperar-contrasena/cambiar-contrasena',
+        path: '',
         component: ResetPasswordFinishComponent,
         data: {
             authorities: [],
             pageTitle: 'passwordReset.finish.home.title',
         },
-        //  canActivate: [UserPasswordNotLoggedInGuard, ResetKeyRouteAccessGuard],
     },
 ];
 

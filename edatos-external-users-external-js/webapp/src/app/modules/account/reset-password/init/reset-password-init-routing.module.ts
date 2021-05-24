@@ -4,13 +4,12 @@ import { ResetPasswordInitComponent } from './reset-password-init.component';
 
 export const passwordResetInitRoutes: Routes = [
     {
-        path: 'reset-password',
+        path: '',
         component: ResetPasswordInitComponent,
         data: {
             authorities: [],
-            pageTitle: 'passwordReset.init.home.title',
+            pageTitle: 'passwordReset.init.title',
         },
-        //  canActivate: [UserPasswordNotLoggedInGuard],
     },
 ];
 

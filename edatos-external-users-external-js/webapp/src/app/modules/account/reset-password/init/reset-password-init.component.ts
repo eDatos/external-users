@@ -1,51 +1,24 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ResetPasswordService } from '@app/core/service';
 
 @Component({
-    selector: 'jhi-password-reset-init',
+    selector: 'app-reset-password-init',
     templateUrl: './reset-password-init.component.html',
+    styleUrls: ['./reset-password-init.component.scss'],
 })
-export class ResetPasswordInitComponent implements OnInit, AfterViewInit {
-    isSending: boolean;
+export class ResetPasswordInitComponent implements OnInit {
+    public email: string;
 
-    resetAccount: any;
-
-    constructor(
-        private resetPasswordService: ResetPasswordService,
-        private elementRef: ElementRef,
-        private renderer: Renderer2,
-        private router: Router //private alertTriggerService: AlertTriggerService
-    ) {
-        this.isSending = false;
+    constructor(private resetPasswordService: ResetPasswordService, private router: Router) {
+        this.email = '';
     }
 
-    ngOnInit() {
-        this.resetAccount = {};
-    }
+    ngOnInit() {}
 
-    ngAfterViewInit() {
-        //   this.renderer.invokeElementMethod(this.elementRef.nativeElement.querySelector('#email'), 'focus', []);
-    }
-
-    requestReset() {
-        this.isSending = true;
-        this.resetPasswordService.resetPassword(this.resetAccount.email).subscribe(
-            (response: string) => this.onSendingSuccess(),
-            (error) => this.onSendingError()
-        );
-    }
-
-    private onSendingSuccess(response?: string) {
-        this.isSending = false;
-        //  this.alertTriggerService.success('passwordReset.init.messages.success', { email: this.resetAccount.email }, () => this.navigateToLogin(), 5000);
-    }
-
-    private onSendingError(error?: any) {
-        this.isSending = false;
-    }
-
-    navigateToLogin() {
-        this.router.navigate(['login']);
+    public requestReset() {
+        this.resetPasswordService.resetPassword(this.email).subscribe((result) => {
+            this.router.navigate(['filter']);
+        });
     }
 }

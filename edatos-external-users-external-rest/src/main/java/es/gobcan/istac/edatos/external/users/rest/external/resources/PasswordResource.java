@@ -42,7 +42,7 @@ public class PasswordResource extends AbstractResource {
         this.auditPublisher = auditPublisher;
     }
 
-    @PostMapping("/recover-password")
+    @PostMapping
     @Timed
     public ResponseEntity<String> recoverPassword(@Valid @RequestBody String email) {
 
