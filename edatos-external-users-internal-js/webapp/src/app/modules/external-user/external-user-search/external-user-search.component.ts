@@ -28,8 +28,6 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
         this.selectedCategoryResources = [];
     }
 
-    º;
-
     public ngOnInit() {
         this.subscription = this.filterChangesSubject.pipe(debounceTime(300)).subscribe(() =>
             this.eventManager.broadcast({
