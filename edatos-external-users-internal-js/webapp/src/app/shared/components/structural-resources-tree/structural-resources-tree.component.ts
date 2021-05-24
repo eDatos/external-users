@@ -214,7 +214,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     public deleteNode(node: CategoryTreeNode) {
         _.pull(this.nodeList, node);
         if (node.parent) {
-            _.pull(node.parent.children, node);
+            _.pull(node.parent.children!, node);
             if (node.parent.data instanceof Category) {
                 _.pull(node.parent.data?.children, node.data);
             }
@@ -320,7 +320,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
                     if (a.data instanceof Category && b.data instanceof Category) {
                         return a.data.index < b.data.index ? -1 : 1;
                     } else {
-                        return a.data.name.val < b.data.name.val ? -1 : 1;
+                        return a.data.name.val! < b.data.name.val! ? -1 : 1;
                     }
                 })
         );
@@ -351,7 +351,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     }
 
     private isFavorite(resource: Category | ExternalOperation): boolean {
-        return this.favorites?.some((favorite) => favorite.resource.id === resource.id && favorite.resource.favoriteType === resource.favoriteType) ?? false;
+        return this.favorites?.some((favorite) => favorite.resource?.id === resource.id && favorite.resource?.favoriteType === resource.favoriteType) ?? false;
     }
 
     private isPreselected(category: Category): boolean {
@@ -404,11 +404,11 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
         for (const [index, node] of tree.entries()) {
             if (node.data instanceof Category) {
                 node.data.index = index;
-                node.data.children = node.children.filter((child) => child.data instanceof Category).map((child) => child.data as Category);
+                node.data.children = node.children!.filter((child) => child.data instanceof Category).map((child) => child.data as Category);
             }
         }
         for (const node of tree) {
-            this.reconstructTree(node.children);
+            this.reconstructTree(node.children!);
         }
     }
 

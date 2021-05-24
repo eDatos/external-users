@@ -26,7 +26,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
                                     headers: err.headers,
                                     status: err.status,
                                     statusText: err.statusText,
-                                    url: err.url,
+                                    url: err.url ?? undefined,
                                 });
                                 observer.error(errorResponse);
                                 observer.complete();

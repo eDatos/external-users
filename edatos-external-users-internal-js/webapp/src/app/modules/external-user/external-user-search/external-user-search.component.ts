@@ -71,7 +71,7 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
     }
 
     public selectCategories() {
-        const categories = [];
+        const categories: string[] = [];
         this.selectedCategoryResources = this.tree.selectedResources;
         this.tree.selectedResources.forEach((category) => categories.push(category.data.id));
         this.filters.categories = categories;
@@ -81,7 +81,7 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
 
     public resetCategories() {
         this.filters.categories = [];
-        this.selectedCategoryResources = null;
+        this.selectedCategoryResources = [];
         this.filter();
     }
 

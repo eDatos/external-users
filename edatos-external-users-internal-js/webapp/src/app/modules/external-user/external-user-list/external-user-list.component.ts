@@ -137,7 +137,7 @@ export class ExternalUserListComponent implements OnInit, OnDestroy {
     }
 
     public loadData(e: LazyLoadEvent) {
-        this.page = e.first / e.rows + 1;
+        this.page = e.first! / e.rows! + 1;
         this.itemsPerPage = e.rows;
         if (e.sortField != null) {
             this.predicate = e.sortField;

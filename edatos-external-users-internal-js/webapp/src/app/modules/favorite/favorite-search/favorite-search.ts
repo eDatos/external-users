@@ -4,8 +4,8 @@ import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
 
 @Injectable()
 export class FavoriteFilter extends BaseEntityFilter implements EntityFilter {
-    public name: string;
-    public login: string;
+    public name: string | null;
+    public login: string | null;
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
@@ -25,7 +25,7 @@ export class FavoriteFilter extends BaseEntityFilter implements EntityFilter {
     }
 
     public getCriterias() {
-        const criterias = [];
+        const criterias: string[] = [];
         if (this.name) {
             criterias.push(`NAME ILIKE '%${this.escapeSingleQuotes(this.name)}%'`);
         }

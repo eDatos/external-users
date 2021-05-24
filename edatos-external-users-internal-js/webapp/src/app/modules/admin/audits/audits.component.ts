@@ -112,13 +112,13 @@ export class AuditsComponent implements OnInit {
             })
             .subscribe((res) => {
                 this.audits = res.json;
-                this.totalItems = +res.headers.get('X-Total-Count');
+                this.totalItems = +res.headers.get('X-Total-Count')!;
             });
     }
 
     loadData(e: LazyLoadEvent) {
-        this.page = e.first / e.rows + 1;
-        this.itemsPerPage = e.rows;
+        this.page = e.first! / e.rows! + 1;
+        this.itemsPerPage = e.rows!;
         if (e.sortField != null) {
             this.predicate = e.sortField;
             this.reverse = e.sortOrder == 1;
@@ -146,7 +146,7 @@ export class AuditsComponent implements OnInit {
         return sort;
     }
 
-    private dateToString(date: Date): string {
+    private dateToString(date: Date): string | null {
         const dateFormat = 'yyyy-MM-dd';
         return this.datePipe.transform(date, dateFormat);
     }

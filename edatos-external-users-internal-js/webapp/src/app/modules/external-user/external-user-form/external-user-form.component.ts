@@ -123,7 +123,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     }
 
     public deleteFavorite(resource: Category | ExternalOperation): void {
-        const favorite = this.favorites.find((fav) => fav.resource.id === resource.id && fav.resource.favoriteType === resource.favoriteType)!;
+        const favorite = this.favorites.find((fav) => fav.resource?.id === resource.id && fav.resource?.favoriteType === resource.favoriteType)!;
         this.favoriteService
             .delete(favorite.id)
             .pipe(finalize(() => this.updateFavorites()))

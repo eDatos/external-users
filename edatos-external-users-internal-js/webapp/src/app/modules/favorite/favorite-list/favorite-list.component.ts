@@ -14,7 +14,7 @@ import { LazyLoadEvent } from 'primeng/api';
 })
 export class FavoriteListComponent implements OnInit {
     public favorites: Favorite[];
-    public totalItems: number;
+    public totalItems: number | null;
     public itemsPerPage: number;
     public columns: any = [
         {
@@ -84,8 +84,8 @@ export class FavoriteListComponent implements OnInit {
     }
 
     public loadData(e: LazyLoadEvent): void {
-        this.page = e.first / e.rows + 1;
-        this.itemsPerPage = e.rows;
+        this.page = e.first! / e.rows! + 1;
+        this.itemsPerPage = e.rows!;
         if (e.sortField != null) {
             this.predicate = this.favoriteSearch.fromCamelCaseToSnakeCase(e.sortField);
             this.reverse = e.sortOrder === 1;

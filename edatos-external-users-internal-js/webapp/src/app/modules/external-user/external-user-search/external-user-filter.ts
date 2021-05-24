@@ -4,10 +4,10 @@ import { Language } from '@app/core/model';
 import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
 
 export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter {
-    public fullname?: string;
-    public languages?: Language[];
-    public includeDeleted: boolean;
-    public categories?: string[];
+    public fullname: string | null;
+    public languages: Language[];
+    public includeDeleted: boolean | null;
+    public categories: string[];
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
@@ -21,17 +21,17 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
     }
 
     public getCriterias() {
-        const criterias = [];
+        const criterias: string[] = [];
         if (this.fullname) {
             criterias.push(`FULLNAME ILIKE '%${this.escapeSingleQuotes(this.fullname)}%'`);
         }
-        if (this.languages?.length > 0) {
+        if (this.languages.length > 0) {
             criterias.push(`LANGUAGE IN (${this.languages.join(',')})`);
         }
         if (!this.includeDeleted) {
             criterias.push(`DELETION_DATE IS_NULL`);
         }
-        if (this.categories?.length > 0) {
+        if (this.categories.length > 0) {
             criterias.push(`FAVORITES IN (${this.categories.join(',')})`);
         }
         return criterias;
@@ -46,7 +46,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         this.registerParam({
             paramName: 'languages',
             updateFilterFromParam: (param) => (this.languages = param),
-            clearFilter: () => (this.languages = null),
+            clearFilter: () => (this.languages = []),
         });
         this.registerParam({
             paramName: 'includeDeleted',
@@ -58,7 +58,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         this.registerParam({
             paramName: 'categories',
             updateFilterFromParam: (param) => (this.categories = param),
-            clearFilter: () => (this.categories = null),
+            clearFilter: () => (this.categories = []),
         });
     }
 }

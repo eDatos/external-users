@@ -14,10 +14,12 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
     @Type(() => ExternalOperation)
     private externalOperation: ExternalOperation | null;
 
-    public get resource(): Category | ExternalOperation | undefined {
+    // @ts-ignore
+    public get resource(): Category | ExternalOperation | null {
         return this.category || this.externalOperation;
     }
 
+    // @ts-ignore
     public set resource(resource: Category | ExternalOperation) {
         if (resource.favoriteType === 'category') {
             this.category = resource;

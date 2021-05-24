@@ -7,8 +7,8 @@ import { UserService } from '@app/core/service/user';
     templateUrl: './account.component.html',
 })
 export class AccountComponent implements OnInit {
-    error: string;
-    success: string;
+    error: string | null;
+    success: string | null;
     isSaving: Boolean;
     account: any;
 
