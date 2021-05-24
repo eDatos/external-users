@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { KeyAndPassword } from '@app/core/model/key-poassword.model';
 import { ResetPasswordService } from '@app/core/service';
 
 @Component({
-    selector: 'jhi-password-reset-finish',
+    selector: 'app-reset-password-finish',
     templateUrl: './reset-password-finish.component.html',
     styleUrls: ['../reset-password.component.scss'],
 })
@@ -13,7 +13,7 @@ export class ResetPasswordFinishComponent implements OnInit {
     public confirmPassword: string;
     public keyAndPassword: KeyAndPassword;
 
-    constructor(private resetPasswordService: ResetPasswordService, private router: Router, private route: ActivatedRoute, private elementRef: ElementRef) {
+    constructor(private resetPasswordService: ResetPasswordService, private router: Router, private route: ActivatedRoute) {
         this.isSaving = false;
         this.keyAndPassword = new KeyAndPassword();
     }

@@ -73,14 +73,7 @@ const APP_ROUTES: Routes = [
     },
     {
         path: 'reset-password',
-        loadChildren: () => import('./modules/account/reset-password/init/reset-password-init.module').then((m) => m.ResetPasswordInitModule),
-        data: {
-            roles: ALL_ALLOWED,
-        },
-    },
-    {
-        path: 'change-password',
-        loadChildren: () => import('./modules/account/reset-password/finish/reset-password-finish.module').then((m) => m.ResetPasswordFinishModule),
+        loadChildren: () => import('./modules/reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
         data: {
             roles: ALL_ALLOWED,
         },
