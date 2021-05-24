@@ -39,6 +39,8 @@
         .ui-table-summary {
             background-color: white;
             text-align: left;
+            overflow-y: auto;
+            max-height: 20vh;
         }
 
         .summary-title {
