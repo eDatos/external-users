@@ -24,7 +24,7 @@
     <ng-template pTemplate="header">
         <tr>
             <th scope="col">
-                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                <p-tableHeaderCheckbox (click)="onSelectAll()"></p-tableHeaderCheckbox>
             </th>
             <th pSortableColumn="schema.code" scope="col">
                 {{'externalCategoriesTable.columns.schemaCode' | translate}}
@@ -45,9 +45,16 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-resource>
-        <tr class="ui-selectable-row">
-            <td>
-                <p-tableCheckbox [value]="resource"></p-tableCheckbox>
+        <tr class="ui-selectable-row" [class.disabled]="isDisabled(resource)">
+            <td class="d-flex flex-row">
+                <p-tableCheckbox [value]="resource" [disabled]="isDisabled(resource)"></p-tableCheckbox>
+                <i
+                    *ngIf="isDisabled(resource)"
+                    class="fa fa-info-circle"
+                    aria-hidden="true"
+                    [pTooltip]="'externalCategoriesTable.alreadySelectedCategory' | translate"
+                    tooltipPosition="top"
+                ></i>
             </td>
             <td>{{resource.schema.code}}</td>
             <td>{{resource.schema.version}}</td>

@@ -57,5 +57,10 @@
         .font-italic {
             font-style: italic;
         }
+
+        tr.disabled > td {
+            @extend .text-secondary;
+            background-color: #f8f8f8;
+        }
     }
 }

@@ -98,6 +98,7 @@
                 #table
                 [externalCategories]="externalCategories"
                 [selectedExternalCategories]="node.data.externalCategories"
+                [disabledExternalCategories]="getDisabledExternalCategories(node.data)"
             ></app-external-categories-table>
             <p-footer>
                 <button (click)="disableNodeEdit(node)" class="btn btn-secondary" type="button">

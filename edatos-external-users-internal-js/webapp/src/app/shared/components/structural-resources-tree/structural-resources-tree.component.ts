@@ -276,6 +276,16 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
             });
     }
 
+    public getDisabledExternalCategories(selectedCategory: Category): ExternalCategory[] {
+        const externalCategoriesAlreadySelected: ExternalCategory[] = [];
+        for (const node of this.nodeList) {
+            if (node.data.id !== selectedCategory.id) {
+                externalCategoriesAlreadySelected.push(...(node.data as Category).externalCategories);
+            }
+        }
+        return externalCategoriesAlreadySelected;
+    }
+
     private updateTree() {
         this.categoryService
             .updateTree(this.tree.map((node) => node.data as Category))
