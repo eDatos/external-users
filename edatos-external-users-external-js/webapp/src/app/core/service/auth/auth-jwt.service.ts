@@ -44,7 +44,6 @@ export class AuthServerProvider {
             const config = this.configService.getConfig();
             this.$localStorage.clear(TOKEN_AUTH_NAME);
             this.$sessionStorage.clear(TOKEN_AUTH_NAME);
-            console.log('ENDPOOOOINT    ', this.getLocation(config.endpoint.appUrl).pathname);
             this.cookieService.delete(TOKEN_AUTH_NAME, this.getLocation(config.endpoint.appUrl).pathname);
             observer.complete();
         });

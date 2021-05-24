@@ -26,7 +26,6 @@ export class ResetPasswordFinishComponent implements OnInit {
 
     public save() {
         this.isSaving = true;
-        console.log('HOLAAA    ', this.keyAndPassword);
         this.resetPasswordService.changePasswordReset(this.keyAndPassword).subscribe((result) => {
             this.navigateToLogin();
         });
