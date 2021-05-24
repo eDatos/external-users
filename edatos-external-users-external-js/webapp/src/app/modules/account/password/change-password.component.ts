@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AccountUserService, Principal } from '@app/core/service';
 import { User, UserAccountChangePassword } from '@app/core/model';
 import { Router } from '@angular/router';
