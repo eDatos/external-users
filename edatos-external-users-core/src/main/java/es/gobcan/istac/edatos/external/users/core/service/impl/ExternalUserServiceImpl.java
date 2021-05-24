@@ -37,9 +37,6 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     @Autowired
     private ExternalUserValidator externalUserValidator;
 
-    @Autowired
-    private LoginValidator loginValidator;
-
     public ExternalUserServiceImpl(ExternalUserRepository externalUserRepository, FilterRepository filterRepository, QueryUtil queryUtil) {
         this.externalUserRepository = externalUserRepository;
         this.filterRepository = filterRepository;
@@ -134,6 +131,7 @@ public class ExternalUserServiceImpl implements ExternalUserService {
 
     @Override
     public Optional<ExternalUserEntity> recoverExternalUserAccountPassword(String email) {
+        externalUserValidator.ckeckEmailExists(email);
         return externalUserRepository.findOneByEmailIgnoreCaseAndDeletionDateIsNull(email).map(user -> {
             user.setResetKey(RandomUtil.generateResetKey());
             user.setResetDate(ZonedDateTime.now());
