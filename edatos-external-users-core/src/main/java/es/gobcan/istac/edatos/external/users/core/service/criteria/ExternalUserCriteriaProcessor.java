@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import com.arte.libs.grammar.domain.QueryPropertyRestriction;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
@@ -33,6 +34,8 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
     private static final String ENTITY_FIELD_DELETION_DATE = "deletionDate";
     private static final String ENTITY_FIELD_LANGUAGE = "language";
     private static final String ENTITY_FIELD_TREATMENT = "treatment";
+    
+    private static final String ENTITY_FIELD_FAVORITES = "favorites";
 
     public enum QueryProperty {
         NAME,
@@ -43,6 +46,7 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
         TREATMENT,
         DELETION_DATE,
         FULLNAME,
+        FAVORITES
     }
 
     public ExternalUserCriteriaProcessor() {
@@ -85,6 +89,11 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.TREATMENT)
                 .withEntityProperty(ENTITY_FIELD_TREATMENT)
                 .build());
+        registerRestrictionProcessor(
+                RestrictionProcessorBuilder.restrictionProcessor()
+                    .withQueryProperty(QueryProperty.FAVORITES)
+                    .withCriterionConverter(new SqlCriterionBuilder())
+                .build());
         //@formatter:on
     }
 
@@ -96,8 +105,22 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
                 List<String> fields = new ArrayList<>(Arrays.asList(TABLE_FIELD_EMAIL, TABLE_FIELD_NAME, TABLE_FIELD_SURNAME1, TABLE_FIELD_SURNAME2));
                 return CriteriaUtil.buildAccentAndCaseInsensitiveCriterion(property, fields);
             }
+            if (QueryProperty.FAVORITES.name().equalsIgnoreCase(property.getLeftExpression())) {
+            	return favoritesCriterion(property);
+            }
             throw new CustomParameterizedExceptionBuilder().message(String.format("Parámetro de búsqueda no soportado: '%s'", property))
                     .code(ErrorConstants.QUERY_NO_SOPORTADA, property.getLeftExpression(), property.getOperationType().name()).build();
+        }
+        
+        private Criterion favoritesCriterion(QueryPropertyRestriction property) {
+        	// @formatter:off
+        	String sql = "{alias}.ID IN ( "
+        			+ " SELECT tf.external_user_fk "
+        			+ " FROM tb_favorites tf "
+        			+ " WHERE tf.category_fk IN " + property.getRightExpressions().toString().replace('[', '(').replace(']', ')')
+        			+ " ) ";
+        	// @formatter:on
+        	return Restrictions.sqlRestriction(sql);
         }
     }
 }

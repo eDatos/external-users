@@ -219,7 +219,8 @@
             "recuperar": "Recuperar",
             "restore": "Restaurar",
             "save": "Guardar",
-            "view": "Ver"
+            "view": "Ver",
+            "select": "Seleccionar"
         },
         "audits": {
             "createdBy": "Creado por",
@@ -374,11 +375,13 @@
         "filters": {
             "placeholders": {
                 "fullname": "Introduzca nombre o apellidos",
-                "language": "Introduzca idiomas del usuario"
+                "language": "Introduzca idiomas del usuario",
+                "categoriesSelected": "# temas seleccionados"
             },
             "labels": {
                 "fullname": "Nombre o apellidos",
-                "language": "Idioma"
+                "language": "Idioma",
+                "categories": "Temas"
             },
             "rolEnum": {
                 "label": "Rol"

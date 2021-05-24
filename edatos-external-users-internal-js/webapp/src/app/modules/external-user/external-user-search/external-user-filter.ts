@@ -7,6 +7,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
     public fullname?: string;
     public languages?: Language[];
     public includeDeleted: boolean;
+    public categories?: string[];
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
@@ -16,6 +17,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         this.includeDeleted = queryParams.hasOwnProperty('includeDeleted');
         this.fullname = queryParams.fullname;
         this.languages = queryParams.languages?.split(',');
+        this.categories = queryParams.categories?.split(',');
     }
 
     public getCriterias() {
@@ -28,6 +30,9 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         }
         if (!this.includeDeleted) {
             criterias.push(`DELETION_DATE IS_NULL`);
+        }
+        if (this.categories?.length > 0) {
+            criterias.push(`FAVORITES IN (${this.categories.join(',')})`)
         }
         return criterias;
     }
@@ -49,6 +54,11 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
                 this.includeDeleted = param === 'true';
             },
             clearFilter: () => (this.includeDeleted = false),
+        });
+        this.registerParam({
+            paramName: 'categories',
+            updateFilterFromParam: (param) => (this.categories = param),
+            clearFilter: () => (this.categories = null),
         });
     }
 }

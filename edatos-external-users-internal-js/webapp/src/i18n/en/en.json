@@ -219,7 +219,8 @@
             "recuperar": "Recover",
             "restore": "Restore",
             "save": "Save",
-            "view": "Watch"
+            "view": "Watch",
+            "select": "Select"
         },
         "audits": {
             "createdBy": "Created By",
@@ -374,11 +375,13 @@
         "filters": {
             "placeholders": {
                 "fullname": "Enter name or surname",
-                "language": "Enter user languages"
+                "language": "Enter user languages",
+                "categoriesSelected": "# categories selected"
             },
             "labels": {
                 "fullname": "Name or surname",
-                "language": "Language"
+                "language": "Language",
+                "categories": "Categories"
             },
             "rolEnum": {
                 "label": "Role"
