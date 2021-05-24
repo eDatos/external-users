@@ -6,7 +6,7 @@ import { ResetPasswordService } from '@app/core/service';
 @Component({
     selector: 'jhi-password-reset-finish',
     templateUrl: './reset-password-finish.component.html',
-    styleUrls: ['./reset-password-finish.component.scss'],
+    styleUrls: ['../reset-password.component.scss'],
 })
 export class ResetPasswordFinishComponent implements OnInit {
     public isSaving: boolean;
