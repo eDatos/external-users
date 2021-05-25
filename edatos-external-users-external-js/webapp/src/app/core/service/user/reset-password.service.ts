@@ -13,7 +13,7 @@ export class ResetPasswordService {
     constructor(private http: HttpClient) {}
 
     resetPassword(email: string): Observable<String> {
-        return this.http.post(this.resourceUrl, email).pipe(map((res) => ResponseUtils.convert(res, String)));
+        return this.http.post(this.resourceUrl, email, { responseType: 'text' });
     }
 
     changePasswordReset(keyAndPassword: KeyAndPassword): Observable<String> {

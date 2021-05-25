@@ -52,12 +52,12 @@ public class PasswordResource extends AbstractResource {
 
     @PostMapping
     @Timed
-    public ResponseEntity<Void> recoverPassword(@Valid @RequestBody String email) {
+    public ResponseEntity<String> recoverPassword(@Valid @RequestBody String email) {
         ExternalUserEntity user = externalUserService.recoverExternalUserAccountPassword(email).get();
         mailService.sendExternalUserEmailTemplate(user, MailConstants.MAIL_RECOVER_PASSWORD_EXT_USER);
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, email);
-        return ResponseEntity.ok().header("global.messages.recoverPasswordEmail", email).build();
+        return ResponseEntity.ok().body("Email was send");
     }
 
     @PostMapping("/change-password")
