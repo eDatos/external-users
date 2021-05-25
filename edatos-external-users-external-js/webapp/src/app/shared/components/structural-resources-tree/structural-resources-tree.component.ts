@@ -3,13 +3,13 @@ import { Category, Favorite, InternationalString, Operation, StructuralResources
 import { ExternalCategory } from '@app/shared/model/external-item.model';
 import { CategoryService } from '@app/shared/service/category/category.service';
 import { TranslateService } from '@ngx-translate/core';
-import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
 import { MultiLanguageInputComponent } from '../multi-language-input/multi-language-input.component';
 import { shareReplay } from 'rxjs/operators';
 import { LanguageService } from '@app/shared/service';
 import * as _ from 'lodash';
+import { EUsuariosAlertService } from '@app/core/service';
 
 export type Mode = 'view' | 'select' | 'edit';
 
@@ -80,7 +80,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck {
     private nodeList: CategoryTreeNode[] = [];
 
     constructor(
-        private alertService: ArteAlertService,
+        private alertService: EUsuariosAlertService,
         private categoryService: CategoryService,
         private translateService: TranslateService,
         private iterableDiffers: IterableDiffers,

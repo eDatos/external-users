@@ -15,7 +15,8 @@ import {
     AccountUserService,
     PageTitleService,
     ProfileService,
-    IssuesService
+    IssuesService,
+    EUsuariosAlertService,
 } from './service';
 import { UserRouteAccessGuard } from './guard';
 import localeEs from '@angular/common/locales/es';
@@ -38,12 +39,13 @@ registerLocaleData(localeEs, 'es');
         NotLoggedUserCanAccessGuard,
         PageTitleService,
         Title,
+        EUsuariosAlertService,
         {
             provide: LOCALE_ID,
             useValue: 'es',
         },
         ProfileService,
-        IssuesService
+        IssuesService,
     ],
 })
 export class CoreModule {
