@@ -90,6 +90,16 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
+    public List<FavoriteEntity> updateFavorites(List<FavoriteEntity> favorites, ExternalUserEntity externalUser) {
+        for (FavoriteEntity favorite : favorites) {
+            favorite.setExternalUser(externalUser);
+        }
+        favoriteRepository.deleteByExternalUser(externalUser);
+        favoriteRepository.flush();
+        return favoriteRepository.save(favorites);
+    }
+
+    @Override
     public FavoriteEntity find(Long id) {
         return favoriteRepository.findOne(id);
     }

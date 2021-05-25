@@ -34,7 +34,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
      * are added or removed. Only works in 'select' {@link mode}.
      */
     @Input()
-    public favorites?: Favorite[];
+    public favorites: Favorite[] = [];
 
     /**
      * List of category nodes, which has been selected in a previous instance. Used to preselect categories on the tree
@@ -77,13 +77,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
      * Emits an event when an element of the tree is selected. Only works in 'select' {@link mode}.
      */
     @Output()
-    public onResourceSelect = new EventEmitter<FavoriteResource>();
+    public onResourceSelect = new EventEmitter<CategoryTreeNode>();
 
     /**
      * Emits an event when an element of the tree is unselected. Only works in 'select' {@link mode}.
      */
     @Output()
-    public onResourceUnselect = new EventEmitter<FavoriteResource>();
+    public onResourceUnselect = new EventEmitter<CategoryTreeNode>();
 
     @ViewChild(MultiLanguageInputComponent)
     public languageInputComponent: MultiLanguageInputComponent;
@@ -169,16 +169,14 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     }
 
     public onSelect(treeNode: CategoryTreeNode) {
-        if (this.mode !== 'simpleSelect') {
-            this.setLoadingNode(treeNode);
-            this.onResourceSelect.emit(treeNode.data);
+        if (this.onResourceSelect.observers.length > 0) {
+            this.onResourceSelect.emit(treeNode);
         }
     }
 
     public onUnselect(treeNode: CategoryTreeNode) {
-        if (this.mode !== 'simpleSelect') {
-            this.setLoadingNode(treeNode);
-            this.onResourceUnselect.emit(treeNode.data);
+        if (this.onResourceUnselect.observers.length) {
+            this.onResourceUnselect.emit(treeNode);
         }
     }
 
@@ -339,10 +337,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
             makingRequest: false,
         };
 
-        if (this.isFavorite(category)) {
-            this.selectedResources.push(node);
-        }
-        if (this.isPreselected(category)) {
+        if (this.isFavorite(category) || this.isPreselected(category)) {
             this.selectedResources.push(node);
         }
         this.nodeList.push(node);
