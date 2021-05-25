@@ -1,5 +1,18 @@
 :host ::ng-deep {
     p-table {
+        .ui-table-thead > tr > th,
+        .ui-table-tbody > tr > td {
+            padding: 0.5em;
+
+            &:first-child {
+                width: 4em;
+                text-align: right;
+                .disabled-tooltip {
+                    margin-right: 0.5em;
+                }
+            }
+        }
+
         .search-wrapper {
             display: flex;
 
@@ -19,21 +32,11 @@
             &.ui-filter-column {
                 border-top: 1px solid #c8c8c8;
             }
-
-            &:first-child {
-                width: 3em;
-                text-align: center;
-            }
         }
 
         .ui-table-tbody > tr > td {
             border: 0 none;
             cursor: auto;
-
-            &:first-child {
-                width: 3em;
-                text-align: center;
-            }
         }
 
         .ui-table-summary {
@@ -60,9 +63,8 @@
             font-style: italic;
         }
 
-        tr.disabled > td {
+        tr.disabled {
             @extend .text-secondary;
-            background-color: #f8f8f8;
         }
     }
 }

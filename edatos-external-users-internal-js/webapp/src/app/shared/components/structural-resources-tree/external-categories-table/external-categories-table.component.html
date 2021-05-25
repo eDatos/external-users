@@ -45,16 +45,16 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-resource>
-        <tr class="ui-selectable-row" [class.disabled]="isDisabled(resource)">
-            <td class="d-flex flex-row">
-                <p-tableCheckbox [value]="resource" [disabled]="isDisabled(resource)"></p-tableCheckbox>
+        <tr [class.disabled]="isDisabled(resource)">
+            <td>
                 <i
                     *ngIf="isDisabled(resource)"
-                    class="fa fa-info-circle"
+                    class="disabled-tooltip fa fa-info-circle"
                     aria-hidden="true"
                     [pTooltip]="'externalCategoriesTable.alreadySelectedCategory' | translate"
                     tooltipPosition="top"
                 ></i>
+                <p-tableCheckbox [value]="resource" [disabled]="isDisabled(resource)"></p-tableCheckbox>
             </td>
             <td>{{resource.schema.code}}</td>
             <td>{{resource.schema.version}}</td>
