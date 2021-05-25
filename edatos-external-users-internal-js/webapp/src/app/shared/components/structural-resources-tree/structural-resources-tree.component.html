@@ -25,7 +25,7 @@
 </p-tree>
 
 <p-tree
-    *ngIf="mode === 'select'"
+    *ngIf="['select', 'simpleSelect'].includes(mode)"
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
     [(selection)]="selectedResources"

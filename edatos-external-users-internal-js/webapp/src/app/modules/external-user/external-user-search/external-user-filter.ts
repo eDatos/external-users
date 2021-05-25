@@ -25,13 +25,13 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         if (this.fullname) {
             criterias.push(`FULLNAME ILIKE '%${this.escapeSingleQuotes(this.fullname)}%'`);
         }
-        if (this.languages.length > 0) {
+        if (this.languages?.length > 0) {
             criterias.push(`LANGUAGE IN (${this.languages.join(',')})`);
         }
         if (!this.includeDeleted) {
             criterias.push(`DELETION_DATE IS_NULL`);
         }
-        if (this.categories.length > 0) {
+        if (this.categories?.length > 0) {
             criterias.push(`FAVORITES IN (${this.categories.join(',')})`);
         }
         return criterias;

@@ -388,8 +388,11 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
                 this.selectionMode = 'single';
                 this.disabled = true;
                 break;
-            case 'select':
             case 'simpleSelect':
+                this.selectionMode = 'checkbox';
+                this.propagateSelection = false;
+                break;
+            case 'select':
                 this.selectionMode = 'checkbox';
                 this.propagateSelection = true;
                 break;
