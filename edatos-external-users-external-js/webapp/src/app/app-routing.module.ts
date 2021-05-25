@@ -72,6 +72,13 @@ const APP_ROUTES: Routes = [
         },
     },
     {
+        path: 'reset-password',
+        loadChildren: () => import('./modules/reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
+        data: {
+            roles: ALL_ALLOWED,
+        },
+    },
+    {
         path: '**',
         redirectTo: 'notfound',
     },
