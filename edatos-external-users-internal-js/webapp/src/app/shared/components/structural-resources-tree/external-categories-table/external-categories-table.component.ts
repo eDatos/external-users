@@ -16,6 +16,12 @@ export class ExternalCategoriesTableComponent implements OnInit {
     public selectedExternalCategories: ExternalCategory[];
 
     /**
+     * The external categories that must appear as disabled.
+     */
+    @Input()
+    public disabledExternalCategories: ExternalCategory[];
+
+    /**
      * List of external categories to be displayed in the table. If null,
      * they will be automatically loaded by the component.
      */
@@ -35,5 +41,13 @@ export class ExternalCategoriesTableComponent implements OnInit {
 
     public getSelectedResources(): ExternalCategory[] {
         return this.selectedExternalCategories;
+    }
+
+    public isDisabled(resource: ExternalCategory): boolean {
+        return this.disabledExternalCategories.some((category) => category.urn === resource.urn);
+    }
+
+    public onSelectAll() {
+        this.selectedExternalCategories = this.selectedExternalCategories.filter((externalCat) => !this.isDisabled(externalCat));
     }
 }

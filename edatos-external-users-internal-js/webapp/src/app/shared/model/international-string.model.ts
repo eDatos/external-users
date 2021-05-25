@@ -33,11 +33,12 @@ export class InternationalString {
             } else {
                 localisedString.label = textOrLocale.label;
             }
-        } else {
-            if (this.has(textOrLocale)) {
-                this.getLocalisedString(textOrLocale).label = label;
+        } else if (label) {
+            const locale = textOrLocale;
+            if (this.has(locale)) {
+                this.getLocalisedString(locale)!.label = label;
             } else {
-                this.texts.push(new LocalisedString(textOrLocale, label));
+                this.texts.push(new LocalisedString(locale, label));
             }
         }
     }

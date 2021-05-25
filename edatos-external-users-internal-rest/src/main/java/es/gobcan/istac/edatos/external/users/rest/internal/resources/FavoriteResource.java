@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,6 +25,7 @@ import com.codahale.metrics.annotation.Timed;
 import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
+import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FavoriteDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FavoriteMapper;
@@ -37,13 +39,13 @@ public class FavoriteResource extends AbstractResource {
     public static final String BASE_URL = "/api/favorites";
 
     private final FavoriteService favoriteService;
-
+    private final ExternalUserService externalUserService;
     private final FavoriteMapper favoriteMapper;
-
     private final AuditEventPublisher auditPublisher;
 
-    public FavoriteResource(FavoriteService favoriteService, FavoriteMapper favoriteMapper, AuditEventPublisher auditPublisher) {
+    public FavoriteResource(FavoriteService favoriteService, ExternalUserService externalUserService, FavoriteMapper favoriteMapper, AuditEventPublisher auditPublisher) {
         this.favoriteService = favoriteService;
+        this.externalUserService = externalUserService;
         this.favoriteMapper = favoriteMapper;
         this.auditPublisher = auditPublisher;
     }
@@ -77,6 +79,20 @@ public class FavoriteResource extends AbstractResource {
 
         auditPublisher.publish(AuditConstants.FAVORITE_CREATION, newDto.getExternalUser().getId().toString());
         return ResponseEntity.created(new URI(BASE_URL + SLASH + newDto.getId())).headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
+    }
+
+    @PutMapping
+    @Timed
+    @PreAuthorize("@secChecker.canCreateFavorites(authentication) && @secChecker.canDeleteFavorites(authentication)")
+    public ResponseEntity<List<FavoriteDto>> updateFavorites(@RequestBody List<FavoriteDto> dto, @RequestParam Long externalUserId) {
+        if (externalUserId == null) {
+            throw new EDatosException(CommonServiceExceptionType.PARAMETER_REQUIRED, "id");
+        }
+
+        List<FavoriteEntity> entities = favoriteMapper.toEntities(dto);
+        entities = favoriteService.updateFavorites(entities, this.externalUserService.find(externalUserId));
+        List<FavoriteDto> dtos = favoriteMapper.toDtos(entities);
+        return ResponseEntity.ok(dtos);
     }
 
     @DeleteMapping("/{id}")

@@ -9,12 +9,13 @@ import { TreeDragDropService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
 import { ExternalCategoriesTableComponent } from './external-categories-table/external-categories-table.component';
 
 @NgModule({
     declarations: [StructuralResourcesTreeComponent, ExternalCategoriesTableComponent],
-    imports: [CommonModule, TreeModule, TranslateModule, FormsModule, InputTextModule, ArteDirectivesModule, DialogModule, MultiLanguageInputModule, TableModule],
+    imports: [CommonModule, TreeModule, TranslateModule, FormsModule, InputTextModule, ArteDirectivesModule, DialogModule, MultiLanguageInputModule, TableModule, TooltipModule],
     exports: [StructuralResourcesTreeComponent],
     providers: [TreeDragDropService],
 })

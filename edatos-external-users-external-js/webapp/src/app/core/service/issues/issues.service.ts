@@ -7,7 +7,6 @@ import { convert } from '@app/core/utils/response-utils';
 
 @Injectable()
 export class IssuesService {
-
     private resourceUrl = 'api/issues';
 
     constructor(private http: HttpClient) {}

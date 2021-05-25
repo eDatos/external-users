@@ -200,7 +200,13 @@
         <fieldset *ngIf="userId" arteAutofocus class="page-section">
             <div class="page-header-btns float-right">
                 <ng-container *ngIf="permissionService.puedeNavegarUserManagement()">
-                    <button (click)="editTree()" *ngIf="$any(editMode) !== 'favorites'" [disabled]="editMode && editMode !== 'favorites'" class="btn btn-secondary" type="button">
+                    <button
+                        (click)="editFavorites()"
+                        *ngIf="$any(editMode) !== 'favorites'"
+                        [disabled]="editMode && editMode !== 'favorites'"
+                        class="btn btn-secondary"
+                        type="button"
+                    >
                         <span class="fa fa-pencil"></span>
                         <span translate="entity.action.edit"></span>
                     </button>
@@ -208,19 +214,14 @@
                         <span class="fa fa-ban"></span>
                         <span translate="entity.action.cancel"></span>
                     </button>
-                    <button (click)="saveTree()" *ngIf="editMode === 'favorites'" [disabled]="editMode !== 'favorites'" class="btn btn-primary btn-save" type="button">
+                    <button (click)="saveFavorites()" *ngIf="editMode === 'favorites'" [disabled]="editMode !== 'favorites'" class="btn btn-primary btn-save" type="button">
                         <span class="fa fa-floppy-o"></span>
                         <span translate="entity.action.save"></span>
                     </button>
                 </ng-container>
             </div>
             <h3 class="button-tree" translate="externalUser.home.favorites"></h3>
-            <app-structural-resources-tree
-                [disabled]="editMode !== 'favorites'"
-                (onResourceSelect)="saveFavorite($event)"
-                (onResourceUnselect)="deleteFavorite($event)"
-                [favorites]="favorites"
-            ></app-structural-resources-tree>
+            <app-structural-resources-tree [disabled]="editMode !== 'favorites'" [favorites]="favorites"></app-structural-resources-tree>
         </fieldset>
         <div *ngIf="userId" class="page-section">
             <div class="d-flex align-items-baseline justify-content-between">

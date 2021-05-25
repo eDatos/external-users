@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
     }
 
     private getTitle(state, parent) {
-        const data = [];
+        const data: string[] = [];
         if (parent?.snapshot.data?.pageTitle) {
             data.push(parent.snapshot.data.pageTitle);
         }

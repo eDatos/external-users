@@ -29,7 +29,7 @@ import { DialogModule } from 'primeng/dialog';
         ArteAuditInfoModule,
         FavoriteModule,
         FilterModule,
-        DialogModule
+        DialogModule,
     ],
     providers: [ExternalUserService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],

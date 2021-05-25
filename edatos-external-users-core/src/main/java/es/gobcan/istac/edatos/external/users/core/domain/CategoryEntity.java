@@ -14,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -70,9 +69,9 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
     private final Set<CategoryEntity> children = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
-    @JoinTable(name = "tb_categories_external_items", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_item_fk"))
-    private final Set<ExternalItemEntity> externalItems = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinTable(name = "tb_categories_external_categories", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_category_fk"))
+    private final Set<ExternalCategoryEntity> externalCategories = new HashSet<>();
 
     @Override
     public Long getId() {
@@ -144,13 +143,13 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         children.clear();
     }
 
-    public Set<ExternalItemEntity> getExternalItems() {
-        return externalItems;
+    public Set<ExternalCategoryEntity> getExternalCategories() {
+        return externalCategories;
     }
 
-    public void setExternalItems(Set<ExternalItemEntity> externalItems) {
-        this.externalItems.clear();
-        this.externalItems.addAll(externalItems);
+    public void setExternalCategories(Set<ExternalCategoryEntity> externalCategories) {
+        this.externalCategories.clear();
+        this.externalCategories.addAll(externalCategories);
     }
 
     @Override

@@ -10,8 +10,9 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
     private Long subscribers;
     private InternationalStringDto name;
     private Integer index;
-    private List<ExternalItemDto> resources;
     private List<CategoryDto> children = new ArrayList<>();
+    private List<ExternalCategoryDto> externalCategories = new ArrayList<>();
+    private List<ExternalOperationDto> externalOperations = new ArrayList<>();
 
     public Long getSubscribers() {
         return subscribers;
@@ -37,12 +38,12 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
         this.index = index;
     }
 
-    public List<ExternalItemDto> getResources() {
-        return resources;
+    public List<ExternalCategoryDto> getExternalCategories() {
+        return externalCategories;
     }
 
-    public void setResources(List<ExternalItemDto> resources) {
-        this.resources = resources;
+    public void setExternalCategories(List<ExternalCategoryDto> externalCategories) {
+        this.externalCategories = externalCategories;
     }
 
     public List<CategoryDto> getChildren() {
@@ -51,5 +52,13 @@ public class CategoryDto extends AbstractVersionedAndAuditingDto {
 
     public void setChildren(List<CategoryDto> children) {
         this.children = children;
+    }
+
+    public List<ExternalOperationDto> getExternalOperations() {
+        return externalOperations;
+    }
+
+    public void setExternalOperations(List<ExternalOperationDto> externalOperations) {
+        this.externalOperations = externalOperations;
     }
 }

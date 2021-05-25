@@ -6,7 +6,7 @@ import { AuthServerProvider } from './auth-jwt.service';
 @Injectable()
 export class Principal {
     [x: string]: any;
-    private userIdentity: UserCAS;
+    private userIdentity: UserCAS | null;
     private authenticated = false;
     private authenticationState = new Subject<any>();
 
@@ -30,10 +30,10 @@ export class Principal {
         if (!this.userIdentity || !this.userIdentity.roles) {
             return false;
         }
-        return rolesRuta.some((rolRuta) => this.userIdentity.hasRole(rolRuta));
+        return rolesRuta.some((rolRuta) => this.userIdentity?.hasRole(rolRuta));
     }
 
-    identity(): Promise<UserCAS> {
+    identity(): Promise<UserCAS | null> {
         if (this.userIdentity) {
             return Promise.resolve(this.userIdentity);
         }

@@ -15,7 +15,7 @@ import {
     AccountUserService,
     PageTitleService,
     ProfileService,
-    IssuesService
+    IssuesService,
 } from './service';
 import { UserRouteAccessGuard } from './guard';
 import localeEs from '@angular/common/locales/es';
@@ -43,7 +43,7 @@ registerLocaleData(localeEs, 'es');
             useValue: 'es',
         },
         ProfileService,
-        IssuesService
+        IssuesService,
     ],
 })
 export class CoreModule {

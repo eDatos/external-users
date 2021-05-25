@@ -8,6 +8,7 @@ public class FavoriteDto extends AbstractVersionedAndAuditingDto implements Seri
 
     private ExternalUserAccountBaseDto externalUser;
     private CategoryDto category;
+    private ExternalOperationDto externalOperation;
 
     public ExternalUserAccountBaseDto getExternalUser() {
         return externalUser;
@@ -23,5 +24,13 @@ public class FavoriteDto extends AbstractVersionedAndAuditingDto implements Seri
 
     public void setCategory(CategoryDto category) {
         this.category = category;
+    }
+
+    public ExternalOperationDto getExternalOperation() {
+        return externalOperation;
+    }
+
+    public void setExternalOperation(ExternalOperationDto externalOperation) {
+        this.externalOperation = externalOperation;
     }
 }
