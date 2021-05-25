@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { convert } from '@app/core/utils/response-utils';
+import { convert, ResponseWrapper } from '@app/core/utils/response-utils';
 import { Category, ExternalCategory } from '@app/shared/model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -35,7 +35,12 @@ export class CategoryService {
         return this.http.delete<void>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    public getExternalCategories(): Observable<ExternalCategory[]> {
-        return this.http.get<ExternalCategory[]>(`${this.resourceUrl}/external-categories`).pipe(map((externalCategories) => convert(ExternalCategory, externalCategories)));
+    public getExternalCategories(params?: { page?: string; offset?: string; limit?: string }): Observable<ResponseWrapper<ExternalCategory[]>> {
+        return (
+            this.http
+                // @ts-ignore
+                .get<ExternalCategory[]>(`${this.resourceUrl}/external-categories`, { observe: 'response', params })
+                .pipe(map((externalCategories) => convert(ExternalCategory, externalCategories)))
+        );
     }
 }

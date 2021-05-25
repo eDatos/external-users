@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ExternalCategory } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service';
-import { shareReplay } from 'rxjs/operators';
+import { LazyLoadEvent } from 'primeng/api';
+import { finalize } from 'rxjs/operators';
+import { Table } from 'primeng/table/table';
 
 @Component({
     selector: 'app-external-categories-table',
@@ -26,16 +28,16 @@ export class ExternalCategoriesTableComponent implements OnInit {
      * they will be automatically loaded by the component.
      */
     @Input()
-    public externalCategories: ExternalCategory[];
+    public externalCategories: ExternalCategory[] = [];
+
+    public totalItems: number;
+    public loading = false;
 
     constructor(public categoryService: CategoryService) {}
 
     public ngOnInit(): void {
         if (!this.externalCategories) {
-            this.categoryService
-                .getExternalCategories()
-                .pipe(shareReplay({ bufferSize: 1, refCount: true }))
-                .subscribe((categories) => (this.externalCategories = categories));
+            this.update();
         }
     }
 
@@ -49,5 +51,22 @@ export class ExternalCategoriesTableComponent implements OnInit {
 
     public onSelectAll() {
         this.selectedExternalCategories = this.selectedExternalCategories.filter((externalCat) => !this.isDisabled(externalCat));
+    }
+
+    public lazyLoad(e: LazyLoadEvent): void {
+        const page = e.first! / e.rows!;
+        const size = e.rows;
+        this.update({ page, size });
+    }
+
+    private update(params?): void {
+        this.loading = true;
+        this.categoryService
+            .getExternalCategories(params)
+            .pipe(finalize(() => (this.loading = false)))
+            .subscribe((categories) => {
+                this.totalItems = categories.totalCount()!;
+                this.externalCategories = categories.body;
+            });
     }
 }

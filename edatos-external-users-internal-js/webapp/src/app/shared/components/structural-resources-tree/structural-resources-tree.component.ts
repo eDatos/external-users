@@ -93,7 +93,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
     public enableDragAndDrop = false;
     public allowedLanguages: string[];
-    public externalCategories: ExternalCategory[];
     public loading = false;
 
     private iterableDiffer: IterableDiffer<Favorite>;
@@ -119,10 +118,6 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
             .getAllowed()
             .pipe(shareReplay({ bufferSize: 1, refCount: true }))
             .subscribe((languages) => (this.allowedLanguages = languages));
-        this.categoryService
-            .getExternalCategories()
-            .pipe(shareReplay({ bufferSize: 1, refCount: true }))
-            .subscribe((categories) => (this.externalCategories = categories));
     }
 
     public ngOnChanges(changes: SimpleChanges) {

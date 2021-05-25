@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
@@ -73,9 +72,10 @@ public class CategoryResource extends AbstractResource {
     @GetMapping("/external-categories")
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    public ResponseEntity<List<ExternalCategoryDto>> getExternalCategories() {
-        List<ExternalCategoryEntity> result = structuralResourcesService.getCategories();
-        return ResponseEntity.ok(externalCategoryMapper.toDtos(result));
+    public ResponseEntity<List<ExternalCategoryDto>> getExternalCategories(Pageable pageable) {
+        Page<ExternalCategoryDto> result = structuralResourcesService.getCategories(pageable).map(externalCategoryMapper::toDto);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
+         return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
 
     @Timed
