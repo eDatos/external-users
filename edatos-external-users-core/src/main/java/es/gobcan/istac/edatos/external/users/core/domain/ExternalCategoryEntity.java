@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -39,7 +38,6 @@ public class ExternalCategoryEntity extends ExternalItemEntity {
     /**
      * The nested code splits the codes from all the levels by a dot. For example: 060.060_010.060_010_030.
      */
-    @Column(unique = true)
     private String nestedCode;
 
     public String getNestedCode() {
