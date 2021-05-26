@@ -5,7 +5,7 @@ export class LocalisedString {
     constructor();
     constructor(locale: string, label: string);
     constructor(locale?: string, label?: string) {
-        if (locale && label) {
+        if (locale != null && label != null) {
             this.label = label;
             this.locale = locale;
         }
