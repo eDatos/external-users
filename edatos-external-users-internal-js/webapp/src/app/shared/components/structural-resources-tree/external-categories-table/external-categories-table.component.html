@@ -16,6 +16,7 @@
     [scrollable]="true"
     scrollHeight="40vh"
     dataKey="urn"
+    styleClass="external-categories-table"
     (onLazyLoad)="lazyLoad($event)"
 >
     <ng-template pTemplate="caption">
@@ -58,7 +59,7 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="summary">
-        <h3 class="summary-title">{{ 'externalCategoriesTable.title' | translate }}</h3>
+        <h4 class="summary-title">{{ 'externalCategoriesTable.title' | translate }}</h4>
         <ng-container *ngIf="selectedExternalCategories?.length !== 0; else nothingSelected">
             <ul class="summary-list">
                 <li *ngFor="let externalCategory of selectedExternalCategories" class="summary-item">

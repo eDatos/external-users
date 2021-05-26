@@ -70,7 +70,7 @@
                         <div *ngIf="editForm.controls.nombre?.dirty && editForm.controls.nombre?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
-                                *ngIf="editForm.controls.nombre?.errors.maxlength"
+                                *ngIf="editForm.controls.nombre?.errors?.maxlength"
                                 translate="entity.validation.maxlength"
                                 [translateParams]="{ max: 255 }"
                             >
@@ -89,7 +89,7 @@
                         <div *ngIf="editForm.controls.surname1?.dirty && editForm.controls.surname1?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
-                                *ngIf="editForm.controls.surname1?.errors.maxlength"
+                                *ngIf="editForm.controls.surname1?.errors?.maxlength"
                                 translate="entity.validation.maxlength"
                                 [translateParams]="{ max: 255 }"
                             >
@@ -108,7 +108,7 @@
                         <div *ngIf="editForm.controls.surname2?.dirty && editForm.controls.surname2?.invalid" class="entity-field-error">
                             <small
                                 class="form-text text-danger"
-                                *ngIf="editForm.controls.surname2?.errors.maxlength"
+                                *ngIf="editForm.controls.surname2?.errors?.maxlength"
                                 translate="entity.validation.maxlength"
                                 [translateParams]="{ max: 255 }"
                             >
@@ -160,23 +160,23 @@
                             </div>
                         </div>
                         <div *ngIf="(editForm.controls.email?.touched || editForm.controls.email?.dirty) && editForm.controls.email?.invalid" class="entity-field-error">
-                            <small class="form-text text-danger" *ngIf="editForm.controls.email?.errors.required" translate="entity.validation.required"> </small>
+                            <small class="form-text text-danger" *ngIf="editForm.controls.email?.errors?.required" translate="entity.validation.required"> </small>
                             <ng-container *ngIf="editForm.controls.email?.dirty">
                                 <small
                                     class="form-text text-danger"
-                                    *ngIf="editForm.controls.email?.errors.maxlength"
+                                    *ngIf="editForm.controls.email?.errors?.maxlength"
                                     translate="entity.validation.maxlength"
                                     [translateParams]="{ max: 255 }"
                                 >
                                 </small>
                                 <small
                                     class="form-text text-danger"
-                                    *ngIf="editForm.controls.email?.errors.minlength"
+                                    *ngIf="editForm.controls.email?.errors?.minlength"
                                     translate="entity.validation.minlength"
                                     [translateParams]="{ requiredLength: 3}"
                                 >
                                 </small>
-                                <small class="form-text text-danger" *ngIf="editForm.controls.email?.errors.email" translate="global.messages.validate.email.invalid"> </small>
+                                <small class="form-text text-danger" *ngIf="editForm.controls.email?.errors?.email" translate="global.messages.validate.email.invalid"> </small>
                             </ng-container>
                         </div>
                     </div>
