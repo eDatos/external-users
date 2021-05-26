@@ -24,7 +24,6 @@ import { ArteTableService } from 'arte-ng';
 import { ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
 import { AboutDialogComponent, DeleteConfirmDialogComponent } from './modules/account';
-import { EUsuariosAlertService } from './core/service';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');

@@ -7,10 +7,9 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.KeyAndPasswordDto;
-import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
-import io.github.jhipster.web.util.ResponseUtil;
-import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +22,7 @@ import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 
+import java.util.Locale;
 import java.util.Optional;
 
 @RestController
@@ -34,20 +34,20 @@ public class PasswordResource extends AbstractResource {
     private final ExternalUserRepository externalUserRepository;
 
     private final MailService mailService;
-
     private final ExternalUserService externalUserService;
 
     private final ExternalUserAccountMapper externalUserMapper;
-
     private final AuditEventPublisher auditPublisher;
+    private final MessageSource messageSource;
 
     public PasswordResource(ExternalUserRepository externalUserRepository, MailService mailService, ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper,
-            AuditEventPublisher auditPublisher) {
+            AuditEventPublisher auditPublisher, MessageSource messageSource) {
         this.externalUserRepository = externalUserRepository;
         this.mailService = mailService;
         this.externalUserService = externalUserService;
         this.externalUserMapper = externalUserMapper;
         this.auditPublisher = auditPublisher;
+        this.messageSource = messageSource;
     }
 
     @PostMapping
@@ -57,7 +57,7 @@ public class PasswordResource extends AbstractResource {
         mailService.sendExternalUserEmailTemplate(user, MailConstants.MAIL_RECOVER_PASSWORD_EXT_USER);
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, email);
-        return ResponseEntity.ok().body("Email was send");
+        return ResponseEntity.ok().body(generateTextI18n("resource.external_users.password.email"));
     }
 
     @PostMapping("/change-password")
@@ -80,4 +80,9 @@ public class PasswordResource extends AbstractResource {
         return ResponseEntity.ok().body(externalUserService.findOneByResetKey(key).isPresent());
     }
 
+    private String generateTextI18n(String text) {
+        Locale locale = LocaleContextHolder.getLocale();
+        return messageSource.getMessage(text, null, locale);
+
+    }
 }
