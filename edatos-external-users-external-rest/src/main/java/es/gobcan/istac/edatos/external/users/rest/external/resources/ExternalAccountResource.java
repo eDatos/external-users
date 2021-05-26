@@ -103,7 +103,7 @@ public class ExternalAccountResource extends AbstractResource {
 
     @DeleteMapping("/account/{id}")
     @Timed
-    @PreAuthorize("@secCheckerExternal.canModifyUserStatus(authentication)")
+    @PreAuthorize("@secCheckerExternal.canDeleteUser(authentication)")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             ExternalUserEntity user = externalUserRepository.findOne(id);
