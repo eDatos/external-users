@@ -73,11 +73,11 @@
             <p-footer>
                 <button type="button" class="btn btn-secondary" (click)="disableNodeEdit(node)">
                     <i class="fa fa-times" aria-hidden="true"></i>
-                    <span>Cancelar</span>
+                    <span>{{ 'entity.action.cancel' | translate }}</span>
                 </button>
                 <button type="button" class="btn btn-primary" (click)="saveNodeName(node, languageInputComponent.value)">
                     <i class="fa fa-save" aria-hidden="true"></i>
-                    <span>Guardar</span>
+                    <span>{{ 'entity.action.save' | translate }}</span>
                 </button>
             </p-footer>
         </p-dialog>
@@ -102,11 +102,11 @@
             <p-footer>
                 <button (click)="disableNodeEdit(node)" class="btn btn-secondary" type="button">
                     <i class="fa fa-times" aria-hidden="true"></i>
-                    <span>Cancelar</span>
+                    <span>{{ 'entity.action.cancel' | translate }}</span>
                 </button>
                 <button type="button" class="btn btn-primary" (click)="saveRemap(node, table.getSelectedResources())">
                     <i class="fa fa-save" aria-hidden="true"></i>
-                    <span>Guardar</span>
+                    <span>{{ 'entity.action.save' | translate }}</span>
                 </button>
             </p-footer>
         </p-dialog>
