@@ -72,8 +72,8 @@ public class CategoryResource extends AbstractResource {
     @GetMapping("/external-categories")
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    public ResponseEntity<List<ExternalCategoryDto>> getExternalCategories(Pageable pageable) {
-        Page<ExternalCategoryDto> result = structuralResourcesService.getCategories(pageable).map(externalCategoryMapper::toDto);
+    public ResponseEntity<List<ExternalCategoryDto>> getExternalCategories(Pageable pageable, @RequestParam(required = false) String search) {
+        Page<ExternalCategoryDto> result = structuralResourcesService.getCategories(pageable, search).map(externalCategoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
          return ResponseEntity.ok().headers(headers).body(result.getContent());
     }

@@ -9,5 +9,5 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 
 public interface StructuralResourcesService {
     List<ExternalCategoryEntity> getCategories();
-    Page<ExternalCategoryEntity> getCategories(Pageable pageable);
+    Page<ExternalCategoryEntity> getCategories(Pageable pageable, String search);
 }

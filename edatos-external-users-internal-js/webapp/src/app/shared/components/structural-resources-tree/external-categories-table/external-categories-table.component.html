@@ -1,10 +1,9 @@
 <p-table
-    #table
     selectionMode="multiple"
     [value]="externalCategories"
     [(selection)]="selectedExternalCategories"
     [loading]="loading"
-    [rows]="25"
+    [rows]="10"
     [rowsPerPageOptions]="[10,25,50]"
     [paginator]="true"
     [showCurrentPageReport]="true"
@@ -21,7 +20,7 @@
 >
     <ng-template pTemplate="caption">
         <div class="search-wrapper">
-            <input pInputText type="text" (input)="table.filterGlobal($any($event.target).value, 'contains')" [placeholder]="'table.globalSearchPlaceholder' | translate" />
+            <input pInputText type="text" (input)="globalSearch.next($event)" [placeholder]="'table.globalSearchPlaceholder' | translate" />
         </div>
     </ng-template>
     <ng-template pTemplate="header">
@@ -29,22 +28,10 @@
             <th scope="col">
                 <p-tableHeaderCheckbox (click)="onSelectAll()"></p-tableHeaderCheckbox>
             </th>
-            <th pSortableColumn="schema.code" scope="col">
-                {{'externalCategoriesTable.columns.schemaCode' | translate}}
-                <p-sortIcon field="schema.code"></p-sortIcon>
-            </th>
-            <th pSortableColumn="schema.version" scope="col">
-                {{'externalCategoriesTable.columns.schemaVersion' | translate}}
-                <p-sortIcon field="schema.version"></p-sortIcon>
-            </th>
-            <th scope="col" pSortableColumn="name.val">
-                {{'externalCategoriesTable.columns.name' | translate}}
-                <p-sortIcon field="name.val"></p-sortIcon>
-            </th>
-            <th scope="col" pSortableColumn="nestedCode">
-                {{'externalCategoriesTable.columns.nestedCode' | translate}}
-                <p-sortIcon field="nestedCode"></p-sortIcon>
-            </th>
+            <th scope="col">{{'externalCategoriesTable.columns.schemaCode' | translate}}</th>
+            <th scope="col">{{'externalCategoriesTable.columns.schemaVersion' | translate}}</th>
+            <th scope="col">{{'externalCategoriesTable.columns.name' | translate}}</th>
+            <th scope="col">{{'externalCategoriesTable.columns.nestedCode' | translate}}</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-resource>

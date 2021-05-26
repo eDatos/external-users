@@ -43,10 +43,22 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
     }
 
     @Override
-    public Page<ExternalCategoryEntity> getCategories(Pageable pageable) {
-        log.info("Making request to Structural Resources Manager to GET a page of categories");
-        Categories categories = eDatosApisLocator.srmExternal().findCategories("~all", "~all", "~all", null, null, String.valueOf(pageable.getPageSize()), String.valueOf(pageable.getOffset()));
+    public Page<ExternalCategoryEntity> getCategories(Pageable pageable, String search) {
+        log.info("Making request to Structural Resources Manager to GET a page of categories. Page: {}, Search: {}", pageable, search);
+        String sort = null;
+        if (pageable.getSort() != null) {
+            sort = pageable.getSort().toString().replace(": ", " ");
+        }
+        Categories categories = eDatosApisLocator.srmExternal().findCategories("~all", "~all", "~all", getQuery(search), sort,
+                String.valueOf(pageable.getPageSize()), String.valueOf(pageable.getOffset()));
         List<ExternalCategoryEntity> externalCategories = itemResourceMapper.toExternalCategoryEntities(categories);
         return new PageImpl<>(externalCategories, pageable, categories.getTotal().longValue());
+    }
+
+    private String getQuery(String search) {
+        if (search == null) {
+            return null;
+        }
+        return String.format("NAME ILIKE '%s'", search);
     }
 }

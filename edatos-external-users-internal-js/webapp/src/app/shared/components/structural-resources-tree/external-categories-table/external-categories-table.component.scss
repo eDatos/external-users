@@ -34,6 +34,10 @@
             }
         }
 
+        .ui-table-scrollable-wrapper {
+            min-height: 40vh;
+        }
+
         .ui-table-tbody > tr > td {
             border: 0 none;
             cursor: auto;
