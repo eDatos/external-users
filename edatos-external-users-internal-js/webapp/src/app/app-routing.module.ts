@@ -33,14 +33,6 @@ const APP_ROUTES: Routes = [
         },
     },
     {
-        path: 'favorite',
-        loadChildren: () => import('./modules/favorite/favorite.module').then((m) => m.FavoriteModule),
-        canLoad: [UserRouteAccessGuard],
-        data: {
-            roles: FAVORITE_ROLES,
-        },
-    },
-    {
         path: 'category-subscriptions',
         loadChildren: () => import('./modules/category-subscriptions/category-subscriptions.module').then((m) => m.CategorySubscriptionsModule),
         canLoad: [UserRouteAccessGuard],
