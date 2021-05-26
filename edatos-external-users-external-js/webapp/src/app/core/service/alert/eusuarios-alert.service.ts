@@ -38,7 +38,7 @@ export class EUsuariosAlertService {
                 const arr = httpResponse.headers.keys();
                 const headers = [];
                 for (let i = 0; i < arr.length; i++) {
-                    if (arr[i].endsWith('flueco-error') || arr[i].endsWith('flueco-params')) {
+                    if (arr[i].endsWith('alert-error') || arr[i].endsWith('alert-params')) {
                         headers.push(arr[i]);
                     }
                 }
@@ -59,7 +59,6 @@ export class EUsuariosAlertService {
                         const fieldError = fieldErrors[i];
                         // convert 'something[14].other[4].id' to 'something[].other[].id' so translations can be written to it
                         const convertedField = fieldError.field.replace(/\[\d*\]/g, '[]');
-                        // TODO: Discutir funcionamiento en reunión
                         const fieldName = this.translateService.instant('app.' + fieldError.objectName + '.' + convertedField);
                         this.addErrorAlert('Error on field "' + fieldName + '"', 'error.' + fieldError.message, { fieldName });
                     }

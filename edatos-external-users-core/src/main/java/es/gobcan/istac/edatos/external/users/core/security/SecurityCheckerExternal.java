@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import es.gobcan.istac.edatos.external.users.core.domain.enumeration.Role;
-
 @Component("secCheckerExternal")
 public class SecurityCheckerExternal {
 
@@ -15,50 +13,50 @@ public class SecurityCheckerExternal {
     private ExternalUserRepository externalUserRepository;
 
     public boolean canAccessCategory(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canAccessFilters(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canUpdateFilters(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canDeleteFilters(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canUpdateCategoryTree(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canAccessFavorites(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canCreateFavorites(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canDeleteFavorites(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canAccessUser(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canUpdateUser(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
     public boolean canDeleteUser(Authentication authentication) {
-        return this.isExternalUserAndDeactivated(authentication);
+        return this.isExternalUserAndIsNotDeactivated(authentication);
     }
 
-    private boolean isExternalUserAndDeactivated(Authentication authentication) {
+    private boolean isExternalUserAndIsNotDeactivated(Authentication authentication) {
         return this.hasRole(authentication, ExternalUserRole.USER) && isDeactivatedUser();
     }
 

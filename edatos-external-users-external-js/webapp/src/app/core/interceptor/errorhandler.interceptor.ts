@@ -46,9 +46,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
             )
             .pipe(
                 catchError((err) => {
-                    if (HTTP_ERROR_REDIRECT.hasOwnProperty(err.status)) {
-                        this.router.navigate(HTTP_ERROR_REDIRECT[err.status]);
-                    } else if (err.status != 401) {
+                    if (err.status != 401 /*|| !(err.text() === '' || (err.json().path && err.json().path.indexOf('/api/account') === 0))*/) {
                         this.alertService.handleResponseError(err);
                     }
                     return throwError(err);
