@@ -22,6 +22,9 @@ export class ResetPasswordFinishComponent implements OnInit {
         this.route.queryParams.subscribe((params) => {
             this.keyAndPassword.key = params['key'];
         });
+        this.resetPasswordService.existsUserWithKey(this.keyAndPassword.key).subscribe((result) => {
+            this.existsUserWithKey(result.valueOf());
+        });
     }
 
     public save() {
@@ -33,5 +36,11 @@ export class ResetPasswordFinishComponent implements OnInit {
 
     public navigateToLogin() {
         this.router.navigate(['login']);
+    }
+
+    private existsUserWithKey(existsKey: boolean) {
+        if (!existsKey) {
+            this.navigateToLogin();
+        }
     }
 }

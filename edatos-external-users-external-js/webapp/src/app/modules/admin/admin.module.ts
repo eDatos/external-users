@@ -1,27 +1,13 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { SharedModule } from '@app/shared';
 
-import {
-    AuditsComponent,
-    LogsComponent,
-    MetricsMonitoringModalComponent,
-    MetricsMonitoringComponent,
-    HealthModalComponent,
-    HealthCheckComponent,
-    ConfigurationComponent,
-    AuditsService,
-    ConfigurationService,
-    HealthService,
-    MetricsService,
-    LogsService,
-    AdminRoutingModule,
-} from '.';
+import { AuditsComponent, LogsComponent, ConfigurationComponent, AuditsService, ConfigurationService, LogsService, AdminRoutingModule } from '.';
 
 @NgModule({
     imports: [SharedModule, AdminRoutingModule],
-    declarations: [AuditsComponent, LogsComponent, ConfigurationComponent, HealthCheckComponent, HealthModalComponent, MetricsMonitoringComponent, MetricsMonitoringModalComponent],
-    entryComponents: [HealthModalComponent, MetricsMonitoringModalComponent],
-    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService],
+    declarations: [AuditsComponent, LogsComponent, ConfigurationComponent],
+    entryComponents: [],
+    providers: [AuditsService, ConfigurationService, LogsService],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {}

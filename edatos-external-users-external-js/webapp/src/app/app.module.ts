@@ -21,7 +21,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 import { ArteTableService } from 'arte-ng';
-import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
+import { ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
 import { AboutDialogComponent, DeleteConfirmDialogComponent } from './modules/account';
 
@@ -77,11 +77,6 @@ export function initTranslations(translateService: TranslateService, cookieServi
             multi: true,
         },
         {
-            provide: ArteAlertService,
-            useClass: ArteAlertService,
-            deps: [MessageService],
-        },
-        {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorHandlerInterceptor,
             multi: true,
@@ -90,7 +85,6 @@ export function initTranslations(translateService: TranslateService, cookieServi
         ArteTableService,
         ArteEventManager,
         PagingParamsResolver,
-        ArteAlertService,
         ScrollService,
     ],
     bootstrap: [AppComponent],

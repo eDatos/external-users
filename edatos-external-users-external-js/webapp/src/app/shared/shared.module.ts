@@ -37,6 +37,7 @@ import { PasswordNotMatchValidatorDirective } from './directives';
 import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
 import { MultiLanguageInputComponent } from './components/multi-language-input/multi-language-input.component';
 import { NbButtonModule, NbCardModule } from '@nebular/theme';
+import { EUsuariosAlertService } from '@app/core/service';
 
 @NgModule({
     imports: [
@@ -90,6 +91,7 @@ import { NbButtonModule, NbCardModule } from '@nebular/theme';
             useClass: GenericModalService,
             deps: [NgbModal],
         }, // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
+        EUsuariosAlertService,
     ],
     exports: [
         FormsModule,

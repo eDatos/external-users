@@ -13,14 +13,18 @@ export class ResetPasswordService {
     constructor(private http: HttpClient) {}
 
     resetPassword(email: string): Observable<String> {
-        return this.http.post(this.resourceUrl, email).pipe(map((res) => ResponseUtils.convert(res, String)));
+        return this.http.post(this.resourceUrl, email, { responseType: 'text' });
     }
 
     changePasswordReset(keyAndPassword: KeyAndPassword): Observable<String> {
-        return this.http.post(`${this.resourceUrl}/change-password`, keyAndPassword).pipe(map((res) => ResponseUtils.convert(res, String)));
+        return this.http.post(`${this.resourceUrl}/change-password`, keyAndPassword, { responseType: 'text' });
     }
 
     existsUserWithKey(key: string): Observable<Boolean> {
-        return this.http.get<Boolean>(`${this.resourceUrl}/key-recovery/${key}`).pipe(map((res) => convert(Boolean, res)));
+        return this.http.get<boolean>(`${this.resourceUrl}/key-recovery/${key}`).pipe(
+            map((res) => {
+                return res.valueOf();
+            })
+        );
     }
 }

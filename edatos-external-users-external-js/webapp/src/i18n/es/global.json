@@ -21,8 +21,6 @@
             "admin": {
                 "main": "Administración",
                 "userManagement": "Gestión de usuarios",
-                "metrics": "Métricas",
-                "health": "Salud",
                 "configuration": "Configuración",
                 "logs": "Logs",
                 "audits": "Auditoría",

@@ -16,6 +16,7 @@ import {
     PageTitleService,
     ProfileService,
     IssuesService,
+    EUsuariosAlertService,
 } from './service';
 import { UserRouteAccessGuard } from './guard';
 import localeEs from '@angular/common/locales/es';
@@ -38,6 +39,7 @@ registerLocaleData(localeEs, 'es');
         NotLoggedUserCanAccessGuard,
         PageTitleService,
         Title,
+        EUsuariosAlertService,
         {
             provide: LOCALE_ID,
             useValue: 'es',
