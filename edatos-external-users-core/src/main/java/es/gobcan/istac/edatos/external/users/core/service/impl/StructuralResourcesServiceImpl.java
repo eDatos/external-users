@@ -59,6 +59,6 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
         if (search == null) {
             return null;
         }
-        return String.format("NAME ILIKE '%s'", search);
+        return String.format("NAME ILIKE '%1$s' OR URN ILIKE '%1$s' OR DESCRIPTION ILIKE '%1$s'", search);
     }
 }
