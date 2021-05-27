@@ -33,7 +33,7 @@ const APP_ROUTES: Routes = [
         },
     },
     {
-        path: 'account-management/change-password',
+        path: 'change-password',
         loadChildren: () => import('./modules/account/password/change-password.module').then((m) => m.ChangePasswordModule),
         canLoad: [UserRouteAccessGuard],
         data: {
