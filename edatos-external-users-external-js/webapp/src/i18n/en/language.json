@@ -1,10 +1,10 @@
 {
     "language": {
-        "SPANISH": "Spanish",
+        "SPANISH": "Castillian",
         "CATALAN": "Catalan"
     },
     "localeToLanguage": {
-        "es": "Spanish",
+        "es": "Castillian",
         "en": "English",
         "ca": "Catalan",
         "pt": "Portuguese",
