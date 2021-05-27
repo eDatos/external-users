@@ -5,10 +5,13 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalOperationRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterWithOperationCodeDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.resolver.GenericMapperResolver;
 
@@ -17,6 +20,9 @@ public abstract class FilterMapper implements EntityMapper<FilterDto, FilterEnti
 
     @Autowired
     private ExternalUserRepository externalUserRepository;
+
+    @Autowired
+    private ExternalOperationRepository externalOperationRepository;
 
     @Override
     @Mapping(target = "resourceName", ignore = true)
@@ -39,7 +45,14 @@ public abstract class FilterMapper implements EntityMapper<FilterDto, FilterEnti
     @Mapping(target = "name", defaultExpression = "java( dto.getResourceName() )")
     @Mapping(target = "lastAccessDate", defaultExpression = "java( java.time.Instant.now() )")
     @Mapping(target = "externalUser", source = "externalUser.id", qualifiedByName = "externalUserFromId")
+    @Mapping(target = "externalOperation", ignore = true)
     public abstract FilterEntity toEntity(FilterDto dto);
+
+    @Mapping(target = "name", defaultExpression = "java( dto.getResourceName() )")
+    @Mapping(target = "lastAccessDate", defaultExpression = "java( java.time.Instant.now() )")
+    @Mapping(target = "externalUser", source = "externalUser.id", qualifiedByName = "externalUserFromId")
+    @Mapping(target = "externalOperation", source = "externalOperationCode", qualifiedByName = "externalOperationFromCode")
+    public abstract FilterEntity toEntity(FilterWithOperationCodeDto dto);
 
     @Named("externalUserFromId")
     public ExternalUserEntity externalUserFromId(Long id) {
@@ -47,5 +60,13 @@ public abstract class FilterMapper implements EntityMapper<FilterDto, FilterEnti
             return null;
         }
         return externalUserRepository.findOne(id);
+    }
+
+    @Named("externalOperationFromCode")
+    public ExternalOperationEntity externalOperationFromCode(String code) {
+        if (code == null) {
+            return null;
+        }
+        return externalOperationRepository.findByCode(code).orElse(null);
     }
 }

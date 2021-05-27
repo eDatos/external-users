@@ -61,6 +61,11 @@ public class FilterEntity extends AbstractVersionedAndAuditingEntity implements 
     @Column(length = 4000)
     private String notes;
 
+    // TODO(EDATOS-3357): Make not null?
+    @ManyToOne(targetEntity = ExternalItemEntity.class)
+    @JoinColumn(columnDefinition = "external_operation_fk", referencedColumnName = "urn")
+    private ExternalOperationEntity externalOperation;
+
     @Override
     public Long getId() {
         return id;
@@ -108,5 +113,13 @@ public class FilterEntity extends AbstractVersionedAndAuditingEntity implements 
 
     public void setLastAccessDate(Instant lastAccessDate) {
         this.lastAccessDate = lastAccessDate;
+    }
+
+    public ExternalOperationEntity getExternalOperation() {
+        return externalOperation;
+    }
+
+    public void setExternalOperation(ExternalOperationEntity externalOperation) {
+        this.externalOperation = externalOperation;
     }
 }

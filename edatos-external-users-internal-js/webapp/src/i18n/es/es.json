@@ -739,6 +739,7 @@
         "editionModal": "Edición multidioma del nombre del recurso",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
+        "numberOfFilters": "Consultas personalizadas: {{amount}}",
         "remapModal": "Seleccionar temas",
         "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },

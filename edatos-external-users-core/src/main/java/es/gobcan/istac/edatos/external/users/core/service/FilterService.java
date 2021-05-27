@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,5 +28,7 @@ public interface FilterService {
 
     void delete(FilterEntity filter);
 
-    public Page<FilterEntity> findByExternalUser(String query, Pageable pageable);
+    Page<FilterEntity> findByExternalUser(String query, Pageable pageable);
+
+    Map<String, Long> getOperationFilters();
 }
