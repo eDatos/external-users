@@ -5,11 +5,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
-import es.gobcan.istac.edatos.external.users.core.service.validator.LoginValidator;
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -31,7 +28,9 @@ import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
 import es.gobcan.istac.edatos.external.users.core.service.FilterService;
+import es.gobcan.istac.edatos.external.users.core.service.validator.LoginValidator;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterWithOperationCodeDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FilterMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
@@ -88,7 +87,7 @@ public class FilterResource extends AbstractResource {
     @PostMapping
     @Timed
     @PreAuthorize("@secCheckerExternal.canCreateFavorites(authentication)")
-    public ResponseEntity<FilterDto> createFilter(@RequestBody FilterDto dto) throws URISyntaxException {
+    public ResponseEntity<FilterDto> createFilter(@RequestBody FilterWithOperationCodeDto dto) throws URISyntaxException {
         if (dto != null && dto.getId() != null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
         }

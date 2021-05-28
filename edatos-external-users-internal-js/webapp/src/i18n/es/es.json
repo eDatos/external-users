@@ -293,7 +293,7 @@
             "CA": "Catalán",
             "DE": "Alemán",
             "EN": "Inglés",
-            "ES": "Español",
+            "ES": "Castellano",
             "FR": "Francés",
             "PT": "Portugués",
             "RU": "Ruso",
@@ -410,7 +410,7 @@
         "language": "Idioma",
         "languageEnum": {
             "CATALAN": "Catalán",
-            "SPANISH": "Español"
+            "SPANISH": "Castellano"
         },
         "login": "Nombre de usuario",
         "name": "Nombre",
@@ -739,6 +739,7 @@
         "editionModal": "Edición multidioma del nombre del recurso",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
+        "numberOfFilters": "Consultas personalizadas: {{amount}}",
         "remapModal": "Seleccionar temas",
         "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },

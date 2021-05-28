@@ -1,14 +1,12 @@
-package es.gobcan.istac.edatos.external.users.rest.common.dto;
+package es.gobcan.istac.edatos.external.users.rest.external.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
 
-import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.AbstractVersionedAndAuditingDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.interfaces.Identifiable;
 
-public class FilterDto extends AbstractVersionedAndAuditingDto implements Serializable, Identifiable {
-
-    private static final long serialVersionUID = 1L;
+public class FilterWithOperationCodeDto implements Serializable, Identifiable {
 
     private Long id;
     private String name;
@@ -17,14 +15,12 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
     private String permalink;
     private Instant lastAccessDate;
     private String notes;
-    private ExternalOperationDto externalOperation;
 
     @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -35,6 +31,22 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getResourceName() {
+        return resourceName;
+    }
+
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
+    }
+
+    public ExternalUserDto getExternalUser() {
+        return externalUser;
+    }
+
+    public void setExternalUser(ExternalUserDto externalUser) {
+        this.externalUser = externalUser;
     }
 
     public String getPermalink() {
@@ -59,29 +71,5 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
 
     public void setNotes(String notes) {
         this.notes = notes;
-    }
-
-    public String getResourceName() {
-        return resourceName;
-    }
-
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    public ExternalUserDto getExternalUser() {
-        return externalUser;
-    }
-
-    public void setExternalUser(ExternalUserDto externalUser) {
-        this.externalUser = externalUser;
-    }
-
-    public ExternalOperationDto getExternalOperation() {
-        return externalOperation;
-    }
-
-    public void setExternalOperation(ExternalOperationDto externalOperation) {
-        this.externalOperation = externalOperation;
     }
 }

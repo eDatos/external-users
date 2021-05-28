@@ -20,7 +20,13 @@
 >
     <ng-template let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
-        <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
+        <span *ngIf="node.data.favoriteType === 'externalOperation'; else onlySubscribedUsers" class="subscribed-users">
+            ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}, {{'structuralResourcesTree.numberOfFilters' | translate:{amount:
+            node.data.numberOfFilters || 0} }})
+        </span>
+        <ng-template #onlySubscribedUsers>
+            <span class="subscribed-users"> ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}) </span>
+        </ng-template>
     </ng-template>
 </p-tree>
 
