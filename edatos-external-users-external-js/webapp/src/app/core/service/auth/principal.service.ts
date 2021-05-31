@@ -1,21 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Role, UserAccount } from '@app/core/model';
-import { Subject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { AccountUserService } from '../user/user.service';
 import { AuthServerProvider } from './auth-jwt.service';
 
 @Injectable()
 export class Principal {
-    [x: string]: any;
-    private userIdentity: UserAccount;
-    private authenticationState = new Subject<UserAccount>();
+    private authenticationState = new Subject<boolean>();
 
-    constructor(private authServerProvider: AuthServerProvider) {}
-
-    authenticate(identity) {
-        this.userIdentity = identity;
-        this.authenticationState.next(this.userIdentity);
-    }
+    constructor(private authServerProvider: AuthServerProvider, private accountUserService: AccountUserService) {}
 
     hasRoles(rolesRuta: Role[]): Promise<boolean> {
         return Promise.resolve(this.rolesRutaMatchesRolesUsuario(rolesRuta));
@@ -25,35 +18,29 @@ export class Principal {
         return true;
     }
 
-    isAuthenticated(): Observable<boolean> {
-        return this.getAuthenticationState().pipe(map((userAccount) => userAccount !== null));
-    }
-
-    isIdentityResolved(): boolean {
-        return this.userIdentity !== undefined;
-    }
-
-    getAuthenticationState(): Observable<UserAccount> {
+    getAuthenticationState(): Observable<boolean> {
         return this.authenticationState.asObservable();
     }
 
     identity(): Promise<UserAccount> {
-        if (this.userIdentity) {
-            return Promise.resolve(this.userIdentity);
-        }
-
-        const token: string = this.authServerProvider.getToken();
-        if (token) {
-            this.userIdentity = UserAccount.fromJwt(token);
-        } else {
-            this.userIdentity = null;
-        }
-
-        this.authenticationState.next(this.userIdentity);
-        return Promise.resolve(this.userIdentity);
+        return new Promise((resolve, reject) => {
+            const token: string = this.authServerProvider.getToken();
+            if (token) {
+                this.accountUserService.getLogueado().toPromise().then(user => {
+                    this.authenticationState.next(true);
+                    resolve(UserAccount.fromJwt(token));
+                }).catch(() => {
+                    this.authenticationState.next(false);
+                    resolve(null);
+                });
+            } else {
+                this.authenticationState.next(false);
+                resolve(null);
+            }
+        });
     }
 
     public isCorrectlyLogged(): Observable<boolean> {
-        return this.getAuthenticationState().pipe(map((userAccount) => userAccount && userAccount.roles && !!userAccount.roles.length));
+        return this.getAuthenticationState();
     }
 }

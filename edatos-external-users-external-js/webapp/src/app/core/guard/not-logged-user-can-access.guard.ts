@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, Data, CanLoad, Route } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, CanLoad, Route, Params } from '@angular/router';
 import { DEFAULT_PATH } from '@app/app.constants';
+import { AuthServerProvider } from '../service';
 import { Principal } from '../service/auth/principal.service';
 
 @Injectable()
 export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
-    constructor(private router: Router, private principal: Principal) {}
+    constructor(private router: Router, private principal: Principal, private authServerProvider: AuthServerProvider, @Inject(DOCUMENT) readonly document: Document) {}
 
     canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-        return this.canNavigateIsNotAuthenticated();
+        return this.canNavigateIsNotAuthenticated(route.queryParams);
     }
 
     canLoad(route: Route): Promise<boolean> {
@@ -21,10 +23,15 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
         });
     }
 
-    private canNavigateIsNotAuthenticated(): Promise<boolean> {
+    private canNavigateIsNotAuthenticated(params?: Params): Promise<boolean> {
         return this.checkIsAuthenticated().then((authenticated) => {
             if (authenticated) {
-                this.router.navigate([DEFAULT_PATH]);
+                const origin = (params && params["origin"]) ? params["origin"].replace(/^http:\/\//i, 'https://') : undefined;
+                if (origin) {
+                    this.document.defaultView.open(origin + "?token=" + encodeURIComponent(this.authServerProvider.getToken()), "_self");
+                } else {
+                    this.router.navigate([DEFAULT_PATH]);
+                }
                 return false;
             }
             return true;
