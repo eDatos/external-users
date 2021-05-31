@@ -11,4 +11,5 @@
     <include file="config/liquibase/changelog/20210412084011_added_entity_DataProtectionPolicy.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210428114744_added_entity_Favorite.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210513083239_added_entity_Issues.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210526142016_added_entity_DisabledToken.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
