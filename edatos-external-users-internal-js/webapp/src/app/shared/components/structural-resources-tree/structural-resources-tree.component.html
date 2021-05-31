@@ -1,3 +1,5 @@
+<div #modalWrapper></div>
+
 <p *ngIf="mode === 'edit'" class="text-secondary">
     <i class="fa fa-info-circle" aria-hidden="true"></i>
     {{'structuralResourcesTree.helpMessage' | translate}}.
@@ -67,7 +69,7 @@
             [resizable]="false"
             [style]="{width: '50vw'}"
             [contentStyle]="{padding: '1.5em 2em'}"
-            appendTo="body"
+            [appendTo]="modalWrapper"
             (visibleChange)="disableNodeEdit(node)"
         >
             <app-multi-language-input
@@ -97,7 +99,7 @@
             [resizable]="false"
             [style]="{width: '80vw'}"
             [contentStyle]="{padding: '0', 'overflow-y': 'auto'}"
-            appendTo="body"
+            [appendTo]="modalWrapper"
             (visibleChange)="disableNodeEdit(node)"
         >
             <app-external-categories-table
