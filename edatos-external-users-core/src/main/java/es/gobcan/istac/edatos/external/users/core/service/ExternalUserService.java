@@ -23,4 +23,6 @@ public interface ExternalUserService {
 
     ExternalUserEntity getUsuarioWithAuthorities();
     void updateExternalUserAccountPassword(ExternalUserEntity user, String oldPassword, String password);
+
+    void logout(String token);
 }

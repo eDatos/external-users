@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.time.Instant;
+import java.util.Base64;
 import java.util.HashSet;
 
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
@@ -8,15 +9,18 @@ import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.json.JSONObject;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import es.gobcan.istac.edatos.external.users.core.domain.DisabledTokenEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
+import es.gobcan.istac.edatos.external.users.core.repository.DisabledTokenRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
@@ -29,11 +33,13 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     private final ExternalUserRepository externalUserRepository;
     private final FilterRepository filterRepository;
     private final QueryUtil queryUtil;
+    private final DisabledTokenRepository disabledTokenRepository;
 
-    public ExternalUserServiceImpl(ExternalUserRepository externalUserRepository, FilterRepository filterRepository, QueryUtil queryUtil) {
+    public ExternalUserServiceImpl(ExternalUserRepository externalUserRepository, FilterRepository filterRepository, QueryUtil queryUtil, DisabledTokenRepository disabledTokenRepository) {
         this.externalUserRepository = externalUserRepository;
         this.filterRepository = filterRepository;
         this.queryUtil = queryUtil;
+        this.disabledTokenRepository = disabledTokenRepository;
     }
 
     @Autowired
@@ -43,6 +49,27 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     public ExternalUserEntity create(ExternalUserEntity user) {
         externalUserValidator.checkEmailEnUso(user);
         return externalUserRepository.saveAndFlush(user);
+    }
+    
+    @Override
+    public void logout(String token) {
+        if(StringUtils.isNotBlank(token)) {
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7, token.length());
+            }
+            String[] chunks = token.split("\\.");
+            Base64.Decoder decoder = Base64.getDecoder();
+
+            String payload = new String(decoder.decode(chunks[1]));
+            
+            JSONObject obj = new JSONObject(payload);
+            
+            Instant expirationDate = Instant.ofEpochSecond(obj.getLong("exp"));
+            if(Instant.now().isBefore(expirationDate)) {
+                DisabledTokenEntity disabledToken = new DisabledTokenEntity(token, expirationDate);
+                disabledTokenRepository.save(disabledToken);
+            }
+        }
     }
 
     @Override
