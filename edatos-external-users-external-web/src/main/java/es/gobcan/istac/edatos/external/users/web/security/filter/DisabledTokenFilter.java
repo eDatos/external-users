@@ -36,9 +36,8 @@ public class DisabledTokenFilter implements Filter {
         String token = httpRequest.getHeader("Authorization");
         token = (token != null && token.startsWith("Bearer ")) ? token.substring(7, token.length()) : token;
         
-        boolean thereIsAToken = StringUtils.hasText(token);
-        boolean theTokenIsDisabled = disabledTokenRepository.exists(token);
-        if(thereIsAToken && theTokenIsDisabled) {
+        boolean thereIsATokenAndItIsDisabled = StringUtils.hasText(token) && disabledTokenRepository.exists(token);
+        if(thereIsATokenAndItIsDisabled) {
             HttpServletResponse httpResponse = (HttpServletResponse) response;
             httpResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         } else {
