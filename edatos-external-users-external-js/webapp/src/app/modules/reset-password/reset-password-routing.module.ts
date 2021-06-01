@@ -13,7 +13,7 @@ export const RESET_PASSWORD_ROUTES: Routes = [
         },
     },
     {
-        path: 'change-password',
+        path: 'reset-password',
         component: ResetPasswordFinishComponent,
         data: {
             authorities: [],
