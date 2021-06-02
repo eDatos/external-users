@@ -2,6 +2,7 @@ package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,6 +114,22 @@ public class FilterResource extends AbstractResource {
         FilterDto newDto = filterMapper.toDto(entity);
 
         auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getExternalUser().getId().toString());
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
+    }
+    
+    @PutMapping("/last-access/{permalink}")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canUpdateFilters(authentication)")
+    public ResponseEntity<FilterDto> updateFilterLastAccess(@PathVariable String permalink) {
+        FilterEntity filterEntity = filterService.findByPermalinkAndExternalUser(permalink);
+        if (filterEntity == null) {
+            throw new EDatosException(CommonServiceExceptionType.PARAMETER_INCORRECT, "permalink");
+        }
+        
+        filterEntity.setLastAccessDate(Instant.now());
+        filterEntity = filterService.update(filterEntity);
+        FilterDto newDto = filterMapper.toDto(filterEntity);
+        
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 
