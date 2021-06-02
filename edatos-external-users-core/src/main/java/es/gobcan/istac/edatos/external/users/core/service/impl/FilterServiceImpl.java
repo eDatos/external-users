@@ -79,6 +79,12 @@ public class FilterServiceImpl implements FilterService {
         criteria.add(Restrictions.eq("externalUser", externalUser));
         return filterRepository.findAll(criteria, pageable);
     }
+    
+    @Override
+    public FilterEntity findByPermalinkAndExternalUser(String permalink) {
+        ExternalUserEntity externalUser = externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).orElse(null);
+        return filterRepository.findOneByPermalinkAndExternalUser(permalink, externalUser);
+    }
 
     @Override
     @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "operationFilters")

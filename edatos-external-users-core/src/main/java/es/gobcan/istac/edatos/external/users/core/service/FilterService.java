@@ -31,4 +31,6 @@ public interface FilterService {
     Page<FilterEntity> findByExternalUser(String query, Pageable pageable);
 
     Map<String, Long> getOperationFilters();
+
+    FilterEntity findByPermalinkAndExternalUser(String permalink);
 }
