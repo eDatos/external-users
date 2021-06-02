@@ -81,7 +81,7 @@
                                     id="notes"
                                     name="notes"
                                     [(ngModel)]="filter.notes"
-                                    [maxlength]="255"
+                                    [maxlength]="4000"
                                 ></textarea>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <span *ngFor="let m of messages">{{m}}</span>
