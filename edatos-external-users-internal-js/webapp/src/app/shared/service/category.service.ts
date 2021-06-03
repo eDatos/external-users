@@ -1,9 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { convert, ResponseWrapper } from '@app/core/utils/response-utils';
-import { Category, ExternalCategory } from '@app/shared/model';
+import { Category, ExternalCategory, ExternalOperation } from '@app/shared/model';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
+import { createRequestOption } from 'arte-ng/utils';
 
 @Injectable({
     providedIn: 'root',
@@ -17,8 +18,11 @@ export class CategoryService {
         return this.http.get<Category>(`${this.resourceUrl}/${id}`).pipe(map((category) => convert(Category, category)));
     }
 
-    public findAll(): Observable<Category[]> {
-        return this.http.get<Category[]>(`${this.resourceUrl}`).pipe(map((category) => convert(Category, category)));
+    public findAll(options?: {}): Observable<ResponseWrapper<Category[]>> {
+        const params = createRequestOption(options);
+        return this.http
+            .get<Category[]>(`${this.resourceUrl}`, { ...params, observe: 'response' })
+            .pipe(map((category) => convert(Category, category)));
     }
 
     public getTree(): Observable<Category[]> {

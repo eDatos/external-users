@@ -1,32 +1,33 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Language } from '@app/core/model';
-import { StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree/structural-resources-tree.component';
-import { TranslateService } from '@ngx-translate/core';
+import { FavoriteResource, StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree/structural-resources-tree.component';
+import { CategoryService } from '@app/shared/service';
 import { ArteEventManager } from 'arte-ng/services';
-import { Subject, Subscription } from 'rxjs';
+import * as _ from 'lodash';
+import { of, Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ExternalUserFilter } from './external-user-filter';
 
 @Component({
     selector: 'app-external-user-search',
     templateUrl: 'external-user-search.component.html',
+    styleUrls: ['external-user-search.component.scss'],
 })
 export class ExternalUserSearchComponent implements OnInit, OnDestroy {
     @Input()
     public filters: ExternalUserFilter;
+
     public subscription: Subscription;
     public languageEnum = Language;
-    public selectedCategoryResources: any[];
+    public selectedResources: FavoriteResource[] = [];
+    public isSelectingResource = false;
 
     @ViewChild(StructuralResourcesTreeComponent)
     public tree: StructuralResourcesTreeComponent;
 
     private filterChangesSubject: Subject<any> = new Subject<any>();
-    private selectingCategory = false;
 
-    constructor(private eventManager: ArteEventManager, private translateService: TranslateService) {
-        this.selectedCategoryResources = [];
-    }
+    constructor(private eventManager: ArteEventManager, public categoryService: CategoryService, private changeDetectorRef: ChangeDetectorRef) {}
 
     public ngOnInit() {
         this.subscription = this.filterChangesSubject.pipe(debounceTime(300)).subscribe(() =>
@@ -35,10 +36,38 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
                 content: this.filters,
             })
         );
+        this.categoryService.findAll({ size: 100000000 }).subscribe((categories) => {
+            this.selectedResources = [
+                ...categories.body
+                    .filter((category) => {
+                        return (
+                            this.filters.categories.includes(category.id.toString()) ||
+                            category.externalOperations.some((externalOp) => {
+                                return this.filters.externalOperations.includes(externalOp.id.toString());
+                            })
+                        );
+                    })
+                    .map((category) => {
+                        if (this.filters.categories.includes(category.id.toString())) {
+                            return category;
+                        } else {
+                            return category.externalOperations
+                                .filter((externalOp) => {
+                                    return this.filters.externalOperations.indexOf(externalOp.id.toString()) !== -1;
+                                })
+                                .shift()!;
+                        }
+                    }),
+            ];
+        });
     }
 
     public ngOnDestroy() {
         this.eventManager.destroy(this.subscription);
+    }
+
+    public trackSelectedResource(index: number, item: FavoriteResource) {
+        return `${item.id}${item.favoriteType}`;
     }
 
     public filter(): void {
@@ -52,39 +81,50 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
     }
 
     public openCategoryModal() {
-        if (!this.selectingCategory) {
-            this.selectingCategory = true;
-        }
-        if (this.selectedCategoryResources?.length > 0) {
-            this.tree.selectedResources = this.selectedCategoryResources;
-        }
+        this.isSelectingResource = true;
     }
 
     public closeCategoryModal() {
-        this.selectingCategory = false;
-    }
-
-    public isSelectingCategory(): boolean {
-        return this.selectingCategory;
+        this.isSelectingResource = false;
     }
 
     public selectCategories() {
-        const categories: string[] = [];
-        this.selectedCategoryResources = this.tree.selectedResources;
-        this.tree.selectedResources.forEach((category) => categories.push(category.data.id));
-        this.filters.categories = categories;
+        const categoriesIds: string[] = [];
+        const externalOperationsIds: string[] = [];
+        for (const resource of this.tree.selectedResources) {
+            if (resource.data.favoriteType === 'category') {
+                categoriesIds.push(resource.data.id.toString());
+            } else {
+                externalOperationsIds.push(resource.data.id.toString());
+            }
+        }
+        this.filters.categories = categoriesIds;
+        this.filters.externalOperations = externalOperationsIds;
+        this.updateSelectedResources();
         this.closeCategoryModal();
         this.filter();
     }
 
     public resetCategories() {
         this.filters.categories = [];
-        this.selectedCategoryResources = [];
+        this.filters.externalOperations = [];
+        this.selectedResources = [];
         this.filter();
     }
 
-    public categoriesSelectedInfo(): string {
-        const info: string = this.translateService.instant('externalUser.filters.placeholders.categoriesSelected');
-        return info.replace('#', this.filters.categories != null ? this.filters.categories.length.toString() : '0');
+    public updateSelectedResources() {
+        this.selectedResources = this.tree.selectedResources.map((node) => node.data);
+    }
+
+    public deleteResource(resource: FavoriteResource) {
+        _.pull(this.selectedResources, resource);
+        let filter;
+        if (resource.favoriteType === 'category') {
+            filter = this.filters.categories;
+        } else {
+            filter = this.filters.externalOperations;
+        }
+        _.pull(filter, resource.id.toString());
+        of(debounceTime(300)).subscribe(() => this.filter());
     }
 }

@@ -157,7 +157,7 @@ export class ExternalUserFormComponent implements OnInit, OnDestroy {
     private updateFavorites() {
         this.favoriteService.findByUserId(this.userId).subscribe((favorites) => {
             this.favorites = favorites;
-            this.favoriteTree.updateSelection();
+            this.favoriteTree?.updateSelection();
         });
     }
 
