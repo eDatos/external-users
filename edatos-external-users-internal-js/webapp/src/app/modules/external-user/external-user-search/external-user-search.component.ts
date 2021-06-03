@@ -36,29 +36,11 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
                 content: this.filters,
             })
         );
-        this.categoryService.findAll({ size: 100000000 }).subscribe((categories) => {
-            this.selectedResources = [
-                ...categories.body
-                    .filter((category) => {
-                        return (
-                            this.filters.categories.includes(category.id.toString()) ||
-                            category.externalOperations.some((externalOp) => {
-                                return this.filters.externalOperations.includes(externalOp.id.toString());
-                            })
-                        );
-                    })
-                    .map((category) => {
-                        if (this.filters.categories.includes(category.id.toString())) {
-                            return category;
-                        } else {
-                            return category.externalOperations
-                                .filter((externalOp) => {
-                                    return this.filters.externalOperations.indexOf(externalOp.id.toString()) !== -1;
-                                })
-                                .shift()!;
-                        }
-                    }),
-            ];
+        this.categoryService.findAll({ size: 100000000 }).subscribe((response) => {
+            this.selectedResources = response.body.filter((category) => this.filters.categories.includes(category.id.toString()));
+            for (const category of response.body) {
+                this.selectedResources.push(...category.externalOperations.filter((externalOp) => this.filters.externalOperations.includes(externalOp.id.toString())));
+            }
         });
     }
 
@@ -117,13 +99,8 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
     }
 
     public deleteResource(resource: FavoriteResource) {
+        const filter = resource.favoriteType === 'category' ? this.filters.categories : this.filters.externalOperations;
         _.pull(this.selectedResources, resource);
-        let filter;
-        if (resource.favoriteType === 'category') {
-            filter = this.filters.categories;
-        } else {
-            filter = this.filters.externalOperations;
-        }
         _.pull(filter, resource.id.toString());
         of(debounceTime(300)).subscribe(() => this.filter());
     }
