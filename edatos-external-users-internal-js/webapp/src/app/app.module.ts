@@ -1,34 +1,35 @@
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { LanguageService } from '@app/shared/service';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ArteTableService } from 'arte-ng';
+import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
+import { CookieService } from 'ngx-cookie';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
-import { ConfigModule } from './config/config.module';
-import { ConfigService } from './config';
-import { SharedModule } from './shared';
-import { TranslateModule, TranslateLoader, TranslateService, MissingTranslationHandler } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthServerProvider } from './core/service/auth';
-import { AuthInterceptor, AuthExpiredInterceptor, ErrorHandlerInterceptor, ClassToPlainInterceptor } from './core/interceptor';
-import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { AppRoutingModule } from './app-routing.module';
-import { NavbarComponent } from './layouts/navbar';
-import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ToastModule } from 'primeng/toast';
 import { environment } from '../environments/environment';
-import { CookieService } from 'ngx-cookie';
-import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
-import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
-import { EdatosNavbarComponent } from './layouts/edatos-navbar/edatos-navbar.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AVAILABLE_LANGUAGES, DEFAULT_LANG, LANG_KEY } from './app.constants';
+import { ConfigService } from './config';
+import { ConfigModule } from './config/config.module';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
+import { CoreModule } from './core/core.module';
+import { AuthExpiredInterceptor, AuthInterceptor, ClassToPlainInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
+import { AuthServerProvider } from './core/service/auth';
+import { EdatosNavbarComponent } from './layouts/edatos-navbar/edatos-navbar.component';
+import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
+import { NavbarComponent } from './layouts/navbar';
+import { SharedModule } from './shared';
 
 export function init(configService: ConfigService, authServerProvider: AuthServerProvider) {
     return () => {
@@ -90,6 +91,12 @@ export function initTranslations(translateService: TranslateService, cookieServi
             provide: APP_INITIALIZER,
             useFactory: initTranslations,
             deps: [TranslateService, CookieService],
+            multi: true,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (languageService: LanguageService) => () => languageService.init(),
+            deps: [LanguageService],
             multi: true,
         },
         {

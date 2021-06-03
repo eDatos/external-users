@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Language } from '@app/core/model';
 import { FavoriteResource, StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree/structural-resources-tree.component';
 import { CategoryService } from '@app/shared/service';
@@ -27,7 +27,7 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
 
     private filterChangesSubject: Subject<any> = new Subject<any>();
 
-    constructor(private eventManager: ArteEventManager, public categoryService: CategoryService, private changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private eventManager: ArteEventManager, public categoryService: CategoryService) {}
 
     public ngOnInit() {
         this.subscription = this.filterChangesSubject.pipe(debounceTime(300)).subscribe(() =>

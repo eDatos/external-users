@@ -31,7 +31,7 @@
                     <div class="selected-resources">
                         <span *ngFor="let resource of selectedResources; trackBy: trackSelectedResource" class="badge badge-primary d-flex align-items-center">
                             <i class="pi pi-times" aria-hidden="true" (click)="deleteResource(resource)"></i>
-                            {{resource.name.getLocalisedLabel('es')}}
+                            {{resource.name.val}}
                         </span>
                     </div>
                 </div>
