@@ -110,7 +110,7 @@ public class ExternalAccountResource extends AbstractResource {
 
     @DeleteMapping("/account/{id}")
     @Timed
-    @PreAuthorize("@secCheckerExternal.canModifyUserStatus(authentication)")
+    @PreAuthorize("@secCheckerExternal.canDeleteUser(authentication)")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
             ExternalUserEntity user = externalUserRepository.findOne(id);
@@ -131,9 +131,9 @@ public class ExternalAccountResource extends AbstractResource {
         externalUserService.updateExternalUserAccountPassword(user, passwordDto.getCurrentPassword(), passwordDto.getNewPassword());
 
         mailService.sendExternalUserEmailTemplate(user, MailConstants.MAIL_CHANGE_PASSWORD_EXT_USER);
-        Optional<ExternalUserAccountBaseDto> updatedUserDto = Optional.ofNullable(externalUserMapper.toBaseDto(user));
+        ExternalUserAccountBaseDto updatedUserDto = externalUserMapper.toBaseDto(user);
 
-        auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, updatedUserDto.get().getEmail());
+        auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, updatedUserDto.getEmail());
         return ResponseEntity.ok().build();
     }
 }

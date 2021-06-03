@@ -219,8 +219,8 @@
             "recuperar": "Recover",
             "restore": "Restore",
             "save": "Save",
-            "view": "Watch",
-            "select": "Select"
+            "select": "Select",
+            "view": "Watch"
         },
         "audits": {
             "createdBy": "Created By",
@@ -348,6 +348,7 @@
         "usuario-existe": "The username entered is already in use"
     },
     "externalCategoriesTable": {
+        "alreadySelectedCategory": "You cannot select this category because a node already exists that references it.",
         "columns": {
             "name": "Name",
             "nestedCode": "Nested code",
@@ -355,7 +356,8 @@
             "schemaVersion": "Schema version",
             "urn": "URN"
         },
-        "noResourceFound": "No external resource found"
+        "noResourceFound": "No external resource found",
+        "title": "Selected topics"
     },
     "externalUser": {
         "activado": "Activated",
@@ -373,15 +375,15 @@
         "email": "e-mail",
         "enableEmailNotifications": "Enable email notifications for this user",
         "filters": {
-            "placeholders": {
-                "fullname": "Enter name or surname",
-                "language": "Enter user languages",
-                "categoriesSelected": "# categories selected"
-            },
             "labels": {
+                "categories": "Categories",
                 "fullname": "Name or surname",
-                "language": "Language",
-                "categories": "Categories"
+                "language": "Language"
+            },
+            "placeholders": {
+                "categoriesSelected": "# categories selected",
+                "fullname": "Enter name or surname",
+                "language": "Enter user languages"
             },
             "rolEnum": {
                 "label": "Role"
@@ -502,8 +504,8 @@
             "lastAccessDate": "Last Access Date",
             "name": "First Name",
             "notes": "Notes",
-            "permalink": "URL",
-            "owner": "Owner"
+            "owner": "Owner",
+            "permalink": "URL"
         },
         "form": {
             "cancel": "Cancel",
@@ -520,13 +522,13 @@
         },
         "name": "Filter",
         "search": {
+            "filterExternalUserLabel": "External user name",
+            "filterNameLabel": "Filter name",
             "includeFromDeactivatedUsers": "Include disabled user filters",
             "name": "Search filters",
             "placeholder": "Enter user name or email",
             "placeholderForFilterNameSearch": "",
-            "placeholderForUserSearch": "",
-            "filterNameLabel": "Filter name",
-            "filterExternalUserLabel": "External user name"
+            "placeholderForUserSearch": ""
         }
     },
     "global": {
@@ -555,15 +557,15 @@
                 "audits": "Audit",
                 "categoryMasterTree": "Master category tree",
                 "configuration": "Configuration",
+                "consultIssues": "Consult issues",
                 "dataProtectionPolicy": "Data protection policy",
                 "health": "Health",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
                 "main": "Administration",
                 "metrics": "Metrics",
-                "userManagement": "User management",
                 "treeTopicsAdministration": "Manage topics tree",
-                "consultIssues": "Consult issues"
+                "userManagement": "User management"
             },
             "administracion": {
                 "main": "Administration"
@@ -737,6 +739,7 @@
         "editionModal": "Multilanguage edition of the resource name",
         "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
         "noRecordsFound": "No topic or operation found",
+        "numberOfFilters": "Custom queries: {{amount}}",
         "remapModal": "Select topics",
         "subscribedUsers": "Subscribed users: {{amount}}"
     },

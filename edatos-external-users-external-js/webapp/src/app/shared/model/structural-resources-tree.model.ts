@@ -4,7 +4,7 @@ import { InternationalString } from './international-string.model';
 export class StructuralResourcesTree {
     public id: number | null = null;
     public code: string | null = null;
-    public type: 'category' | 'operation';
+    public type: 'category' | 'externalOperation';
 
     @Type(() => InternationalString)
     public name: InternationalString;

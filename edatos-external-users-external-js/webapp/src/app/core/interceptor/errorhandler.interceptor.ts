@@ -2,13 +2,19 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
-import { ArteAlertService } from 'arte-ng/services';
+import { EUsuariosAlertService } from '../service';
+import { Router } from '@angular/router';
+
+const HTTP_ERROR_REDIRECT = {
+    403: ['accessdenied'],
+    404: ['notfound'],
+};
 
 @Injectable({
     providedIn: 'root',
 })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-    constructor(private alertService: ArteAlertService) {}
+    constructor(private alertService: EUsuariosAlertService, private router: Router) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next

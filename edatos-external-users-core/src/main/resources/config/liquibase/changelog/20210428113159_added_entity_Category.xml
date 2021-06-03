@@ -25,21 +25,24 @@
             <column name="parent_fk" type="BIGINT"/>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1619605919000-3">
-        <createTable tableName="tb_categories_external_items">
+    <changeSet author="Francisco Cruz (generated)" id="1621592860040-10">
+        <createTable tableName="tb_categories_external_categories">
             <column name="category_fk" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="external_item_fk" type="BIGINT">
+            <column name="external_category_fk" type="BIGINT">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1619605919000-5">
-        <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_categories_external_items" constraintName="FK350peo522parsl4jaxuijfitj" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
+    <changeSet author="Francisco Cruz (generated)" id="1621593108636-10">
+        <addUniqueConstraint columnNames="external_category_fk" constraintName="UK_hehomwkghycargmbenptkv0f2" tableName="tb_categories_external_categories"/>
     </changeSet>
-    <changeSet author="arte" id="1619605919000-6">
-        <addForeignKeyConstraint baseColumnNames="external_item_fk" baseTableName="tb_categories_external_items" constraintName="FKm9q8yt8gnik3u5ysict1l49cu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
+    <changeSet author="Francisco Cruz (generated)" id="1621592860040-16">
+        <addForeignKeyConstraint baseColumnNames="category_fk" baseTableName="tb_categories_external_categories" constraintName="FKm5i1urt8b58bkmmx35rwtrgsy" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="Francisco Cruz (generated)" id="1621592860040-15">
+        <addForeignKeyConstraint baseColumnNames="external_category_fk" baseTableName="tb_categories_external_categories" constraintName="FKi08vg224h1xsbehxeo4ptbl34" deferrable="false" initiallyDeferred="false" referencedColumnNames="external_item_fk" referencedTableName="tb_external_categories" validate="true"/>
     </changeSet>
     <changeSet author="arte" id="1619605919000-7">
         <addForeignKeyConstraint baseColumnNames="parent_fk" baseTableName="tb_categories" constraintName="FKhdw7gdcy7c4ejvflekjwtmvci" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_categories" validate="true"/>

@@ -9,7 +9,7 @@
 </button>
 
 <p-tree
-    *ngIf="mode === 'view' || mode === 'select'"
+    *ngIf="mode === 'view'"
     (onNodeSelect)="onSelect($event.node)"
     (onNodeUnselect)="onUnselect($event.node)"
     [(selection)]="selectedResources"
@@ -20,9 +20,28 @@
 >
     <ng-template let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
-        <span class="subscribed-users">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
+        <span *ngIf="node.data.favoriteType === 'externalOperation'; else onlySubscribedUsers" class="subscribed-users">
+            ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}, {{'structuralResourcesTree.numberOfFilters' | translate:{amount:
+            node.data.numberOfFilters || 0} }})
+        </span>
+        <ng-template #onlySubscribedUsers>
+            <span class="subscribed-users"> ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}) </span>
+        </ng-template>
     </ng-template>
 </p-tree>
+
+<p-tree
+    *ngIf="['select', 'simpleSelect'].includes(mode)"
+    (onNodeSelect)="onSelect($event.node)"
+    (onNodeUnselect)="onUnselect($event.node)"
+    [(selection)]="selectedResources"
+    [loading]="!tree || loading"
+    [selectionMode]="selectionMode"
+    [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
+    [value]="tree"
+    [propagateSelectionUp]="propagateSelection"
+    [propagateSelectionDown]="propagateSelection"
+></p-tree>
 
 <p-tree
     (onNodeDrop)="onNodeDrop($event)"
@@ -37,7 +56,7 @@
     <ng-template let-node pTemplate="default">
         <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
         <span class="subscribed-users mr-2">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
-        <span class="badge badge-secondary mr-2">{{node.data.resources.length}}</span>
+        <span class="badge badge-secondary mr-2">{{node.data.externalCategories.length}}</span>
         <p-dialog
             *ngIf="node.editMode === 'name'"
             [visible]="true"
@@ -60,11 +79,11 @@
             <p-footer>
                 <button type="button" class="btn btn-secondary" (click)="disableNodeEdit(node)">
                     <i class="fa fa-times" aria-hidden="true"></i>
-                    <span>Cancelar</span>
+                    <span>{{ 'entity.action.cancel' | translate }}</span>
                 </button>
                 <button type="button" class="btn btn-primary" (click)="saveNodeName(node, languageInputComponent.value)">
                     <i class="fa fa-save" aria-hidden="true"></i>
-                    <span>Guardar</span>
+                    <span>{{ 'entity.action.save' | translate }}</span>
                 </button>
             </p-footer>
         </p-dialog>
@@ -77,19 +96,23 @@
             [header]="'structuralResourcesTree.remapModal' | translate"
             [resizable]="false"
             [style]="{width: '80vw'}"
-            [contentStyle]="{padding: '1.5em 2em', overflow: 'visible'}"
+            [contentStyle]="{padding: '0', 'overflow-y': 'auto'}"
             appendTo="body"
             (visibleChange)="disableNodeEdit(node)"
         >
-            <app-external-categories-table #table [externalCategories]="externalCategories" [selectedExternalCategories]="node.data.resources"></app-external-categories-table>
+            <app-external-categories-table
+                #table
+                [selectedExternalCategories]="node.data.externalCategories"
+                [disabledExternalCategories]="getDisabledExternalCategories(node.data)"
+            ></app-external-categories-table>
             <p-footer>
                 <button (click)="disableNodeEdit(node)" class="btn btn-secondary" type="button">
                     <i class="fa fa-times" aria-hidden="true"></i>
-                    <span>Cancelar</span>
+                    <span>{{ 'entity.action.cancel' | translate }}</span>
                 </button>
                 <button type="button" class="btn btn-primary" (click)="saveRemap(node, table.getSelectedResources())">
                     <i class="fa fa-save" aria-hidden="true"></i>
-                    <span>Guardar</span>
+                    <span>{{ 'entity.action.save' | translate }}</span>
                 </button>
             </p-footer>
         </p-dialog>

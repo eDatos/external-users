@@ -15,6 +15,7 @@ public interface FavoriteService {
 
     FavoriteEntity create(FavoriteEntity favorite);
     FavoriteEntity update(FavoriteEntity favorite);
+    List<FavoriteEntity> updateFavorites(List<FavoriteEntity> favorite, ExternalUserEntity externalUser);
     FavoriteEntity find(Long id);
     List<FavoriteEntity> findAll();
     List<FavoriteEntity> findAllByUser(ExternalUserEntity user);
@@ -22,6 +23,7 @@ public interface FavoriteService {
     List<FavoriteEntity> find(String query, Sort sort);
     void delete(FavoriteEntity favorite);
     Map<Long, Long> getCategorySubscribers();
+    Map<Long, Long> getOperationSubscribers();
     List<FavoriteEntity> findByExternalUser();
     List<FavoriteEntity> findByCategory(CategoryEntity category);
 }

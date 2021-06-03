@@ -7,9 +7,6 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="arte" id="1615884741000-2">
-        <addUniqueConstraint columnNames="nested_code" constraintName="UC_TB_EXTERNAL_CATEGORIESNESTED_CODE_COL" tableName="tb_external_categories"/>
-    </changeSet>
     <changeSet author="arte" id="1615884741000-4">
         <addForeignKeyConstraint baseColumnNames="external_item_fk" baseTableName="tb_external_categories" constraintName="FK7drrsp1eexh1dobjn53ei382g" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_items" validate="true"/>
     </changeSet>

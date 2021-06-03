@@ -38,7 +38,7 @@ export class FilterTableComponent implements OnInit {
             },
         },
     ];
-    public filterAmount: number;
+    public filterAmount: number | null;
     public itemsPerPage = ITEMS_PER_PAGE;
     public filters: Filter[];
 
@@ -57,8 +57,8 @@ export class FilterTableComponent implements OnInit {
     }
 
     public loadData(e: LazyLoadEvent) {
-        this.page = e.first / e.rows + 1;
-        this.itemsPerPage = e.rows;
+        this.page = e.first! / e.rows! + 1;
+        this.itemsPerPage = e.rows!;
         if (e.sortField != null) {
             this.sortPredicate = this.filterSearch.fromCamelCaseToSnakeCase(e.sortField);
             this.reverse = e.sortOrder === 1;

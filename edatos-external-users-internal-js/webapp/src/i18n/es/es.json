@@ -219,8 +219,8 @@
             "recuperar": "Recuperar",
             "restore": "Restaurar",
             "save": "Guardar",
-            "view": "Ver",
-            "select": "Seleccionar"
+            "select": "Seleccionar",
+            "view": "Ver"
         },
         "audits": {
             "createdBy": "Creado por",
@@ -293,7 +293,7 @@
             "CA": "Catalán",
             "DE": "Alemán",
             "EN": "Inglés",
-            "ES": "Español",
+            "ES": "Castellano",
             "FR": "Francés",
             "PT": "Portugués",
             "RU": "Ruso",
@@ -348,6 +348,7 @@
         "usuario-existe": "El nombre de usuario introducido ya está siendo usado"
     },
     "externalCategoriesTable": {
+        "alreadySelectedCategory": "No se puede seleccionar esta categoría porque ya existe un nodo que la referencia.",
         "columns": {
             "name": "Nombre",
             "nestedCode": "Código anidado",
@@ -355,7 +356,8 @@
             "schemaVersion": "Versión del esquema",
             "urn": "URN"
         },
-        "noResourceFound": "No se ha encontrado ningún recurso externo"
+        "noResourceFound": "No se ha encontrado ningún recurso externo",
+        "title": "Temas seleccionados"
     },
     "externalUser": {
         "activado": "Activado",
@@ -373,15 +375,15 @@
         "email": "Email",
         "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario",
         "filters": {
-            "placeholders": {
-                "fullname": "Introduzca nombre o apellidos",
-                "language": "Introduzca idiomas del usuario",
-                "categoriesSelected": "# temas seleccionados"
-            },
             "labels": {
+                "categories": "Temas",
                 "fullname": "Nombre o apellidos",
-                "language": "Idioma",
-                "categories": "Temas"
+                "language": "Idioma"
+            },
+            "placeholders": {
+                "categoriesSelected": "# temas seleccionados",
+                "fullname": "Introduzca nombre o apellidos",
+                "language": "Introduzca idiomas del usuario"
             },
             "rolEnum": {
                 "label": "Rol"
@@ -408,7 +410,7 @@
         "language": "Idioma",
         "languageEnum": {
             "CATALAN": "Catalán",
-            "SPANISH": "Español"
+            "SPANISH": "Castellano"
         },
         "login": "Nombre de usuario",
         "name": "Nombre",
@@ -502,8 +504,8 @@
             "lastAccessDate": "Fecha de último acceso",
             "name": "Nombre",
             "notes": "Notas",
-            "permalink": "URL",
-            "owner": "Propietario"
+            "owner": "Propietario",
+            "permalink": "URL"
         },
         "form": {
             "cancel": "Cancelar",
@@ -520,13 +522,13 @@
         },
         "name": "Consulta personalizada",
         "search": {
+            "filterExternalUserLabel": "Nombre de usuario externo",
+            "filterNameLabel": "Nombre de consulta personalizada",
             "includeFromDeactivatedUsers": "Consultas de usuarios desactivados",
             "name": "Buscar consultas personalizadas",
             "placeholder": "",
             "placeholderForFilterNameSearch": "Buscar consultas por nombre",
-            "placeholderForUserSearch": "Buscar consultas por datos del usuario (nombre, apellidos, email)",
-            "filterNameLabel": "Nombre de consulta personalizada",
-            "filterExternalUserLabel": "Nombre de usuario externo"
+            "placeholderForUserSearch": "Buscar consultas por datos del usuario (nombre, apellidos, email)"
         }
     },
     "global": {
@@ -555,15 +557,15 @@
                 "audits": "Auditoría",
                 "categoryMasterTree": "Árbol maestro de categorías",
                 "configuration": "Configuración",
+                "consultIssues": "Consultar incidencias",
                 "dataProtectionPolicy": "Política de protección de datos",
                 "health": "Salud",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
                 "main": "Administración",
                 "metrics": "Métricas",
-                "userManagement": "Gestión de usuarios",
                 "treeTopicsAdministration": "Administrar árbol de temas",
-                "consultIssues": "Consultar incidencias"
+                "userManagement": "Gestión de usuarios"
             },
             "administracion": {
                 "main": "Administración"
@@ -737,6 +739,7 @@
         "editionModal": "Edición multidioma del nombre del recurso",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
+        "numberOfFilters": "Consultas personalizadas: {{amount}}",
         "remapModal": "Seleccionar temas",
         "subscribedUsers": "Usuarios suscritos: {{amount}}"
     },

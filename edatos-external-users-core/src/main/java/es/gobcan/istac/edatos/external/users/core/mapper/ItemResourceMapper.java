@@ -22,6 +22,5 @@ public abstract class ItemResourceMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "type", ignore = true)
     @Mapping(target = "optLock", ignore = true)
-    @Mapping(target = "categories", ignore = true)
     protected abstract ExternalCategoryEntity toExternalCategoryEntity(ItemResource itemResource);
 }

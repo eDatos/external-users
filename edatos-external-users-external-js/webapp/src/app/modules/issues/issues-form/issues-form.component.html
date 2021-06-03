@@ -72,7 +72,7 @@
                         <div class="form-row">
                             <label class="form-label col-md-4" for="subject">{{ "issues.entity.subject" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
-                                <arte-input id="subject" name="subject" [(ngModel)]="issues.subject" [maxlength]="255" [required]="true" ></arte-input>
+                                <arte-input id="subject" name="subject" [(ngModel)]="issues.subject" [maxlength]="255" [required]="true"></arte-input>
                                 <div class="form-errors-messages" *hasErrors="let messages">
                                     <span *ngFor="let m of messages">{{m}}</span>
                                 </div>

@@ -2,14 +2,12 @@ package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
-import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
-import es.gobcan.istac.edatos.external.users.core.service.validator.LoginValidator;
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -31,7 +29,9 @@ import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
 import es.gobcan.istac.edatos.external.users.core.service.FilterService;
+import es.gobcan.istac.edatos.external.users.core.service.validator.LoginValidator;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterDto;
+import es.gobcan.istac.edatos.external.users.rest.common.dto.FilterWithOperationCodeDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.FilterMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
@@ -88,7 +88,7 @@ public class FilterResource extends AbstractResource {
     @PostMapping
     @Timed
     @PreAuthorize("@secCheckerExternal.canCreateFavorites(authentication)")
-    public ResponseEntity<FilterDto> createFilter(@RequestBody FilterDto dto) throws URISyntaxException {
+    public ResponseEntity<FilterDto> createFilter(@RequestBody FilterWithOperationCodeDto dto) throws URISyntaxException {
         if (dto != null && dto.getId() != null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_UNEXPECTED, "id");
         }
@@ -114,6 +114,22 @@ public class FilterResource extends AbstractResource {
         FilterDto newDto = filterMapper.toDto(entity);
 
         auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getExternalUser().getId().toString());
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
+    }
+    
+    @PutMapping("/last-access/{permalink}")
+    @Timed
+    @PreAuthorize("@secCheckerExternal.canUpdateFilters(authentication)")
+    public ResponseEntity<FilterDto> updateFilterLastAccess(@PathVariable String permalink) {
+        FilterEntity filterEntity = filterService.findByPermalinkAndExternalUser(permalink);
+        if (filterEntity == null) {
+            throw new EDatosException(CommonServiceExceptionType.PARAMETER_INCORRECT, "permalink");
+        }
+        
+        filterEntity.setLastAccessDate(Instant.now());
+        filterEntity = filterService.update(filterEntity);
+        FilterDto newDto = filterMapper.toDto(filterEntity);
+        
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
 

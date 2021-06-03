@@ -9,21 +9,19 @@ import { TranslateService } from '@ngx-translate/core';
     selector: 'app-issues-form',
     templateUrl: './issues-form.component.html',
 })
-
 export class IssuesFormComponent implements OnInit {
     public issues: Issues = new Issues();
     public account: any;
     public isSaving: Boolean = false;
     public workplaceEnum = WorkplaceEnum;
-    
+
     constructor(
         private issuesService: IssuesService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
         private messageService: MessageService,
         private translateService: TranslateService
-    ) { }
-    
+    ) {}
 
     public ngOnInit() {
         this.account = this.activatedRoute.snapshot.data.user;
@@ -39,17 +37,16 @@ export class IssuesFormComponent implements OnInit {
             (response) => this.onSaveSuccess(response),
             () => this.onSaveError()
         );
-        
     }
 
     onSaveSuccess(response) {
         this.isSaving = false;
         this.messageService.add({
-            key: "customAlertKey", 
-            severity:'success', 
-            summary: this.translateService.instant('issues.messages.onSuccessSumary'), 
-            detail: this.translateService.instant('issues.messages.onSuccess'), 
-            life: 5000
+            key: 'customAlertKey',
+            severity: 'success',
+            summary: this.translateService.instant('issues.messages.onSuccessSumary'),
+            detail: this.translateService.instant('issues.messages.onSuccess'),
+            life: 5000,
         });
         this.navigateGoBack();
     }
@@ -57,11 +54,11 @@ export class IssuesFormComponent implements OnInit {
     onSaveError() {
         this.isSaving = false;
         this.messageService.add({
-            key: "customAlertKey", 
-            severity:'error', 
-            summary: this.translateService.instant('issues.messages.onFailSumary'), 
-            detail: this.translateService.instant('issues.messages.onFail'), 
-            life: 5000
+            key: 'customAlertKey',
+            severity: 'error',
+            summary: this.translateService.instant('issues.messages.onFailSumary'),
+            detail: this.translateService.instant('issues.messages.onFail'),
+            life: 5000,
         });
     }
 

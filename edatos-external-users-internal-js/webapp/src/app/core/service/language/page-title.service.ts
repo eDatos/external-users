@@ -6,7 +6,7 @@ import { LANGUAGES } from './language.constants';
 
 @Injectable()
 export class PageTitleService {
-    renderer: Renderer2 = null;
+    renderer: Renderer2 | null = null;
 
     constructor(private translateService: TranslateService, private rootRenderer: RendererFactory2, private titleService: Title, private router: Router) {
         this.renderer = rootRenderer.createRenderer(document.querySelector('html'), null);
@@ -36,7 +36,7 @@ export class PageTitleService {
 
     private init() {
         this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
-            this.renderer.setAttribute(document.querySelector('html'), 'lang', this.translateService.currentLang);
+            this.renderer?.setAttribute(document.querySelector('html'), 'lang', this.translateService.currentLang);
             this.update();
         });
     }

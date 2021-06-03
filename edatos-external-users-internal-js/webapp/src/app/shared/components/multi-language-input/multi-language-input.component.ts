@@ -16,7 +16,9 @@ import * as _ from 'lodash';
     ],
 })
 export class MultiLanguageInputComponent implements ControlValueAccessor {
-    // TODO(EDATOS-3357): Document.
+    /**
+     * List of input fields to show according to the locale.
+     */
     @Input()
     public locales: string[];
 
@@ -37,7 +39,7 @@ export class MultiLanguageInputComponent implements ControlValueAccessor {
     public onTouched: any = () => {};
     public onChange: any = () => {};
 
-    public writeValue(internationalString?: InternationalString): void {
+    public writeValue(internationalString: InternationalString | null): void {
         // We check for null because this bug with Angular ngModel:
         // https://github.com/angular/angular/issues/14988.
         if (internationalString) {

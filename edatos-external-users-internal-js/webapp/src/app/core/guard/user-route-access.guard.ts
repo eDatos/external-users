@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, Data, CanLoad, Route } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, Data, CanLoad, Route } from '@angular/router';
 import { Principal } from '../service/auth/principal.service';
 import { Role } from '../model/rol.model';
 import { LoginService } from '../service/auth/login.service';
@@ -18,7 +18,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
 
     canLoad(route: Route): true | Promise<boolean> {
         const roles = route.data ? route.data.roles : [];
-        return this.checkRoles(roles, route.data);
+        return this.checkRoles(roles, route.data!);
     }
 
     checkLogin(roles: Role[]): Promise<boolean> {

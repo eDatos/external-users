@@ -24,7 +24,9 @@ export class CategoryService {
     }
 
     public getTree(): Observable<Category[]> {
-        return this.http.get<Category[]>(`${this.resourceUrl}/tree`, { params: { sort: 'id' } }).pipe(map((tree) => convert(Category, tree)));
+        return this.http
+            .get<Category[]>(`${this.resourceUrl}/tree`, { params: { sort: 'id' } })
+            .pipe(map((tree) => convert(Category, tree)));
     }
 
     public updateTree(tree: Category[]): Observable<Category[]> {

@@ -1,11 +1,11 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Base64;
 import java.util.HashSet;
+import java.util.Optional;
 
-import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
-import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -20,12 +20,15 @@ import es.gobcan.istac.edatos.external.users.core.domain.DisabledTokenEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.DisabledTokenRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import es.gobcan.istac.edatos.external.users.core.repository.FilterRepository;
 import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.validator.ExternalUserValidator;
 import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
+import es.gobcan.istac.edatos.external.users.core.util.RandomUtil;
 
 @Service
 public class ExternalUserServiceImpl implements ExternalUserService {
@@ -35,15 +38,15 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     private final QueryUtil queryUtil;
     private final DisabledTokenRepository disabledTokenRepository;
 
+    @Autowired
+    private ExternalUserValidator externalUserValidator;
+
     public ExternalUserServiceImpl(ExternalUserRepository externalUserRepository, FilterRepository filterRepository, QueryUtil queryUtil, DisabledTokenRepository disabledTokenRepository) {
         this.externalUserRepository = externalUserRepository;
         this.filterRepository = filterRepository;
         this.queryUtil = queryUtil;
         this.disabledTokenRepository = disabledTokenRepository;
     }
-
-    @Autowired
-    private ExternalUserValidator externalUserValidator;
 
     @Override
     public ExternalUserEntity create(ExternalUserEntity user) {
@@ -151,4 +154,33 @@ public class ExternalUserServiceImpl implements ExternalUserService {
         user.setPassword(passwordEncoder);
         externalUserRepository.saveAndFlush(user);
     }
+
+    @Override
+    public Optional<ExternalUserEntity> recoverExternalUserAccountPassword(String email) {
+        externalUserValidator.ckeckEmailExists(email);
+        return externalUserRepository.findOneByEmailIgnoreCaseAndDeletionDateIsNull(email).map(user -> {
+            user.setResetKey(RandomUtil.generateResetKey());
+            user.setResetDate(ZonedDateTime.now());
+            return externalUserRepository.save(user);
+        });
+    }
+
+    @Override
+    public Optional<ExternalUserEntity> completePasswordReset(String newPassword, String key) {
+        return findOneByResetKey(key).map(user -> {
+            user.setPassword(SecurityUtils.passwordEncoder(newPassword));
+            user.setResetKey(null);
+            user.setResetDate(null);
+            return externalUserRepository.save(user);
+        });
+    }
+
+    @Override
+    public Optional<ExternalUserEntity> findOneByResetKey(String key) {
+        return externalUserRepository.findOneByResetKeyAndDeletionDateIsNull(key).filter(user -> {
+            ZonedDateTime thirtyMinutesAgo = ZonedDateTime.now().minusMinutes(30);
+            return user.getResetDate().isAfter(thirtyMinutesAgo);
+        });
+    }
+
 }

@@ -5,11 +5,11 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class FilterFilter extends BaseEntityFilter implements EntityFilter {
-    public name: string;
-    public user: string;
-    public userId: number;
+    public name: string | null;
+    public user: string | null;
+    public userId: number | null;
     public includeFromDeletedUsers = false;
-    public lastAccessDate: Date;
+    public lastAccessDate: Date | null;
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);

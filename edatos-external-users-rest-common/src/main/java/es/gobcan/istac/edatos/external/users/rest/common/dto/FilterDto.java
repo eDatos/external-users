@@ -17,6 +17,7 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
     private String permalink;
     private Instant lastAccessDate;
     private String notes;
+    private ExternalOperationDto externalOperation;
 
     @Override
     public Long getId() {
@@ -74,5 +75,13 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
 
     public void setExternalUser(ExternalUserDto externalUser) {
         this.externalUser = externalUser;
+    }
+
+    public ExternalOperationDto getExternalOperation() {
+        return externalOperation;
+    }
+
+    public void setExternalOperation(ExternalOperationDto externalOperation) {
+        this.externalOperation = externalOperation;
     }
 }

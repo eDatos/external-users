@@ -5,18 +5,20 @@ import { USER } from '@app/core/service';
 import { UserRouteAccessGuard } from '@app/core/guard';
 import { UserResolver } from '@app/core/resolver';
 
-export const ISSUES_ROUTE: Routes = [{
-    path: '',
-    component: IssuesFormComponent,
-    resolve: {
-        user: UserResolver,
+export const ISSUES_ROUTE: Routes = [
+    {
+        path: '',
+        component: IssuesFormComponent,
+        resolve: {
+            user: UserResolver,
+        },
+        data: {
+            roles: USER,
+            pageTitle: 'issues.home.title',
+        },
+        canActivate: [UserRouteAccessGuard],
     },
-    data: {
-        roles: USER,
-        pageTitle: 'issues.home.title',
-    },
-    canActivate: [UserRouteAccessGuard],
-}];
+];
 
 @NgModule({
     imports: [RouterModule.forChild(ISSUES_ROUTE)],

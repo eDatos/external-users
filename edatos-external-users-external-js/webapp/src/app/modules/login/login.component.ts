@@ -9,7 +9,7 @@ import { addQueryParamToRoute } from '@app/shared/utils/routesUtils';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
     credentials: Credentials;
@@ -54,5 +54,9 @@ export class LoginComponent implements OnInit {
 
     public navigateToDataProtectionPolicy() {
         this.router.navigate(['data-protection-policy']);
+    }
+
+    public navigateToResetPassword() {
+        this.router.navigate(['reset-password']);
     }
 }

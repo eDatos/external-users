@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -82,6 +83,12 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
     @NotNull
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "reset_key")
+    private String resetKey;
+
+    @Column(name = "reset_date")
+    private ZonedDateTime resetDate;
 
     @ElementCollection(targetClass = ExternalUserRole.class)
     @JoinTable(name = "tb_external_users_roles", joinColumns = @JoinColumn(name = "external_user_fk", referencedColumnName = "id"))
@@ -180,6 +187,22 @@ public class ExternalUserEntity extends AbstractVersionedAndAuditingAndLogicalDe
 
     public void setEmailNotificationsEnabled(boolean emailNotificationsEnabled) {
         this.emailNotificationsEnabled = emailNotificationsEnabled;
+    }
+
+    public String getResetKey() {
+        return resetKey;
+    }
+
+    public void setResetKey(String resetKey) {
+        this.resetKey = resetKey;
+    }
+
+    public ZonedDateTime getResetDate() {
+        return resetDate;
+    }
+
+    public void setResetDate(ZonedDateTime resetDate) {
+        this.resetDate = resetDate;
     }
 
     public Set<ExternalUserRole> getRoles() {
