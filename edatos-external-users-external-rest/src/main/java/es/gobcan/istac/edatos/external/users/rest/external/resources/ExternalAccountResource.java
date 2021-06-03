@@ -75,6 +75,13 @@ public class ExternalAccountResource extends AbstractResource {
         return ResponseEntity.created(new URI("/api/account/signup/" + newExternalUserDto.getEmail())).headers(HeaderUtil.createAlert("userManagement.created", newExternalUserDto.getEmail()))
                 .body(newExternalUserDto);
     }
+    
+    @PostMapping("/account/logout")
+    @Timed
+    public ResponseEntity<String> logout(@RequestHeader (name="Authorization") String token) {
+        externalUserService.logout(token);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/account")
     @Timed

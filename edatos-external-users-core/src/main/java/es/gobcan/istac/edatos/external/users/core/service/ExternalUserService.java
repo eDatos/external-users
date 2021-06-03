@@ -26,6 +26,8 @@ public interface ExternalUserService {
     ExternalUserEntity getUsuarioWithAuthorities();
     void updateExternalUserAccountPassword(ExternalUserEntity user, String oldPassword, String password);
 
+    void logout(String token);
+
     Optional<ExternalUserEntity> recoverExternalUserAccountPassword(String email);
     Optional<ExternalUserEntity> completePasswordReset(String newPassword, String key);
     Optional<ExternalUserEntity> findOneByResetKey(String key);

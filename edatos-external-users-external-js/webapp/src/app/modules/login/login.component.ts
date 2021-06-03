@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Credentials } from '@app/core/model';
 import { AccountUserService } from '@app/core/service/user';
-import { Principal } from '@app/core/service';
+import { AuthServerProvider, Principal } from '@app/core/service';
+import { DOCUMENT } from '@angular/common';
+import { addQueryParamToRoute } from '@app/shared/utils/routesUtils';
 
 @Component({
     selector: 'app-login',
@@ -11,17 +13,39 @@ import { Principal } from '@app/core/service';
 })
 export class LoginComponent implements OnInit {
     credentials: Credentials;
+    origin: String;
 
-    constructor(private accountUserService: AccountUserService, private router: Router, private principal: Principal) {
+    constructor(private accountUserService: AccountUserService, private router: Router, private principal: Principal, private route: ActivatedRoute, 
+                private authServerProvider: AuthServerProvider, @Inject(DOCUMENT) readonly document: Document) {
         this.credentials = new Credentials();
+        this.route.queryParams.subscribe(queryParams => {
+            if(queryParams["origin"]) {
+                this.origin = queryParams["origin"].replace(/^http:\/\//i, 'https://');
+            }
+        });
     }
 
     ngOnInit() {}
 
     login() {
         this.accountUserService.login(this.credentials).subscribe((foo: any) => {
-            this.principal.identity().then(() => this.router.navigate(['filter']));
+            this.principal.identity().then(() => {
+                if(this.origin) {
+                    this.navigateToOrigin();
+                } else {
+                    this.navigateToFilter();
+                }
+            });
         });
+    }
+
+    private navigateToFilter() {
+        this.router.navigate(['filter']);
+    }
+
+    private navigateToOrigin() {
+        const originRouteWithTokenParam = addQueryParamToRoute(this.origin.toString(), "token", encodeURIComponent(this.authServerProvider.getToken()));
+        this.document.defaultView.open(originRouteWithTokenParam, "_self");
     }
 
     public navigateToSignup() {
