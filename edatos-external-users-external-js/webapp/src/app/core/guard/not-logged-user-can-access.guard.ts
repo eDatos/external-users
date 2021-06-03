@@ -2,6 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, CanLoad, Route, Params } from '@angular/router';
 import { DEFAULT_PATH } from '@app/app.constants';
+import { addQueryParamToRoute } from '@app/shared/utils/routesUtils';
 import { AuthServerProvider } from '../service';
 import { Principal } from '../service/auth/principal.service';
 
@@ -29,7 +30,8 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
             const origin = (params && params["origin"]) ? params["origin"].replace(/^http:\/\//i, 'https://') : undefined;
             if (authenticated) {
                 if (origin) {
-                    this.document.defaultView.open(origin + "?token=" + encodeURIComponent(this.authServerProvider.getToken()), "_self");
+                    const originRouteWithTokenParam = addQueryParamToRoute(origin, "token", encodeURIComponent(this.authServerProvider.getToken()));
+                    this.document.defaultView.open(originRouteWithTokenParam, "_self");
                 } else {
                     this.router.navigate([DEFAULT_PATH]);
                 }

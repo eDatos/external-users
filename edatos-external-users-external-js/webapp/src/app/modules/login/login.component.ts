@@ -4,6 +4,7 @@ import { Credentials } from '@app/core/model';
 import { AccountUserService } from '@app/core/service/user';
 import { AuthServerProvider, Principal } from '@app/core/service';
 import { DOCUMENT } from '@angular/common';
+import { addQueryParamToRoute } from '@app/shared/utils/routesUtils';
 
 @Component({
     selector: 'app-login',
@@ -43,7 +44,8 @@ export class LoginComponent implements OnInit {
     }
 
     private navigateToOrigin() {
-        this.document.defaultView.open(this.origin + "?token=" + encodeURIComponent(this.authServerProvider.getToken()), "_self");
+        const originRouteWithTokenParam = addQueryParamToRoute(this.origin.toString(), "token", encodeURIComponent(this.authServerProvider.getToken()));
+        this.document.defaultView.open(originRouteWithTokenParam, "_self");
     }
 
     public navigateToSignup() {
