@@ -1,12 +1,16 @@
 package es.gobcan.istac.edatos.external.users.web.security.filter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Optional;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +22,10 @@ import es.gobcan.istac.edatos.external.users.core.repository.DisabledTokenReposi
 
 @Component
 public class DisabledTokenFilter implements Filter {
+    
+    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String JHI_AUTHENTICATIONTOKEN = "authenticationtoken";
+    public static final String AUTHORIZATION_HEADER = "Authorization";
     
     private final DisabledTokenRepository disabledTokenRepository;
 
@@ -32,9 +40,7 @@ public class DisabledTokenFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String token = httpRequest.getHeader("Authorization");
-        token = (token != null && token.startsWith("Bearer ")) ? token.substring(7, token.length()) : token;
+        String token = resolveToken((HttpServletRequest) request);
         
         boolean thereIsATokenAndItIsDisabled = StringUtils.hasText(token) && disabledTokenRepository.exists(token);
         if(thereIsATokenAndItIsDisabled) {
@@ -50,4 +56,20 @@ public class DisabledTokenFilter implements Filter {
 
     }
 
+    private String resolveToken(HttpServletRequest request) {
+        // Header
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(TOKEN_PREFIX)) {
+            return bearerToken.substring(7, bearerToken.length());
+        }
+        // Cookie
+        if (request.getCookies() != null) {
+            Optional<Cookie> tokenCookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals(JHI_AUTHENTICATIONTOKEN)).findFirst();
+            if (tokenCookie.isPresent()) {
+                return tokenCookie.get().getValue();
+            }
+        }
+
+        return null;
+    }
 }
