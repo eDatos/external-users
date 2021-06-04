@@ -1,14 +1,17 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, Data, CanLoad, Route } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, CanLoad, Route, Params } from '@angular/router';
 import { DEFAULT_PATH } from '@app/app.constants';
+import { addQueryParamToRoute } from '@app/shared/utils/routesUtils';
+import { AuthServerProvider } from '../service';
 import { Principal } from '../service/auth/principal.service';
 
 @Injectable()
 export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
-    constructor(private router: Router, private principal: Principal) {}
+    constructor(private router: Router, private principal: Principal, private authServerProvider: AuthServerProvider, @Inject(DOCUMENT) readonly document: Document) {}
 
     canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-        return this.canNavigateIsNotAuthenticated();
+        return this.canNavigateIsNotAuthenticated(route.queryParams);
     }
 
     canLoad(route: Route): Promise<boolean> {
@@ -21,11 +24,20 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
         });
     }
 
-    private canNavigateIsNotAuthenticated(): Promise<boolean> {
+    private canNavigateIsNotAuthenticated(params?: Params): Promise<boolean> {
         return this.checkIsAuthenticated().then((authenticated) => {
+            const nonStop = (params && /^true$/i.test(params["nonStop"]));
+            const origin = (params && params["origin"]) ? params["origin"].replace(/^http:\/\//i, 'https://') : undefined;
             if (authenticated) {
-                this.router.navigate([DEFAULT_PATH]);
+                if (origin) {
+                    const originRouteWithTokenParam = addQueryParamToRoute(origin, "token", encodeURIComponent(this.authServerProvider.getToken()));
+                    this.document.defaultView.open(originRouteWithTokenParam, "_self");
+                } else {
+                    this.router.navigate([DEFAULT_PATH]);
+                }
                 return false;
+            } else if(nonStop && origin) {
+                this.document.defaultView.open(origin, "_self");
             }
             return true;
         });

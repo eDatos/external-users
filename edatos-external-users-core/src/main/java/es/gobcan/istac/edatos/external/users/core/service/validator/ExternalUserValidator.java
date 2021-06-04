@@ -27,6 +27,11 @@ public class ExternalUserValidator extends AbstractValidator<ExternalUserEntity>
                 throw new EDatosException(ServiceExceptionType.EXTERNAL_USER_CREATE);
             }
         }
+    }
 
+    public void ckeckEmailExists(String email) {
+        if (!externalUserRepository.findOneByEmailAndDeletionDateIsNull(email).isPresent()) {
+            throw new EDatosException(ServiceExceptionType.EXTERNAL_USER_NOT_EXISTS);
+        }
     }
 }

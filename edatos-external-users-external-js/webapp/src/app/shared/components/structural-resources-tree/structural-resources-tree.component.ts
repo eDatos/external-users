@@ -2,9 +2,9 @@ import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDif
 import { Category, ExternalOperation, Favorite } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
-import { ArteAlertService } from 'arte-ng/services';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
+import { EUsuariosAlertService } from '@app/core/service';
 
 /**
  * @see StructuralResourcesTreeComponent#mode
@@ -92,7 +92,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     private nodeList: CategoryTreeNode[] = [];
 
     constructor(
-        private alertService: ArteAlertService,
+        private alertService: EUsuariosAlertService,
         private categoryService: CategoryService,
         private translateService: TranslateService,
         private iterableDiffers: IterableDiffers,

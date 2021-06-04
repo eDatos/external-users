@@ -6,7 +6,7 @@ import { LanguageService } from '@app/shared/service';
 import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ArteTableService } from 'arte-ng';
-import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
+import { ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 import { CookieService } from 'ngx-cookie-service';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 
@@ -84,11 +84,6 @@ export function initTranslations(translateService: TranslateService, cookieServi
             multi: true,
         },
         {
-            provide: ArteAlertService,
-            useClass: ArteAlertService,
-            deps: [MessageService],
-        },
-        {
             provide: HTTP_INTERCEPTORS,
             useClass: ErrorHandlerInterceptor,
             multi: true,
@@ -97,7 +92,6 @@ export function initTranslations(translateService: TranslateService, cookieServi
         ArteTableService,
         ArteEventManager,
         PagingParamsResolver,
-        ArteAlertService,
         ScrollService,
     ],
     bootstrap: [AppComponent],

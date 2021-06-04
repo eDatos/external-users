@@ -1,4 +1,6 @@
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
     <changeSet author="arte" id="1614083280000-1">
         <createSequence incrementBy="50" sequenceName="seq_tb_external_users" startValue="1"/>
     </changeSet>
@@ -40,6 +42,10 @@
             </column>
             <column name="surname2" type="VARCHAR(255)"/>
             <column name="treatment" type="VARCHAR(255)"/>
+
+            <column name="reset_key" type="varchar(255)"/>
+            <column name="reset_date" type="timestamp"/>
+
         </createTable>
     </changeSet>
     <changeSet author="arte" id="1614083280000-3">
@@ -53,9 +59,13 @@
         </createTable>
     </changeSet>
     <changeSet author="arte" id="1614083280000-4">
-        <addUniqueConstraint columnNames="email" constraintName="UC_TB_EXTERNAL_USERSEMAIL_COL" tableName="tb_external_users"/>
+        <addUniqueConstraint columnNames="email" constraintName="UC_TB_EXTERNAL_USERSEMAIL_COL"
+                             tableName="tb_external_users"/>
     </changeSet>
-     <changeSet author="arte" id="1614083280000-5">
-        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_external_users_roles" constraintName="FK35rp8qvox3xtpksga7retcytt" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tb_external_users" validate="true"/>
+    <changeSet author="arte" id="1614083280000-5">
+        <addForeignKeyConstraint baseColumnNames="external_user_fk" baseTableName="tb_external_users_roles"
+                                 constraintName="FK35rp8qvox3xtpksga7retcytt" deferrable="false"
+                                 initiallyDeferred="false" referencedColumnNames="id"
+                                 referencedTableName="tb_external_users" validate="true"/>
     </changeSet>
 </databaseChangeLog>

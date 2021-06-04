@@ -32,9 +32,6 @@ export class FilterFormComponent implements OnInit {
     }
 
     public ngOnInit() {
-        if (!this.inEditMode) {
-            this.titleService.setTitle(this.titleService.getTitle() + ' ' + this.filter.id);
-        }
         this.account = this.activatedRoute.snapshot.data.user;
     }
 

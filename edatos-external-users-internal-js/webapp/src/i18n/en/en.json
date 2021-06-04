@@ -509,23 +509,23 @@
         },
         "form": {
             "cancel": "Cancel",
-            "delete": "Delete Filter",
-            "edit": "Edit Filter",
+            "delete": "Delete Custom Query",
+            "edit": "Edit Custom Query",
             "goBack": "Back to List",
-            "legend": "Filter Details",
-            "new": "Create a new filter",
-            "save": "Save Filter"
+            "legend": "Custom Query Details",
+            "new": "Create a new custom query",
+            "save": "Save Custom Query"
         },
         "home": {
-            "createLabel": "Create Filter",
-            "title": "Filters"
+            "createLabel": "Create Custom Query",
+            "title": "Custom queries"
         },
-        "name": "Filter",
+        "name": "Custom query",
         "search": {
             "filterExternalUserLabel": "External user name",
-            "filterNameLabel": "Filter name",
-            "includeFromDeactivatedUsers": "Include disabled user filters",
-            "name": "Search filters",
+            "filterNameLabel": "Custom query name",
+            "includeFromDeactivatedUsers": "Include disabled user custom queries",
+            "name": "Search custom queries",
             "placeholder": "Enter user name or email",
             "placeholderForFilterNameSearch": "",
             "placeholderForUserSearch": ""

@@ -33,7 +33,7 @@ const APP_ROUTES: Routes = [
         },
     },
     {
-        path: 'account-management/change-password',
+        path: 'change-password',
         loadChildren: () => import('./modules/account/password/change-password.module').then((m) => m.ChangePasswordModule),
         canLoad: [UserRouteAccessGuard],
         data: {
@@ -69,6 +69,13 @@ const APP_ROUTES: Routes = [
         canLoad: [UserRouteAccessGuard],
         data: {
             roles: USER,
+        },
+    },
+    {
+        path: 'reset-password',
+        loadChildren: () => import('./modules/reset-password/reset-password.module').then((m) => m.ResetPasswordModule),
+        data: {
+            roles: ALL_ALLOWED,
         },
     },
     {

@@ -23,10 +23,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
-import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -62,13 +60,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         logoutHandler.setClearAuthentication(true);
         logoutHandler.setInvalidateHttpSession(true);
         return logoutHandler;
-    }
-
-    @Bean
-    public LogoutFilter requestGlobalLogoutFilter() {
-        LogoutFilter logoutFilter = new LogoutFilter(metadataProperties.getMetamacCasLogoutUrl(), logoutHandler());
-        logoutFilter.setLogoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"));
-        return logoutFilter;
     }
 
     @Bean
@@ -108,7 +99,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         //@formatter:off
-        // .addFilterBefore(requestGlobalLogoutFilter(), LogoutFilter.class) // TODO EDATOS-3287 Still to be set up
         http
             .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, applicationProperties, env))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenProvider))
@@ -130,6 +120,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/profile-info").permitAll()
                 .antMatchers("/api/account/**").permitAll()
                 .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/recover-password/**").permitAll()
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/apis/operations-internal/**").permitAll()
                 .antMatchers("/api/data-protection-policy").permitAll()
