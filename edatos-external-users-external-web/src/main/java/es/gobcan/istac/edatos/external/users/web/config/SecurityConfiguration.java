@@ -25,6 +25,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -82,6 +83,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new ObjectMapper();
     }
 
+    private CsrfTokenRepository getCsrfTokenRepository() {
+        CookieCsrfTokenRepository tokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        tokenRepository.setCookiePath("/");
+        return tokenRepository;
+    }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         //@formatter:off
@@ -105,9 +112,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .exceptionHandling()
             .authenticationEntryPoint(http401UnauthorizedEntryPoint())
         .and()
-            .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            .ignoringAntMatchers("/api/login")
-            .ignoringAntMatchers("/api/filters")
+            .csrf().csrfTokenRepository(this.getCsrfTokenRepository())
         .and()
             .headers().frameOptions().sameOrigin()
         .and()
