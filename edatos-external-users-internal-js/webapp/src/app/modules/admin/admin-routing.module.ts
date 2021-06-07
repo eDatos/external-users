@@ -8,7 +8,16 @@ import { healthRoute } from './health/health.route';
 import { logsRoute } from './logs/logs.route';
 import { metricsRoute } from './metrics/metrics.route';
 
-export const adminRoutes: Routes = [auditsRoute, configurationRoute, healthRoute, logsRoute, metricsRoute, dataProtectionPolicyConfigurationRoute, categoryMasterTreeRoutes];
+export const adminRoutes: Routes = [
+    auditsRoute,
+    configurationRoute,
+    healthRoute,
+    logsRoute,
+    metricsRoute,
+    dataProtectionPolicyConfigurationRoute,
+    categoryMasterTreeRoutes,
+    auditsRoute,
+];
 
 @NgModule({
     imports: [RouterModule.forChild(adminRoutes)],

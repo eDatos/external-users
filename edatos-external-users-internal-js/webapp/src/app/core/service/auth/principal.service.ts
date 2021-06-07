@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Role, UserCAS } from '@app/core/model';
-import { Subject, Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthServerProvider } from './auth-jwt.service';
 
 @Injectable()
@@ -12,17 +12,17 @@ export class Principal {
 
     constructor(private authServerProvider: AuthServerProvider) {}
 
-    authenticate(identity) {
+    public authenticate(identity) {
         this.userIdentity = identity;
         this.authenticated = identity !== null;
         this.authenticationState.next(this.userIdentity);
     }
 
-    hasRoles(rolesRuta: Role[]): Promise<boolean> {
+    public hasRoles(rolesRuta: Role[]): Promise<boolean> {
         return Promise.resolve(this.rolesRutaMatchesRolesUsuario(rolesRuta));
     }
 
-    rolesRutaMatchesRolesUsuario(rolesRuta: Role[]) {
+    public rolesRutaMatchesRolesUsuario(rolesRuta: Role[]) {
         rolesRuta = rolesRuta || [];
         if (rolesRuta.length === 0) {
             return true;
@@ -33,7 +33,7 @@ export class Principal {
         return rolesRuta.some((rolRuta) => this.userIdentity?.hasRole(rolRuta));
     }
 
-    identity(): Promise<UserCAS | null> {
+    public identity(): Promise<UserCAS | null> {
         if (this.userIdentity) {
             return Promise.resolve(this.userIdentity);
         }
@@ -51,15 +51,15 @@ export class Principal {
         return Promise.resolve(this.userIdentity);
     }
 
-    isAuthenticated(): boolean {
+    public isAuthenticated(): boolean {
         return this.authenticated;
     }
 
-    isIdentityResolved(): boolean {
+    public isIdentityResolved(): boolean {
         return this.userIdentity !== undefined;
     }
 
-    getAuthenticationState(): Observable<any> {
+    public getAuthenticationState(): Observable<any> {
         return this.authenticationState.asObservable();
     }
 

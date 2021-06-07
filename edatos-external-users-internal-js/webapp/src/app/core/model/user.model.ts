@@ -30,8 +30,7 @@ export interface RolCAS {
 }
 
 export class UserCAS {
-    // TODO EDATOS-3141 Cambiar nombre de aplicación
-    private readonly ACL_APP_NAME: string = 'GESTOR_OPERACIONES';
+    private readonly ACL_APP_NAME: string = 'GESTOR_USUARIOS_EXTERNOS';
     constructor(public login: string, public roles: RolCAS[]) {}
 
     public static fromJwt(token: string) {

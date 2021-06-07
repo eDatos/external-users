@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ErrorComponent } from '@app/layouts/error';
 import { DEFAULT_PATH } from './app.constants';
 import { UserRouteAccessGuard } from './core/guard';
-import { EXTERNAL_USER_ROLES, FAVORITE_ROLES, FILTER_ROLES, HERRAMIENTAS_ROLES } from './core/service';
+import { EXTERNAL_USER_ROLES, FAVORITE_ROLES, FILTER_ROLES, TOOLS_ROLES } from './core/service';
 
 const APP_ROUTES: Routes = [
     {
@@ -21,7 +21,7 @@ const APP_ROUTES: Routes = [
         loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: HERRAMIENTAS_ROLES,
+            roles: TOOLS_ROLES,
         },
     },
     {

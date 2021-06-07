@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, Data, CanLoad, Route } from '@angular/router';
-import { Principal } from '../service/auth/principal.service';
+import { ActivatedRouteSnapshot, CanActivate, CanLoad, Data, Route, Router } from '@angular/router';
 import { Role } from '../model/rol.model';
 import { LoginService } from '../service/auth/login.service';
+import { Principal } from '../service/auth/principal.service';
 
 @Injectable()
 export class UserRouteAccessGuard implements CanActivate, CanLoad {
@@ -11,17 +11,17 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
 
     constructor(private router: Router, private principal: Principal, private loginService: LoginService) {}
 
-    canActivate(route: ActivatedRouteSnapshot): boolean | Promise<boolean> {
+    public canActivate(route: ActivatedRouteSnapshot): boolean | Promise<boolean> {
         const roles = this.rolesFromRouteSnapshot(route);
         return this.checkRoles(roles, route.data);
     }
 
-    canLoad(route: Route): true | Promise<boolean> {
+    public canLoad(route: Route): true | Promise<boolean> {
         const roles = route.data ? route.data.roles : [];
         return this.checkRoles(roles, route.data!);
     }
 
-    checkLogin(roles: Role[]): Promise<boolean> {
+    public checkLogin(roles: Role[]): Promise<boolean> {
         return this.principal.identity().then((account) => {
             if (!!account) {
                 return this.noPermissionRequired(roles) || this.principal.hasRoles(roles);
@@ -51,7 +51,7 @@ export class UserRouteAccessGuard implements CanActivate, CanLoad {
         if (data[UserRouteAccessGuard.AUTH_REDIRECT]) {
             this.router.navigate([data[UserRouteAccessGuard.AUTH_REDIRECT]]);
         } else {
-            this.router.navigate(['accessdenied']);
+            this.router.navigateByUrl('/accessdenied');
         }
     }
 

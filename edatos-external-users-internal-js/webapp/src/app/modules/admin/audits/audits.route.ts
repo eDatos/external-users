@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
 import { ITEMS_PER_PAGE } from '@app/app.constants';
-import { AuditsComponent } from './audits.component';
-import { HERRAMIENTAS_ROLES } from '@app/core/service/auth';
 import { UserRouteAccessGuard } from '@app/core/guard/user-route-access.guard';
+import { ADMIN_ROLES } from '@app/core/service/auth';
 import { PagingParamsResolver } from 'arte-ng/services';
+import { AuditsComponent } from './audits.component';
 
 export const auditsRoute: Route = {
     path: 'audits',
@@ -13,7 +13,7 @@ export const auditsRoute: Route = {
     },
     data: {
         pageTitle: 'audits.title',
-        roles: HERRAMIENTAS_ROLES,
+        roles: ADMIN_ROLES,
         defaultPagingParams: {
             page: '1',
             sort: 'auditEventDate,desc',
