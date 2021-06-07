@@ -1,6 +1,9 @@
 <nav class="navbar navbar-dark navbar-expand-lg">
+    <span *ngIf="isAuthenticated()" class="navbar-user-login badge badge-dark">
+        <i [class.admin-color]="isAdmin" class="fa fa-user-circle"></i>
+        {{login}}
+    </span>
     <span class="navbar-version">{{version}}</span>
-
     <button
         class="navbar-toggler"
         type="button"
@@ -11,9 +14,9 @@
         aria-label="Toggle navigation"
         (click)="toggleNavbar()"
     >
-        <i class="fa fa-bars"></i>
+        <i aria-hidden="true" class="fa fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
+    <div [ngbCollapse]="isNavbarCollapsed" class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
             <li>
                 <a class="nav-link btn" routerLink="external-users" routerLinkActive="active">
@@ -94,7 +97,7 @@
                 </ul>
             </li>
             <li>
-                <a *ngSwitchCase="true" class="nav-link btn" (click)="logout()" id="logout" [title]="'global.menu.account.logout' | translate">
+                <a (click)="logout()" *ngIf="isAuthenticated()" [title]="'global.menu.account.logout' | translate" class="nav-link btn" id="logout">
                     <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>
                 </a>
             </li>

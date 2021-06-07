@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { VERSION } from '@app/app.constants';
 import { ConfigService } from '@app/config';
+import { Role } from '@app/core/model';
 import { LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-navbar',
@@ -12,13 +12,14 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class NavbarComponent implements OnInit {
     public inProduction: boolean;
     public isNavbarCollapsed: boolean;
-    public modalRef: NgbModalRef;
     public version: string;
+    public login: string | undefined;
+    public isAdmin: boolean;
 
     constructor(
         private loginService: LoginService,
         public permissionService: PermissionService,
-        private principal: Principal,
+        public principal: Principal,
         private profileService: ProfileService,
         private configService: ConfigService
     ) {
@@ -29,6 +30,11 @@ export class NavbarComponent implements OnInit {
     public ngOnInit() {
         this.profileService.getProfileInfo().subscribe((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
+        });
+
+        this.principal.identity().then((user) => {
+            this.login = user?.login;
+            this.isAdmin = user?.hasRole(Role.ADMINISTRADOR) ?? false;
         });
     }
 

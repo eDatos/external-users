@@ -11,6 +11,23 @@ Navbar
     vertical-align: text-bottom;
 }
 
+.navbar-user-login {
+    display: inline-block;
+    vertical-align: center;
+    padding: 0.5em 1em;
+    margin-right: 1em;
+    font-size: 1rem;
+    color: $grey-light;
+
+    i {
+        margin-right: 0.2em;
+    }
+}
+
+.admin-color {
+    color: #4ea8ff;
+}
+
 .navbar {
     min-height: $navbar-content-height;
     position: fixed;
