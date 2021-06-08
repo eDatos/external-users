@@ -33,3 +33,6 @@ VALUES (1, 'system', '2021-05-06 11:10:17.234000', 'system',
         '2021-05-06 11:30:54.247000', 0, '2021-05-06 11:30:53.461000', 'Visitantes en las islas',
         'El número de visitantes en las islas',
         '1ofnp6ihvgdv8qx11d8t96092m', 4, 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op2');
+
+
+ALTER SEQUENCE seq_tb_filters RESTART WITH 9;
