@@ -21,7 +21,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
-import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
+import es.gobcan.istac.edatos.external.users.core.service.ExternalCategoryService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalCategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
@@ -39,15 +39,15 @@ public class CategoryResource extends AbstractResource {
 
     private final CategoryService categoryService;
     private final CategoryMapper categoryMapper;
-    private final StructuralResourcesService structuralResourcesService;
+    private final ExternalCategoryService externalCategoryService;
     private final ExternalCategoryMapper externalCategoryMapper;
 
     // TODO(EDATOS-3357): Add audits
 
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, StructuralResourcesService structuralResourcesService, ExternalCategoryMapper externalCategoryMapper) {
+    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, ExternalCategoryService externalCategoryService, ExternalCategoryMapper externalCategoryMapper) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
-        this.structuralResourcesService = structuralResourcesService;
+        this.externalCategoryService = externalCategoryService;
         this.externalCategoryMapper = externalCategoryMapper;
     }
 
@@ -73,7 +73,7 @@ public class CategoryResource extends AbstractResource {
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
     public ResponseEntity<List<ExternalCategoryDto>> getExternalCategories(Pageable pageable, @RequestParam(required = false) String search) {
-        Page<ExternalCategoryDto> result = structuralResourcesService.getCategories(pageable, search).map(externalCategoryMapper::toDto);
+        Page<ExternalCategoryDto> result = externalCategoryService.requestExternalCategories(pageable, search).map(externalCategoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
          return ResponseEntity.ok().headers(headers).body(result.getContent());
     }

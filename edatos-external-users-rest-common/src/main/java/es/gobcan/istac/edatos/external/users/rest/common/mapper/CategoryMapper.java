@@ -17,8 +17,8 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalCategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalOperationRepository;
+import es.gobcan.istac.edatos.external.users.core.service.ExternalCategoryService;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
-import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalCategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalOperationDto;
@@ -31,7 +31,7 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     FavoriteService favoriteService;
 
     @Autowired
-    StructuralResourcesService structuralResourcesService;
+    ExternalCategoryService externalCategoryService;
 
     @Autowired
     ExternalCategoryRepository externalCategoryRepository;
@@ -68,7 +68,7 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
         List<String> urns = resources.stream().map(ExternalCategoryDto::getUrn).filter(Objects::nonNull).collect(Collectors.toList());
         List<ExternalCategoryEntity> inDbExternalCategories = externalCategoryRepository.findAll();
         // @formatter:off
-        return structuralResourcesService.getCategories().stream()
+        return externalCategoryService.requestAllExternalCategories().stream()
                 // pick only the selected external categories
                 .filter(externalCategory -> urns.contains(externalCategory.getUrn()))
                 // if the external category was already in db, pick that one; otherwise create a new one (this avoid problems with unique constraints and duplication)
