@@ -34,7 +34,7 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
     private static final String ENTITY_FIELD_DELETION_DATE = "deletionDate";
     private static final String ENTITY_FIELD_LANGUAGE = "language";
     private static final String ENTITY_FIELD_TREATMENT = "treatment";
-    
+
     private static final String ENTITY_FIELD_FAVORITES = "favorites";
 
     public enum QueryProperty {
@@ -46,7 +46,8 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
         TREATMENT,
         DELETION_DATE,
         FULLNAME,
-        FAVORITES
+        FAVORITE_CATEGORIES,
+        FAVORITE_EXTERNAL_OPERATIONS,
     }
 
     public ExternalUserCriteriaProcessor() {
@@ -89,10 +90,13 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withQueryProperty(QueryProperty.TREATMENT)
                 .withEntityProperty(ENTITY_FIELD_TREATMENT)
                 .build());
-        registerRestrictionProcessor(
-                RestrictionProcessorBuilder.restrictionProcessor()
-                    .withQueryProperty(QueryProperty.FAVORITES)
-                    .withCriterionConverter(new SqlCriterionBuilder())
+        registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
+                .withQueryProperty(QueryProperty.FAVORITE_CATEGORIES)
+                .withCriterionConverter(new SqlCriterionBuilder())
+                .build());
+        registerRestrictionProcessor(RestrictionProcessorBuilder.longRestrictionProcessor()
+                .withQueryProperty(QueryProperty.FAVORITE_EXTERNAL_OPERATIONS)
+                .withCriterionConverter(new SqlCriterionBuilder())
                 .build());
         //@formatter:on
     }
@@ -105,20 +109,44 @@ public class ExternalUserCriteriaProcessor extends AbstractCriteriaProcessor {
                 List<String> fields = new ArrayList<>(Arrays.asList(TABLE_FIELD_EMAIL, TABLE_FIELD_NAME, TABLE_FIELD_SURNAME1, TABLE_FIELD_SURNAME2));
                 return CriteriaUtil.buildAccentAndCaseInsensitiveCriterion(property, fields);
             }
-            if (QueryProperty.FAVORITES.name().equalsIgnoreCase(property.getLeftExpression())) {
-            	return favoritesCriterion(property);
+            if (QueryProperty.FAVORITE_CATEGORIES.name().equalsIgnoreCase(property.getLeftExpression())) {
+                return favoriteCategoriesCriterion(property);
+            }
+            if (QueryProperty.FAVORITE_EXTERNAL_OPERATIONS.name().equalsIgnoreCase(property.getLeftExpression())) {
+                return favoriteExternalOperationsCriterion(property);
             }
             throw new CustomParameterizedExceptionBuilder().message(String.format("Parámetro de búsqueda no soportado: '%s'", property))
                     .code(ErrorConstants.QUERY_NO_SOPORTADA, property.getLeftExpression(), property.getOperationType().name()).build();
         }
-        
-        private Criterion favoritesCriterion(QueryPropertyRestriction property) {
-        	// @formatter:off
-        	String sql = "{alias}.ID IN ( "
-        			+ " SELECT tf.external_user_fk "
-        			+ " FROM tb_favorites tf "
-        			+ " WHERE tf.category_fk IN " + property.getRightExpressions().toString().replace('[', '(').replace(']', ')')
-        			+ " ) ";
+
+        private Criterion favoriteCategoriesCriterion(QueryPropertyRestriction property) {
+            // @formatter:off
+        	String sql = String.format("{alias}.ID IN (" +
+                "select distinct id\n" +
+                "from tb_external_users external_user\n" +
+                "where id in\n" +
+                "      (select distinct favorite.external_user_fk\n" +
+                "       from tb_favorites favorite\n" +
+                "       where category_fk in (%s)\n" +
+                "       group by external_user_fk\n" +
+                "       having count(category_fk) >= %s)" +
+            ")", String.join(",", property.getRightExpressions()), property.getRightExpressions().size());
+        	// @formatter:on
+            return Restrictions.sqlRestriction(sql);
+        }
+
+        private Criterion favoriteExternalOperationsCriterion(QueryPropertyRestriction property) {
+            // @formatter:off
+        	String sql = String.format("{alias}.ID IN (" +
+                "select distinct id\n" +
+                "from tb_external_users external_user\n" +
+                "where id in\n" +
+                "      (select distinct favorite.external_user_fk\n" +
+                "       from tb_favorites favorite\n" +
+                "       where external_operation_fk in (%s)\n" +
+                "       group by external_user_fk\n" +
+                "       having count(external_operation_fk) >= %s)" +
+            ")", String.join(",", property.getRightExpressions()), property.getRightExpressions().size());
         	// @formatter:on
         	return Restrictions.sqlRestriction(sql);
         }

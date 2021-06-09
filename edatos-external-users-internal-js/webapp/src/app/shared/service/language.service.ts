@@ -11,9 +11,11 @@ import { Observable } from 'rxjs';
 export class LanguageService {
     public readonly resourceUrl = 'api/languages';
 
-    constructor(private http: HttpClient, private translateService: TranslateService) {
-        setCurrentLanguage(translateService.currentLang);
-        translateService.onLangChange.subscribe((e: LangChangeEvent) => {
+    constructor(private http: HttpClient, private translateService: TranslateService) {}
+
+    public init(): void {
+        setCurrentLanguage(this.translateService.currentLang);
+        this.translateService.onLangChange.subscribe((e: LangChangeEvent) => {
             setCurrentLanguage(e.lang);
         });
     }

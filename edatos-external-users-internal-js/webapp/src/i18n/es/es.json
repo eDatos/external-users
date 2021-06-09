@@ -376,12 +376,12 @@
         "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario",
         "filters": {
             "labels": {
-                "categories": "Temas",
+                "categories": "Suscripciones temáticas",
                 "fullname": "Nombre o apellidos",
                 "language": "Idioma"
             },
             "placeholders": {
-                "categoriesSelected": "# temas seleccionados",
+                "noResourceSelected": "No hay ningún recurso seleccionado",
                 "fullname": "Introduzca nombre o apellidos",
                 "language": "Introduzca idiomas del usuario"
             },

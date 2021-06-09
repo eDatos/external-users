@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '@app/core/model';
-import { Category, Favorite } from '@app/shared/model';
+import { CategoryTreeNode } from '@app/shared/components/structural-resources-tree';
+import { Favorite } from '@app/shared/model';
 import { FavoriteService } from '@app/shared/service/favorite/favorite.service';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
     selector: 'app-favorite-tree',
@@ -17,7 +18,6 @@ export class FavoriteTreeComponent implements OnInit {
     public mainLanguageCode: string;
 
     public user: User;
-    public eventSubscriber: Subscription;
     public favorites: Favorite[];
 
     constructor(private favoriteService: FavoriteService, private translateService: TranslateService, private route: ActivatedRoute) {
@@ -30,30 +30,30 @@ export class FavoriteTreeComponent implements OnInit {
         this.favorites = this.route.snapshot.data.favorites;
     }
 
-    public saveFavorite(category: Category): void {
+    public saveFavorite(node: CategoryTreeNode): void {
+        node.setLoading();
         const favorite = new Favorite();
         favorite.externalUser = this.user;
-        favorite.category = category;
-        this.favoriteService.save(favorite).subscribe(
-            () => {
-                this.updateFavorites();
-            },
-            (error) => {
-                this.updateFavorites();
-            }
-        );
+        favorite.resource = node.data;
+        this.favoriteService
+            .save(favorite)
+            .pipe(finalize(() => node.unsetLoading()))
+            .subscribe({
+                next: () => this.updateFavorites(),
+                error: () => this.updateFavorites(),
+            });
     }
 
-    public deleteFavorite(category: Category): void {
-        const favorite = this.favorites.find((fav) => fav.category.id === category.id)!;
-        this.favoriteService.delete(favorite.id).subscribe(
-            () => {
-                this.updateFavorites();
-            },
-            (error) => {
-                this.updateFavorites();
-            }
-        );
+    public deleteFavorite(node: CategoryTreeNode): void {
+        node.setLoading();
+        const favorite = this.favorites.find((fav) => fav.resource.id === node.data.id)!;
+        this.favoriteService
+            .delete(favorite.id)
+            .pipe(finalize(() => node.unsetLoading()))
+            .subscribe({
+                next: () => this.updateFavorites(),
+                error: () => this.updateFavorites(),
+            });
     }
 
     private updateFavorites() {

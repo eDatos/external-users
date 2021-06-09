@@ -5,24 +5,22 @@ import org.springframework.stereotype.Component;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 import com.arte.libs.grammar.orm.jpa.criteria.RestrictionProcessorBuilder;
 
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.util.CriteriaUtil;
 
 @Component
 public class CategoryCriteriaProcessor extends AbstractCriteriaProcessor {
 
-    public static final CriteriaUtil criteriaUtil = new CriteriaUtil(ExternalCategoryEntity.class);
+    public static final CriteriaUtil criteriaUtil = new CriteriaUtil(CategoryEntity.class);
 
     public static final String ENTITY_FIELD_ID = criteriaUtil.validateFieldExists("id");
-    public static final String ENTITY_FIELD_CODE = criteriaUtil.validateFieldExists("code");
 
     public enum QueryProperty {
         ID,
-        CODE,
     }
 
     public CategoryCriteriaProcessor() {
-        super(ExternalCategoryEntity.class);
+        super(CategoryEntity.class);
     }
 
     @Override
@@ -32,11 +30,6 @@ public class CategoryCriteriaProcessor extends AbstractCriteriaProcessor {
                 .longRestrictionProcessor()
                 .withQueryProperty(QueryProperty.ID).sortable()
                 .withEntityProperty(ENTITY_FIELD_ID)
-                .build());
-        registerRestrictionProcessor(RestrictionProcessorBuilder
-                .stringRestrictionProcessor()
-                .withQueryProperty(QueryProperty.CODE).sortable()
-                .withEntityProperty(ENTITY_FIELD_CODE)
                 .build());
         // @formatter:on
     }

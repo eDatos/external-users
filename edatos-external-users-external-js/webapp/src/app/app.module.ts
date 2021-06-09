@@ -1,29 +1,30 @@
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
-
-import { NgxWebstorageModule } from 'ngx-webstorage';
-import { AppComponent } from './app.component';
-import { CoreModule } from './core/core.module';
-import { ConfigModule } from './config/config.module';
-import { SharedModule } from './shared';
-import { TranslateModule, TranslateLoader, TranslateService, MissingTranslationHandler } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor, AuthExpiredInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { AppRoutingModule } from './app-routing.module';
-import { NavbarComponent } from './layouts/navbar';
-import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
-import { DEFAULT_LANG, LANG_KEY, AVAILABLE_LANGUAGES } from './app.constants';
-import { ScriptLoaderModule } from 'ngx-script-loader';
+import { LanguageService } from '@app/shared/service';
+import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ArteTableService } from 'arte-ng';
 import { ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
+import { CookieService } from 'ngx-cookie-service';
+import { ScriptLoaderModule } from 'ngx-script-loader';
+
+import { NgxWebstorageModule } from 'ngx-webstorage';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { environment } from '../environments/environment';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AVAILABLE_LANGUAGES, DEFAULT_LANG, LANG_KEY } from './app.constants';
+import { ConfigModule } from './config/config.module';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
+import { CoreModule } from './core/core.module';
+import { AuthExpiredInterceptor, AuthInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
+import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
+import { NavbarComponent } from './layouts/navbar';
 import { AboutDialogComponent, DeleteConfirmDialogComponent } from './modules/account';
+import { SharedModule } from './shared';
 
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');
@@ -74,6 +75,12 @@ export function initTranslations(translateService: TranslateService, cookieServi
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthExpiredInterceptor,
+            multi: true,
+        },
+        {
+            provide: APP_INITIALIZER,
+            useFactory: (languageService: LanguageService) => () => languageService.init(),
+            deps: [LanguageService],
             multi: true,
         },
         {
