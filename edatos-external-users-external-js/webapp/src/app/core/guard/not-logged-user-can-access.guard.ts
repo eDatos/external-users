@@ -38,6 +38,7 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
                 return false;
             } else if(nonStop && origin) {
                 this.document.defaultView.open(origin, "_self");
+                return false;
             }
             return true;
         });
