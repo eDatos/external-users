@@ -21,12 +21,17 @@
     <ng-template let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
         <span *ngIf="node.data.favoriteType === 'externalOperation'; else onlySubscribedUsers" class="subscribed-users">
-            ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}, {{'structuralResourcesTree.numberOfFilters' | translate:{amount:
-            node.data.numberOfFilters || 0} }})
+            ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}, {{'structuralResourcesTree.numberOfFilters' | translate:{ amount:
+            node.data.numberOfFilters || 0 } }})
         </span>
         <ng-template #onlySubscribedUsers>
             <span class="subscribed-users"> ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}) </span>
         </ng-template>
+        <span *ngIf="node.data.favoriteType === 'externalOperation'" class="notifications-switch">
+            <i *ngIf="node.data.notificationsEnabled" aria-hidden="true" class="fa fa-bell notifications-icon"></i>
+            <i *ngIf="!node.data.notificationsEnabled" aria-hidden="true" class="fa fa-bell-slash notifications-icon"></i>
+            <p-inputSwitch (onChange)="updateExternalOperationNotifications(node)" [(ngModel)]="node.data.notificationsEnabled" styleClass="switch"></p-inputSwitch>
+        </span>
     </ng-template>
 </p-tree>
 
@@ -50,13 +55,12 @@
     [droppableNodes]="true"
     [emptyMessage]="'structuralResourcesTree.noRecordsFound' | translate"
     [loading]="!tree || loading"
-    [selectionMode]="selectionMode"
     [value]="tree"
 >
     <ng-template let-node pTemplate="default">
         <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
         <span class="subscribed-users mr-2">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
-        <span class="badge badge-secondary mr-2">{{node.data.externalCategories.length}}</span>
+        <!--        <span class="badge badge-secondary mr-2">{{node.data.externalCategories.length}}</span>-->
         <p-dialog
             *ngIf="node.editMode === 'name'"
             [visible]="true"
@@ -116,14 +120,19 @@
                 </button>
             </p-footer>
         </p-dialog>
-        <button type="button" class="btn btn-info node-btn-sm mr-2">
-            <i class="fa fa-search" aria-hidden="true" (click)="remapNode(node)"></i>
-        </button>
-        <button type="button" class="btn btn-primary node-btn-sm mr-2" (click)="addNode(node)">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-        </button>
-        <button type="button" class="btn btn-danger node-btn-sm" (click)="deleteNode(node)">
-            <i class="fa fa-minus" aria-hidden="true"></i>
-        </button>
+        <div (mouseleave)="clickedDelete = false" *ngIf="node.data.favoriteType !== 'externalOperation'" class="buttons">
+            <button (click)="addNode(node)" class="btn btn-outline-success node-btn-sm" type="button">
+                <i aria-hidden="true" class="fa fa-plus"></i>
+            </button>
+            <button (click)="clickedDelete = true" *ngIf="!clickedDelete" class="btn btn-outline-danger node-btn-sm" type="button">
+                <i aria-hidden="true" class="fa fa-minus"></i>
+            </button>
+            <button (click)="clickedDelete = false; deleteNode(node)" *ngIf="clickedDelete" class="btn btn-outline-danger node-btn-sm" type="button">
+                {{ 'entity.eliminar.title' | translate }}
+            </button>
+            <button class="btn btn-primary node-btn-sm" type="button">
+                <i (click)="remapNode(node)" aria-hidden="true" class="fa fa-search"></i>
+            </button>
+        </div>
     </ng-template>
 </p-tree>

@@ -31,12 +31,24 @@ public class ExternalOperationEntity extends ExternalItemEntity {
     @Column(nullable = false)
     private String externalCategoryUrn;
 
+    @NotNull
+    @Column(nullable = false)
+    private boolean notificationsEnabled;
+
     public String getExternalCategoryUrn() {
         return externalCategoryUrn;
     }
 
     public void setExternalCategoryUrn(String externalCategoryUrn) {
         this.externalCategoryUrn = externalCategoryUrn;
+    }
+
+    public boolean isNotificationsEnabled() {
+        return notificationsEnabled;
+    }
+
+    public void setNotificationsEnabled(boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
     }
 
     public static final class Properties {

@@ -2,9 +2,10 @@ package es.gobcan.istac.edatos.external.users.rest.common.dto;
 
 public class ExternalOperationDto extends ExternalItemDto {
 
-    private Long subscribers;
-    private Long numberOfFilters;
+    private long subscribers;
+    private long numberOfFilters;
     private ExternalCategoryDto category;
+    private boolean notificationsEnabled;
 
     public ExternalCategoryDto getCategory() {
         return category;
@@ -28,5 +29,13 @@ public class ExternalOperationDto extends ExternalItemDto {
 
     public void setNumberOfFilters(Long numberOfFilters) {
         this.numberOfFilters = numberOfFilters;
+    }
+
+    public boolean isNotificationsEnabled() {
+        return notificationsEnabled;
+    }
+
+    public void setNotificationsEnabled(boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
     }
 }

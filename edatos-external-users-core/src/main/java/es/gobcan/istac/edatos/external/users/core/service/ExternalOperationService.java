@@ -11,4 +11,5 @@ public interface ExternalOperationService {
     void delete(String urn);
     void delete(ExternalOperationEntity operation);
     List<ExternalOperationEntity> findByExternalCategoryUrnIn(List<String> urns);
+    ExternalOperationEntity updateNotifications(ExternalOperationEntity externalOperation);
 }

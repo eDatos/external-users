@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input';
 import { Category, ExternalCategory, ExternalOperation, Favorite, InternationalString } from '@app/shared/model';
-import { CategoryService, LanguageService } from '@app/shared/service';
+import { CategoryService, ExternalOperationService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
 import * as _ from 'lodash';
@@ -93,8 +93,9 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     public selectionMode: 'checkbox' | 'single' | 'multiple' = 'checkbox';
     public enableDragAndDrop = false;
     public allowedLanguages: string[];
-    public loading = false;
+    public clickedDelete: boolean;
 
+    public loading = false;
     private iterableDiffer: IterableDiffer<Favorite>;
     private nodeList: CategoryTreeNode[] = [];
 
@@ -102,6 +103,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
         private alertService: ArteAlertService,
         private categoryService: CategoryService,
         private translateService: TranslateService,
+        private externalOperationService: ExternalOperationService,
         private iterableDiffers: IterableDiffers,
         private languageService: LanguageService,
         private _changeDetectorRef: ChangeDetectorRef
@@ -270,13 +272,34 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     }
 
     public getDisabledExternalCategories(selectedCategory: Category): ExternalCategory[] {
-        const externalCategoriesAlreadySelected: ExternalCategory[] = [];
-        for (const node of this.nodeList) {
+        const externalCategoriesAlreadySelectedByOtherNode: ExternalCategory[] = [];
+        const categoryNodes = this.nodeList.filter((node) => node.data.favoriteType === 'category');
+        for (const node of categoryNodes) {
             if (node.data.id !== selectedCategory.id) {
-                externalCategoriesAlreadySelected.push(...(node.data as Category).externalCategories);
+                externalCategoriesAlreadySelectedByOtherNode.push(...(node.data as Category).externalCategories);
             }
         }
-        return externalCategoriesAlreadySelected;
+        return externalCategoriesAlreadySelectedByOtherNode;
+    }
+
+    public enableNotifications(node: CategoryTreeNode): void {
+        if (node.data instanceof ExternalOperation) {
+            node.data.notificationsEnabled = true;
+        }
+    }
+
+    public disableNotifications(node: CategoryTreeNode): void {
+        if (node.data instanceof ExternalOperation) {
+            node.data.notificationsEnabled = false;
+        }
+    }
+
+    public updateExternalOperationNotifications(node: CategoryTreeNode) {
+        if (node.data instanceof ExternalOperation) {
+            this.externalOperationService.updateNotifications(node.data).subscribe((externalOperation) => {
+                node.data = externalOperation;
+            });
+        }
     }
 
     private updateTree() {
@@ -296,26 +319,16 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
 
     private categoryListToCategoryTree(categories: Category[]): Observable<CategoryTreeNode[]> {
         return of(
-            categories
-                ?.map((category) => {
-                    const children: CategoryTreeNode[] = [];
-                    this.categoryListToCategoryTree(category.children).subscribe((treeNodes) => {
-                        children.push(...treeNodes);
-                    });
-                    if (this.mode !== 'edit') {
-                        for (const externalOperation of category.externalOperations) {
-                            children.push(this.externalOperationToTreeNode(externalOperation));
-                        }
-                    }
-                    return this.categoryToCategoryTreeNode(category, children);
-                })
-                .sort((a, b) => {
-                    if (a.data instanceof Category && b.data instanceof Category) {
-                        return a.data.index < b.data.index ? -1 : 1;
-                    } else {
-                        return a.data.name.val! < b.data.name.val! ? -1 : 1;
-                    }
-                })
+            categories?.map((category) => {
+                const children: CategoryTreeNode[] = [];
+                this.categoryListToCategoryTree(category.children).subscribe((treeNodes) => {
+                    children.push(...treeNodes);
+                });
+                for (const externalOperation of category.externalOperations) {
+                    children.push(this.externalOperationToTreeNode(externalOperation));
+                }
+                return this.categoryToCategoryTreeNode(category, children);
+            })
         );
     }
 
@@ -325,7 +338,13 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
             collapsedIcon: 'fa fa-folder',
             expandedIcon: 'fa fa-folder-open',
             expanded: true,
-            children,
+            children: children.sort((a, b) => {
+                if (a.data instanceof Category && b.data instanceof Category) {
+                    return a.data.index < b.data.index ? -1 : 1;
+                } else {
+                    return a.data.id < b.data.id ? -1 : 1;
+                }
+            }),
             data: category,
             selectable: !this.disabled,
             editMode: null,
@@ -398,10 +417,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
             if (node.data instanceof Category) {
                 node.data.index = index;
                 node.data.children = node.children!.filter((child) => child.data instanceof Category).map((child) => child.data as Category);
+                this.reconstructTree(node.children!);
             }
-        }
-        for (const node of tree) {
-            this.reconstructTree(node.children!);
         }
     }
 
@@ -411,6 +428,8 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
             icon: 'fa fa-table',
             data: externalOperation,
             selectable: !this.disabled,
+            draggable: false,
+            droppable: false,
             editMode: null,
             makingRequest: false,
         };

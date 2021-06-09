@@ -43,4 +43,11 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
     public List<ExternalOperationEntity> findByExternalCategoryUrnIn(List<String> urns) {
         return externalOperationRepository.findByExternalCategoryUrnIn(urns);
     }
+
+    @Override
+    public ExternalOperationEntity updateNotifications(ExternalOperationEntity externalOperation) {
+        ExternalOperationEntity op = externalOperationRepository.findOne(externalOperation.getId());
+        op.setNotificationsEnabled(externalOperation.isNotificationsEnabled());
+        return externalOperationRepository.saveAndFlush(op);
+    }
 }

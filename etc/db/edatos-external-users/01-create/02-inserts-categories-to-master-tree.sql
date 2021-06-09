@@ -496,8 +496,8 @@ VALUES (1, 1, 'op1', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op1', 'statisticalOperations#operation');
 
-INSERT INTO tb_external_operations (external_category_urn, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', 1);
+INSERT INTO tb_external_operations (external_category_urn, notifications_enabled, external_item_fk)
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', true, 1);
 
 ------------------------------------------------------------------
 
@@ -511,8 +511,8 @@ VALUES (2, 1, 'op2', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op2', 'statisticalOperations#operation');
 
-INSERT INTO tb_external_operations (external_category_urn, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', 2);
+INSERT INTO tb_external_operations (external_category_urn, notifications_enabled, external_item_fk)
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', true, 2);
 
 ------------------------------------------------------------------
 
@@ -526,8 +526,8 @@ VALUES (3, 1, 'op3', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op3', 'statisticalOperations#operation');
 
-INSERT INTO tb_external_operations (external_category_urn, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', 3);
+INSERT INTO tb_external_operations (external_category_urn, notifications_enabled, external_item_fk)
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', true, 3);
 
 ------------------------------------------------------------------
 
@@ -541,8 +541,8 @@ VALUES (4, 1, 'op4', '{
     ]
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op4', 'statisticalOperations#operation');
 
-INSERT INTO tb_external_operations (external_category_urn, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', 4);
+INSERT INTO tb_external_operations (external_category_urn, notifications_enabled, external_item_fk)
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', true, 4);
 
 
 ALTER SEQUENCE seq_tb_external_items RESTART WITH 5;

@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ArteDirectivesModule } from 'arte-ng/directives';
 import { TreeDragDropService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
@@ -15,7 +16,19 @@ import { ExternalCategoriesTableComponent } from './external-categories-table/ex
 
 @NgModule({
     declarations: [StructuralResourcesTreeComponent, ExternalCategoriesTableComponent],
-    imports: [CommonModule, TreeModule, TranslateModule, FormsModule, InputTextModule, ArteDirectivesModule, DialogModule, MultiLanguageInputModule, TableModule, TooltipModule],
+    imports: [
+        CommonModule,
+        TreeModule,
+        TranslateModule,
+        FormsModule,
+        InputTextModule,
+        ArteDirectivesModule,
+        DialogModule,
+        MultiLanguageInputModule,
+        TableModule,
+        TooltipModule,
+        InputSwitchModule,
+    ],
     exports: [StructuralResourcesTreeComponent],
     providers: [TreeDragDropService],
 })
