@@ -4,6 +4,8 @@ import { BaseVersionedAndAuditingEntity } from 'arte-ng/model';
 import { Type } from 'class-transformer';
 import { Category } from './category.model';
 
+export type FavoriteResource = Category | ExternalOperation;
+
 export class Favorite extends BaseVersionedAndAuditingEntity {
     @Type(() => ExternalUser)
     public externalUser: ExternalUser;
@@ -15,12 +17,12 @@ export class Favorite extends BaseVersionedAndAuditingEntity {
     private externalOperation: ExternalOperation | null;
 
     // @ts-ignore
-    public get resource(): Category | ExternalOperation | null {
+    public get resource(): FavoriteResource | null {
         return this.category || this.externalOperation;
     }
 
     // @ts-ignore
-    public set resource(resource: Category | ExternalOperation) {
+    public set resource(resource: FavoriteResource) {
         if (resource.favoriteType === 'category') {
             this.category = resource;
             this.externalOperation = null;

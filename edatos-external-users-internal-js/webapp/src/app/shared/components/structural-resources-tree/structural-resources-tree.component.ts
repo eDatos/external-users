@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input';
-import { Category, ExternalCategory, ExternalOperation, Favorite, InternationalString } from '@app/shared/model';
+import { Category, ExternalCategory, ExternalOperation, Favorite, FavoriteResource, InternationalString } from '@app/shared/model';
 import { CategoryService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteAlertService } from 'arte-ng/services';
@@ -13,7 +13,6 @@ import { finalize, shareReplay } from 'rxjs/operators';
  * @see StructuralResourcesTreeComponent#mode
  */
 export type Mode = 'view' | 'select' | 'simpleSelect' | 'edit';
-export type FavoriteResource = Category | ExternalOperation;
 
 export interface CategoryTreeNode extends TreeNode {
     data: FavoriteResource;
@@ -340,7 +339,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
         return node;
     }
 
-    private isFavorite(resource: Category | ExternalOperation): boolean {
+    private isFavorite(resource: FavoriteResource): boolean {
         return this.favorites?.some((favorite) => favorite.resource?.id === resource.id && favorite.resource?.favoriteType === resource.favoriteType) ?? false;
     }
 
