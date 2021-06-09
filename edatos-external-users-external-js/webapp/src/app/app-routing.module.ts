@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { USER, ALL_ALLOWED } from './core/service';
 import { UserRouteAccessGuard } from './core/guard';
 import { DEFAULT_PATH } from './app.constants';
+import { NotLoggedUserCanAccessGuard } from './core/guard/not-logged-user-can-access.guard';
 
 const APP_ROUTES: Routes = [
     {
@@ -20,6 +21,7 @@ const APP_ROUTES: Routes = [
     {
         path: 'login',
         loadChildren: () => import('./modules/login/login.module').then((m) => m.LoginModule),
+        canLoad: [NotLoggedUserCanAccessGuard],
         data: {
             roles: ALL_ALLOWED,
         },

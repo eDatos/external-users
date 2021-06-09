@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, CanLoad, Route, Params } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, CanLoad, Route, Params, UrlSegment } from '@angular/router';
 import { DEFAULT_PATH } from '@app/app.constants';
 import { addQueryParamToRoute } from '@app/shared/utils/routesUtils';
 import { AuthServerProvider } from '../service';
@@ -15,7 +15,7 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
     }
 
     canLoad(route: Route): Promise<boolean> {
-        return this.canNavigateIsNotAuthenticated();
+        return this.canNavigateIsNotAuthenticated(this.router.getCurrentNavigation().extractedUrl.queryParams);
     }
 
     private checkIsAuthenticated(): Promise<boolean> {
