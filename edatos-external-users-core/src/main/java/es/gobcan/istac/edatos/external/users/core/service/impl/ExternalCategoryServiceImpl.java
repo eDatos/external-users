@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.mapper.ItemResourceMapper;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalCategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.service.EDatosApisLocator;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalCategoryService;
 
@@ -27,10 +28,12 @@ public class ExternalCategoryServiceImpl implements ExternalCategoryService {
 
     private final EDatosApisLocator eDatosApisLocator;
     private final ItemResourceMapper itemResourceMapper;
+    private final ExternalCategoryRepository externalCategoryRepository;
 
-    public ExternalCategoryServiceImpl(EDatosApisLocator eDatosApisLocator, ItemResourceMapper itemResourceMapper) {
+    public ExternalCategoryServiceImpl(EDatosApisLocator eDatosApisLocator, ItemResourceMapper itemResourceMapper, ExternalCategoryRepository externalCategoryRepository) {
         this.eDatosApisLocator = eDatosApisLocator;
         this.itemResourceMapper = itemResourceMapper;
+        this.externalCategoryRepository = externalCategoryRepository;
     }
 
     @Override
@@ -52,6 +55,12 @@ public class ExternalCategoryServiceImpl implements ExternalCategoryService {
                 String.valueOf(pageable.getPageSize()), String.valueOf(pageable.getOffset()));
         List<ExternalCategoryEntity> externalCategories = itemResourceMapper.toExternalCategoryEntities(categories);
         return new PageImpl<>(externalCategories, pageable, categories.getTotal().longValue());
+    }
+
+    @Override
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "inDbExternalCategories")
+    public List<ExternalCategoryEntity> findAll() {
+        return externalCategoryRepository.findAll();
     }
 
     private String getQuery(String search) {

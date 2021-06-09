@@ -16,8 +16,8 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalCategoryRepository;
-import es.gobcan.istac.edatos.external.users.core.repository.ExternalOperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalCategoryService;
+import es.gobcan.istac.edatos.external.users.core.service.ExternalOperationService;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalCategoryDto;
@@ -43,7 +43,7 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     ExternalOperationMapper externalOperationMapper;
 
     @Autowired
-    ExternalOperationRepository externalOperationRepository;
+    ExternalOperationService externalOperationService;
 
     @Override
     @Mapping(target = "subscribers", expression = "java(favoriteService.getCategorySubscribers().getOrDefault(entity.getId(), 0L))")
@@ -59,14 +59,14 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     @Named("getOperations")
     public List<ExternalOperationDto> getOperations(Collection<ExternalCategoryEntity> entities) {
         List<String> urns = entities.stream().map(ExternalCategoryEntity::getUrn).collect(Collectors.toList());
-        List<ExternalOperationEntity> externalOperations = externalOperationRepository.findByExternalCategoryUrnIn(urns);
+        List<ExternalOperationEntity> externalOperations = externalOperationService.findByExternalCategoryUrnIn(urns);
         return externalOperations.stream().map(externalOperationMapper::toDto).collect(Collectors.toList());
     }
 
     @Named("getExternalCategoryEntitiesFromUrn")
     public Set<ExternalCategoryEntity> getExternalCategoryEntitiesFromUrn(List<ExternalCategoryDto> resources) {
         List<String> urns = resources.stream().map(ExternalCategoryDto::getUrn).filter(Objects::nonNull).collect(Collectors.toList());
-        List<ExternalCategoryEntity> inDbExternalCategories = externalCategoryRepository.findAll();
+        List<ExternalCategoryEntity> inDbExternalCategories = externalCategoryService.findAll();
         // @formatter:off
         return externalCategoryService.requestAllExternalCategories().stream()
                 // pick only the selected external categories

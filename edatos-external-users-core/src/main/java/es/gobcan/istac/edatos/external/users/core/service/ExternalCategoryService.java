@@ -11,4 +11,5 @@ public interface ExternalCategoryService {
 
     List<ExternalCategoryEntity> requestAllExternalCategories();
     Page<ExternalCategoryEntity> requestExternalCategories(Pageable pageable, String search);
+    List<ExternalCategoryEntity> findAll();
 }

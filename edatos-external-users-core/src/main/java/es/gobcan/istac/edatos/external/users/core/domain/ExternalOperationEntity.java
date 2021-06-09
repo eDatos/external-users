@@ -18,7 +18,7 @@ import org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum;
  */
 @Entity
 @Table(name = "tb_external_operations")
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @PrimaryKeyJoinColumn(name="external_item_fk")
 public class ExternalOperationEntity extends ExternalItemEntity {
 

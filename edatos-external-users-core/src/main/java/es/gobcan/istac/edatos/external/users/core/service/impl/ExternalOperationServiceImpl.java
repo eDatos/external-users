@@ -1,5 +1,8 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
+import java.util.List;
+
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
@@ -33,5 +36,11 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
     @Override
     public void delete(ExternalOperationEntity operation) {
         externalOperationRepository.delete(operation);
+    }
+
+    @Override
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "externalOperationsByUrns")
+    public List<ExternalOperationEntity> findByExternalCategoryUrnIn(List<String> urns) {
+        return externalOperationRepository.findByExternalCategoryUrnIn(urns);
     }
 }

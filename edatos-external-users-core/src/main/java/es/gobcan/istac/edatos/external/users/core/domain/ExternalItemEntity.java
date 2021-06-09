@@ -47,7 +47,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  */
 @Entity
 @Table(name = "tb_external_items")
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ExternalItemEntity extends AbstractVersionedEntity {
 

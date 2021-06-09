@@ -85,6 +85,7 @@ public class CategoryServiceImpl implements CategoryService {
             if (category != null) {
                 categoryValidator.checkCategoriesWithSubscribers(category);
                 categoryRepository.delete(category);
+                category.getParent().removeChild(category);
                 return Optional.of(category);
             }
         }

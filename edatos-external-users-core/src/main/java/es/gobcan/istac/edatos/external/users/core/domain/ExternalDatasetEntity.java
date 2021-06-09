@@ -18,7 +18,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "tb_external_datasets")
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @PrimaryKeyJoinColumn(name = "external_item_fk")
 @EntityListeners(AuditingEntityListener.class)
 public class ExternalDatasetEntity extends ExternalItemEntity {
