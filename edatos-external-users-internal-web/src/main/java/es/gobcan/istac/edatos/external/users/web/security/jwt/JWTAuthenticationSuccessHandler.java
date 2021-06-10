@@ -22,7 +22,7 @@ import io.github.jhipster.config.JHipsterProperties;
 public class JWTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     public static final String TOKEN = "token";
-    public static final String JHI_AUTHENTICATIONTOKEN = "authenticationtoken";
+    public static final String AUTHENTICATIONTOKEN = "authentication_token_internal";
     public static final String ROOT_PATH = "/";
 
     private Environment env;
@@ -41,7 +41,7 @@ public class JWTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         boolean rememberMe = false;
         String jwt = tokenProvider.createToken(authentication, rememberMe);
-        Cookie cookie = new Cookie(JHI_AUTHENTICATIONTOKEN, jwt);
+        Cookie cookie = new Cookie(AUTHENTICATIONTOKEN, jwt);
         cookie.setSecure(env.acceptsProfiles(Constants.SPRING_PROFILE_ENV));
         cookie.setMaxAge((int) tokenValidityInSeconds);
         cookie.setHttpOnly(false);

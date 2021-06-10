@@ -5,9 +5,10 @@ import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
 
 export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter {
     public fullname: string | null;
-    public languages: Language[];
+    public languages: Language[] = [];
     public includeDeleted: boolean | null;
-    public categories: string[];
+    public categories: string[] = [];
+    public externalOperations: string[] = [];
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
@@ -16,8 +17,9 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
     public processUrlParams(queryParams: Params) {
         this.includeDeleted = queryParams.hasOwnProperty('includeDeleted');
         this.fullname = queryParams.fullname;
-        this.languages = queryParams.languages?.split(',');
-        this.categories = queryParams.categories?.split(',');
+        this.languages = queryParams.languages?.split(',') ?? [];
+        this.categories = queryParams.categories?.split(',') ?? [];
+        this.externalOperations = queryParams.externalOperations?.split(',') ?? [];
     }
 
     public getCriterias() {
@@ -32,7 +34,10 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
             criterias.push(`DELETION_DATE IS_NULL`);
         }
         if (this.categories?.length > 0) {
-            criterias.push(`FAVORITES IN (${this.categories.join(',')})`);
+            criterias.push(`FAVORITE_CATEGORIES IN (${this.categories.join(',')})`);
+        }
+        if (this.externalOperations?.length > 0) {
+            criterias.push(`FAVORITE_EXTERNAL_OPERATIONS IN (${this.externalOperations.join(',')})`);
         }
         return criterias;
     }
@@ -50,15 +55,18 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         });
         this.registerParam({
             paramName: 'includeDeleted',
-            updateFilterFromParam: (param) => {
-                this.includeDeleted = param === 'true';
-            },
+            updateFilterFromParam: (param) => (this.includeDeleted = param === 'true'),
             clearFilter: () => (this.includeDeleted = false),
         });
         this.registerParam({
             paramName: 'categories',
             updateFilterFromParam: (param) => (this.categories = param),
             clearFilter: () => (this.categories = []),
+        });
+        this.registerParam({
+            paramName: 'externalOperations',
+            updateFilterFromParam: (param) => (this.externalOperations = param),
+            clearFilter: () => (this.externalOperations = []),
         });
     }
 }

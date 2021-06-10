@@ -64,7 +64,9 @@ public class CategoryResource extends AbstractResource {
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
     public ResponseEntity<List<CategoryDto>> getCategory(Pageable pageable, @RequestParam(required = false) String query) {
-        Page<CategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
+        Page<CategoryDto> result = categoryService
+            .find(query, pageable)
+            .map(categoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
