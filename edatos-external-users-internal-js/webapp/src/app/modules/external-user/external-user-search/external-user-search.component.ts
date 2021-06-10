@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Language } from '@app/core/model';
-import { FavoriteResource, StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree/structural-resources-tree.component';
+import { StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree';
+import { FavoriteResource } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service';
 import { ArteEventManager } from 'arte-ng/services';
 import * as _ from 'lodash';
