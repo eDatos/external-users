@@ -1,7 +1,6 @@
 
 export function addQueryParamToRoute(route: string, queryParamName:string, queryParamValue: string) {
-    var newRoute = route.trim();
-    newRoute = newRoute[newRoute.length - 1] === '/' ? newRoute.slice(0, -1) : newRoute;
-    newRoute += /\?[^/]+$/.test(newRoute) ? '&' : '?';
-    return newRoute + queryParamName + '=' + queryParamValue;
+    var url = new URL(route);
+    url.searchParams.set(queryParamName, queryParamValue);
+    return url.href;
 }

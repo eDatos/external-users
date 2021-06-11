@@ -26,7 +26,6 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
 
     private canNavigateIsNotAuthenticated(params?: Params): Promise<boolean> {
         return this.checkIsAuthenticated().then((authenticated) => {
-            const nonStop = (params && /^true$/i.test(params["nonStop"]));
             const origin = (params && params["origin"]) ? params["origin"].replace(/^http:\/\//i, 'https://') : undefined;
             if (authenticated) {
                 if (origin) {
@@ -35,9 +34,6 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
                 } else {
                     this.router.navigate([DEFAULT_PATH]);
                 }
-                return false;
-            } else if(nonStop && origin) {
-                this.document.defaultView.open(origin, "_self");
                 return false;
             }
             return true;
