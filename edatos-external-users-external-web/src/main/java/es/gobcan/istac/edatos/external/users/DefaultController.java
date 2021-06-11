@@ -1,20 +1,32 @@
 package es.gobcan.istac.edatos.external.users;
 
-import es.gobcan.istac.edatos.external.users.core.service.HtmlService;
-import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.support.RequestContextUtils;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
+import javax.ws.rs.core.UriBuilder;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import es.gobcan.istac.edatos.external.users.core.service.HtmlService;
+import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
+import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 
 @Controller
 public class DefaultController {
@@ -54,5 +66,20 @@ public class DefaultController {
             model.putAll(flashMap);
         }
         return new ModelAndView("index", model);
+    }
+    
+    @GetMapping("/external-login")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<String> externalLogin(@RequestParam String url, @CookieValue(value="authenticationtoken", required=false) String token) {
+        String location = StringUtils.isNotBlank(token) ? UriBuilder.fromUri(url).queryParam("token", token).build().toString() : url;
+        return ResponseEntity.status(HttpStatus.FOUND).header("Location", location).build();
+    }
+    
+    @GetMapping("/forced-external-login")
+    @ResponseStatus(HttpStatus.FOUND)
+    public ResponseEntity<Void> forceExternalLogin(@RequestParam String url, @CookieValue(value="authenticationtoken", required=false) String token) throws UnsupportedEncodingException {
+        String loginUrl = metadataService.retrieveExternalUsersExternalWebApplicationUrlBase() + "/#/login?origin=" + URLEncoder.encode(url, "UTF-8");
+        String location = StringUtils.isNotBlank(token) ? UriBuilder.fromUri(url).queryParam("token", token).build().toString() : loginUrl; 
+        return ResponseEntity.status(HttpStatus.FOUND).header("Location", location).build();
     }
 }
