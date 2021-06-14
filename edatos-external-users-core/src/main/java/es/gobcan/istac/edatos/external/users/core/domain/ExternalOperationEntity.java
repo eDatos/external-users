@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
+import java.time.Instant;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -19,7 +21,7 @@ import org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum;
 @Entity
 @Table(name = "tb_external_operations")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@PrimaryKeyJoinColumn(name="external_item_fk")
+@PrimaryKeyJoinColumn(name = "external_item_fk")
 public class ExternalOperationEntity extends ExternalItemEntity {
 
     public ExternalOperationEntity() {
@@ -33,7 +35,15 @@ public class ExternalOperationEntity extends ExternalItemEntity {
 
     @NotNull
     @Column(nullable = false)
-    private boolean notificationsEnabled;
+    private boolean enabled = false;
+
+    @NotNull
+    @Column(nullable = false)
+    private boolean notificationsEnabled = true;
+
+    @NotNull
+    @Column(nullable = false)
+    private Instant publicationDate;
 
     public String getExternalCategoryUrn() {
         return externalCategoryUrn;
@@ -43,12 +53,28 @@ public class ExternalOperationEntity extends ExternalItemEntity {
         this.externalCategoryUrn = externalCategoryUrn;
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public boolean isNotificationsEnabled() {
         return notificationsEnabled;
     }
 
     public void setNotificationsEnabled(boolean notificationsEnabled) {
         this.notificationsEnabled = notificationsEnabled;
+    }
+
+    public Instant getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(Instant publicationDate) {
+        this.publicationDate = publicationDate;
     }
 
     public static final class Properties {

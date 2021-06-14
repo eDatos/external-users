@@ -1,9 +1,17 @@
 package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -12,6 +20,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity
 import es.gobcan.istac.edatos.external.users.core.service.ExternalOperationService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalOperationDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalOperationMapper;
+import es.gobcan.istac.edatos.external.users.rest.common.util.PaginationUtil;
 
 @RestController
 @RequestMapping(ExternalOperationResource.BASE_URL)
@@ -28,30 +37,21 @@ public class ExternalOperationResource extends AbstractResource {
         this.externalOperationMapper = externalOperationMapper;
     }
 
-    //@GetMapping("/{id}")
-    //@Timed
-    //@PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    //public ResponseEntity<CategoryDto> getCategoryById(@PathVariable Long id) {
-    //    CategoryEntity category = categoryService.findCategoryById(id);
-    //    CategoryDto externalCategoryDto = categoryMapper.toDto(category);
-    //    return ResponseUtil.wrapOrNotFound(Optional.ofNullable(externalCategoryDto));
-    //}
-
-    //@GetMapping
-    //@Timed
-    //@PreAuthorize("@secChecker.canAccessCategory(authentication)")
-    //public ResponseEntity<List<CategoryDto>> getCategory(Pageable pageable, @RequestParam(required = false) String query) {
-    //    Page<CategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
-    //    HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
-    //    return ResponseEntity.ok().headers(headers).body(result.getContent());
-    //}
+    @GetMapping
+    @Timed
+    @PreAuthorize("@secChecker.canAccessExternalOperation(authentication)")
+    public ResponseEntity<List<ExternalOperationDto>> getExternalOperations(Pageable pageable, @RequestParam(required = false) String query) {
+        Page<ExternalOperationDto> result = externalOperationService.find(query, pageable).map(externalOperationMapper::toDto);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
+        return ResponseEntity.ok().headers(headers).body(result.getContent());
+    }
 
     @Timed
     @PutMapping
-    //@PreAuthorize("@secChecker.canUpdateCategory(authentication)")
-    public ResponseEntity<ExternalOperationDto> updateExternalOperationNotifications(@RequestBody ExternalOperationDto externalOperationDto) {
-        ExternalOperationEntity externalOperation = externalOperationMapper.toEntity(externalOperationDto);
-        externalOperation = externalOperationService.updateNotifications(externalOperation);
+    @PreAuthorize("@secChecker.canUpdateExternalOperation(authentication)")
+    public ResponseEntity<ExternalOperationDto> updateExternalOperation(@RequestBody ExternalOperationDto dto) {
+        ExternalOperationEntity externalOperation = externalOperationMapper.toEntity(dto.getId(), dto.isEnabled(), dto.isNotificationsEnabled());
+        externalOperation = externalOperationService.update(externalOperation);
         return ResponseEntity.ok(externalOperationMapper.toDto(externalOperation));
     }
 }

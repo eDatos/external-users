@@ -22,12 +22,12 @@
 >
     <ng-template let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
-        <span *ngIf="node.data.favoriteType === 'externalOperation'; else onlySubscribedUsers" class="subscribed-users">
+        <span *ngIf="node.data.favoriteType === 'externalOperation'; else onlySubscribedUsers" class="node-info">
             ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}, {{'structuralResourcesTree.numberOfFilters' | translate:{ amount:
             node.data.numberOfFilters || 0 } }})
         </span>
         <ng-template #onlySubscribedUsers>
-            <span class="subscribed-users"> ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}) </span>
+            <span class="node-info"> ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}) </span>
         </ng-template>
         <span *ngIf="node.data.favoriteType === 'externalOperation'" class="notifications-switch">
             <i *ngIf="node.data.notificationsEnabled" aria-hidden="true" class="fa fa-bell notifications-icon"></i>
@@ -60,9 +60,13 @@
     [value]="tree"
 >
     <ng-template let-node pTemplate="default">
-        <span class="label mr-2" (dblclick)="editNodeName(node)">{{node.label}}</span>
-        <span class="subscribed-users mr-2">({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }})</span>
-        <!--        <span class="badge badge-secondary mr-2">{{node.data.externalCategories.length}}</span>-->
+        <span (dblclick)="editNodeName(node)" class="label mr-2">{{node.label}} </span>
+        <span class="node-info">(</span>
+        <span class="node-info">{{'structuralResourcesTree.subscribedUsers' | translate }}: {{node.data.subscribers || 0}}</span>
+        <span *ngIf="node.data.externalCategories?.length > 0" class="node-info"
+            >, {{'structuralResourcesTree.externalOperations' | translate }}: {{node.data.externalCategories?.length || 0}}</span
+        >
+        <span class="node-info mr-2">)</span>
         <p-dialog
             *ngIf="node.editMode === 'name'"
             [visible]="true"

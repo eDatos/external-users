@@ -17,10 +17,11 @@ import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.CategoryCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.ExternalOperationCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.ExternalUserCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FavoriteCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.FilterCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.OperationCriteriaProcessor;
-import es.gobcan.istac.edatos.external.users.core.service.criteria.ExternalUserCriteriaProcessor;
 
 @Component
 public class QueryUtil {
@@ -32,11 +33,14 @@ public class QueryUtil {
     private final FilterCriteriaProcessor filterCriteriaProcessor;
     private final CategoryCriteriaProcessor categoryCriteriaProcessor;
     private final FavoriteCriteriaProcessor favoriteCriteriaProcessor;
+    private final ExternalOperationCriteriaProcessor externalOperationCriteriaProcessor;
 
-    public QueryUtil(FilterCriteriaProcessor filterCriteriaProcessor, CategoryCriteriaProcessor categoryCriteriaProcessor, FavoriteCriteriaProcessor favoriteCriteriaProcessor) {
+    public QueryUtil(FilterCriteriaProcessor filterCriteriaProcessor, CategoryCriteriaProcessor categoryCriteriaProcessor, FavoriteCriteriaProcessor favoriteCriteriaProcessor,
+            ExternalOperationCriteriaProcessor externalOperationCriteriaProcessor) {
         this.filterCriteriaProcessor = filterCriteriaProcessor;
         this.categoryCriteriaProcessor = categoryCriteriaProcessor;
         this.favoriteCriteriaProcessor = favoriteCriteriaProcessor;
+        this.externalOperationCriteriaProcessor = externalOperationCriteriaProcessor;
     }
 
     public DetachedCriteria queryToUserExternalUserCriteria(Pageable pageable, String query) {
@@ -148,6 +152,10 @@ public class QueryUtil {
 
     public DetachedCriteria queryToFavoriteCriteria(String query, Pageable pageable) {
         return queryToCriteria(pageable, query, favoriteCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToExternalOperationCriteria(String query, Pageable pageable) {
+        return queryToCriteria(pageable, query, externalOperationCriteriaProcessor);
     }
 
     public DetachedCriteria queryToFavoriteSortCriteria(String query, Sort sort) {

@@ -4,7 +4,13 @@
             <column name="external_category_urn" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
             <column name="notifications_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="publication_date" type="TIMESTAMP WITHOUT TIME ZONE">
                 <constraints nullable="false"/>
             </column>
             <column name="external_item_fk" type="BIGINT">

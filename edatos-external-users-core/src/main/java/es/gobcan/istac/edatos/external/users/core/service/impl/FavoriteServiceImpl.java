@@ -154,6 +154,16 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
+    public void deleteBySuscription(CategoryEntity category) {
+        favoriteRepository.deleteByCategory(category);
+    }
+
+    @Override
+    public void deleteBySuscription(ExternalOperationEntity operation) {
+        favoriteRepository.deleteByExternalOperation(operation);
+    }
+
+    @Override
     @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "operations")
     public Map<Long, Long> getOperationSubscribers() {
         return favoriteRepository.getOperationsSubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
