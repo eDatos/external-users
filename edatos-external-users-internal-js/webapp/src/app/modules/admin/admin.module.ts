@@ -1,10 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { SharedModule } from '@app/shared';
-import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteTriInputSwitchModule } from 'arte-ng';
+import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteSpinnerModule, ArteTriInputSwitchModule } from 'arte-ng';
 import { ArteDirectivesModule } from 'arte-ng/directives';
-import { DataProtectionPolicyComponent } from './data-protection-policy/data-protection-policy.component';
-import { DataProtectionPolicyService } from './data-protection-policy/data-protection-policy.service';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import {
     AdminRoutingModule,
@@ -22,6 +21,9 @@ import {
     MetricsService,
 } from '.';
 import { CategoryMasterTreeComponent } from './category-master-tree/category-master-tree.component';
+import { DataProtectionPolicyComponent } from './data-protection-policy/data-protection-policy.component';
+import { DataProtectionPolicyService } from './data-protection-policy/data-protection-policy.service';
+import { ExternalOperationsListComponent } from './external-operations-list/external-operations-list.component';
 
 @NgModule({
     imports: [
@@ -33,6 +35,8 @@ import { CategoryMasterTreeComponent } from './category-master-tree/category-mas
         ArteAutocompleteModule,
         ArteAuditInfoModule,
         ArteTriInputSwitchModule,
+        ArteSpinnerModule,
+        InputSwitchModule,
     ],
     declarations: [
         AuditsComponent,
@@ -44,6 +48,7 @@ import { CategoryMasterTreeComponent } from './category-master-tree/category-mas
         MetricsMonitoringModalComponent,
         DataProtectionPolicyComponent,
         CategoryMasterTreeComponent,
+        ExternalOperationsListComponent,
     ],
     entryComponents: [HealthModalComponent, MetricsMonitoringModalComponent],
     providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService, DataProtectionPolicyService],

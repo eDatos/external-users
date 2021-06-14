@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { categoryMasterTreeRoutes } from '@app/modules/admin/category-master-tree/category-master-tree.route';
+import { externalOperationsListRoutes } from '@app/modules/admin/external-operations-list/external-operations-list.route';
 import { auditsRoute } from './audits/audits.route';
 import { configurationRoute } from './configuration/configuration.route';
 import { dataProtectionPolicyConfigurationRoute } from './data-protection-policy/data-protection-policy.route';
@@ -17,6 +18,7 @@ export const adminRoutes: Routes = [
     dataProtectionPolicyConfigurationRoute,
     categoryMasterTreeRoutes,
     auditsRoute,
+    externalOperationsListRoutes,
 ];
 
 @NgModule({

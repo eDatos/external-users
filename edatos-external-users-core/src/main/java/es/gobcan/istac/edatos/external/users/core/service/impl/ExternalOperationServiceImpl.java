@@ -2,20 +2,35 @@ package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalOperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalOperationService;
+import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
+import es.gobcan.istac.edatos.external.users.core.util.QueryUtil;
 
 @Service
 public class ExternalOperationServiceImpl implements ExternalOperationService {
 
     private final ExternalOperationRepository externalOperationRepository;
+    private final QueryUtil queryUtil;
+    private final FavoriteService favoriteService;
 
-    public ExternalOperationServiceImpl(ExternalOperationRepository externalOperationRepository) {
+    public ExternalOperationServiceImpl(ExternalOperationRepository externalOperationRepository, QueryUtil queryUtil, FavoriteService favoriteService) {
         this.externalOperationRepository = externalOperationRepository;
+        this.queryUtil = queryUtil;
+        this.favoriteService = favoriteService;
+    }
+
+    @Override
+    public Page<ExternalOperationEntity> find(String query, Pageable pageable) {
+        DetachedCriteria criteria = queryUtil.queryToExternalOperationCriteria(query, pageable);
+        return externalOperationRepository.findAll(criteria, pageable);
     }
 
     @Override
@@ -25,6 +40,10 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
 
     @Override
     public ExternalOperationEntity update(ExternalOperationEntity operation) {
+        if (!operation.isEnabled()) {
+            deleteSuscriptions(operation);
+        }
+
         return externalOperationRepository.saveAndFlush(operation);
     }
 
@@ -44,10 +63,7 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
         return externalOperationRepository.findByExternalCategoryUrnIn(urns);
     }
 
-    @Override
-    public ExternalOperationEntity updateNotifications(ExternalOperationEntity externalOperation) {
-        ExternalOperationEntity op = externalOperationRepository.findOne(externalOperation.getId());
-        op.setNotificationsEnabled(externalOperation.isNotificationsEnabled());
-        return externalOperationRepository.saveAndFlush(op);
+    private void deleteSuscriptions(ExternalOperationEntity operation) {
+        favoriteService.deleteBySuscription(operation);
     }
 }

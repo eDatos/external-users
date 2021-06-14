@@ -33,4 +33,7 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
 
     @Query("select new org.apache.commons.lang3.tuple.ImmutablePair(e.externalOperation.id, count(e)) from FavoriteEntity e where e.externalOperation is not null group by e.externalOperation")
     List<ImmutablePair<Long, Long>> getOperationsSubscribers();
+
+    void deleteByCategory(CategoryEntity category);
+    void deleteByExternalOperation(ExternalOperationEntity operation);
 }

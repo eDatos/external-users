@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalOperationRepository;
 import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.core.service.FilterService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalOperationDto;
@@ -19,6 +20,9 @@ public abstract class ExternalOperationMapper implements EntityMapper<ExternalOp
     @Autowired
     FilterService filterService;
 
+    @Autowired
+    ExternalOperationRepository externalOperationRepository;
+
     @Override
     @Mapping(target = "category", source = "entity.externalCategoryUrn")
     @Mapping(target = "subscribers", expression = "java(favoriteService.getOperationSubscribers().getOrDefault(entity.getId(), 0L))")
@@ -28,4 +32,11 @@ public abstract class ExternalOperationMapper implements EntityMapper<ExternalOp
     @Override
     @Mapping(target = "externalCategoryUrn", source = "dto.category.urn")
     public abstract ExternalOperationEntity toEntity(ExternalOperationDto dto);
+
+    public ExternalOperationEntity toEntity(long id, boolean enabled, boolean notificationsEnabled) {
+        ExternalOperationEntity entity = externalOperationRepository.findOne(id);
+        entity.setEnabled(enabled);
+        entity.setNotificationsEnabled(notificationsEnabled);
+        return entity;
+    }
 }

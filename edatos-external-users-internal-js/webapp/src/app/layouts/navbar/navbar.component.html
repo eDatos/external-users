@@ -50,6 +50,12 @@
                         </a>
                     </li>
                     <li>
+                        <a (click)="collapseNavbar()" class="dropdown-item" routerLink="/admin/external-operations-list" routerLinkActive="active">
+                            <i aria-hidden="true" class="fa fa-fw fa-table"></i>
+                            <span translate="global.menu.admin.externalOperationsList"></span>
+                        </a>
+                    </li>
+                    <li>
                         <a class="dropdown-item" routerLink="/admin/reportIssue" routerLinkActive="active" (click)="collapseNavbar()">
                             <i class="fa fa-fw fa-bullhorn" aria-hidden="true"></i>
                             <span translate="global.menu.admin.consultIssues"></span>

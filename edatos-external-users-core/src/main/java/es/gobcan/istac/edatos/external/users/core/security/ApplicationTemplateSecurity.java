@@ -91,6 +91,14 @@ public class ApplicationTemplateSecurity {
         return isAdmin(authentication) || isManager(authentication);
     }
 
+    public boolean canAccessExternalOperation(Authentication authentication) {
+        return isAdmin(authentication) || isManager(authentication);
+    }
+
+    public boolean canUpdateExternalOperation(Authentication authentication) {
+        return isAdmin(authentication) || isManager(authentication);
+    }
+
     public boolean canAccessMetrics(Authentication authentication) {
         return isAdmin(authentication);
     }
