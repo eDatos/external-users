@@ -26,11 +26,11 @@ export class NotLoggedUserCanAccessGuard implements CanLoad, CanActivate {
 
     private canNavigateIsNotAuthenticated(params?: Params): Promise<boolean> {
         return this.checkIsAuthenticated().then((authenticated) => {
-            const origin = (params && params["origin"]) ? params["origin"].replace(/^http:\/\//i, 'https://') : undefined;
+            const origin = params && params['origin'] ? params['origin'].replace(/^http:\/\//i, 'https://') : undefined;
             if (authenticated) {
                 if (origin) {
-                    const originRouteWithTokenParam = addQueryParamToRoute(origin, "token", encodeURIComponent(this.authServerProvider.getToken()));
-                    this.document.defaultView.open(originRouteWithTokenParam, "_self");
+                    const originRouteWithTokenParam = addQueryParamToRoute(origin, 'token', encodeURIComponent(this.authServerProvider.getToken()));
+                    this.document.defaultView.open(originRouteWithTokenParam, '_self');
                 } else {
                     this.router.navigate([DEFAULT_PATH]);
                 }

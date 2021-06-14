@@ -13,38 +13,40 @@ import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.mapper.ItemResourceMapper;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalCategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.service.EDatosApisLocator;
-import es.gobcan.istac.edatos.external.users.core.service.StructuralResourcesService;
+import es.gobcan.istac.edatos.external.users.core.service.ExternalCategoryService;
 
 @Service
-public class StructuralResourcesServiceImpl implements StructuralResourcesService {
+public class ExternalCategoryServiceImpl implements ExternalCategoryService {
 
-    private final Logger log = LoggerFactory.getLogger(StructuralResourcesServiceImpl.class);
-
-    private final EDatosApisLocator eDatosApisLocator;
     /**
      * Amount of resources that can be obtained in a request.
      */
     private static final String LIMIT = String.valueOf(Integer.MAX_VALUE);
+    private static final Logger LOG = LoggerFactory.getLogger(ExternalCategoryServiceImpl.class);
 
+    private final EDatosApisLocator eDatosApisLocator;
     private final ItemResourceMapper itemResourceMapper;
+    private final ExternalCategoryRepository externalCategoryRepository;
 
-    public StructuralResourcesServiceImpl(EDatosApisLocator eDatosApisLocator, ItemResourceMapper itemResourceMapper) {
+    public ExternalCategoryServiceImpl(EDatosApisLocator eDatosApisLocator, ItemResourceMapper itemResourceMapper, ExternalCategoryRepository externalCategoryRepository) {
         this.eDatosApisLocator = eDatosApisLocator;
         this.itemResourceMapper = itemResourceMapper;
+        this.externalCategoryRepository = externalCategoryRepository;
     }
 
     @Override
     @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "externalCategories")
-    public List<ExternalCategoryEntity> getCategories() {
-        log.info("Making request to Structural Resources Manager to GET all the categories");
+    public List<ExternalCategoryEntity> requestAllExternalCategories() {
+        LOG.info("Making request to Structural Resources Manager to GET all the categories");
         Categories categories = eDatosApisLocator.srmExternal().findCategories("~all", "~all", "~all", null, null, LIMIT, null);
         return itemResourceMapper.toExternalCategoryEntities(categories);
     }
 
     @Override
-    public Page<ExternalCategoryEntity> getCategories(Pageable pageable, String search) {
-        log.info("Making request to Structural Resources Manager to GET a page of categories. Page: {}, Search: {}", pageable, search);
+    public Page<ExternalCategoryEntity> requestExternalCategories(Pageable pageable, String search) {
+        LOG.info("Making request to Structural Resources Manager to GET a page of categories. Page: {}, Search: {}", pageable, search);
         String sort = null;
         if (pageable.getSort() != null) {
             sort = pageable.getSort().toString().replace(": ", " ");
@@ -53,6 +55,12 @@ public class StructuralResourcesServiceImpl implements StructuralResourcesServic
                 String.valueOf(pageable.getPageSize()), String.valueOf(pageable.getOffset()));
         List<ExternalCategoryEntity> externalCategories = itemResourceMapper.toExternalCategoryEntities(categories);
         return new PageImpl<>(externalCategories, pageable, categories.getTotal().longValue());
+    }
+
+    @Override
+    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "inDbExternalCategories")
+    public List<ExternalCategoryEntity> findAll() {
+        return externalCategoryRepository.findAll();
     }
 
     private String getQuery(String search) {

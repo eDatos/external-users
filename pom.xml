@@ -140,6 +140,7 @@
 
         <commons-io.version>2.5</commons-io.version>
         <commons-lang.version>3.5</commons-lang.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
 
         <edatos-core-common.version>0.0.1-SNAPSHOT</edatos-core-common.version>
         <edatos-rest-common.version>0.0.1-SNAPSHOT</edatos-rest-common.version>
@@ -155,7 +156,7 @@
 
         <hibernate-types.version>2.10.4</hibernate-types.version>
         <h2.version>1.4.200</h2.version>
-        
+
         <kafka-avro-serializer.version>6.1.1</kafka-avro-serializer.version>
     </properties>
 
@@ -512,6 +513,11 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.mattbertolini</groupId>
@@ -566,11 +572,11 @@
                 <version>${hibernate-types.version}</version>
             </dependency>
 
-			<dependency>
-				<groupId>io.confluent</groupId>
-				<artifactId>kafka-avro-serializer</artifactId>
-				<version>${kafka-avro-serializer.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>io.confluent</groupId>
+                <artifactId>kafka-avro-serializer</artifactId>
+                <version>${kafka-avro-serializer.version}</version>
+            </dependency>
 
             <!-- Test -->
 

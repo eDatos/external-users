@@ -38,7 +38,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  */
 @Entity
 @Table(name = "tb_categories")
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
@@ -67,10 +67,12 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     // delete sql statements may occur when the tree is updated.
     @NotNull
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private final Set<CategoryEntity> children = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "tb_categories_external_categories", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_category_fk"))
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private final Set<ExternalCategoryEntity> externalCategories = new HashSet<>();
 
     @Override

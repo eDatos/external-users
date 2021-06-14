@@ -22,7 +22,7 @@ import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
  */
 @Entity
 @Table(name = "tb_external_categories")
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 // jsonb is already defined on a package-level, but for some reason liquibase:diff doesn't detect it, so
 // it needs to be declared on at least one entity for it to work. Refer to
 // https://stackoverflow.com/a/52117748/7611990
