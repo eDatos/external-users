@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-import org.siemac.edatos.core.common.lang.LocaleUtil;
+import io.github.jhipster.config.JHipsterProperties;
 import org.siemac.metamac.rest.notices.v1_0.domain.Message;
 import org.siemac.metamac.rest.notices.v1_0.domain.Notice;
 import org.siemac.metamac.rest.notices.v1_0.domain.Receivers;
@@ -18,6 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.service.EDatosApisLocator;
@@ -29,6 +30,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final Logger log = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
+    private static String BASE_URL = "/#/reset-password/change-password?key=";
     @Autowired
     private MessageSource messageSource;
 
@@ -38,56 +40,61 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     private EDatosApisLocator eDatosApisLocator;
 
+    @Autowired
+    private JHipsterProperties jHipsterProperties;
+
     @Override
     public void createNewExternalUserAccountNotification(ExternalUserEntity externalUserEntity) {
-        String codeSubject = "notice.subject.register_account";
-        String messageCode = "email.creation.text1";
+        String codeSubject = "notice.subject.register_account.title";
+        String messageCode = "notice.subject.register_account.text";
+        String[] args = {externalUserEntity.getName(), externalUserEntity.getSurname1(), externalUserEntity.getEmail()};
 
-        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail());
+        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
 
     @Override
     public void createDeleteExternalUserAccountNotification(ExternalUserEntity externalUserEntity) {
-        String codeSubject = "notice.subject.unsubscribe_account";
-        String messageCode = "email.delete_account.confirm";
+        String codeSubject = "notice.subject.unsubscribe_account.title";
+        String messageCode = "notice.subject.unsubscribe_account.text";
+        String[] args = {externalUserEntity.getEmail()};
 
-        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail());
+        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
 
     @Override
     public void createChangePasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity) {
-        String codeSubject = "notice.subject.change_password";
-        String messageCode = "email.change_password.text";
+        String codeSubject = "notice.subject.change_password.title";
+        String messageCode = "notice.subject.change_password.text";
 
-        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail());
+        String[] args = {externalUserEntity.getName(), externalUserEntity.getSurname1()};
+
+        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
 
     @Override
     public void createResetPasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity) {
-        String codeSubject = "notice.subject.reset_password";
-        String messageCode = "email.reset.button";
+        String codeSubject = "notice.subject.reset_password.title";
+        String messageCode = "notice.subject.reset_password.text";
+        String baseUrl = jHipsterProperties.getMail().getBaseUrl() + BASE_URL + externalUserEntity.getResetKey();
 
-        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail());
+        String[] args = {externalUserEntity.getName(), externalUserEntity.getSurname1(), baseUrl};
+
+        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
 
-    private void createNotificationWithReceiver(String codeSubject, String messageCode, String receiver) {
+    private void createNotificationWithReceiver(String codeSubject, String messageCode, String receiver, String[] args) {
         try {
-            Notice notice = createNotice(codeSubject, messageCode, receiver);
+            Notice notice = createNotice(codeSubject, messageCode, receiver, args);
 
             eDatosApisLocator.getNoticesRestInternalFacadeV10().createNotice(notice);
-
-            eDatosApisLocator.createNoticesRest(notice);
         } catch (Exception e) {
             log.debug("Error al enviar notificacion : {}", e);
         }
     }
 
-    private Notice createNotice(String codeSubject, String messageCode, String receiver) {
-        Locale locale = metadataConfigurationService.retrieveLanguageDefaultLocale();
-        Locale currentLocale = metadataConfigurationService.retrieveLanguageDefaultLocale();
-        String subject = messageSource.getMessage(codeSubject, null, currentLocale);
-
-        Message message = createMessage(locale, messageCode);
+    private Notice createNotice(String codeSubject, String messageCode, String receiver, String[] args) {
+        String subject = generateTextI18n(codeSubject, args);
+        Message message = createMessage(messageCode, args);
 
         // @formatter:off
         return NoticeBuilder.notification()
@@ -100,8 +107,8 @@ public class NotificationServiceImpl implements NotificationService {
         // @formatter:on
     }
 
-    private Message createMessage(Locale locale, String messageCode) {
-        String localisedMessage = LocaleUtil.getMessageForCode(messageCode, locale);
+    private Message createMessage(String messageCode, String[] args) {
+        String localisedMessage = generateTextI18n(messageCode, args);
 
         // @formatter:off
         return  MessageBuilder.message()
@@ -136,4 +143,10 @@ public class NotificationServiceImpl implements NotificationService {
         }
     }
 
+    private String generateTextI18n(String text, String[] args) {
+        Locale locale = LocaleContextHolder.getLocale();
+
+        return messageSource.getMessage(text, args, locale);
+
+    }
 }
