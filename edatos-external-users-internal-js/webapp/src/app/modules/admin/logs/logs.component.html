@@ -3,10 +3,6 @@
         <h2 class="page-header-title">
             <span class="page-header-title-text" translate="logs.title"></span>
         </h2>
-        <button class="btn btn-outline-dark btn-icon-only" (click)="hiddenFilters = !hiddenFilters">
-            <i class="fa fa-filter mr-1" aria-hidden="true"></i>
-            <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}" aria-hidden="true"></i>
-        </button>
 
         <div class="page-filters entity-search" [hidden]="hiddenFilters">
             <div class="entity-search-field">
@@ -14,6 +10,11 @@
                 <arte-input [type]="'text'" name="'filter'" [(ngModel)]="filter"></arte-input>
             </div>
         </div>
+
+        <button class="btn btn-outline-dark btn-icon-only" (click)="hiddenFilters = !hiddenFilters">
+            <i class="fa fa-filter mr-1" aria-hidden="true"></i>
+            <i class="fa" [ngClass]="{'fa-angle-down': hiddenFilters, 'fa-angle-up': !hiddenFilters}" aria-hidden="true"></i>
+        </button>
     </div>
 
     <div class="page-body">

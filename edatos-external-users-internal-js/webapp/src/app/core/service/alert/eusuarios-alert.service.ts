@@ -8,6 +8,8 @@ const ERROR_ALERT_KEY = 'alert-errors';
 export class EUsuariosAlertService {
     readonly DEFAULT_MESSAGE = 'Error desconocido';
 
+    private arr: string[] = [];
+
     constructor(private translateService: TranslateService, private messageService: MessageService) {}
 
     public error(error: any): void {
@@ -36,7 +38,8 @@ export class EUsuariosAlertService {
             case 400:
             case 404:
                 const arr = httpResponse.headers.keys();
-                const headers = [];
+
+                const headers = [] as any[];
                 for (let i = 0; i < arr.length; i++) {
                     if (arr[i].endsWith('alert-error') || arr[i].endsWith('alert-params')) {
                         headers.push(arr[i]);
