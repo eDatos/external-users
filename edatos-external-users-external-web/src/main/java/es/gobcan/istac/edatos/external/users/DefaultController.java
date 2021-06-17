@@ -67,19 +67,19 @@ public class DefaultController {
         }
         return new ModelAndView("index", model);
     }
-    
-    @GetMapping("/external-login")
+
+    @GetMapping("/authenticate")
     @ResponseStatus(HttpStatus.FOUND)
-    public ResponseEntity<String> externalLogin(@RequestParam String url, @CookieValue(value="authenticationtoken", required=false) String token) {
-        String location = StringUtils.isNotBlank(token) ? UriBuilder.fromUri(url).queryParam("token", token).build().toString() : url;
-        return ResponseEntity.status(HttpStatus.FOUND).header("Location", location).build();
-    }
-    
-    @GetMapping("/forced-external-login")
-    @ResponseStatus(HttpStatus.FOUND)
-    public ResponseEntity<Void> forceExternalLogin(@RequestParam String url, @CookieValue(value="authenticationtoken", required=false) String token) throws UnsupportedEncodingException {
-        String loginUrl = metadataService.retrieveExternalUsersExternalWebApplicationUrlBase() + "/#/login?origin=" + URLEncoder.encode(url, "UTF-8");
-        String location = StringUtils.isNotBlank(token) ? UriBuilder.fromUri(url).queryParam("token", token).build().toString() : loginUrl; 
+    public ResponseEntity<Void> authenticate(@RequestParam String origin, @RequestParam(required = false, defaultValue = "false") boolean force,
+            @CookieValue(value = "authenticationtoken", required = false) String token) throws UnsupportedEncodingException {
+
+        String location;
+        if (StringUtils.isNotBlank(token)) {
+            location = UriBuilder.fromUri(origin).queryParam("token", token).build().toString();
+        } else {
+            location = force ? metadataService.retrieveExternalUsersExternalWebApplicationUrlBase() + "/#/login?origin=" + URLEncoder.encode(origin, "UTF-8") : origin;
+        }
+
         return ResponseEntity.status(HttpStatus.FOUND).header("Location", location).build();
     }
 }
