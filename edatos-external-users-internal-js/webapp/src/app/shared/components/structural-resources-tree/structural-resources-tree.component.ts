@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, DoCheck, EventEmitter, Input, IterableDiffer, IterableDiffers, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { EUsuariosAlertService } from '@app/core/service/alert/eusuarios-alert.service';
 import { MultiLanguageInputComponent } from '@app/shared/components/multi-language-input';
 import { Category, ExternalCategory, ExternalOperation, Favorite, FavoriteResource, InternationalString } from '@app/shared/model';
 import { CategoryService, ExternalOperationService, LanguageService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
-import { ArteAlertService } from 'arte-ng/services';
 import * as _ from 'lodash';
 import { TreeNode } from 'primeng/api';
 import { Observable, of } from 'rxjs';
@@ -99,7 +99,7 @@ export class StructuralResourcesTreeComponent implements OnInit, DoCheck, OnChan
     private nodeList: CategoryTreeNode[] = [];
 
     constructor(
-        private alertService: ArteAlertService,
+        private alertService: EUsuariosAlertService,
         private categoryService: CategoryService,
         private translateService: TranslateService,
         private externalOperationService: ExternalOperationService,
