@@ -89,6 +89,16 @@ public class NotificationServiceImpl implements NotificationService {
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), argsList.toArray(new String[argsList.size()]));
     }
 
+    @Override
+    public void createNoticeOfSusbcritionsJob() {
+        String codeSubject = "notice.subject.subscrition_job.title";
+        String messageCode = "notice.message.subscrition_job..text";
+        ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity)));
+        argsList.add(baseUrl);
+
+        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), argsList.toArray(new String[argsList.size()]));
+    }
+
     private void createNotificationWithReceiver(String codeSubject, String messageCode, String receiver, String[] args) {
         try {
             Notice notice = createNotice(codeSubject, messageCode, receiver, args);

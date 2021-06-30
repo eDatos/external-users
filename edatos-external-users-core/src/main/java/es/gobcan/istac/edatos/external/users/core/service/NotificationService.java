@@ -9,4 +9,6 @@ public interface NotificationService {
     void createChangePasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity);
     void createResetPasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity);
 
+    void createNoticeOfSusbcritionsJob();
+
 }
