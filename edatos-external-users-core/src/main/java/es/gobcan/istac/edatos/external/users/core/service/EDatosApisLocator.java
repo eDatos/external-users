@@ -41,15 +41,6 @@ public class EDatosApisLocator {
         return noticesV10;
     }
 
-    public HttpStatus createNoticesRest(Notice notice) {
-        RestTemplate restTemplate = new RestTemplate();
-        String noticesApiUrlBase = metadataConfigurationService.retrieveNoticesInternalApiUrlBase();
-        HttpEntity<Notice> entity = new HttpEntity<>(notice);
-        ResponseEntity<Response> response = restTemplate.exchange(noticesApiUrlBase, HttpMethod.PUT, entity, Response.class);
-
-        return response.getStatusCode();
-    }
-
     public SrmRestExternalFacadeV10 srmExternal() {
         if (srmV10 == null) {
             String baseApiUrl = metadataConfigurationService.retrieveSrmExternalApiUrlBase();

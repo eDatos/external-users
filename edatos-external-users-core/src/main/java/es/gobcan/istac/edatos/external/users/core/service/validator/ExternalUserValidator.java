@@ -1,8 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.service.validator;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
-import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
-import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import org.siemac.edatos.core.common.exception.EDatosException;

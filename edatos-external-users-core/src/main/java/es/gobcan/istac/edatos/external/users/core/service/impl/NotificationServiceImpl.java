@@ -143,8 +143,6 @@ public class NotificationServiceImpl implements NotificationService {
                 .withSendingApplication(MetamacApplicationsEnum.GESTOR_AVISOS.getName()).withSubject(subject).withRoles(MetamacRolesEnum.ADMINISTRADOR).build();
 
             eDatosApisLocator.getNoticesRestInternalFacadeV10().createNotice(notice);
-
-            eDatosApisLocator.createNoticesRest(notice);
         } catch (Exception e) {
             log.debug("Error al enviar notificacion : {}", e);
         }
