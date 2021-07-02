@@ -2,6 +2,7 @@ package es.gobcan.istac.edatos.external.users.core.service;
 
 import java.util.List;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -15,4 +16,5 @@ public interface ExternalOperationService {
     void delete(String urn);
     void delete(ExternalOperationEntity operation);
     List<ExternalOperationEntity> findByExternalCategoryUrnIn(List<String> urns);
+    List<ExternalOperationEntity> findByExternalOperationDatasetUrnIn(List<ExternalDatasetEntity> listDataset);
 }

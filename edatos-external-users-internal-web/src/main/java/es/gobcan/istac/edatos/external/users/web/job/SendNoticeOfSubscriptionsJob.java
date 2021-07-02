@@ -1,6 +1,9 @@
 package es.gobcan.istac.edatos.external.users.web.job;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalDatasetService;
 import org.quartz.*;
 import org.siemac.edatos.core.common.exception.EDatosException;
@@ -13,6 +16,8 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class SendNoticeOfSubscriptionsJob extends AbstractConsumerQuartzJob {
@@ -38,10 +43,11 @@ public class SendNoticeOfSubscriptionsJob extends AbstractConsumerQuartzJob {
                 try {
                     List<ExternalDatasetEntity> listDataset = getExternalDatasetService(context).list();
 
-                    /*
-                     * matchSubscriptionsDatasets();
-                     */
-                    getNotificationService(context).createNoticeOfSusbcritionsJob(); // sendNoticeOfSubscriptions();
+                    List<ExternalOperationEntity> listOperations = getExternalOperationService(context).findByExternalOperationDatasetUrnIn(listDataset);
+
+                    List<FavoriteEntity> listFavorites = getFavoriteService(context).findByExternalOperation(listOperations);
+
+                    getNotificationService(context).createNoticeOfSusbcritionsJob(listFavorites);
                     deleteDatasets(listDataset, context);
                     return true;
                 } catch (Exception e) {
@@ -52,6 +58,10 @@ public class SendNoticeOfSubscriptionsJob extends AbstractConsumerQuartzJob {
 
         });
         log.info("--- FINISHED --- Job SendNoticeOfSubscriptionsJob finished.");
+    }
+
+    private void matchFilterSubscriptionsDataset(List<ExternalDatasetEntity> listDataset, Map<String, Long> operationsFilter) {
+
     }
 
     private void deleteDatasets(List<ExternalDatasetEntity> listDataset, JobExecutionContext context) {

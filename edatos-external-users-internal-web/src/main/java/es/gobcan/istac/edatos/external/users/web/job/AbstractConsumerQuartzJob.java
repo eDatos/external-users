@@ -3,8 +3,7 @@ package es.gobcan.istac.edatos.external.users.web.job;
 import es.gobcan.istac.edatos.external.users.core.errors.CustomParameterizedExceptionBuilder;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
-import es.gobcan.istac.edatos.external.users.core.service.ExternalDatasetService;
-import es.gobcan.istac.edatos.external.users.core.service.NotificationService;
+import es.gobcan.istac.edatos.external.users.core.service.*;
 import es.gobcan.istac.edatos.external.users.web.config.QuartzConstants;
 import org.quartz.JobExecutionContext;
 import org.quartz.SchedulerException;
@@ -40,4 +39,11 @@ public abstract class AbstractConsumerQuartzJob extends QuartzJobBean {
         return getApplicationContext(context).getBean(NotificationService.class);
     }
 
+    protected ExternalOperationService getExternalOperationService(JobExecutionContext context) {
+        return getApplicationContext(context).getBean(ExternalOperationService.class);
+    }
+
+    protected FavoriteService getFavoriteService(JobExecutionContext context) {
+        return getApplicationContext(context).getBean(FavoriteService.class);
+    }
 }

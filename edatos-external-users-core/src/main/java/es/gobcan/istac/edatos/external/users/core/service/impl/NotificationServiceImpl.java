@@ -6,7 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationOrganismArgsService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.siemac.metamac.rest.notices.v1_0.domain.Message;
@@ -90,13 +92,20 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public void createNoticeOfSusbcritionsJob() {
+    public void createNoticeOfSusbcritionsJob(List<FavoriteEntity> listFavorites) {
         String codeSubject = "notice.subject.subscrition_job.title";
-        String messageCode = "notice.message.subscrition_job..text";
-        ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity)));
-        argsList.add(baseUrl);
+        String messageCode = "notice.message.subscrition_job.text";
 
-        createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), argsList.toArray(new String[argsList.size()]));
+        for (FavoriteEntity favorite : listFavorites) {
+            ExternalUserEntity externalUserEntity = favorite.getExternalUser();
+            String locale = LocaleContextHolder.getLocale().toString();
+            String operation = favorite.getExternalOperation().getName().getLocalisedLabel(locale);
+            ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity)));
+            argsList.add(operation);
+            if (externalUserEntity.isEmailNotificationsEnabled() && favorite.getExternalOperation().isNotificationsEnabled()) {
+                createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), argsList.toArray(new String[argsList.size()]));
+            }
+        }
     }
 
     private void createNotificationWithReceiver(String codeSubject, String messageCode, String receiver, String[] args) {
