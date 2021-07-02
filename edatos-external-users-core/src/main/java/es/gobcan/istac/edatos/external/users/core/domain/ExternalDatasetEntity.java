@@ -31,7 +31,7 @@ public class ExternalDatasetEntity extends ExternalItemEntity {
     @CreatedDate
     @NotNull
     @Column(nullable = false, updatable = false)
-    private Instant createdDate;
+    private Instant recivedDate;
 
     public ExternalDatasetEntity() {
         type = TypeExternalArtefactsEnum.DATASET;
@@ -45,11 +45,11 @@ public class ExternalDatasetEntity extends ExternalItemEntity {
         this.externalOperationUrn = externalOperationUrn;
     }
 
-    public Instant getCreatedDate() {
-        return createdDate;
+    public Instant getRecivedDate() {
+        return recivedDate;
     }
 
-    public void setCreatedDate(Instant createdDate) {
-        this.createdDate = createdDate;
+    public void setRecivedDate(Instant recivedDate) {
+        this.recivedDate = recivedDate;
     }
 }
