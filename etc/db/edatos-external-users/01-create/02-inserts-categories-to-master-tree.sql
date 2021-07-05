@@ -570,7 +570,7 @@ VALUES (5, 1, 'dt1', '{
         'statisticalResources#dataset');
 
 
-INSERT INTO public.tb_external_datasets (created_date, external_operation_urn, external_item_fk)
+INSERT INTO public.tb_external_datasets (recived_date, external_operation_urn, external_item_fk)
 VALUES ('2021-07-01 11:31:51.000000',
         'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op3', 5);
 
@@ -588,7 +588,7 @@ VALUES (6, 1, 'dt2', '{
         'statisticalResources#dataset');
 
 
-INSERT INTO public.tb_external_datasets (created_date, external_operation_urn, external_item_fk)
+INSERT INTO public.tb_external_datasets (recived_date, external_operation_urn, external_item_fk)
 VALUES ('2021-07-01 11:31:51.000000',
         'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op4', 6);
 

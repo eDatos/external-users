@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationOrganismArgsService;

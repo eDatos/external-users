@@ -1,6 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
-import org.joda.time.Instant;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +17,6 @@ public interface ExternalDatasetRepository extends AbstractExternalItemRepositor
     List<ExternalDatasetEntity> findByExternalOperationUrnIn(List<String> urns);
     Optional<ExternalDatasetEntity> findByCode(String code);
 
-    @Query("SELECT ds FROM ExternalDatasetEntity ds WHERE ds.createdDate <= :startDate AND ds.createdDate >= :endDate")
-    List<ExternalDatasetEntity> findAllByChangeRegisterOfDataset(@Param("startDate") Instant startDate, @Param("endDate") Instant endDate);
+    @Query("SELECT ds FROM ExternalDatasetEntity ds WHERE ds.recivedDate <= :endDate AND ds.recivedDate >= :startDate")
+    List<ExternalDatasetEntity> findAllByChangeRegisterOfDataset(@Param("endDate") Instant endDate, @Param("startDate") Instant startDate);
 }

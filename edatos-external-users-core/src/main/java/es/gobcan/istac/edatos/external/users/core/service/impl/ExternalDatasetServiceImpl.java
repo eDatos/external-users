@@ -3,11 +3,14 @@ package es.gobcan.istac.edatos.external.users.core.service.impl;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalDatasetRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalDatasetService;
-import org.joda.time.Instant;
-import org.joda.time.LocalDate;
+import java.time.Instant;
+import org.springframework.stereotype.Service;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+@Service
 public class ExternalDatasetServiceImpl implements ExternalDatasetService {
 
     private final ExternalDatasetRepository externalDatasetRepository;
@@ -38,8 +41,9 @@ public class ExternalDatasetServiceImpl implements ExternalDatasetService {
 
     @Override
     public List<ExternalDatasetEntity> list() {
-        Instant twentyFourHoursBefore = LocalDate.now().minusDays(1).toDateTimeAtCurrentTime().toInstant();
-        return externalDatasetRepository.findAllByChangeRegisterOfDataset(new Instant(), twentyFourHoursBefore);
+        Instant now = ZonedDateTime.now().toInstant();
+        Instant twentyFourHoursBefore = ZonedDateTime.now().minusDays(1).toInstant();
+        return externalDatasetRepository.findAllByChangeRegisterOfDataset(now, twentyFourHoursBefore);
     }
 
 }
