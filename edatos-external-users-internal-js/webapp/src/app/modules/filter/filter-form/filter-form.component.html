@@ -1,6 +1,9 @@
 <div class="page">
     <div class="page-header">
         <div class="page-header-top">
+            <button *ngIf="!inEditMode" type="button" (click)="goBack()" class="btn btn-secondary btn-frameless back-arrow" [attr.aria-label]="'entity.action.back' | translate">
+                <i class="material-icons">arrow_back</i>
+            </button>
             <h2 class="page-header-title">
                 <span class="page-header-title-text" [ngSwitch]="true">
                     <ng-container *ngSwitchCase="!inEditMode">{{ ('filter.name' | translate) + ': ' + filter.name }}</ng-container>
