@@ -157,6 +157,11 @@
         <h2.version>1.4.200</h2.version>
         
         <kafka-avro-serializer.version>6.1.1</kafka-avro-serializer.version>
+        
+        <thymeleaf.version>3.0.6.RELEASE</thymeleaf.version>
+    	<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
+    	
+    	<simple-captcha.version>1.1.1</simple-captcha.version>
     </properties>
 
     <build>

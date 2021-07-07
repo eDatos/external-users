@@ -68,6 +68,11 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+            <groupId>nl.captcha</groupId>
+            <artifactId>simple-captcha</artifactId>
+            <version>${simple-captcha.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>
