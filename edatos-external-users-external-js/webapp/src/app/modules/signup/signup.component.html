@@ -25,7 +25,7 @@
             name="editForm"
             role="form"
             novalidate
-            (ngSubmit)="save()"
+            (ngSubmit)="save(captchaModalContent)"
             #editForm="ngForm"
             autocomplete="off"
             [passwordMatch]="['password', 'confirmPassword']"
@@ -172,3 +172,18 @@
         </form>
     </div>
 </div>
+
+<ng-template #captchaModalContent let-modal>
+    <div class="modal-header">
+        <p class="modal-title">
+            <span class="mr-3">
+                <i class="fa"></i>
+            </span>
+            <strong> <span translate="signup.form.captchaModal"></span></strong>
+        </p>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" (click)="closeCaptchaModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <div id="captchaContainer"></div>
+    </div>
+</ng-template>

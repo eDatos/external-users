@@ -7,25 +7,25 @@ var showCaptcha = function (options, done) {
     options.captchaEl.insertAdjacentHTML('beforeend',
         "<div id=\"" + captchaContainerGeneratedId + "\" class=\"captcha captcha-simple\">" +
         "	<div id=\"" + captchaGeneratedId + "\">" +
-        "		<table>" +
+        "		<table style=\"width: 100%;\">" +
         "			<tr>" +
         "       		<td class=\"formevenrow\" nowrap=\"nowrap\" >" +
-        "					<img src=\"" + (/*[[${baseUrl}]]*/ "") + "\">" +
+        "					<img src=\"" + (/*[[${baseUrl}]]*/ "") + "\" class=\"" + (options.imgClasses ? options.imgClasses : "captchaImg") + "\">" +
         "				</td>" +
         "			</tr>" +
         "			<tr>" +
         "           	<td class=\"formevenrow\" align=\"right\" width=\"120\">" +
-        "               	<label for=\"codigo\">Escriba el texto que aparece en la imagen superior</label>" +
+        "               	<label for=\"codigo\" class=\"" + (options.labelClasses ? options.labelClasses : "captchaLabel") + "\">Escriba el texto que aparece en la imagen superior</label>" +
         "               </td>" +
         "			</tr>" +
         "			<tr>" +
         "           	<td class=\"formevenrow\" nowrap=\"nowrap\" align=\"center\">" +
-        "               	<input type=\"text\" name=\"codigo\" tabindex=\"1002\" id=\"codigo\"  />" +
+        "               	<input type=\"text\" name=\"codigo\" tabindex=\"1002\" id=\"codigo\" class=\"" + (options.inputClasses ? options.inputClasses : "captchaInput") + "\" />" +
         "               </td>" +
         "			</tr>" +
         "		</table>" +
         "	</div>" +
-        "	<button id=\"" + captchaButtonGeneratedId + "\">Enviar</button>" +
+        "	<button id=\"" + captchaButtonGeneratedId + "\" class=\"" + (options.buttonClasses ? options.buttonClasses : "captchaButton") + "\">Enviar</button>" +
         "</div>");
 
     var $button = document.getElementById(captchaButtonGeneratedId);
@@ -75,6 +75,9 @@ var removeCaptcha = function(options, captchaId) {
 }
 
 var requestWithCaptcha = function(request, url, options) {
+	if(!options.captchaEl && options.captchaId) {
+		options.captchaEl = document.getElementById(options.captchaId);
+	}
     return new Promise((resolve, reject) => {
         request(url).then(function (response) {
             resolve(response);

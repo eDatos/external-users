@@ -2,6 +2,7 @@ package es.gobcan.istac.edatos.external.users.web.config;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.web.security.provider.LoginPasswordAuthenticationProvider;
+import es.gobcan.istac.edatos.external.users.web.security.filter.CaptchaFilter;
 import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthenticationFilter;
 import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthorizationFilter;
 import es.gobcan.istac.edatos.external.users.web.security.provider.TokenProvider;
@@ -34,24 +35,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final TokenProvider tokenProvider;
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
     private JHipsterProperties jHipsterProperties;
 
     private ApplicationProperties applicationProperties;
-
-    private MetadataProperties metadataProperties;
 
     private final Environment env;
 
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, JHipsterProperties jHipsterProperties,
             ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env) {
 
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.tokenProvider = tokenProvider;
         this.jHipsterProperties = jHipsterProperties;
         this.applicationProperties = applicationProperties;
-        this.metadataProperties = metadataProperties;
         this.env = env;
     }
 
@@ -107,6 +102,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //@formatter:off
         http
+            .addFilterBefore(new CaptchaFilter(), JWTAuthenticationFilter.class)
             .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, applicationProperties, env))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenProvider))
             .exceptionHandling()
@@ -129,6 +125,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/apis/operations-internal/**").permitAll()
                 .antMatchers("/api/data-protection-policy").permitAll()
+                .antMatchers("/api/captcha/**").permitAll()
                 .antMatchers("/**").authenticated();
         //@formatter:on
     }

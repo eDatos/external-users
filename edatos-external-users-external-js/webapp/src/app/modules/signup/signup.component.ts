@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User, Role, Treatment, Language } from '@app/core/model';
 import { Router } from '@angular/router';
 import { AccountUserService } from '@app/core/service/user';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 type SignUp = Omit<User, 'id' | 'roles'>;
 
@@ -20,7 +21,7 @@ export class SignupFormComponent implements OnInit {
 
     public confirmPassword: string;
 
-    constructor(private accountUserService: AccountUserService, private router: Router) {}
+    constructor(private accountUserService: AccountUserService, private router: Router, private modalService: NgbModal) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -34,16 +35,24 @@ export class SignupFormComponent implements OnInit {
         this.router.navigate(returnPath);
     }
 
-    save() {
+    save(modalContent) {
         this.isSaving = true;
         if (this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
-            this.accountUserService.create(this.user).subscribe(
-                (response) => this.onSaveSuccess(response),
-                () => this.onSaveError()
-            );
+            this.modalService.open(modalContent, { container: '.app' });
+            this.accountUserService.create("captchaContainer", this.user)
+                .then((response) => this.onSaveSuccess(response))
+                .catch(() => this.onSaveError())
+                .finally(() => {
+                    this.closeCaptchaModal();
+                });
         }
+    }
+
+    closeCaptchaModal() {
+        this.modalService.dismissAll();
+        this.isSaving = false;
     }
 
     validarUsuario(inputDirty = true) {

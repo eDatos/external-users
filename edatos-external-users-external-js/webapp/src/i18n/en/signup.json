@@ -14,7 +14,8 @@
             "language": "Language",
             "phoneNumber": "Phone number",
             "organism": "Organism",
-            "enableEmailNotifications": "Enable email notifications for this user"
+            "enableEmailNotifications": "Enable email notifications for this user",
+            "captchaModal": "Solve the captcha to finish the registration"
         }
     }
 }

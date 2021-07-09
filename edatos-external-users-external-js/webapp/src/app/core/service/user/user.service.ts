@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { ElementRef, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Credentials, User, UserAccountChangePassword } from '@app/core/model';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { createRequestOption, ResponseUtils } from 'arte-ng/utils';
 import { convert, ResponseWrapper } from '@app/core/utils/response-utils';
+import { postRequestWithCaptcha } from '@app/shared/utils/captchaUtils';
 
 @Injectable()
 export class AccountUserService {
@@ -12,8 +13,12 @@ export class AccountUserService {
 
     constructor(private http: HttpClient) {}
 
-    create(user: User): Observable<User> {
-        return this.http.post<User>(`${this.resourceUrl}/signup`, user).pipe(map((res) => convert(User, res)));
+    create(el: (ElementRef | string), user: User): Promise<User> {
+        return postRequestWithCaptcha(this.http, el, User, `${this.resourceUrl}/signup`, user);
+    }
+
+    login(el: (ElementRef | string), credentials: Credentials): Promise<Credentials> {
+        return postRequestWithCaptcha(this.http, el, User, `api/login`, credentials);
     }
 
     buscarUsuarioPorEmail(email: string): Observable<User> {
@@ -26,10 +31,6 @@ export class AccountUserService {
 
     update(user: User): Observable<User> {
         return this.http.put<User>(this.resourceUrl, user).pipe(map((res) => convert(User, res)));
-    }
-
-    login(credentials: Credentials): Observable<User> {
-        return this.http.post<User>(`api/login`, credentials).pipe(map((res) => convert(User, res)));
     }
 
     changeCurrentUserPassword(accountChangePassword: UserAccountChangePassword): Observable<User> {
