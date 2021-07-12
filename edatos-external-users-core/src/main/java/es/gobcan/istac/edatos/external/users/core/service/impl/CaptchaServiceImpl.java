@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
+import es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants;
 import es.gobcan.istac.edatos.external.users.core.service.CaptchaService;
 import nl.captcha.Captcha;
 
@@ -34,7 +35,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Override
     public boolean validateSimple(String response, HttpSession session) {
-        Captcha simpleCaptcha = (Captcha) session.getAttribute(Captcha.NAME);
+        Captcha simpleCaptcha = (Captcha) session.getAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE);
         return response != null && simpleCaptcha != null && simpleCaptcha.isCorrect(response);
     }
 
@@ -46,7 +47,7 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     @Override
     public boolean validateCaptchaGobcan(String response, HttpSession session) {
-        // TODO
-        return true;
+        String gobcanCaptchaAnswer = (String) session.getAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE);
+        return response != null && gobcanCaptchaAnswer != null && gobcanCaptchaAnswer.equals(response);
     }
 }

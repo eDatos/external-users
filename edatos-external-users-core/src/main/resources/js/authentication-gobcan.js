@@ -15,7 +15,7 @@ var showCaptcha = function (options, done) {
         "			</tr>" +
         "			<tr>" +
         "           	<td class=\"formevenrow\" align=\"right\" width=\"120\">" +
-        "               	<label for=\"codigo\" class=\"" + (options.labelClasses ? options.labelClasses : "captchaLabel") + "\">Escriba el texto que aparece en la imagen superior</label>" +
+        "               	<label for=\"codigo\" class=\"" + (options.labelClasses ? options.labelClasses : "captchaLabel") + "\">Resultado de la operación</label>" +
         "               </td>" +
         "			</tr>" +
         "			<tr>" +
