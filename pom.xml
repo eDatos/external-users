@@ -146,10 +146,9 @@
         <edatos-rest-common.version>0.0.1-SNAPSHOT</edatos-rest-common.version>
 
         <metamac-notifications-rest-internal-api.version>3.1.0</metamac-notifications-rest-internal-api.version>
-        <metamac-statistical-operations-rest-internal-api.version>2.2.0
-        </metamac-statistical-operations-rest-internal-api.version>
-        <metamac-statistical-operations-rest-external-api.version>3.2.0
-        </metamac-statistical-operations-rest-external-api.version>
+        <metamac-statistical-operations-rest-internal-api.version>2.2.0</metamac-statistical-operations-rest-internal-api.version>
+        <metamac-statistical-operations-rest-external-api.version>3.2.0</metamac-statistical-operations-rest-external-api.version>
+        <metamac-statistical-operations.version>2.5.2-SNAPSHOT</metamac-statistical-operations.version>
         <metamac-common-metadata-rest-external-api.version>2.3.0</metamac-common-metadata-rest-external-api.version>
         <metamac-srm-rest-internal-api.version>2.2.0</metamac-srm-rest-internal-api.version>
         <metamac-srm-rest-external-api.version>2.2.0</metamac-srm-rest-external-api.version>
@@ -362,6 +361,14 @@
                         <artifactId>jsr311-api</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <!-- Other METAMAC dependencies -->
+
+            <dependency>
+                <groupId>org.siemac.metamac.metamac-statistical-operations</groupId>
+                <artifactId>metamac-statistical-operations-kafka</artifactId>
+                <version>${metamac-statistical-operations.version}</version>
             </dependency>
 
             <!-- Arte -->

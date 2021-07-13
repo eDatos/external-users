@@ -21,7 +21,10 @@
             <groupId>es.gobcan.istac.edatos-external-users</groupId>
             <artifactId>edatos-external-users-core</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.siemac.metamac.metamac-statistical-operations</groupId>
+            <artifactId>metamac-statistical-operations-kafka</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>

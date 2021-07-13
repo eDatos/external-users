@@ -43,7 +43,7 @@ public class ExternalOperationEntity extends ExternalItemEntity {
 
     @NotNull
     @Column(nullable = false)
-    private Instant publicationDate;
+    private Instant publicationDate = Instant.now();
 
     public String getExternalCategoryUrn() {
         return externalCategoryUrn;
