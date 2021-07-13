@@ -7,38 +7,37 @@ import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationS
 @Configuration
 public class KafkaProperties {
 
-	private static final String GROUP_ID = "edatos-external-users";
-	private static final String CLIENT_ID = "edatos-external-users-client";
+    private static final String GROUP_ID = "edatos-external-users";
 
-	private final MetadataConfigurationService metadataConfigurationService;
+    private static final String CLIENT_ID = "edatos-external-users-client";
 
-	public KafkaProperties(MetadataConfigurationService metadataConfigurationService) {
-		this.metadataConfigurationService = metadataConfigurationService;
-	}
+    private final MetadataConfigurationService metadataConfigurationService;
 
-	public String getOperationPublicationTopic() {
-	    // TODO(EDATOS-3335): Add from config db
-		//      return metadataConfigurationService.retrieveKafkaTopicOperationsPublication();
-        return "OPERATION_PUBLICATIONS";
-	}
+    public KafkaProperties(MetadataConfigurationService metadataConfigurationService) {
+        this.metadataConfigurationService = metadataConfigurationService;
+    }
 
-	public String getDatasetPublicationTopic() {
-		return metadataConfigurationService.retrieveKafkaTopicDatasetsPublication();
-	}
+    public String getOperationPublicationTopic() {
+        return metadataConfigurationService.retrieveKafkaTopicOperationsPublication();
+    }
 
-	public String getBootStrapServers() {
-		return metadataConfigurationService.retrieveKafkaBootStrapServers();
-	}
+    public String getDatasetPublicationTopic() {
+        return metadataConfigurationService.retrieveKafkaTopicDatasetsPublication();
+    }
 
-	public String getSchemaRegistryUrl() {
-		return metadataConfigurationService.retrieveKafkaSchemaRegistryUrl();
-	}
+    public String getBootStrapServers() {
+        return metadataConfigurationService.retrieveKafkaBootStrapServers();
+    }
 
-	public String getGroupId() {
-		return KafkaProperties.GROUP_ID;
-	}
+    public String getSchemaRegistryUrl() {
+        return metadataConfigurationService.retrieveKafkaSchemaRegistryUrl();
+    }
 
-	public String getClientId() {
-		return KafkaProperties.CLIENT_ID;
-	}
+    public String getGroupId() {
+        return KafkaProperties.GROUP_ID;
+    }
+
+    public String getClientId() {
+        return KafkaProperties.CLIENT_ID;
+    }
 }
