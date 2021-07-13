@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.service.impl;
 
+import java.util.Optional;
+
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.siemac.metamac.statistical.operations.core.stream.messages.OperationAvro;
 import org.siemac.metamac.statistical.resources.core.stream.messages.DatasetVersionAvro;
@@ -46,18 +48,16 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
                                    .getUrn();
         LOGGER.info("Kafka dataset message received. Code: '{}'", urn);
         ExternalDatasetEntity dataset = externalDatasetMapper.toEntity(consumerRecord.value());
-        if (externalDatasetService.findByUrn(dataset.getUrn()).isPresent()) {
-            externalDatasetService.update(dataset);
-        } else {
-            externalDatasetService.create(dataset);
-        }
+        externalDatasetService.update(dataset);
     }
 
     @KafkaListener(topics = "#{kafkaProperties.getOperationPublicationTopic()}")
     public void processOperationPublicationEvent(ConsumerRecord<String, OperationAvro> consumerRecord) {
         LOGGER.info("Kafka operation message received. Code: '{}'", consumerRecord.value().getUrn());
         ExternalOperationEntity operation = externalOperationMapper.toEntity(consumerRecord.value());
-        if (externalOperationService.findByUrn(operation.getUrn()).isPresent()) {
+        Optional<ExternalOperationEntity> inDbOperation = externalOperationService.findByUrn(operation.getUrn());
+        if (inDbOperation.isPresent()) {
+            operation.setId(inDbOperation.get().getId());
             externalOperationService.update(operation);
         } else {
             externalOperationService.create(operation);

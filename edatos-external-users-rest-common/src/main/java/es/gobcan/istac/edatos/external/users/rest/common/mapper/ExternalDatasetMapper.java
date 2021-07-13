@@ -2,14 +2,25 @@ package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ObjectFactory;
+import org.mapstruct.TargetType;
 import org.siemac.metamac.statistical.resources.core.stream.messages.DatasetVersionAvro;
+import org.siemac.metamac.statistical.resources.core.stream.messages.InternationalStringAvro;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
+import es.gobcan.istac.edatos.external.users.core.repository.ExternalDatasetRepository;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalDatasetDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
 
-@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {InternationalStringVOMapper.class, ExternalOperationMapper.class})
+@Mapper(componentModel = "spring",
+        config = AuditingMapperConfig.class,
+        uses = {InternationalStringVOMapper.class, ExternalOperationMapper.class})
 public abstract class ExternalDatasetMapper implements EntityMapper<ExternalDatasetDto, ExternalDatasetEntity> {
+
+    @Autowired
+    ExternalDatasetRepository externalDatasetRepository;
 
     @Mapping(target = "name",
              source = "siemacMetadataStatisticalResource.lifecycleStatisticalResource.versionableStatisticalResource.nameableStatisticalResource.title")
@@ -24,4 +35,25 @@ public abstract class ExternalDatasetMapper implements EntityMapper<ExternalData
     @Mapping(target = "optLock", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     public abstract ExternalDatasetEntity toEntity(DatasetVersionAvro value);
+
+    @Mapping(target = "texts", source = "localisedStrings")
+    public abstract InternationalStringVO toVO(InternationalStringAvro source);
+
+    @ObjectFactory
+    public ExternalDatasetEntity resolver(DatasetVersionAvro dataset, @TargetType Class<ExternalDatasetEntity> type) {
+        if (dataset == null) {
+            return new ExternalDatasetEntity();
+        }
+        String urn = dataset.getSiemacMetadataStatisticalResource()
+                            .getLifecycleStatisticalResource()
+                            .getVersionableStatisticalResource()
+                            .getNameableStatisticalResource()
+                            .getIdentifiableStatisticalResource()
+                            .getStatisticalOperation()
+                            .getUrn();
+        if (urn == null) {
+            return new ExternalDatasetEntity();
+        }
+        return externalDatasetRepository.findByUrn(urn).orElseGet(ExternalDatasetEntity::new);
+    }
 }
