@@ -1,11 +1,11 @@
-package es.gobcan.istac.edatos.external.users.core.service.impl;
+package es.gobcan.istac.edatos.external.users.service.impl;
 
 import org.apache.avro.generic.GenericRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import es.gobcan.istac.edatos.external.users.core.service.KafkaConsumerService;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
+import es.gobcan.istac.edatos.external.users.service.KafkaConsumerService;
 
 @Service
 public class KafkaConsumerServiceImpl implements KafkaConsumerService {

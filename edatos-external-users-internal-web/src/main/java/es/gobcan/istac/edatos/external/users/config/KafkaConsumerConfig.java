@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.core.config;
+package es.gobcan.istac.edatos.external.users.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +12,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 
+import es.gobcan.istac.edatos.external.users.config.properties.KafkaProperties;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 

@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.core.config;
+package es.gobcan.istac.edatos.external.users.config.properties;
 
 import org.springframework.context.annotation.Configuration;
 
