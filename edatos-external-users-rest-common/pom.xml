@@ -26,6 +26,10 @@
             <artifactId>metamac-statistical-operations-kafka</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
+            <artifactId>metamac-statistical-resources-kafka</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
         </dependency>

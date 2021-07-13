@@ -28,6 +28,10 @@
             <groupId>org.siemac.metamac.metamac-statistical-operations</groupId>
             <artifactId>metamac-statistical-operations-kafka</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.siemac.metamac.metamac-statistical-resources</groupId>
+            <artifactId>metamac-statistical-resources-kafka</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

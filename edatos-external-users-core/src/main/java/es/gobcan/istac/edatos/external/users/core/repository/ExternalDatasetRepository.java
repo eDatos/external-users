@@ -13,4 +13,5 @@ public interface ExternalDatasetRepository extends AbstractExternalItemRepositor
     List<ExternalDatasetEntity> findByExternalOperationUrn(String urn);
     List<ExternalDatasetEntity> findByExternalOperationUrnIn(List<String> urns);
     Optional<ExternalDatasetEntity> findByCode(String code);
+    Optional<ExternalDatasetEntity> findByUrn(String urn);
 }

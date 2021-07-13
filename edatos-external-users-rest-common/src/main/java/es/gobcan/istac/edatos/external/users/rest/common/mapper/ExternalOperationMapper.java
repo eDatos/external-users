@@ -1,7 +1,12 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.siemac.metamac.statistical.operations.core.stream.messages.DatetimeAvro;
 import org.siemac.metamac.statistical.operations.core.stream.messages.OperationAvro;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,10 +49,14 @@ public abstract class ExternalOperationMapper implements EntityMapper<ExternalOp
     @Mapping(target = "name", source = "title")
     @Mapping(target = "externalCategoryUrn", source = "urn")
     @Mapping(target = "type", ignore = true)
-    @Mapping(target = "publicationDate", ignore = true)
+    @Mapping(target = "publicationDate", source = "inventoryDate")
     @Mapping(target = "optLock", ignore = true)
     @Mapping(target = "notificationsEnabled", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "enabled", ignore = true)
     public abstract ExternalOperationEntity toEntity(OperationAvro source);
+
+    public Instant toInstant(DatetimeAvro datetime) {
+        return Instant.ofEpochMilli(datetime.getInstant());
+    }
 }
