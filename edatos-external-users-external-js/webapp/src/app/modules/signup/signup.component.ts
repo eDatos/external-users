@@ -40,7 +40,9 @@ export class SignupFormComponent implements OnInit {
         if (this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
-            this.modalService.open(modalContent, { container: '.app' });
+            if(!isCaptchaInvisible()) {
+                this.modalService.open(modalContent, { container: '.app' });
+            }
             this.accountUserService.create("captchaContainer", this.user)
                 .then((response) => this.onSaveSuccess(response))
                 .catch(() => this.onSaveError())
