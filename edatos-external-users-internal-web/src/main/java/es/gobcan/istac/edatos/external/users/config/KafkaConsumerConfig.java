@@ -33,7 +33,6 @@ public class KafkaConsumerConfig {
         Map<String, Object> properties = new HashMap<>();
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootStrapServers());
         properties.put(ConsumerConfig.GROUP_ID_CONFIG, kafkaProperties.getGroupId());
-        properties.put(ConsumerConfig.CLIENT_ID_CONFIG, kafkaProperties.getClientId());
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
         properties.put(SCHEMA_REGISTRY_URL_CONFIG, kafkaProperties.getSchemaRegistryUrl());
