@@ -22,7 +22,7 @@ def load_avro_schema_from_file(schema_filepath: str) -> [str, str]:
         key_schema = loader.loads(key_schema_string)
         value_schema = loader.load(schema_filepath)
 
-    console.log(f"Loaded avro schema at {schema_filepath}")
+    console.log(f"Avro schema loaded: '{schema_filepath}'")
     return key_schema, value_schema
 
 
@@ -42,14 +42,13 @@ def send_record(args):
     with console.status(f"[yellow]Producing record value to topic '{args.topic}'...[/]"):
         try:
             producer.produce(topic=args.topic, key=key, value=value)
+            producer.flush()
         except Exception as e:
             error_console.log(
                 f"Exception while producing {key} record value to topic {args.topic}:\n» {e}")
         else:
             console.log(
-                f"[bold green]Successfully producing record value to topic '{args.topic}'[/bold green]")
-
-    producer.flush()
+                f"[bold green]Successfully produced record value to topic '{args.topic}'[/bold green]")
 
 
 def file_exists(string):
@@ -63,11 +62,11 @@ def file_exists(string):
 def json_filepath_or_string(string):
     with console.status("Processing record value..."):
         if os.path.isfile(string):
+            console.log(f"Record loaded: '{string}'")
             with open(string) as file:
                 value = json.load(file)
         else:
             value = json.loads(string)
-        console.log(f"Record loaded")
         return value
 
 
@@ -79,9 +78,9 @@ def parse_command_line_args():
     arg_parser.add_argument("--bootstrap-servers", required=False, default="localhost:9092",
                             help="Bootstrap server address")
     arg_parser.add_argument("--schema-registry", required=False, default="http://localhost:8081",
-                            help="Schema Registry url")
+                            help="Schema registry url")
     arg_parser.add_argument("--schema-file", required=False, type=file_exists, default="schemas/operation.avsc",
-                            help="File path of Avro schema to use, default is schemas/operation.avsc")
+                            help="Avro schema filepath to use, default is 'schemas/operation.avsc'")
     arg_parser.add_argument("--record-key", required=False, type=str,
                             help="Record key. If not provided, will be a random UUID")
     arg_parser.add_argument("--record-value", required=False, type=json_filepath_or_string,
