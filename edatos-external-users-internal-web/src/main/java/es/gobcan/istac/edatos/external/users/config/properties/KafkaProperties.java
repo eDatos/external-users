@@ -16,6 +16,12 @@ public class KafkaProperties {
 		this.metadataConfigurationService = metadataConfigurationService;
 	}
 
+	public String getOperationPublicationTopic() {
+	    // TODO(EDATOS-3335): Add from config db
+		//      return metadataConfigurationService.retrieveKafkaTopicOperationsPublication();
+        return "OPERATION_PUBLICATIONS";
+	}
+
 	public String getDatasetPublicationTopic() {
 		return metadataConfigurationService.retrieveKafkaTopicDatasetsPublication();
 	}

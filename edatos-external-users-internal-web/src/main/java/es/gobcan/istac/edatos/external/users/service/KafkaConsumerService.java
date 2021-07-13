@@ -4,5 +4,6 @@ import org.apache.avro.generic.GenericRecord;
 
 public interface KafkaConsumerService {
 
-	void processDatasetPublicationEvent(GenericRecord record);
+	void processDatasetPublicationEvent(GenericRecord genericRecord);
+	void processOperationPublicationEvent(GenericRecord genericRecord);
 }
