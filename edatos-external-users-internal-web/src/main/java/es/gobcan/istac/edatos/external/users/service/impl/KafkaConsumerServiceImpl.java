@@ -48,7 +48,13 @@ public class KafkaConsumerServiceImpl implements KafkaConsumerService {
                                    .getUrn();
         LOGGER.info("Kafka dataset message received. Code: '{}'", urn);
         ExternalDatasetEntity dataset = externalDatasetMapper.toEntity(consumerRecord.value());
-        externalDatasetService.update(dataset);
+        Optional<ExternalDatasetEntity> inDbDataset = externalDatasetService.findByUrn(urn);
+        if (inDbDataset.isPresent()) {
+            dataset.setId(inDbDataset.get().getId());
+            externalDatasetService.update(dataset);
+        } else {
+            externalDatasetService.create(dataset);
+        }
     }
 
     @KafkaListener(topics = "#{kafkaProperties.getOperationPublicationTopic()}")

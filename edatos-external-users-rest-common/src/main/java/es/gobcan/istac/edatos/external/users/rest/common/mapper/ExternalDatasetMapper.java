@@ -49,7 +49,6 @@ public abstract class ExternalDatasetMapper implements EntityMapper<ExternalData
                             .getVersionableStatisticalResource()
                             .getNameableStatisticalResource()
                             .getIdentifiableStatisticalResource()
-                            .getStatisticalOperation()
                             .getUrn();
         if (urn == null) {
             return new ExternalDatasetEntity();
