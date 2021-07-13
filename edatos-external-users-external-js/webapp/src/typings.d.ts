@@ -11,8 +11,4 @@ declare var requestWithCaptcha: <T>(
     }
 ) => Promise<T>;
 
-declare var showCaptcha: (
-    options: { 
-        captchaEl: any
-    }
-) => void;
+declare var isCaptchaInvisible: () => boolean;

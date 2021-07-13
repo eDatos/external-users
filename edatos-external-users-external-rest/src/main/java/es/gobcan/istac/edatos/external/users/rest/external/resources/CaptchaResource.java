@@ -4,6 +4,7 @@ import static es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants
 import static es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants.CAPTCHA_GOBCAN_OPERATORS;
 
 import es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants;
+import es.gobcan.istac.edatos.external.users.core.errors.CaptchaClientError;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
 import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaService;
@@ -53,7 +54,7 @@ public class CaptchaResource extends AbstractResource {
         boolean captchaEnabled;
         String captchaProvider;
         
-        if(userValue == null || sessionKey == null) {
+        if(userValue == null) {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
 
@@ -75,14 +76,13 @@ public class CaptchaResource extends AbstractResource {
 
         boolean valid = false;
         HttpSession session = captchaService.getSession(sessionKey);
-        if (session == null) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        }
         if (CaptchaConstants.CAPTCHA_PROVIDER_GOBCAN.equals(captchaProvider)) {
             valid = captchaService.validateCaptchaGobcan(userValue, session);
         } else if (CaptchaConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(captchaProvider)) {
             try {
-                valid = captchaService.validateRecaptchaGobcan(userValue, session);
+                valid = captchaService.validateRecaptcha(userValue);
+            } catch (CaptchaClientError e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             } catch (EDatosException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
@@ -167,6 +167,10 @@ public class CaptchaResource extends AbstractResource {
             String captchaPictureUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(BASE_URL + "/picture/gobcan").build().toUriString();
             model.addAttribute(CaptchaConstants.CAPTCHA_PICTURE_MODEL_ATTR, captchaPictureUrl);
             return "authentication-gobcan";
+        } else if(CaptchaConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(captchaProvider)) {
+            String recaptchaSiteKey = "6LfVgBAbAAAAAJdivCt7T3o70IwI9_L7bxgy8Ja6";
+            model.addAttribute(CaptchaConstants.RECAPTCHA_SITE_KEY_MODEL_ATTR, recaptchaSiteKey);
+            return "authentication-recaptcha";
         }
         return null;
     }

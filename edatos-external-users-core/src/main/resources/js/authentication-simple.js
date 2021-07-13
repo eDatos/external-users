@@ -74,6 +74,10 @@ var removeCaptcha = function(options, captchaId) {
     options.captchaEl.removeChild(document.getElementById(captchaId));
 }
 
+var isCaptchaInvisible = function() {
+	return false;
+}
+
 var requestWithCaptcha = function(request, url, options) {
 	if(!options.captchaEl && options.captchaId) {
 		options.captchaEl = document.getElementById(options.captchaId);
