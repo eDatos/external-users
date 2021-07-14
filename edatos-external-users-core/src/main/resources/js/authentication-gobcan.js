@@ -1,8 +1,11 @@
 
 var showCaptcha = function (options, done) {
-    var captchaGeneratedId = "captcha_generated_" + Math.random().toString(36).slice(2);
-	var captchaContainerGeneratedId = captchaGeneratedId + "_container";
-	var captchaButtonGeneratedId = captchaGeneratedId + "_button";
+    var captchaGeneratedId = createUUID();
+	var captchaContainerGeneratedId = "captcha_container_" + captchaGeneratedId;
+	var captchaButtonGeneratedId = "captcha_button_" + captchaGeneratedId;
+	
+	var imgUrl = new URL(/*[[${captchaPictureUrl}]]*/ "");
+	imgUrl.searchParams.set('sessionKey', captchaGeneratedId);
 	
     options.captchaEl.insertAdjacentHTML('beforeend',
         "<div id=\"" + captchaContainerGeneratedId + "\" class=\"captcha captcha-simple\">" +
@@ -10,7 +13,7 @@ var showCaptcha = function (options, done) {
         "		<table style=\"width: 100%;\">" +
         "			<tr>" +
         "       		<td class=\"formevenrow\" nowrap=\"nowrap\" >" +
-        "					<img src=\"" + (/*[[${captchaPictureUrl}]]*/ "") + "\" class=\"" + (options.imgClasses ? options.imgClasses : "captchaImg") + "\">" +
+        "					<img src=\"" + imgUrl.href + "\" class=\"" + (options.imgClasses ? options.imgClasses : "captchaImg") + "\">" +
         "				</td>" +
         "			</tr>" +
         "			<tr>" +
@@ -32,39 +35,32 @@ var showCaptcha = function (options, done) {
     if ($button.addEventListener) {  // all browsers except IE before version 9
         $button.addEventListener("click", function (e) {
             e.preventDefault();
-            done(document.getElementById('codigo').value);
+            done(document.getElementById('codigo').value, captchaGeneratedId);
             removeCaptcha(options, captchaContainerGeneratedId);
         }, false);
     } else {
         if ($button.attachEvent) {   // IE before version 9
             $button.attachEvent("click", function (e) {
                 e.preventDefault();
-                done(document.getElementById('codigo').value);
+                done(document.getElementById('codigo').value, captchaGeneratedId);
                 removeCaptcha(options, captchaContainerGeneratedId);
             });
         }
     }
 };
 
-var sendRequestWithCaptcha = function(request, baseUrl, captchaResponse) {
-    var url = new URL(baseUrl);
-    url.searchParams.set('userValue', captchaResponse);
-    url.searchParams.set('sessionKey', getCookie("captcha_validation_key") || '');
-    return request(url.href);
+var createUUID = function() {
+  return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+  )
 };
 
-var getCookie = function(name) {
-    var cookieArr = document.cookie.split(";");
-
-    for(var i = 0; i < cookieArr.length; i++) {
-        var cookiePair = cookieArr[i].split("=");
-        if(name === cookiePair[0].trim()) {
-            return decodeURIComponent(cookiePair[1]);
-        }
-    }
-
-    return null;
-}
+var sendRequestWithCaptcha = function(request, baseUrl, captchaResponse, sessionKey) {
+    var url = new URL(baseUrl);
+    url.searchParams.set('userValue', captchaResponse);
+    url.searchParams.set('sessionKey', sessionKey);
+    return request(url.href);
+};
 
 var xhrIsUnauthorized = function(xhr) {
     return xhr.status === 401;
@@ -88,8 +84,8 @@ var requestWithCaptcha = function(request, url, options) {
         }).catch(function (error) {
             if (xhrIsUnauthorized(error)) {
                 var startCaptchaProcess = function () {
-                    showCaptcha(options, function (response) {
-                        sendRequestWithCaptcha(request, url, response).then((result) => {
+                    showCaptcha(options, function (response, sessionKey) {
+                        sendRequestWithCaptcha(request, url, response, sessionKey).then((result) => {
                             resolve(result);
                         }).catch((err) => {
                             if (xhrIsUnauthorized(err)) {

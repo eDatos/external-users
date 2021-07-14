@@ -15,10 +15,10 @@ import java.net.URL;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -94,18 +94,16 @@ public class CaptchaResource extends AbstractResource {
     }
 
     @GetMapping("/picture/simple")
-    public void drawSimpleCaptcha(HttpServletRequest request, HttpServletResponse response) {
+    public void drawSimpleCaptcha(HttpServletRequest request, HttpServletResponse response, @RequestParam String sessionKey) {
         Captcha captcha = new Captcha.Builder(CaptchaConstants.CAPTCHA_SIMPLE_WIDTH, CaptchaConstants.CAPTCHA_SIMPLE_HEIGHT).addText().addBackground().addNoise().gimp().addBorder().build();
 
         request.getSession().setAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE, captcha);
-        Cookie cookie = new Cookie("captcha_validation_key", captchaService.saveSession(request.getSession()));
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        captchaService.saveSession(sessionKey, request.getSession());
         CaptchaServletUtil.writeImage(response, captcha.getImage());
     }
     
     @GetMapping("/picture/gobcan")
-    public void drawGobcanCaptcha(HttpServletRequest request, HttpServletResponse response) {
+    public void drawGobcanCaptcha(HttpServletRequest request, HttpServletResponse response, @RequestParam String sessionKey) {
         response.setContentType("image/" + CaptchaConstants.CAPTCHA_GOBCAN_IMAGE_FORMAT);
 
         try {
@@ -146,10 +144,7 @@ public class CaptchaResource extends AbstractResource {
             CaptchaServletUtil.writeImage(response, ImageIO.read(new ByteArrayInputStream(imgCaptcha)));
 
             request.getSession().setAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE, String.valueOf(result));
-            
-            Cookie cookie = new Cookie(CaptchaConstants.CAPTCHA_SESSION_COOKIE, captchaService.saveSession(request.getSession()));
-            cookie.setPath("/");
-            response.addCookie(cookie);
+            captchaService.saveSession(sessionKey, request.getSession());            
         } catch (Exception e) {
             throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
         }

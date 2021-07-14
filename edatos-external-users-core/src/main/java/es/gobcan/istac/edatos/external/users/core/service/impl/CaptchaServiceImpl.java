@@ -2,7 +2,6 @@ package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.UriBuilder;
@@ -26,14 +25,8 @@ public class CaptchaServiceImpl implements CaptchaService {
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public String saveSession(HttpSession session) {
-        if(session == null) {
-            return null;
-        } else {
-            String key = UUID.randomUUID().toString();
-            sessions.put(key, session);
-            return key;
-        }
+    public void saveSession(String key, HttpSession session) {
+        sessions.put(key, session);
     }
 
     @Override
