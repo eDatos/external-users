@@ -9,12 +9,18 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.CreateTopicsOptions;
+import org.apache.kafka.clients.admin.DescribeClusterOptions;
+import org.apache.kafka.clients.admin.DescribeClusterResult;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.KafkaException;
+import org.apache.kafka.common.Node;
 import org.apache.kafka.common.errors.TopicExistsException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.actuate.autoconfigure.ConditionalOnEnabledHealthIndicator;
+import org.springframework.boot.actuate.health.AbstractHealthIndicator;
+import org.springframework.boot.actuate.health.Health;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
@@ -56,18 +62,18 @@ public class KafkaInitializeTopics {
         }
     }
 
+    public Properties getKafkaProperties() {
+        Properties properties = new Properties();
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, metadataConfigurationService.retrieveKafkaBootStrapServers());
+        return properties;
+    }
+
     private void propagateCreationOfTopics() {
         Properties kafkaProperties = getKafkaProperties();
         List<NewTopic> topics = getTopics();
         CreateTopicsOptions topicsOptions = getTopicsOptions();
         LOGGER.info("Kafka Properties: {}, Topics: {}", kafkaProperties, topics);
         createTopics(kafkaProperties, topics, topicsOptions);
-    }
-
-    private Properties getKafkaProperties() {
-        Properties properties = new Properties();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, metadataConfigurationService.retrieveKafkaBootStrapServers());
-        return properties;
     }
 
     private List<NewTopic> getTopics() {
@@ -99,4 +105,6 @@ public class KafkaInitializeTopics {
             Thread.currentThread().interrupt(); // See SonarLint java:S2142
         }
     }
+
+
 }
