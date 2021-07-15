@@ -1,106 +1,89 @@
+var captchaGeneratedId = null;
 
-var showCaptcha = function (options, done) {
-    var captchaGeneratedId = createUUID();
-	var captchaContainerGeneratedId = "captcha_container_" + captchaGeneratedId;
-	var captchaButtonGeneratedId = "captcha_button_" + captchaGeneratedId;
-	
-	var imgUrl = new URL(/*[[${captchaPictureUrl}]]*/ "");
-	imgUrl.searchParams.set('sessionKey', captchaGeneratedId);
-	
-    options.captchaEl.insertAdjacentHTML('beforeend',
-        "<div id=\"" + captchaContainerGeneratedId + "\" class=\"captcha captcha-simple\">" +
-        "	<div id=\"" + captchaGeneratedId + "\">" +
-        "		<table style=\"width: 100%;\">" +
-        "			<tr>" +
-        "       		<td class=\"formevenrow\" nowrap=\"nowrap\" >" +
-        "					<img src=\"" + imgUrl.href + "\" class=\"" + (options.imgClasses ? options.imgClasses : "captchaImg") + "\">" +
-        "				</td>" +
-        "			</tr>" +
-        "			<tr>" +
-        "           	<td class=\"formevenrow\" align=\"right\" width=\"120\">" +
-        "               	<label for=\"codigo\" class=\"" + (options.labelClasses ? options.labelClasses : "captchaLabel") + "\">Escriba el texto que aparece en la imagen superior</label>" +
-        "               </td>" +
-        "			</tr>" +
-        "			<tr>" +
-        "           	<td class=\"formevenrow\" nowrap=\"nowrap\" align=\"center\">" +
-        "               	<input type=\"text\" name=\"codigo\" tabindex=\"1002\" id=\"codigo\" class=\"" + (options.inputClasses ? options.inputClasses : "captchaInput") + "\" />" +
-        "               </td>" +
-        "			</tr>" +
-        "		</table>" +
-        "	</div>" +
-        "	<button id=\"" + captchaButtonGeneratedId + "\" class=\"" + (options.buttonClasses ? options.buttonClasses : "captchaButton") + "\">Enviar</button>" +
-        "</div>");
-
-    var $button = document.getElementById(captchaButtonGeneratedId);
-    if ($button.addEventListener) {  // all browsers except IE before version 9
-        $button.addEventListener("click", function (e) {
-            e.preventDefault();
-            done(document.getElementById('codigo').value, captchaGeneratedId);
-            removeCaptcha(options, captchaContainerGeneratedId);
-        }, false);
-    } else {
-        if ($button.attachEvent) {   // IE before version 9
-            $button.attachEvent("click", function (e) {
-                e.preventDefault();
-                done(document.getElementById('codigo').value, captchaGeneratedId);
-                removeCaptcha(options, captchaContainerGeneratedId);
-            });
-        }
-    }
+var showCaptcha = function (options) {	
+	if(isCaptchaEnabled()) {
+		captchaGeneratedId = createCaptchaSessionKey();
+		var imgUrl = new URL(/*[[${captchaPictureUrl}]]*/ "");
+		imgUrl.searchParams.set('sessionKey', captchaGeneratedId);
+		
+		if(!options.captchaEl && options.captchaId) {
+			options.captchaEl = document.getElementById(options.captchaId);
+		}
+	    options.captchaEl.insertAdjacentHTML('beforeend',
+	        "<div id=\"captcha_container\" class=\"captcha captcha-simple\">" +
+			"	<img src=\"" + imgUrl.href + "\" class=\"" + (options.imgClasses ? options.imgClasses : "captchaImg") + "\">" + 
+			"	<label for=\"codigo\" class=\"" + (options.labelClasses ? options.labelClasses : "captchaLabel") + "\">Escriba el texto que aparece en la imagen superior</label>" +
+			"	<input type=\"text\" name=\"codigo\" tabindex=\"1002\" id=\"codigo\" class=\"" + (options.inputClasses ? options.inputClasses : "captchaInput") + "\" />" +
+	        "</div>");
+	}
 };
 
-var createUUID = function() {
+var showCaptchaWithButton = function (request, url, options) {	
+    if(isCaptchaEnabled()) {
+		return new Promise((resolve, reject) => {
+			showCaptcha(options);
+			options.withButton = true;
+	
+			var $button = document.createElement("button");
+			$button.className = (options.buttonClasses ? options.buttonClasses : "captchaButton");
+			$button.textContent = "Enviar";
+			options.captchaEl.querySelector("#captcha_container").appendChild($button);
+	        $button.addEventListener("click", function (e) {
+	            e.preventDefault();
+	            requestWithCaptcha(request, url, options).then(val => resolve(val)).catch(error => reject(error));
+	        }, false);
+	    });
+	} else {
+		return requestWithCaptcha(request, url, options);
+	}
+};
+
+var createCaptchaSessionKey = function() {
   return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   )
 };
 
-var sendRequestWithCaptcha = function(request, baseUrl, captchaResponse, sessionKey) {
-    var url = new URL(baseUrl);
-    url.searchParams.set('userValue', captchaResponse);
-    url.searchParams.set('sessionKey', sessionKey);
-    return request(url.href);
-};
+var removeCaptcha = function(options) {
+    options.captchaEl.removeChild(options.captchaEl.querySelector("#captcha_container"));
+}
 
-var xhrIsUnauthorized = function(xhr) {
-    return xhr.status === 401;
-};
-
-var removeCaptcha = function(options, captchaId) {
-    options.captchaEl.removeChild(document.getElementById(captchaId));
+var isCaptchaEnabled = function() {
+	return /*[[${captchaEnabled}]]*/ false;
 }
 
 var isCaptchaInvisible = function() {
-	return false;
+	return false || !isCaptchaEnabled();
 }
+
+var sendRequestWithCaptcha = function(request, baseUrl, options) {
+    var url = new URL(baseUrl);
+	if(isCaptchaEnabled()) {		
+	    url.searchParams.set('userValue', options.captchaEl.querySelector("#captcha_container input").value);
+	    url.searchParams.set('sessionKey', captchaGeneratedId);
+	}
+    return request(url.href);
+};
 
 var requestWithCaptcha = function(request, url, options) {
 	if(!options.captchaEl && options.captchaId) {
 		options.captchaEl = document.getElementById(options.captchaId);
 	}
     return new Promise((resolve, reject) => {
-        request(url).then(function (response) {
+        sendRequestWithCaptcha(request, url, options).then(function (response) {
             resolve(response);
         }).catch(function (error) {
-            if (xhrIsUnauthorized(error)) {
-                var startCaptchaProcess = function () {
-                    showCaptcha(options, function (response, sessionKey) {
-                        sendRequestWithCaptcha(request, url, response, sessionKey).then((result) => {
-                            resolve(result);
-                        }).catch((err) => {
-                            if (xhrIsUnauthorized(err)) {
-                                startCaptchaProcess();
-                            } else {
-                                reject(err);
-                            }
-                        });
-                    });
-                };
-
-                startCaptchaProcess();
-            } else {
-                reject(error);
-            }
+			if(isCaptchaEnabled()) {	
+				removeCaptcha(options);
+				if(options.withButton) {
+					showCaptchaWithButton(request, url, options).then(val => resolve(val)).catch(error => reject(error));
+				} else {
+					showCaptcha(options);
+					reject(error);				
+				}
+			} else {
+				reject(error);
+			}
         });
     });
-}
+};

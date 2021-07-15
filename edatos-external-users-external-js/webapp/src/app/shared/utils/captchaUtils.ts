@@ -25,3 +25,7 @@ export function postRequestWithCaptcha<T, G>(http: HttpClient, el: (ElementRef |
         (el instanceof ElementRef) ? { captchaEl: el.nativeElement } : { captchaId: el }
     );
 }
+
+export function buildCaptcha(el: (ElementRef | string)): void {
+    return showCaptcha((el instanceof ElementRef) ? { captchaEl: el.nativeElement } : { captchaId: el });
+}

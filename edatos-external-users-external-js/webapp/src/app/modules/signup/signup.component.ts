@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User, Role, Treatment, Language } from '@app/core/model';
 import { Router } from '@angular/router';
 import { AccountUserService } from '@app/core/service/user';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { buildCaptcha } from '@app/shared/utils/captchaUtils';
 
 type SignUp = Omit<User, 'id' | 'roles'>;
 
@@ -21,7 +21,17 @@ export class SignupFormComponent implements OnInit {
 
     public confirmPassword: string;
 
-    constructor(private accountUserService: AccountUserService, private router: Router, private modalService: NgbModal) {}
+    private captchaContainerEl: ElementRef;
+
+    @ViewChild('captchaContainer') 
+    set captchaContainer(captchaContainerEl: ElementRef) {
+        if(captchaContainerEl && !this.captchaContainerEl) {
+            this.captchaContainerEl = captchaContainerEl;
+            buildCaptcha(this.captchaContainerEl);
+        }
+    }
+
+    constructor(private accountUserService: AccountUserService, private router: Router) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -35,26 +45,15 @@ export class SignupFormComponent implements OnInit {
         this.router.navigate(returnPath);
     }
 
-    save(modalContent) {
+    save() {
         this.isSaving = true;
         if (this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
-            if(!isCaptchaInvisible()) {
-                this.modalService.open(modalContent, { container: '.app' });
-            }
-            this.accountUserService.create("captchaContainer", this.user)
+            this.accountUserService.create(this.captchaContainerEl, this.user)
                 .then((response) => this.onSaveSuccess(response))
                 .catch(() => this.onSaveError())
-                .finally(() => {
-                    this.closeCaptchaModal();
-                });
         }
-    }
-
-    closeCaptchaModal() {
-        this.modalService.dismissAll();
-        this.isSaving = false;
     }
 
     validarUsuario(inputDirty = true) {

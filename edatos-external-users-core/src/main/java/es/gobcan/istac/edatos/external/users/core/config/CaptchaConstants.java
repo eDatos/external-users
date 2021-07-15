@@ -14,6 +14,7 @@ public final class CaptchaConstants {
     // CONSTANTS FOR ALL PROVIDERS
     public static final String CAPTCHA_SESSION_ATTRIBUTE = "captcha_result";
     public static final String CAPTCHA_PICTURE_MODEL_ATTR = "captchaPictureUrl";
+    public static final String CAPTCHA_ENABLED_MODEL_ATTR = "captchaEnabled";
     public static final String CAPTCHA_SESSION_COOKIE = "captcha_validation_key";
     
     // SPECIFIC CONSTANTS FOR RECAPTCHA 

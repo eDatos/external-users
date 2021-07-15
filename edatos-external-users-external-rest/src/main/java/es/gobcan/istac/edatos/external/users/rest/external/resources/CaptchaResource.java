@@ -54,10 +54,6 @@ public class CaptchaResource extends AbstractResource {
         boolean captchaEnabled;
         String captchaProvider;
         
-        if(userValue == null) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        }
-
         try {
             captchaEnabled = metadataService.retrieveCaptchaEnable();
         } catch (EDatosException e) {
@@ -72,6 +68,10 @@ public class CaptchaResource extends AbstractResource {
             }
         } else {
             return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        
+        if(userValue == null) {
+            return new ResponseEntity<>(false, HttpStatus.OK);
         }
 
         boolean valid = false;
@@ -154,6 +154,8 @@ public class CaptchaResource extends AbstractResource {
     public String authentication(HttpServletRequest request, Model model) {
 
         String captchaProvider = metadataService.retrieveCaptchaProvider();
+        boolean captchaEnable = metadataService.retrieveCaptchaEnable();
+        model.addAttribute(CaptchaConstants.CAPTCHA_ENABLED_MODEL_ATTR, captchaEnable);
         if (CaptchaConstants.CAPTCHA_PROVIDER_SIMPLE.equals(captchaProvider)) {
             String captchaPictureUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(BASE_URL + "/picture/simple").build().toUriString();
             model.addAttribute(CaptchaConstants.CAPTCHA_PICTURE_MODEL_ATTR, captchaPictureUrl);
