@@ -1,9 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.core.UriBuilder;
 
 import org.siemac.edatos.core.common.exception.EDatosException;
@@ -16,38 +14,42 @@ import es.gobcan.istac.edatos.external.users.core.errors.CaptchaClientError;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.CaptchaService;
 import es.gobcan.istac.edatos.external.users.core.util.RecaptchaVerification;
+import jersey.repackaged.com.google.common.cache.Cache;
+import jersey.repackaged.com.google.common.cache.CacheBuilder;
 import nl.captcha.Captcha;
 
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
 
-    private Map<String, HttpSession> sessions = new HashMap<>();
+    private Cache<Object, Object> responses = CacheBuilder.newBuilder()
+            .concurrencyLevel(10)
+            .expireAfterWrite(1200000, TimeUnit.MILLISECONDS)
+            .build();
     private RestTemplate restTemplate = new RestTemplate();
 
     @Override
-    public void saveSession(String key, HttpSession session) {
-        sessions.put(key, session);
+    public void saveResponse(String key, Object session) {
+        responses.put(key, session);
     }
 
     @Override
-    public HttpSession getSession(String key) {
-        return (key == null) ? null : sessions.remove(key);
+    public Object getResponse(String key) {
+        Object response = responses.getIfPresent(key);
+        responses.invalidate(key);
+        return response;
     }
 
     @Override
-    public boolean validateSimple(String response, HttpSession session) {
-        if(session == null) {
-            return false;
-        }
-        Captcha simpleCaptcha = (Captcha) session.getAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE);
-        return response != null && simpleCaptcha != null && simpleCaptcha.isCorrect(response);
+    public boolean validateSimple(String userResponse, String sessionKey) {
+        Captcha simpleCaptcha = (Captcha) getResponse(sessionKey);
+        return userResponse != null && simpleCaptcha != null && simpleCaptcha.isCorrect(userResponse);
     }
 
     @Override
-    public boolean validateRecaptcha(String response) {
+    public boolean validateRecaptcha(String userResponse, String captchaAction) {
         UriBuilder urlBuilder = UriBuilder.fromUri(CaptchaConstants.RECAPTCHA_VERIFICATION_API);
         urlBuilder.queryParam("secret", "6LfVgBAbAAAAAB9YjsovVuStNs7oEigoBeJnSB9x");
-        urlBuilder.queryParam("response", response);
+        urlBuilder.queryParam("response", userResponse);
 
         ResponseEntity<RecaptchaVerification> recaptchaVerificationResponse = restTemplate.getForEntity(urlBuilder.build(), RecaptchaVerification.class);
         RecaptchaVerification recaptchaVerification = recaptchaVerificationResponse.getBody();
@@ -58,17 +60,16 @@ public class CaptchaServiceImpl implements CaptchaService {
             } else {
                 throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
             }
+        } else if (!recaptchaVerification.getAction().equals(captchaAction)) {
+            throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
         }
         
         return recaptchaVerification.getScore() >= 0.5;
     }
 
     @Override
-    public boolean validateCaptchaGobcan(String response, HttpSession session) {
-        if(session == null) {
-            return false;
-        }
-        String gobcanCaptchaAnswer = (String) session.getAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE);
-        return response != null && gobcanCaptchaAnswer != null && gobcanCaptchaAnswer.equals(response);
+    public boolean validateCaptchaGobcan(String userResponse, String sessionKey) {
+        String gobcanCaptchaResponse = (String) getResponse(sessionKey);
+        return userResponse != null && gobcanCaptchaResponse != null && gobcanCaptchaResponse.equals(userResponse);
     }
 }

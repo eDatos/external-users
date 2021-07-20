@@ -5,7 +5,7 @@ import { AccountUserService } from '@app/core/service/user';
 import { AuthServerProvider, Principal } from '@app/core/service';
 import { DOCUMENT } from '@angular/common';
 import { addQueryParamToRoute } from '@app/shared/utils/routesUtils';
-import { buildCaptcha } from '@app/shared/utils/captchaUtils';
+import { CaptchaService } from '@app/shared/service';
 
 @Component({
     selector: 'app-login',
@@ -21,12 +21,12 @@ export class LoginComponent implements OnInit {
     set captchaContainer(captchaContainerEl: ElementRef) {
         if(captchaContainerEl && !this.captchaContainerEl) {
             this.captchaContainerEl = captchaContainerEl;
-            buildCaptcha(this.captchaContainerEl);
+            this.captchaService.buildCaptcha(this.captchaContainerEl);
         }
     }
 
     constructor(private accountUserService: AccountUserService, private router: Router, private principal: Principal, private route: ActivatedRoute, 
-                private authServerProvider: AuthServerProvider, @Inject(DOCUMENT) readonly document: Document) {
+                private authServerProvider: AuthServerProvider, @Inject(DOCUMENT) readonly document: Document, private captchaService: CaptchaService) {
         this.credentials = new Credentials();
         this.route.queryParams.subscribe(queryParams => {
             if(queryParams["origin"]) {

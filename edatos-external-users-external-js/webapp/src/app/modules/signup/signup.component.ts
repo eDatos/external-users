@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User, Role, Treatment, Language } from '@app/core/model';
 import { Router } from '@angular/router';
 import { AccountUserService } from '@app/core/service/user';
-import { buildCaptcha } from '@app/shared/utils/captchaUtils';
+import { CaptchaService } from '@app/shared/service';
 
 type SignUp = Omit<User, 'id' | 'roles'>;
 
@@ -27,11 +27,11 @@ export class SignupFormComponent implements OnInit {
     set captchaContainer(captchaContainerEl: ElementRef) {
         if(captchaContainerEl && !this.captchaContainerEl) {
             this.captchaContainerEl = captchaContainerEl;
-            buildCaptcha(this.captchaContainerEl);
+            this.captchaService.buildCaptcha(this.captchaContainerEl);
         }
     }
 
-    constructor(private accountUserService: AccountUserService, private router: Router) {}
+    constructor(private accountUserService: AccountUserService, private router: Router, private captchaService: CaptchaService) {}
 
     ngOnInit() {
         this.isSaving = false;

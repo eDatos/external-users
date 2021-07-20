@@ -17,7 +17,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +49,12 @@ public class CaptchaResource extends AbstractResource {
 
     @GetMapping("/validate")
     @ResponseBody
-    public ResponseEntity<Boolean> validateCaptcha(@RequestParam(required=false) String userValue, @RequestParam(required=false) String sessionKey) {
+    public ResponseEntity<Boolean> validateCaptcha(@RequestParam(required = false) String userValue, @RequestParam(required = false) String sessionKey,
+            @RequestParam(required = false) String captchaAction) {
+        
         boolean captchaEnabled;
         String captchaProvider;
-        
+
         try {
             captchaEnabled = metadataService.retrieveCaptchaEnable();
         } catch (EDatosException e) {
@@ -75,41 +76,42 @@ public class CaptchaResource extends AbstractResource {
         }
 
         boolean valid = false;
-        HttpSession session = captchaService.getSession(sessionKey);
         if (CaptchaConstants.CAPTCHA_PROVIDER_GOBCAN.equals(captchaProvider)) {
-            valid = captchaService.validateCaptchaGobcan(userValue, session);
+            valid = captchaService.validateCaptchaGobcan(userValue, sessionKey);
         } else if (CaptchaConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(captchaProvider)) {
             try {
-                valid = captchaService.validateRecaptcha(userValue);
+                valid = captchaService.validateRecaptcha(userValue, captchaAction);
             } catch (CaptchaClientError e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             } catch (EDatosException e) {
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         } else if (CaptchaConstants.CAPTCHA_PROVIDER_SIMPLE.equals(captchaProvider)) {
-            valid = captchaService.validateSimple(userValue, session);
+            valid = captchaService.validateSimple(userValue, sessionKey);
         }
 
         return new ResponseEntity<>(valid, HttpStatus.OK);
     }
 
     @GetMapping("/picture/simple")
-    public void drawSimpleCaptcha(HttpServletRequest request, HttpServletResponse response, @RequestParam String sessionKey) {
-        Captcha captcha = new Captcha.Builder(CaptchaConstants.CAPTCHA_SIMPLE_WIDTH, CaptchaConstants.CAPTCHA_SIMPLE_HEIGHT).addText().addBackground().addNoise().gimp().addBorder().build();
+    public void drawSimpleCaptcha(HttpServletRequest request, HttpServletResponse response, @RequestParam String sessionKey,
+            @RequestParam(required = false, defaultValue = "" + CaptchaConstants.CAPTCHA_SIMPLE_WIDTH) int width,
+            @RequestParam(required = false, defaultValue = "" + CaptchaConstants.CAPTCHA_SIMPLE_HEIGHT) int height) {
+        
+        Captcha captcha = new Captcha.Builder(width, height).addText().addBackground().addNoise().gimp().addBorder().build();
 
-        request.getSession().setAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE, captcha);
-        captchaService.saveSession(sessionKey, request.getSession());
+        captchaService.saveResponse(sessionKey, captcha);
         CaptchaServletUtil.writeImage(response, captcha.getImage());
     }
-    
+
     @GetMapping("/picture/gobcan")
-    public void drawGobcanCaptcha(HttpServletRequest request, HttpServletResponse response, @RequestParam String sessionKey) {
+    public void drawGobcanCaptcha(HttpServletRequest request, HttpServletResponse response, @RequestParam String sessionKey,
+            @RequestParam(required = false, defaultValue = "" + CaptchaConstants.CAPTCHA_GOBCAN_WIDTH) int width,
+            @RequestParam(required = false, defaultValue = "" + CaptchaConstants.CAPTCHA_GOBCAN_HEIGHT) int height) {
+        
         response.setContentType("image/" + CaptchaConstants.CAPTCHA_GOBCAN_IMAGE_FORMAT);
 
         try {
-            int width = request.getParameter("width") != null ? Integer.parseInt(request.getParameter("width")) : CaptchaConstants. CAPTCHA_GOBCAN_WIDTH;
-            int height = request.getParameter("height") != null ? Integer.parseInt(request.getParameter("height")) : CaptchaConstants.CAPTCHA_GOBCAN_HEIGHT;
-            
             char operandChar1 = CAPTCHA_GOBCAN_OPERANDS[random.nextInt((CAPTCHA_GOBCAN_OPERANDS.length))];
             int operandInt1 = Integer.parseInt(String.valueOf(operandChar1));
 
@@ -143,8 +145,7 @@ public class CaptchaResource extends AbstractResource {
             byte[] imgCaptcha = captchaServ.captchaImage1(width, height, keyword, CaptchaConstants.CAPTCHA_GOBCAN_FONTNAME, 45f);
             CaptchaServletUtil.writeImage(response, ImageIO.read(new ByteArrayInputStream(imgCaptcha)));
 
-            request.getSession().setAttribute(CaptchaConstants.CAPTCHA_SESSION_ATTRIBUTE, String.valueOf(result));
-            captchaService.saveSession(sessionKey, request.getSession());            
+            captchaService.saveResponse(sessionKey, String.valueOf(result));            
         } catch (Exception e) {
             throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
         }

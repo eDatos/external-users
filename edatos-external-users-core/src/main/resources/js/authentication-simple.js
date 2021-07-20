@@ -11,10 +11,16 @@ var showCaptcha = function (options) {
 		}
 	    options.captchaEl.insertAdjacentHTML('beforeend',
 	        "<div id=\"captcha_container\" class=\"captcha captcha-simple\">" +
-			"	<img src=\"" + imgUrl.href + "\" class=\"" + (options.imgClasses ? options.imgClasses : "captchaImg") + "\">" + 
-			"	<label for=\"codigo\" class=\"" + (options.labelClasses ? options.labelClasses : "captchaLabel") + "\">Escriba el texto que aparece en la imagen superior</label>" +
-			"	<input type=\"text\" name=\"codigo\" tabindex=\"1002\" id=\"codigo\" class=\"" + (options.inputClasses ? options.inputClasses : "captchaInput") + "\" />" +
+			"	<img src=\"" + imgUrl.href + "\">" + 
+			"	<label for=\"code\"></label>" +
+			"	<input type=\"text\" name=\"code\" id=\"code\"/>" +
 	        "</div>");
+
+		options.captchaEl.querySelector("#captcha_container img").className = options.imgClasses ? options.imgClasses : "captchaImg";
+		options.captchaEl.querySelector("#captcha_container input").className = options.inputClasses ? options.inputClasses : "captchaInput";
+		var labelEl = options.captchaEl.querySelector("#captcha_container label");
+		labelEl.innerText = options.labelText ? options.labelText : "Escriba el texto que aparece en la imagen superior";
+		labelEl.className = options.labelClasses ? options.labelClasses : "captchaLabel";
 	}
 };
 
@@ -25,8 +31,8 @@ var showCaptchaWithButton = function (request, url, options) {
 			options.withButton = true;
 	
 			var $button = document.createElement("button");
-			$button.className = (options.buttonClasses ? options.buttonClasses : "captchaButton");
-			$button.textContent = "Enviar";
+			$button.className = options.buttonClasses ? options.buttonClasses : "captchaButton";
+			$button.textContent = options.buttonText ? options.buttonText : "Enviar";
 			options.captchaEl.querySelector("#captcha_container").appendChild($button);
 	        $button.addEventListener("click", function (e) {
 	            e.preventDefault();

@@ -5,20 +5,20 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { createRequestOption, ResponseUtils } from 'arte-ng/utils';
 import { convert, ResponseWrapper } from '@app/core/utils/response-utils';
-import { postRequestWithCaptcha } from '@app/shared/utils/captchaUtils';
+import { CaptchaService } from '@app/shared/service/captcha/captcha.service';
 
 @Injectable()
 export class AccountUserService {
     private resourceUrl = 'api/account';
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient, private captchaService: CaptchaService) {}
 
     create(el: (ElementRef | string), user: User): Promise<User> {
-        return postRequestWithCaptcha(this.http, el, User, `${this.resourceUrl}/signup`, user);
+        return this.captchaService.postRequestWithCaptcha(this.http, el, User, `${this.resourceUrl}/signup`, user, "signup");
     }
 
     login(el: (ElementRef | string), credentials: Credentials): Promise<Credentials> {
-        return postRequestWithCaptcha(this.http, el, User, `api/login`, credentials);
+        return this.captchaService.postRequestWithCaptcha(this.http, el, User, `api/login`, credentials, "login");
     }
 
     buscarUsuarioPorEmail(email: string): Observable<User> {

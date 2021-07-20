@@ -1,11 +1,9 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
-import javax.servlet.http.HttpSession;
-
 public interface CaptchaService {
-    void saveSession(String key, HttpSession session);
-    HttpSession getSession(String key);
-    boolean validateSimple(String response, HttpSession session);
-    boolean validateRecaptcha(String response);
-    boolean validateCaptchaGobcan(String response, HttpSession session);
+    void saveResponse(String key, Object response);
+    Object getResponse(String key);
+    boolean validateSimple(String userResponse, String sessionKey);
+    boolean validateRecaptcha(String userResponse, String captchaAction);
+    boolean validateCaptchaGobcan(String userResponse, String sessionKey);
 }

@@ -8,6 +8,9 @@ declare var requestWithCaptcha: <T>(
         inputClasses?: string,
         buttonClasses?: string,
         labelClasses?: string,
+        labelText?: string,
+        buttonText?: string, 
+        action?: string
     }
 ) => Promise<T>;
 
@@ -20,4 +23,7 @@ declare var showCaptcha: (options: {
     inputClasses?: string,
     buttonClasses?: string,
     labelClasses?: string,
+    labelText?: string,
+    buttonText?: string,
+    action?: string
 }) => void;
