@@ -138,9 +138,14 @@ table.table-sticky-header {
 /* END .no-content */
 
 /* BEGIN CAPTCHA */
-.captchaButton, .captchaLabel, .captchaInput {
+.captcha_container {
+    width: fit-content;
+}
+
+.captchaImg, .captchaButton, .captchaLabel, .captchaInput {
     width: 100%;
     margin-top: 5px;
+    display: block;
 }
 
 .captchaButton {
@@ -150,10 +155,8 @@ table.table-sticky-header {
 }
 
 .captchaImg {
-    display: block;
     margin-left: auto;
     margin-right: auto;
-    max-width: 100%;
 }
 /* END CAPTCHA */
 
