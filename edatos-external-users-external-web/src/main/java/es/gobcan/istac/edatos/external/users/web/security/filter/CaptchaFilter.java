@@ -13,6 +13,9 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -21,10 +24,17 @@ public class CaptchaFilter extends OncePerRequestFilter {
     
     @Context
     private HttpServletRequest  request;
+    
+    private MetadataProperties metadataProperties;
+    
+    public CaptchaFilter(MetadataProperties metadataProperties) {
+        this.metadataProperties = metadataProperties;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws ServletException, IOException {
-        UriBuilder urlBuilder = UriBuilder.fromUri("http://localhost:8084/api/captcha/validate");
+        UriBuilder urlBuilder = UriBuilder.fromUri(metadataProperties.getCaptchaUrl());
+        urlBuilder.path("validate");
         for(String paramKey : Collections.list(req.getParameterNames())) {
             urlBuilder.queryParam(paramKey, req.getParameter(paramKey));
         }

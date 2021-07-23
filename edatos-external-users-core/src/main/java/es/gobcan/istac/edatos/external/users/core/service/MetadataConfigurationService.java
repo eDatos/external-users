@@ -8,4 +8,8 @@ public interface MetadataConfigurationService extends ConfigurationService {
     boolean retrieveCaptchaEnable() throws EDatosException;
 
     String retrieveCaptchaProvider() throws EDatosException;
+
+    String retrieveRecaptchaSiteKey() throws EDatosException;
+
+    String retrieveRecaptchaSecretKey() throws EDatosException;
 }

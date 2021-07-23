@@ -9,6 +9,7 @@ import es.gobcan.istac.edatos.external.users.web.security.provider.TokenProvider
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -38,6 +39,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private JHipsterProperties jHipsterProperties;
 
     private ApplicationProperties applicationProperties;
+    
+    @Autowired
+    private MetadataProperties metadataProperties;
 
     private final Environment env;
 
@@ -102,7 +106,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //@formatter:off
         http
-            .addFilterBefore(new CaptchaFilter(), JWTAuthenticationFilter.class)
+            .addFilterBefore(new CaptchaFilter(metadataProperties), JWTAuthenticationFilter.class)
             .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, applicationProperties, env))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenProvider))
             .exceptionHandling()

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.service.HtmlService;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
 import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
@@ -36,6 +37,9 @@ public class DefaultController {
 
     @Autowired
     private MetadataConfigurationService metadataService;
+    
+    @Autowired
+    private MetadataProperties metadataProperties;
 
     @Autowired
     private HtmlService htmlService;
@@ -60,6 +64,10 @@ public class DefaultController {
         model.put("faviconUrl", this.faviconUrl);
         model.put("headerHtml", htmlService.getHeaderHtml());
         model.put("footerHtml", htmlService.getFooterHtml());
+        
+        UriBuilder urlBuilder = UriBuilder.fromUri(metadataProperties.getCaptchaUrl());
+        urlBuilder.path("authentication.js");
+        model.put("captchaAuthenticationUrl", urlBuilder.build().toString());
 
         Map<String, Object> flashMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);
         if (flashMap != null) {

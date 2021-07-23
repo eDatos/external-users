@@ -4,9 +4,10 @@ import static es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants
 import static es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants.CAPTCHA_GOBCAN_OPERATORS;
 
 import es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants;
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.errors.CaptchaClientError;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
-import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
+
 import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaService;
 import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaServiceSoap;
 
@@ -45,7 +46,7 @@ public class CaptchaResource extends AbstractResource {
     private es.gobcan.istac.edatos.external.users.core.service.CaptchaService captchaService;
 
     @Autowired
-    private MetadataConfigurationService metadataService;
+    private MetadataProperties metadataService;
 
     @GetMapping("/validate")
     @ResponseBody
@@ -56,14 +57,14 @@ public class CaptchaResource extends AbstractResource {
         String captchaProvider;
 
         try {
-            captchaEnabled = metadataService.retrieveCaptchaEnable();
+            captchaEnabled = metadataService.isCaptchaEnable();
         } catch (EDatosException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
         if (captchaEnabled) {
             try {
-                captchaProvider = metadataService.retrieveCaptchaProvider();
+                captchaProvider = metadataService.getCaptchaProvider();
             } catch (EDatosException e) {
                 return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
             }
@@ -154,8 +155,8 @@ public class CaptchaResource extends AbstractResource {
     @GetMapping(value="/authentication.js")
     public String authentication(HttpServletRequest request, Model model) {
 
-        String captchaProvider = metadataService.retrieveCaptchaProvider();
-        boolean captchaEnable = metadataService.retrieveCaptchaEnable();
+        String captchaProvider = metadataService.getCaptchaProvider();
+        boolean captchaEnable = metadataService.isCaptchaEnable();
         model.addAttribute(CaptchaConstants.CAPTCHA_ENABLED_MODEL_ATTR, captchaEnable);
         if (CaptchaConstants.CAPTCHA_PROVIDER_SIMPLE.equals(captchaProvider)) {
             String captchaPictureUrl = ServletUriComponentsBuilder.fromRequestUri(request).replacePath(BASE_URL + "/picture/simple").build().toUriString();
@@ -166,7 +167,7 @@ public class CaptchaResource extends AbstractResource {
             model.addAttribute(CaptchaConstants.CAPTCHA_PICTURE_MODEL_ATTR, captchaPictureUrl);
             return "authentication-gobcan";
         } else if(CaptchaConstants.CAPTCHA_PROVIDER_RECAPTCHA.equals(captchaProvider)) {
-            String recaptchaSiteKey = "6LfVgBAbAAAAAJdivCt7T3o70IwI9_L7bxgy8Ja6";
+            String recaptchaSiteKey = metadataService.getRecaptchaSiteKey();
             model.addAttribute(CaptchaConstants.RECAPTCHA_SITE_KEY_MODEL_ATTR, recaptchaSiteKey);
             return "authentication-recaptcha";
         }

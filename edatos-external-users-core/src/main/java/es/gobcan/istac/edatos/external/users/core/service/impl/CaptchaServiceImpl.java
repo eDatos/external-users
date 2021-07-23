@@ -5,11 +5,13 @@ import java.util.concurrent.TimeUnit;
 import javax.ws.rs.core.UriBuilder;
 
 import org.siemac.edatos.core.common.exception.EDatosException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants;
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.errors.CaptchaClientError;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.CaptchaService;
@@ -23,9 +25,12 @@ public class CaptchaServiceImpl implements CaptchaService {
 
     private Cache<Object, Object> responses = CacheBuilder.newBuilder()
             .concurrencyLevel(10)
-            .expireAfterWrite(1200000, TimeUnit.MILLISECONDS)
+            .expireAfterWrite(CaptchaConstants.CAPTCHA_LIFESPAN, TimeUnit.MILLISECONDS)
             .build();
     private RestTemplate restTemplate = new RestTemplate();
+    
+    @Autowired
+    private MetadataProperties metadataProperties;
 
     @Override
     public void saveResponse(String key, Object session) {
@@ -48,14 +53,14 @@ public class CaptchaServiceImpl implements CaptchaService {
     @Override
     public boolean validateRecaptcha(String userResponse, String captchaAction) {
         UriBuilder urlBuilder = UriBuilder.fromUri(CaptchaConstants.RECAPTCHA_VERIFICATION_API);
-        urlBuilder.queryParam("secret", "6LfVgBAbAAAAAB9YjsovVuStNs7oEigoBeJnSB9x");
+        urlBuilder.queryParam("secret", metadataProperties.getRecaptchaSecretKey());
         urlBuilder.queryParam("response", userResponse);
 
         ResponseEntity<RecaptchaVerification> recaptchaVerificationResponse = restTemplate.getForEntity(urlBuilder.build(), RecaptchaVerification.class);
         RecaptchaVerification recaptchaVerification = recaptchaVerificationResponse.getBody();
-        
-        if(!recaptchaVerification.wasASuccess()) {
-            if(recaptchaVerification.hasClientError()) {
+
+        if (!recaptchaVerification.wasASuccess()) {
+            if (recaptchaVerification.hasClientError()) {
                 throw new CaptchaClientError();
             } else {
                 throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
@@ -63,8 +68,8 @@ public class CaptchaServiceImpl implements CaptchaService {
         } else if (!recaptchaVerification.getAction().equals(captchaAction)) {
             throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
         }
-        
-        return recaptchaVerification.getScore() >= 0.5;
+
+        return recaptchaVerification.getScore() >= CaptchaConstants.RECAPTCHA_SCORE_THRESHOLD;
     }
 
     @Override

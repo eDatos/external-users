@@ -6,20 +6,18 @@ public final class CaptchaConstants {
     public static final String CAPTCHA_PROVIDER_GOBCAN = "gobcan";
     public static final String CAPTCHA_PROVIDER_RECAPTCHA = "recaptcha";
     public static final String CAPTCHA_PROVIDER_SIMPLE = "simple";
-    
-    // METADATA FIELDS
-    public static final String CAPTCHA_ENABLE = "metamac.portal.rest.external.authentication.captcha.enable";
-    public static final String CAPTCHA_PROVIDER = "metamac.portal.rest.external.authentication.captcha.provider";
-    
+
     // CONSTANTS FOR ALL PROVIDERS
     public static final String CAPTCHA_SESSION_ATTRIBUTE = "captcha_result";
     public static final String CAPTCHA_PICTURE_MODEL_ATTR = "captchaPictureUrl";
     public static final String CAPTCHA_ENABLED_MODEL_ATTR = "captchaEnabled";
     public static final String CAPTCHA_SESSION_COOKIE = "captcha_validation_key";
+    public static final long CAPTCHA_LIFESPAN = 1200000;
     
     // SPECIFIC CONSTANTS FOR RECAPTCHA 
     public static final String RECAPTCHA_SITE_KEY_MODEL_ATTR = "recaptchaSiteKey";
     public static final String RECAPTCHA_VERIFICATION_API = "https://www.google.com/recaptcha/api/siteverify";
+    public static final double RECAPTCHA_SCORE_THRESHOLD = 0.5;
     
     // SPECIFIC CONSTANTS FOR CAPTCHA SIMPLE 
     public static final int CAPTCHA_SIMPLE_WIDTH = 200;

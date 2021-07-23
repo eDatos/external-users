@@ -1,6 +1,5 @@
 package es.gobcan.istac.edatos.external.users.core.config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -26,6 +25,12 @@ public class MetadataProperties {
     private String metamacCasLoginUrl;
     private String metamacCasLogoutUrl;
     private String defaultLanguage;
+    
+    private boolean captchaEnable;
+    private String captchaProvider;
+    private String recaptchaSiteKey;
+    private String recaptchaSecretKey;
+    private String captchaUrl;
 
     @PostConstruct
     public void setValues() {
@@ -34,6 +39,11 @@ public class MetadataProperties {
             metamacCasPrefix = normalizeUrl(configurationService.retrieveSecurityCasServerUrlPrefix());
             metamacCasLoginUrl = normalizeUrl(configurationService.retrieveSecurityCasServiceLoginUrl());
             metamacCasLogoutUrl = normalizeUrl(configurationService.retrieveSecurityCasServiceLogoutUrl());
+            captchaEnable = configurationService.retrieveCaptchaEnable();
+            captchaProvider = configurationService.retrieveCaptchaProvider();
+            recaptchaSiteKey = configurationService.retrieveRecaptchaSiteKey();
+            recaptchaSecretKey = configurationService.retrieveRecaptchaSecretKey();
+            captchaUrl = configurationService.retrieveCaptchaExternalApiUrlBase();
             List<String> languages = configurationService.retrieveLanguages();
             defaultLanguage = languages.get(0);
         } catch (Exception e) {
@@ -59,6 +69,26 @@ public class MetadataProperties {
 
     public String getDefaultLanguage() {
         return defaultLanguage;
+    }
+
+    public boolean isCaptchaEnable() {
+        return captchaEnable;
+    }
+
+    public String getCaptchaProvider() {
+        return captchaProvider;
+    }
+
+    public String getRecaptchaSiteKey() {
+        return recaptchaSiteKey;
+    }
+
+    public String getRecaptchaSecretKey() {
+        return recaptchaSecretKey;
+    }
+
+    public String getCaptchaUrl() {
+        return captchaUrl;
     }
 
     // 
