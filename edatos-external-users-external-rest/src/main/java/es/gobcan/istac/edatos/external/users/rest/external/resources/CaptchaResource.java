@@ -10,6 +10,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 
 import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaService;
 import https.www_gobiernodecanarias_org.ws.wscaptcha.service_asmx.CaptchaServiceSoap;
+import liquibase.util.BooleanUtils;
 
 import java.io.ByteArrayInputStream;
 import java.net.URL;
@@ -53,26 +54,13 @@ public class CaptchaResource extends AbstractResource {
     public ResponseEntity<Boolean> validateCaptcha(@RequestParam(required = false) String userValue, @RequestParam(required = false) String sessionKey,
             @RequestParam(required = false) String captchaAction) {
         
-        boolean captchaEnabled;
-        String captchaProvider;
-
-        try {
-            captchaEnabled = metadataService.isCaptchaEnable();
-        } catch (EDatosException e) {
+        boolean captchaEnabled = metadataService.isCaptchaEnable();
+        String captchaProvider = metadataService.getCaptchaProvider();
+        if (BooleanUtils.equals(null, captchaEnabled)) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        if (captchaEnabled) {
-            try {
-                captchaProvider = metadataService.getCaptchaProvider();
-            } catch (EDatosException e) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-        } else {
+        } else if(captchaEnabled) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }
-        
-        if(userValue == null) {
+        } else if(userValue == null) {
             return new ResponseEntity<>(false, HttpStatus.OK);
         }
 
@@ -139,7 +127,7 @@ public class CaptchaResource extends AbstractResource {
                 keyword = operandChar1 + " por " + operandChar2;
             }
 
-            URL wsdlLocation = getClass().getResource(CaptchaConstants.CAPTCHA_GOBCAN_WSDL_URL);
+            URL wsdlLocation = getClass().getResource(CaptchaConstants.CAPTCHA_GOBCAN_WSDL_PATH);
             CaptchaService service = new CaptchaService(wsdlLocation);
             CaptchaServiceSoap captchaServ = service.getCaptchaServiceSoap();
 

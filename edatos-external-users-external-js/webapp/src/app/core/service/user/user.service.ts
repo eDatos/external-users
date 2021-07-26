@@ -14,11 +14,11 @@ export class AccountUserService {
     constructor(private http: HttpClient, private captchaService: CaptchaService) {}
 
     create(el: (ElementRef | string), user: User): Promise<User> {
-        return this.captchaService.postRequestWithCaptcha(this.http, el, User, `${this.resourceUrl}/signup`, user, "signup");
+        return this.captchaService.postRequestWithCaptcha(el, User, `${this.resourceUrl}/signup`, user, "signup");
     }
 
     login(el: (ElementRef | string), credentials: Credentials): Promise<Credentials> {
-        return this.captchaService.postRequestWithCaptcha(this.http, el, User, `api/login`, credentials, "login");
+        return this.captchaService.postRequestWithCaptcha(el, User, `api/login`, credentials, "login");
     }
 
     buscarUsuarioPorEmail(email: string): Observable<User> {

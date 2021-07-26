@@ -9,18 +9,18 @@ var showCaptcha = function (options) {
 		if(!options.captchaEl && options.captchaId) {
 			options.captchaEl = document.getElementById(options.captchaId);
 		}
-	    options.captchaEl.insertAdjacentHTML('beforeend',
-	        "<div id=\"captcha_container\" class=\"captcha captcha-gobcan\">" +
-			"	<img src=\"" + imgUrl.href + "\">" + 
-			"	<label for=\"code\"></label>" +
-			"	<input type=\"text\" name=\"code\" id=\"code\"/>" +
-	        "</div>");
+		options.captchaEl.insertAdjacentHTML('beforeend', `
+			<div id="captcha-container" class="captcha captcha-gobcan">
+				<img src="${imgUrl.href}">
+				<label for="code"></label>
+				<input type="text" name="code" id="code"/>
+			</div>`);
 
-		options.captchaEl.querySelector("#captcha_container img").className = options.imgClasses ? options.imgClasses : "captchaImg";
-		options.captchaEl.querySelector("#captcha_container input").className = options.inputClasses ? options.inputClasses : "captchaInput";
-		var labelEl = options.captchaEl.querySelector("#captcha_container label");
+		options.captchaEl.querySelector("#captcha-container img").className = options.imgClasses ? options.imgClasses : "captcha-img";
+		options.captchaEl.querySelector("#captcha-container input").className = options.inputClasses ? options.inputClasses : "captcha-input";
+		var labelEl = options.captchaEl.querySelector("#captcha-container label");
 		labelEl.innerText = options.labelText ? options.labelText : "Resultado de la operación";
-		labelEl.className = options.labelClasses ? options.labelClasses : "captchaLabel";
+		labelEl.className = options.labelClasses ? options.labelClasses : "captcha-label";
 	}
 };
 
@@ -31,9 +31,9 @@ var showCaptchaWithButton = function (request, url, options) {
 			options.withButton = true;
 	
 			var $button = document.createElement("button");
-			$button.className = options.buttonClasses ? options.buttonClasses : "captchaButton";
+			$button.className = options.buttonClasses ? options.buttonClasses : "captcha-button";
 			$button.textContent = options.buttonText ? options.buttonText : "Enviar";
-			options.captchaEl.querySelector("#captcha_container").appendChild($button);
+			options.captchaEl.querySelector("#captcha-container").appendChild($button);
 	        $button.addEventListener("click", function (e) {
 	            e.preventDefault();
 	            requestWithCaptcha(request, url, options).then(val => resolve(val)).catch(error => reject(error));
@@ -51,7 +51,7 @@ var createCaptchaSessionKey = function() {
 };
 
 var removeCaptcha = function(options) {
-    options.captchaEl.removeChild(options.captchaEl.querySelector("#captcha_container"));
+    options.captchaEl.removeChild(options.captchaEl.querySelector("#captcha-container"));
 }
 
 var isCaptchaEnabled = function() {
@@ -65,7 +65,7 @@ var isCaptchaInvisible = function() {
 var sendRequestWithCaptcha = function(request, baseUrl, options) {
     var url = new URL(baseUrl);
 	if(isCaptchaEnabled()) {		
-	    url.searchParams.set('userValue', options.captchaEl.querySelector("#captcha_container input").value);
+	    url.searchParams.set('userValue', options.captchaEl.querySelector("#captcha-container input").value);
 	    url.searchParams.set('sessionKey', captchaGeneratedId);
 	}
     return request(url.href);

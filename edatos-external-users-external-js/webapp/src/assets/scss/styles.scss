@@ -137,29 +137,6 @@ table.table-sticky-header {
 }
 /* END .no-content */
 
-/* BEGIN CAPTCHA */
-.captcha_container {
-    width: fit-content;
-}
-
-.captchaImg, .captchaButton, .captchaLabel, .captchaInput {
-    width: 100%;
-    margin-top: 5px;
-    display: block;
-}
-
-.captchaButton {
-    @extend .btn;
-    @extend .btn-primary;
-    @extend .w-100;
-}
-
-.captchaImg {
-    margin-left: auto;
-    margin-right: auto;
-}
-/* END CAPTCHA */
-
 footer.istac-footer {
     position: fixed !important;
 }
@@ -173,5 +150,6 @@ footer.istac-footer {
     background: #f8f8f8;
 }
 
+@import './_captcha';
 @import './_page';
 @import './_forms';
