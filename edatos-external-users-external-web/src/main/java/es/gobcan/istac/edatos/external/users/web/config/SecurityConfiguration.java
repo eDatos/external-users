@@ -2,12 +2,14 @@ package es.gobcan.istac.edatos.external.users.web.config;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.web.security.provider.LoginPasswordAuthenticationProvider;
+import es.gobcan.istac.edatos.external.users.web.security.filter.CaptchaFilter;
 import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthenticationFilter;
 import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthorizationFilter;
 import es.gobcan.istac.edatos.external.users.web.security.provider.TokenProvider;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -34,12 +36,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final TokenProvider tokenProvider;
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-
     private JHipsterProperties jHipsterProperties;
 
     private ApplicationProperties applicationProperties;
-
+    
+    @Autowired
     private MetadataProperties metadataProperties;
 
     private final Environment env;
@@ -47,11 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, JHipsterProperties jHipsterProperties,
             ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env) {
 
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.tokenProvider = tokenProvider;
         this.jHipsterProperties = jHipsterProperties;
         this.applicationProperties = applicationProperties;
-        this.metadataProperties = metadataProperties;
         this.env = env;
     }
 
@@ -107,6 +106,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         //@formatter:off
         http
+            .addFilterBefore(new CaptchaFilter(metadataProperties), JWTAuthenticationFilter.class)
             .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, applicationProperties, env))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenProvider))
             .exceptionHandling()
@@ -129,6 +129,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/apis/operations-internal/**").permitAll()
                 .antMatchers("/api/data-protection-policy").permitAll()
+                .antMatchers("/api/captcha/**").permitAll()
                 .antMatchers("/**").authenticated();
         //@formatter:on
     }

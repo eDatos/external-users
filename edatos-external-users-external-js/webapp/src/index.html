@@ -26,6 +26,10 @@
             window.CONFIGURATION.metadata = {};
             window.CONFIGURATION.metadata.defaultLanguage = /*[[${@metadataProperties.defaultLanguage}]]*/ 'es';
             /*]]>*/
+
+            var captchaAuthenticationScript = document.createElement('script');
+            captchaAuthenticationScript.src = /*[[${captchaAuthenticationUrl}]]*/ "http://localhost:8084/api/captcha/authentication.js";
+            document.head.appendChild(captchaAuthenticationScript);
         </script>
 
         <app-root></app-root>

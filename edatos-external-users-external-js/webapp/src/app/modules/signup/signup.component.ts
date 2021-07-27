@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { User, Role, Treatment, Language } from '@app/core/model';
 import { Router } from '@angular/router';
 import { AccountUserService } from '@app/core/service/user';
+import { CaptchaService } from '@app/shared/service';
 
 type SignUp = Omit<User, 'id' | 'roles'>;
 
@@ -20,7 +21,17 @@ export class SignupFormComponent implements OnInit {
 
     public confirmPassword: string;
 
-    constructor(private accountUserService: AccountUserService, private router: Router) {}
+    private captchaContainerEl: ElementRef;
+
+    @ViewChild('captchaContainer') 
+    set captchaContainer(captchaContainerEl: ElementRef) {
+        if(captchaContainerEl && !this.captchaContainerEl) {
+            this.captchaContainerEl = captchaContainerEl;
+            this.captchaService.buildCaptcha(this.captchaContainerEl);
+        }
+    }
+
+    constructor(private accountUserService: AccountUserService, private router: Router, private captchaService: CaptchaService) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -39,10 +50,9 @@ export class SignupFormComponent implements OnInit {
         if (this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
-            this.accountUserService.create(this.user).subscribe(
-                (response) => this.onSaveSuccess(response),
-                () => this.onSaveError()
-            );
+            this.accountUserService.create(this.captchaContainerEl, this.user)
+                .then((response) => this.onSaveSuccess(response))
+                .catch(() => this.onSaveError())
         }
     }
 

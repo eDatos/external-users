@@ -1,0 +1,20 @@
+.captcha-container {
+    width: fit-content;
+}
+
+.captcha-img, .captcha-button, .captcha-label, .captcha-input {
+    width: 100%;
+    margin-top: 5px;
+    display: block;
+}
+
+.captcha-button {
+    @extend .btn;
+    @extend .btn-primary;
+    @extend .w-100;
+}
+
+.captcha-img {
+    margin-left: auto;
+    margin-right: auto;
+}
