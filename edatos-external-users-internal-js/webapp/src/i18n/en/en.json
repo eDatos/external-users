@@ -213,6 +213,7 @@
             "eliminar": "Remove",
             "filtersReset": "Reset filters",
             "modificar": "modify",
+            "name": "Actions",
             "open": "Open",
             "publishExternally": "Publish externally",
             "publishInternally": "Publish internally",
@@ -234,6 +235,7 @@
         "calendar": {
             "placeholder": "Select the desired date on the calendar"
         },
+        "code": "Code",
         "crear": {
             "title": "Confirm creation"
         },
@@ -248,9 +250,11 @@
         "delete": {
             "title": "Confirm delete operation"
         },
+        "disabled": "Disabled",
         "eliminar": {
             "title": "Confirm Deletion"
         },
+        "enabled": "Desactivado",
         "input": {
             "placeholder": "Enter the desired text here"
         },
@@ -267,12 +271,15 @@
         "modificar": {
             "title": "Confirm modification"
         },
+        "name": "Name",
+        "publicationDate": "Publication date",
         "recuperar": {
             "title": "Confirm recovery"
         },
         "restore": {
             "title": "Confirm restoration"
         },
+        "status": "Status",
         "validation": {
             "ZonedDateTimelocal": "This field must be a date and time.",
             "datetimelocal": "This field must be a date and time.",
@@ -359,6 +366,15 @@
         "noResourceFound": "No external resource found",
         "title": "Selected topics"
     },
+    "externalOperation": {
+        "disabled": "Disabled",
+        "enabled": "Activated"
+    },
+    "externalOperations": {
+        "home": {
+            "title": "Statistical operations"
+        }
+    },
     "externalUser": {
         "activado": "Activated",
         "created": "User {{ param }}has been created",
@@ -381,9 +397,9 @@
                 "language": "Language"
             },
             "placeholders": {
-                "noResourceSelected": "No resource selected",
                 "fullname": "Enter name or surname",
-                "language": "Enter user languages"
+                "language": "Enter user languages",
+                "noResourceSelected": "No resource selected"
             },
             "rolEnum": {
                 "label": "Role"
@@ -559,6 +575,7 @@
                 "configuration": "Configuration",
                 "consultIssues": "Consult issues",
                 "dataProtectionPolicy": "Data protection policy",
+                "externalOperationsList": "Statistical operations",
                 "health": "Health",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
@@ -737,11 +754,12 @@
     "structuralResourcesTree": {
         "addNewNode": "Add topic",
         "editionModal": "Multilanguage edition of the resource name",
+        "externalOperations": "Ascribed statistical operations",
         "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
         "noRecordsFound": "No topic or operation found",
         "numberOfFilters": "Custom queries: {{amount}}",
         "remapModal": "Select topics",
-        "subscribedUsers": "Subscribed users: {{amount}}"
+        "subscribedUsers": "Subscribed users"
     },
     "table": {
         "globalSearchPlaceholder": "Enter search terms",

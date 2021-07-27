@@ -1,7 +1,13 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
@@ -85,6 +91,7 @@ public class CategoryServiceImpl implements CategoryService {
             if (category != null) {
                 categoryValidator.checkCategoriesWithSubscribers(category);
                 categoryRepository.delete(category);
+                category.getParent().removeChild(category);
                 return Optional.of(category);
             }
         }

@@ -1,10 +1,31 @@
 package es.gobcan.istac.edatos.external.users.rest.common.dto;
 
+import java.time.Instant;
+
 public class ExternalOperationDto extends ExternalItemDto {
 
-    private Long subscribers;
-    private Long numberOfFilters;
+    private long subscribers;
+    private long numberOfFilters;
     private ExternalCategoryDto category;
+    private boolean enabled;
+    private boolean notificationsEnabled;
+    private Instant publicationDate;
+
+    public long getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(long subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public long getNumberOfFilters() {
+        return numberOfFilters;
+    }
+
+    public void setNumberOfFilters(long numberOfFilters) {
+        this.numberOfFilters = numberOfFilters;
+    }
 
     public ExternalCategoryDto getCategory() {
         return category;
@@ -14,19 +35,27 @@ public class ExternalOperationDto extends ExternalItemDto {
         this.category = category;
     }
 
-    public Long getSubscribers() {
-        return subscribers;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setSubscribers(Long subscribers) {
-        this.subscribers = subscribers;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    public Long getNumberOfFilters() {
-        return numberOfFilters;
+    public boolean isNotificationsEnabled() {
+        return notificationsEnabled;
     }
 
-    public void setNumberOfFilters(Long numberOfFilters) {
-        this.numberOfFilters = numberOfFilters;
+    public void setNotificationsEnabled(boolean notificationsEnabled) {
+        this.notificationsEnabled = notificationsEnabled;
+    }
+
+    public Instant getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(Instant publicationDate) {
+        this.publicationDate = publicationDate;
     }
 }

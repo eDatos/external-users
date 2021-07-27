@@ -213,6 +213,7 @@
             "eliminar": "Eliminar",
             "filtersReset": "Reiniciar filtros",
             "modificar": "Modificar",
+            "name": "Acciones",
             "open": "Abrir",
             "publishExternally": "Publicar externamente",
             "publishInternally": "Publicar internamente",
@@ -234,6 +235,7 @@
         "calendar": {
             "placeholder": "Seleccione en el calendario la fecha deseada"
         },
+        "code": "Código",
         "crear": {
             "title": "Confirmar creación"
         },
@@ -248,9 +250,11 @@
         "delete": {
             "title": "Confirmar operación de borrado"
         },
+        "disabled": "Desactivado",
         "eliminar": {
             "title": "Confirmar eliminación"
         },
+        "enabled": "Activado",
         "input": {
             "placeholder": "Introduzca aquí el texto deseado"
         },
@@ -267,12 +271,15 @@
         "modificar": {
             "title": "Confirmar modificación"
         },
+        "name": "Nombre",
+        "publicationDate": "Fecha de publicación",
         "recuperar": {
             "title": "Confirmar recuperación"
         },
         "restore": {
             "title": "Confirmar restauración"
         },
+        "status": "Estado",
         "validation": {
             "ZonedDateTimelocal": "Este campo debe ser una fecha y hora.",
             "datetimelocal": "Este campo debe ser una fecha y hora.",
@@ -359,6 +366,15 @@
         "noResourceFound": "No se ha encontrado ningún recurso externo",
         "title": "Temas seleccionados"
     },
+    "externalOperation": {
+        "disabled": "Desactivada",
+        "enabled": "Activada"
+    },
+    "externalOperations": {
+        "home": {
+            "title": "Operaciones estadísticas"
+        }
+    },
     "externalUser": {
         "activado": "Activado",
         "created": "Se ha creado el usuario {{ param }}",
@@ -381,9 +397,9 @@
                 "language": "Idioma"
             },
             "placeholders": {
-                "noResourceSelected": "No hay ningún recurso seleccionado",
                 "fullname": "Introduzca nombre o apellidos",
-                "language": "Introduzca idiomas del usuario"
+                "language": "Introduzca idiomas del usuario",
+                "noResourceSelected": "No hay ningún recurso seleccionado"
             },
             "rolEnum": {
                 "label": "Rol"
@@ -559,6 +575,7 @@
                 "configuration": "Configuración",
                 "consultIssues": "Consultar incidencias",
                 "dataProtectionPolicy": "Política de protección de datos",
+                "externalOperationsList": "Operaciones estadísticas",
                 "health": "Salud",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)",
                 "logs": "Logs",
@@ -737,11 +754,12 @@
     "structuralResourcesTree": {
         "addNewNode": "Añadir tema",
         "editionModal": "Edición multidioma del nombre del recurso",
+        "externalOperations": "Operaciones estadísticas adscritas",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
         "numberOfFilters": "Consultas personalizadas: {{amount}}",
         "remapModal": "Seleccionar temas",
-        "subscribedUsers": "Usuarios suscritos: {{amount}}"
+        "subscribedUsers": "Usuarios suscritos"
     },
     "table": {
         "globalSearchPlaceholder": "Introducir términos de búsqueda",

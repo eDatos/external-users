@@ -15,4 +15,5 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalItemEntity;
 public interface AbstractExternalItemRepository<T extends ExternalItemEntity> extends JpaRepository<T, Long> {
 
     Optional<T> getByUrn(String urn);
+    void deleteByUrn(String urn);
 }

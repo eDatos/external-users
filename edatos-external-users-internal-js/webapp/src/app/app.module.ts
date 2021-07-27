@@ -9,7 +9,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
 import { MissingTranslationHandler, TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ArteTableService } from 'arte-ng';
-import { ArteAlertService, ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
+import { ArteEventManager, PagingParamsResolver, ScrollService } from 'arte-ng/services';
 import { CookieService } from 'ngx-cookie';
 import { ScriptLoaderModule } from 'ngx-script-loader';
 
@@ -25,6 +25,7 @@ import { ConfigModule } from './config/config.module';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
 import { CoreModule } from './core/core.module';
 import { AuthExpiredInterceptor, AuthInterceptor, ClassToPlainInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
+import { EUsuariosAlertService } from './core/service/alert/eusuarios-alert.service';
 import { AuthServerProvider } from './core/service/auth';
 import { EdatosNavbarComponent } from './layouts/edatos-navbar/edatos-navbar.component';
 import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
@@ -123,7 +124,7 @@ export function initTranslations(translateService: TranslateService, cookieServi
         ArteTableService,
         ArteEventManager,
         PagingParamsResolver,
-        ArteAlertService,
+        EUsuariosAlertService,
         ScrollService,
     ],
     bootstrap: [AppComponent],

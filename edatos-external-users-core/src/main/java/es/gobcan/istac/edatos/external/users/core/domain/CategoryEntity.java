@@ -38,7 +38,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringV
  */
 @Entity
 @Table(name = "tb_categories")
-@Cache(usage = CacheConcurrencyStrategy.NONE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Id
@@ -67,10 +67,12 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     // delete sql statements may occur when the tree is updated.
     @NotNull
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private final Set<CategoryEntity> children = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinTable(name = "tb_categories_external_categories", joinColumns = @JoinColumn(name = "category_fk"), inverseJoinColumns = @JoinColumn(name = "external_category_fk"))
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private final Set<ExternalCategoryEntity> externalCategories = new HashSet<>();
 
     @Override
@@ -115,7 +117,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      * @return an unmodifiable set.
      */
     @SuppressWarnings("java:S1452") // wildcard usage
-    public Set<? extends CategoryEntity> getChildren() {
+    public Set<CategoryEntity> getChildren() {
         return Collections.unmodifiableSet(children);
     }
 
@@ -129,6 +131,13 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     public void addChild(CategoryEntity category) {
         category.setParent(this);
         this.children.add(category);
+    }
+
+    public void addChildren(CategoryEntity... categories) {
+        for (CategoryEntity category : categories) {
+            category.setParent(this);
+            this.children.add(category);
+        }
     }
 
     public void removeChild(CategoryEntity category) {
@@ -154,12 +163,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Override
     public String toString() {
-        return "CategoryEntity{" + name + '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+        return "CategoryEntity{id: " + id + ", " + name + '}';
     }
 
     @Override
@@ -171,7 +175,12 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
             return false;
         }
         CategoryEntity that = (CategoryEntity) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 
     public Stream<CategoryEntity> flattened() {

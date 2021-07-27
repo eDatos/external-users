@@ -3,7 +3,6 @@ import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { EUsuariosAlertService } from '../service';
-import { Router } from '@angular/router';
 
 const HTTP_ERROR_REDIRECT = {
     403: ['accessdenied'],
@@ -14,7 +13,7 @@ const HTTP_ERROR_REDIRECT = {
     providedIn: 'root',
 })
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-    constructor(private alertService: EUsuariosAlertService, private router: Router) {}
+    constructor(private alertService: EUsuariosAlertService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next

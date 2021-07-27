@@ -51,6 +51,9 @@ export class ExternalOperation extends ExternalItem {
     public externalCategoryUrn: string;
     public subscribers = 0;
     public numberOfFilters = 0;
+    public enabled = false;
+    public notificationsEnabled = true;
+    public publicationDate: Date;
 
     constructor() {
         super();

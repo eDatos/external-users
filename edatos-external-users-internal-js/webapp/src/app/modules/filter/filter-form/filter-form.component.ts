@@ -43,6 +43,10 @@ export class FilterFormComponent implements OnInit {
         }
     }
 
+    public goBack(): void {
+        window.history.back();
+    }
+
     public toggleEditMode(): void {
         this.inEditMode = !this.inEditMode;
     }
