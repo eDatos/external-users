@@ -14,7 +14,8 @@
             "language": "Idioma",
             "phoneNumber": "Número teléfono",
             "organism": "Organismo",
-            "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario"
+            "enableEmailNotifications": "Habilitar notificaciones a través de correo electrónico para este usuario",
+            "captchaModal": "Resuelva el captcha para terminar el registro"
         }
     }
 }
