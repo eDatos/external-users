@@ -26,11 +26,8 @@
             window.CONFIGURATION.metadata = {};
             window.CONFIGURATION.metadata.defaultLanguage = /*[[${@metadataProperties.defaultLanguage}]]*/ 'es';
             /*]]>*/
-
-            var captchaAuthenticationScript = document.createElement('script');
-            captchaAuthenticationScript.src = /*[[${captchaAuthenticationUrl}]]*/ "http://localhost:8084/api/captcha/authentication.js";
-            document.head.appendChild(captchaAuthenticationScript);
         </script>
+        <script src="http://localhost:8080/api/captcha/authentication.js" th:src="${captchaAuthenticationUrl}"></script>
 
         <app-root></app-root>
         <div th:utext="${footerHtml}"></div>
