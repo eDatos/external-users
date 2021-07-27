@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Description;
 import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -23,12 +24,13 @@ public class ThymeleafConfiguration {
 
     @SuppressWarnings("unused")
     private final Logger log = LoggerFactory.getLogger(ThymeleafConfiguration.class);
-    
+
     @Bean
     public SpringTemplateEngine templateEngine(ThymeleafProperties properties) {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.addTemplateResolver(emailTemplateResolver(properties));
         templateEngine.addTemplateResolver(jsTemplateResolver(properties));
+        templateEngine.addTemplateResolver(htmlTemplateResolver(properties));
         if(!properties.isCache()) {
             templateEngine.setCacheManager(null);
         }
@@ -59,8 +61,23 @@ public class ThymeleafConfiguration {
         jsTemplateResolver.setPrefix("js/");
         jsTemplateResolver.setSuffix(".js");
         jsTemplateResolver.setTemplateMode(TemplateMode.JAVASCRIPT);
+        jsTemplateResolver.setCheckExistence(true);
         jsTemplateResolver.setCharacterEncoding(CharEncoding.UTF_8);
         jsTemplateResolver.setCacheable(properties.isCache());
         return jsTemplateResolver;
+    }
+    
+    @Bean
+    @Qualifier("htmlTemplateResolver")
+    @Description("Thymeleaf template resolver serving HTML")
+    public SpringResourceTemplateResolver  htmlTemplateResolver(ThymeleafProperties properties) {
+        SpringResourceTemplateResolver  htmlTemplateResolver = new SpringResourceTemplateResolver ();
+        htmlTemplateResolver.setOrder(3);
+        htmlTemplateResolver.setPrefix("/");
+        htmlTemplateResolver.setSuffix(".html");
+        htmlTemplateResolver.setTemplateMode(TemplateMode.HTML);
+        htmlTemplateResolver.setCharacterEncoding(CharEncoding.UTF_8);
+        htmlTemplateResolver.setCacheable(properties.isCache());
+        return htmlTemplateResolver;
     }
 }
