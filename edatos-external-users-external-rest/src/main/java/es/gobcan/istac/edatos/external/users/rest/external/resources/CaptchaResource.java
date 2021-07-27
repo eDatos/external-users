@@ -58,7 +58,7 @@ public class CaptchaResource extends AbstractResource {
         String captchaProvider = metadataService.getCaptchaProvider();
         if (BooleanUtils.equals(null, captchaEnabled)) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        } else if(captchaEnabled) {
+        } else if(!captchaEnabled) {
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else if(userValue == null) {
             return new ResponseEntity<>(false, HttpStatus.OK);

@@ -43,7 +43,7 @@ public class MetadataProperties {
             captchaProvider = configurationService.retrieveCaptchaProvider();
             recaptchaSiteKey = configurationService.retrieveRecaptchaSiteKey();
             recaptchaSecretKey = configurationService.retrieveRecaptchaSecretKey();
-            captchaUrl = configurationService.retrieveCaptchaExternalApiUrlBase();
+            captchaUrl = normalizeUrl(configurationService.retrieveCaptchaExternalApiUrlBase());
             List<String> languages = configurationService.retrieveLanguages();
             defaultLanguage = languages.get(0);
         } catch (Exception e) {
