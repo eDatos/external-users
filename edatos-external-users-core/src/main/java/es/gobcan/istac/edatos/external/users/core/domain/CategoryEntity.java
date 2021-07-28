@@ -166,23 +166,6 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
         return "CategoryEntity{id: " + id + ", " + name + '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof CategoryEntity)) {
-            return false;
-        }
-        CategoryEntity that = (CategoryEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
     public Stream<CategoryEntity> flattened() {
         return Stream.concat(Stream.of(this), children.stream().flatMap(CategoryEntity::flattened));
     }

@@ -134,15 +134,15 @@ public class CategoryServiceTest {
     @Test
     public void testDeleteLeafNode() {
         categoryService.delete(node1_1_4.getId());
-        categoryService.updateTree(Collections.singletonList(node1));
         assertThat(node1_1.getChildren()).hasSize(3);
+        assertThat(categoryRepository.findAll()).hasSize(8);
     }
 
     @Test
     public void testDeleteNonLeafNode() {
         categoryService.delete(node1_1.getId());
-        categoryService.updateTree(Collections.singletonList(node1));
         assertThat(node1.getChildren()).hasSize(3);
+        assertThat(categoryRepository.findAll()).hasSize(4);
     }
 
     @Test
