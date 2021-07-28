@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.cache.annotation.Cacheable;
@@ -61,6 +62,11 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
     @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "externalOperationsByUrns")
     public List<ExternalOperationEntity> findByExternalCategoryUrnIn(List<String> urns) {
         return externalOperationRepository.findByExternalCategoryUrnIn(urns);
+    }
+
+    @Override
+    public Optional<ExternalOperationEntity> findByUrn(String urn) {
+        return externalOperationRepository.findByUrn(urn);
     }
 
     private void deleteSuscriptions(ExternalOperationEntity operation) {

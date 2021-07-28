@@ -160,7 +160,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     public void deleteBySuscription(ExternalOperationEntity operation) {
-        favoriteRepository.deleteByExternalOperation(operation);
+        favoriteRepository.deleteByExternalOperationUrn(operation.getUrn());
     }
 
     @Override

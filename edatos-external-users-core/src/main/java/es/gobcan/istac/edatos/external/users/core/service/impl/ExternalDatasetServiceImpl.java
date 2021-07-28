@@ -1,9 +1,14 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalDatasetRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalDatasetService;
 
+@Service
 public class ExternalDatasetServiceImpl implements ExternalDatasetService {
 
     private final ExternalDatasetRepository externalDatasetRepository;
@@ -30,5 +35,10 @@ public class ExternalDatasetServiceImpl implements ExternalDatasetService {
     @Override
     public void delete(ExternalDatasetEntity dataset) {
         externalDatasetRepository.delete(dataset);
+    }
+
+    @Override
+    public Optional<ExternalDatasetEntity> findByUrn(String urn) {
+        return externalDatasetRepository.findByUrn(urn);
     }
 }
