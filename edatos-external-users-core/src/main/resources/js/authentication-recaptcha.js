@@ -21,10 +21,6 @@ var isCaptchaEnabled = function() {
 	return /*[[${captchaEnabled}]]*/ false;
 };
 
-var isCaptchaInvisible = function() {
-	return true;
-};
-
 var requestWithCaptcha = function(request, url, options) {
     return new Promise((resolve, reject) => {
 		if(isCaptchaEnabled()) {			

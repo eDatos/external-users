@@ -38,7 +38,7 @@ export class CaptchaService {
     postRequestWithCaptcha<T, G>(el: (ElementRef | string), resultClass: new () => G, relativeUrl: string, body: T, action: string): Promise<G> {
         const url = (new URL(relativeUrl, window.location.origin)).href;
         const requestMethod = (url: String): Promise<G> => {
-            return this.http.post<G>(url.substr(window.location.origin.length), body).pipe(map((res) => convert(resultClass, res))).toPromise();
+            return this.http.post<G>(url.match(new RegExp(window.location.origin + "/?(.*$)"))[1], body).pipe(map((res) => convert(resultClass, res))).toPromise();
         }
 
         const options = {

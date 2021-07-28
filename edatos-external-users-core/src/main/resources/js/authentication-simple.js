@@ -58,10 +58,6 @@ var isCaptchaEnabled = function() {
 	return /*[[${captchaEnabled}]]*/ false;
 }
 
-var isCaptchaInvisible = function() {
-	return false || !isCaptchaEnabled();
-}
-
 var sendRequestWithCaptcha = function(request, baseUrl, options) {
     var url = new URL(baseUrl);
 	if(isCaptchaEnabled()) {		
