@@ -1,9 +1,8 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.ws.rs.core.UriBuilder;
 
+import org.apache.commons.lang.StringUtils;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,42 +11,42 @@ import org.springframework.web.client.RestTemplate;
 
 import es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants;
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
+import es.gobcan.istac.edatos.external.users.core.domain.CaptchaResponseEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.CaptchaClientError;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
+import es.gobcan.istac.edatos.external.users.core.repository.CaptchaResponseRepository;
 import es.gobcan.istac.edatos.external.users.core.service.CaptchaService;
 import es.gobcan.istac.edatos.external.users.core.util.RecaptchaVerification;
-import jersey.repackaged.com.google.common.cache.Cache;
-import jersey.repackaged.com.google.common.cache.CacheBuilder;
-import nl.captcha.Captcha;
 
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
 
-    private Cache<Object, Object> responses = CacheBuilder.newBuilder()
-            .concurrencyLevel(10)
-            .expireAfterWrite(CaptchaConstants.CAPTCHA_LIFESPAN, TimeUnit.MILLISECONDS)
-            .build();
     private RestTemplate restTemplate = new RestTemplate();
     
     @Autowired
     private MetadataProperties metadataProperties;
+    
+    @Autowired
+    private CaptchaResponseRepository captchaResponseRepository;
 
     @Override
-    public void saveResponse(String key, Object session) {
-        responses.put(key, session);
+    public void saveResponse(String key, String response) {
+        captchaResponseRepository.save(new CaptchaResponseEntity(key, response));
     }
 
     @Override
-    public Object getResponse(String key) {
-        Object response = responses.getIfPresent(key);
-        responses.invalidate(key);
-        return response;
+    public String getResponse(String key) {
+        if(key == null) {
+            return null;
+        }
+        CaptchaResponseEntity captchaResponse = captchaResponseRepository.findOne(key);
+        captchaResponseRepository.delete(key);
+        return captchaResponse == null ? null : captchaResponse.getResponse();
     }
 
     @Override
-    public boolean validateSimple(String userResponse, String sessionKey) {
-        Captcha simpleCaptcha = (Captcha) getResponse(sessionKey);
-        return userResponse != null && simpleCaptcha != null && simpleCaptcha.isCorrect(userResponse);
+    public boolean validateSimple(String userResponse, String key) {
+        return userResponse != null && StringUtils.equals(getResponse(key), userResponse);
     }
 
     @Override
@@ -73,8 +72,7 @@ public class CaptchaServiceImpl implements CaptchaService {
     }
 
     @Override
-    public boolean validateCaptchaGobcan(String userResponse, String sessionKey) {
-        String gobcanCaptchaResponse = (String) getResponse(sessionKey);
-        return userResponse != null && gobcanCaptchaResponse != null && gobcanCaptchaResponse.equals(userResponse);
+    public boolean validateCaptchaGobcan(String userResponse, String key) {
+        return userResponse != null && StringUtils.equals(getResponse(key), userResponse);
     }
 }
