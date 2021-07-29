@@ -65,8 +65,7 @@ export class NavbarComponent implements OnInit {
 
     private onDeleteSuccess(isDelete: boolean) {
         if (isDelete) {
-            this.collapseNavbar();
-            this.loginService.logout();
+            this.logout();
         }
     }
 

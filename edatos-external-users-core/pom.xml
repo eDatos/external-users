@@ -81,6 +81,18 @@
             <artifactId>metrics-servlets</artifactId>
         </dependency>
 
+        <!-- Quartz Core -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>${quartz.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz-jobs</artifactId>
+            <version>${quartz-job.version}</version>
+        </dependency>
+
 
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -205,13 +217,13 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
         <dependency>
-			<groupId>org.springframework.kafka</groupId>
-			<artifactId>spring-kafka</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.confluent</groupId>
-			<artifactId>kafka-avro-serializer</artifactId>
-		</dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-avro-serializer</artifactId>
+        </dependency>
         <dependency>
             <groupId>net.sourceforge.nekohtml</groupId>
             <artifactId>nekohtml</artifactId>
@@ -452,7 +464,8 @@
                 <version>${liquibase.version}</version>
                 <configuration>
                     <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
-                    <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml
+                    <diffChangeLogFile>
+                        src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml
                     </diffChangeLogFile>
                     <driver>org.postgresql.Driver</driver>
                     <url>jdbc:postgresql://localhost:5432/edatos_external_users</url>

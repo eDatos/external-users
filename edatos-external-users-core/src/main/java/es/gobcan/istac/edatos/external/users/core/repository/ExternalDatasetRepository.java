@@ -1,8 +1,11 @@
 package es.gobcan.istac.edatos.external.users.core.repository;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
@@ -14,4 +17,8 @@ public interface ExternalDatasetRepository extends AbstractExternalItemRepositor
     List<ExternalDatasetEntity> findByExternalOperationUrnIn(List<String> urns);
     Optional<ExternalDatasetEntity> findByCode(String code);
     Optional<ExternalDatasetEntity> findByUrn(String urn);
+
+    @Query("SELECT ds FROM ExternalDatasetEntity ds WHERE ds.recivedDate <= :endDate AND ds.recivedDate >= :startDate")
+    List<ExternalDatasetEntity> findAllByChangeRegisterOfDataset(@Param("endDate") Instant endDate, @Param("startDate") Instant startDate);
+
 }

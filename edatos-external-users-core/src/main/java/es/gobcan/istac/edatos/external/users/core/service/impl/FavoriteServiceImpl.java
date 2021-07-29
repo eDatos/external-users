@@ -180,4 +180,8 @@ public class FavoriteServiceImpl implements FavoriteService {
             delete(externalUser, child);
         }
     }
+
+    public List<FavoriteEntity> findByExternalOperation(List<ExternalOperationEntity> listExternalOperation) {
+        return favoriteRepository.findByExternalOperationIn(listExternalOperation);
+    }
 }

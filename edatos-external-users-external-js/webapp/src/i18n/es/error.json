@@ -47,6 +47,9 @@
             "user-disabled": "El usuario se encuentra desactivado.",
             "void": "El campo no puede ser vacío.",
             "failed": "El usuario y/o contraseña no son correctos."
+        },
+        "quartz": {
+            "jobExecutionError": "Error durante la ejecución de un job Quartz"
         }
     }
 }

@@ -7,6 +7,12 @@ import org.springframework.stereotype.Service;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalDatasetRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalDatasetService;
+import java.time.Instant;
+import org.springframework.stereotype.Service;
+
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class ExternalDatasetServiceImpl implements ExternalDatasetService {
@@ -41,4 +47,12 @@ public class ExternalDatasetServiceImpl implements ExternalDatasetService {
     public Optional<ExternalDatasetEntity> findByUrn(String urn) {
         return externalDatasetRepository.findByUrn(urn);
     }
+
+    @Override
+    public List<ExternalDatasetEntity> list() {
+        Instant now = ZonedDateTime.now().toInstant();
+        Instant twentyFourHoursBefore = ZonedDateTime.now().minusDays(1).toInstant();
+        return externalDatasetRepository.findAllByChangeRegisterOfDataset(now, twentyFourHoursBefore);
+    }
+
 }
