@@ -2,7 +2,6 @@ var captchaGeneratedId = null;
 
 var showCaptcha = function (options) {	
 	if(isCaptchaEnabled()) {
-		removeCaptcha(options);
 		captchaGeneratedId = createCaptchaSessionKey();
 		var imgUrl = new URL(/*[[${captchaPictureUrl}]]*/ "");
 		imgUrl.searchParams.set('sessionKey', captchaGeneratedId);
@@ -10,6 +9,7 @@ var showCaptcha = function (options) {
 		if(!options.captchaEl && options.captchaId) {
 			options.captchaEl = document.getElementById(options.captchaId);
 		}
+		removeCaptcha(options);
 		options.captchaEl.insertAdjacentHTML('beforeend', `
 			<div id="captcha-container" class="captcha captcha-gobcan">
 				<img src="${imgUrl.href}">
