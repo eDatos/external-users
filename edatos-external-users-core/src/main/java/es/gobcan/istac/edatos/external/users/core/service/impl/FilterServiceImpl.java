@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -79,7 +78,7 @@ public class FilterServiceImpl implements FilterService {
         criteria.add(Restrictions.eq("externalUser", externalUser));
         return filterRepository.findAll(criteria, pageable);
     }
-    
+
     @Override
     public FilterEntity findByPermalinkAndExternalUser(String permalink) {
         ExternalUserEntity externalUser = externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).orElse(null);
@@ -87,7 +86,6 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "operationFilters")
     public Map<String, Long> getOperationFilters() {
         return filterRepository.getOperationFilters().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
     }

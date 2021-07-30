@@ -9,6 +9,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity
 
 public interface ExternalOperationService {
 
+    List<ExternalOperationEntity> findAll();
     Page<ExternalOperationEntity> find(String query, Pageable pageable);
     ExternalOperationEntity create(ExternalOperationEntity operation);
     ExternalOperationEntity update(ExternalOperationEntity operation);

@@ -1,6 +1,8 @@
 package es.gobcan.istac.edatos.external.users.rest.internal.resources;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -20,8 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalCategoryService;
+import es.gobcan.istac.edatos.external.users.core.service.ExternalOperationService;
+import es.gobcan.istac.edatos.external.users.core.service.FavoriteService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.CategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalCategoryDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.CategoryMapper;
@@ -41,14 +47,19 @@ public class CategoryResource extends AbstractResource {
     private final CategoryMapper categoryMapper;
     private final ExternalCategoryService externalCategoryService;
     private final ExternalCategoryMapper externalCategoryMapper;
+    private final ExternalOperationService externalOperationService;
+    private final FavoriteService favoriteService;
 
     // TODO(EDATOS-3357): Add audits
 
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, ExternalCategoryService externalCategoryService, ExternalCategoryMapper externalCategoryMapper) {
+    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, ExternalCategoryService externalCategoryService, ExternalCategoryMapper externalCategoryMapper,
+            ExternalOperationService externalOperationService, FavoriteService favoriteService) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
         this.externalCategoryService = externalCategoryService;
         this.externalCategoryMapper = externalCategoryMapper;
+        this.externalOperationService = externalOperationService;
+        this.favoriteService = favoriteService;
     }
 
     @GetMapping("/{id}")
@@ -64,9 +75,7 @@ public class CategoryResource extends AbstractResource {
     @Timed
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
     public ResponseEntity<List<CategoryDto>> getCategory(Pageable pageable, @RequestParam(required = false) String query) {
-        Page<CategoryDto> result = categoryService
-            .find(query, pageable)
-            .map(categoryMapper::toDto);
+        Page<CategoryDto> result = categoryService.find(query, pageable).map(categoryMapper::toDto);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(result, BASE_URL);
         return ResponseEntity.ok().headers(headers).body(result.getContent());
     }
@@ -84,7 +93,14 @@ public class CategoryResource extends AbstractResource {
     @GetMapping("/tree")
     @PreAuthorize("@secChecker.canAccessCategory(authentication)")
     public ResponseEntity<List<CategoryDto>> getCategoryTree() {
-        return ResponseEntity.ok(categoryMapper.toDtos(categoryService.getTree()));
+        List<CategoryEntity> tree = categoryService.getTree();
+        List<CategoryEntity> all = categoryService.findAll();
+        Map<CategoryEntity, List<ExternalCategoryEntity>> externalCategories = categoryService.getCategoryExternalCategories();
+        List<ExternalOperationEntity> externalOperations = externalOperationService.findAll();
+        Map<String, Long> suscribers = new HashMap<>();
+        suscribers.putAll(favoriteService.getCategorySubscribers());
+        suscribers.putAll(favoriteService.getOperationSubscribers());
+        return ResponseEntity.ok(categoryMapper.toDtos(all, tree, externalCategories, externalOperations, suscribers));
     }
 
     @Timed
