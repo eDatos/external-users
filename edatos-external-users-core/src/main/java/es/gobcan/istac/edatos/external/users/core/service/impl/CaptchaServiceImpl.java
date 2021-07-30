@@ -12,11 +12,11 @@ import org.springframework.web.client.RestTemplate;
 import es.gobcan.istac.edatos.external.users.core.config.CaptchaConstants;
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.domain.CaptchaResponseEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.vo.RecaptchaVerificationVO;
 import es.gobcan.istac.edatos.external.users.core.errors.CaptchaClientError;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.repository.CaptchaResponseRepository;
 import es.gobcan.istac.edatos.external.users.core.service.CaptchaService;
-import es.gobcan.istac.edatos.external.users.core.util.RecaptchaVerification;
 
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
@@ -55,8 +55,8 @@ public class CaptchaServiceImpl implements CaptchaService {
         urlBuilder.queryParam("secret", metadataProperties.getRecaptchaSecretKey());
         urlBuilder.queryParam("response", userResponse);
 
-        ResponseEntity<RecaptchaVerification> recaptchaVerificationResponse = restTemplate.getForEntity(urlBuilder.build(), RecaptchaVerification.class);
-        RecaptchaVerification recaptchaVerification = recaptchaVerificationResponse.getBody();
+        ResponseEntity<RecaptchaVerificationVO> recaptchaVerificationResponse = restTemplate.getForEntity(urlBuilder.build(), RecaptchaVerificationVO.class);
+        RecaptchaVerificationVO recaptchaVerification = recaptchaVerificationResponse.getBody();
 
         if (!recaptchaVerification.wasASuccess()) {
             if (recaptchaVerification.hasClientError()) {

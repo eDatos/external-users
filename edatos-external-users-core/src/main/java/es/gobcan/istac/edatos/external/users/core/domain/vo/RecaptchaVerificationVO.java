@@ -1,4 +1,4 @@
-package es.gobcan.istac.edatos.external.users.core.util;
+package es.gobcan.istac.edatos.external.users.core.domain.vo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+// The names of the json properties depend on the recaptcha api: https://developers.google.com/recaptcha/docs/verify
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonPropertyOrder({
@@ -20,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "score",
     "action"
 })
-public class RecaptchaVerification {
+public class RecaptchaVerificationVO {
 
     private boolean success;
     
