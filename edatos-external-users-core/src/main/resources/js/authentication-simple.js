@@ -2,6 +2,7 @@ var captchaGeneratedId = null;
 
 var showCaptcha = function (options) {	
 	if(isCaptchaEnabled()) {
+		removeCaptcha(options);
 		captchaGeneratedId = createCaptchaSessionKey();
 		var imgUrl = new URL(/*[[${captchaPictureUrl}]]*/ "");
 		imgUrl.searchParams.set('sessionKey', captchaGeneratedId);
@@ -51,7 +52,12 @@ var createCaptchaSessionKey = function() {
 };
 
 var removeCaptcha = function(options) {
-    options.captchaEl.removeChild(options.captchaEl.querySelector("#captcha-container"));
+	if(options.captchaEl) {
+		var captchaContainerEl = options.captchaEl.querySelector("#captcha-container");
+		if(captchaContainerEl) {
+			 options.captchaEl.removeChild(captchaContainerEl);
+		}
+	}
 }
 
 var isCaptchaEnabled = function() {
@@ -73,6 +79,7 @@ var requestWithCaptcha = function(request, url, options) {
 	}
     return new Promise((resolve, reject) => {
         sendRequestWithCaptcha(request, url, options).then(function (response) {
+			removeCaptcha(options);
             resolve(response);
         }).catch(function (error) {
 			if(isCaptchaEnabled()) {	
