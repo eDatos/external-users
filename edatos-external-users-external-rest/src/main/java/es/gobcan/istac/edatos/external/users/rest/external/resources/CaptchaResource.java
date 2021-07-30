@@ -89,7 +89,7 @@ public class CaptchaResource extends AbstractResource {
         
         Captcha captcha = new Captcha.Builder(width, height).addText().addBackground().addNoise().gimp().addBorder().build();
 
-        captchaService.saveResponse(sessionKey, captcha);
+        captchaService.saveResponse(sessionKey, captcha.getAnswer());
         CaptchaServletUtil.writeImage(response, captcha.getImage());
     }
 
