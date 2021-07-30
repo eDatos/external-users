@@ -19,9 +19,7 @@ import es.gobcan.istac.edatos.external.users.core.service.FilterService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalOperationDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.config.AuditingMapperConfig;
 
-@Mapper(componentModel = "spring",
-        config = AuditingMapperConfig.class,
-        uses = {InternationalStringVOMapper.class, ExternalCategoryMapper.class})
+@Mapper(componentModel = "spring", config = AuditingMapperConfig.class, uses = {InternationalStringVOMapper.class, ExternalCategoryMapper.class})
 public abstract class ExternalOperationMapper implements EntityMapper<ExternalOperationDto, ExternalOperationEntity> {
 
     @Autowired
@@ -64,6 +62,9 @@ public abstract class ExternalOperationMapper implements EntityMapper<ExternalOp
     public abstract InternationalStringVO toVO(InternationalStringAvro source);
 
     public Instant toInstant(DatetimeAvro datetime) {
+        if (datetime == null) {
+            return null;
+        }
         return Instant.ofEpochMilli(datetime.getInstant());
     }
 
