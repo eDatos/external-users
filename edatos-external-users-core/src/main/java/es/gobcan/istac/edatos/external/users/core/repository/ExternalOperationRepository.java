@@ -16,4 +16,5 @@ public interface ExternalOperationRepository extends AbstractExternalItemReposit
     Page<ExternalOperationEntity> findAll(DetachedCriteria criteria, Pageable pageable);
     List<ExternalOperationEntity> findByExternalCategoryUrnIn(List<String> urns);
     Optional<ExternalOperationEntity> findByCode(String code);
+    Optional<ExternalOperationEntity> findByUrn(String urn);
 }

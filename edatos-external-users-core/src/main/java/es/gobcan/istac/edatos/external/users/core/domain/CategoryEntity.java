@@ -117,7 +117,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
      * @return an unmodifiable set.
      */
     @SuppressWarnings("java:S1452") // wildcard usage
-    public Set<? extends CategoryEntity> getChildren() {
+    public Set<CategoryEntity> getChildren() {
         return Collections.unmodifiableSet(children);
     }
 
@@ -131,6 +131,13 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
     public void addChild(CategoryEntity category) {
         category.setParent(this);
         this.children.add(category);
+    }
+
+    public void addChildren(CategoryEntity... categories) {
+        for (CategoryEntity category : categories) {
+            category.setParent(this);
+            this.children.add(category);
+        }
     }
 
     public void removeChild(CategoryEntity category) {
@@ -156,24 +163,7 @@ public class CategoryEntity extends AbstractVersionedAndAuditingEntity {
 
     @Override
     public String toString() {
-        return "CategoryEntity{" + name + '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof CategoryEntity)) {
-            return false;
-        }
-        CategoryEntity that = (CategoryEntity) o;
-        return Objects.equals(id, that.id);
+        return "CategoryEntity{id: " + id + ", " + name + '}';
     }
 
     public Stream<CategoryEntity> flattened() {

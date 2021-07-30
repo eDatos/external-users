@@ -36,4 +36,5 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
 
     void deleteByCategory(CategoryEntity category);
     void deleteByExternalOperation(ExternalOperationEntity operation);
+    void deleteByExternalOperationUrn(String urn);
 }
