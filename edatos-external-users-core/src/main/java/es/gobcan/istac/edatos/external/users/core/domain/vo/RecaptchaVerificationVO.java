@@ -23,9 +23,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 })
 public class RecaptchaVerificationVO {
 
-    private boolean success;
-    
-    private double score;
+    @JsonProperty("success")
+    private Boolean success;
+
+    private Double score;
     
     private String action;
     
