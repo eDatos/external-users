@@ -1,10 +1,12 @@
 package es.gobcan.istac.edatos.external.users.web.security.provider;
 
+import es.gobcan.istac.edatos.external.users.core.repository.DisabledTokenRepository;
 import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,10 +42,13 @@ public class TokenProvider {
     private final JHipsterProperties jHipsterProperties;
 
     private final JHipsterExtraProperties jHipsterExtraProperties;
+    
+    private final DisabledTokenRepository disabledTokenRepository;
 
-    public TokenProvider(JHipsterProperties jHipsterProperties, JHipsterExtraProperties jHipsterExtraProperties) {
+    public TokenProvider(JHipsterProperties jHipsterProperties, JHipsterExtraProperties jHipsterExtraProperties, DisabledTokenRepository disabledTokenRepository) {
         this.jHipsterProperties = jHipsterProperties;
         this.jHipsterExtraProperties = jHipsterExtraProperties;
+        this.disabledTokenRepository = disabledTokenRepository;
     }
 
     @PostConstruct
@@ -83,6 +88,10 @@ public class TokenProvider {
     public Jws<Claims> validateToken(String authToken) {
         Jws<Claims> claimsJws = null;
         try {
+            boolean thereIsATokenAndItIsDisabled = StringUtils.hasText(authToken) && disabledTokenRepository.exists(authToken);
+            if(thereIsATokenAndItIsDisabled) {
+                throw new CredentialsExpiredException("The authentication token is disabled. Login again.");
+            }
             return claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
         } catch (SignatureException e) {
             log.info("JWT: Firma no válida.");
@@ -99,6 +108,9 @@ public class TokenProvider {
         } catch (IllegalArgumentException e) {
             log.info("JWT: token del handler no es válido.");
             log.trace("JWT: token del handler no es válido trace: {}", e);
+        } catch (CredentialsExpiredException e) {
+            log.info("JWT: token deshabilitado.");
+            log.trace("JWT: token deshabilitado trace: {}", e);
         }
 
         return claimsJws;
