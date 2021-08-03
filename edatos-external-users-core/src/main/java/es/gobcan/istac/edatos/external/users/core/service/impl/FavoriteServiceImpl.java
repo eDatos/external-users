@@ -133,8 +133,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     }
 
     @Override
-    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "categories")
-    public Map<Long, Long> getCategorySubscribers() {
+    public Map<String, Long> getCategorySubscribers() {
         return favoriteRepository.getCategoriesSubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
     }
 
@@ -165,7 +164,7 @@ public class FavoriteServiceImpl implements FavoriteService {
 
     @Override
     @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "operations")
-    public Map<Long, Long> getOperationSubscribers() {
+    public Map<String, Long> getOperationSubscribers() {
         return favoriteRepository.getOperationsSubscribers().stream().collect(Collectors.toMap(ImmutablePair::getLeft, ImmutablePair::getRight));
     }
 

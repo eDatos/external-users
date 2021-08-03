@@ -1,7 +1,9 @@
 package es.gobcan.istac.edatos.external.users.rest.common.mapper;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -40,27 +42,23 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     CategoryRepository categoryRepository;
 
     @Autowired
+    ExternalCategoryMapper externalCategoryMapper;
+
+    @Autowired
     ExternalOperationMapper externalOperationMapper;
 
     @Autowired
     ExternalOperationService externalOperationService;
 
     @Override
-    @Mapping(target = "subscribers", expression = "java(favoriteService.getCategorySubscribers().getOrDefault(entity.getId(), 0L))")
-    @Mapping(target = "externalCategories", source = "entity.externalCategories")
-    @Mapping(target = "externalOperations", source = "externalCategories", qualifiedByName = "getOperations")
-    public abstract CategoryDto toDto(CategoryEntity entity);
-
-    @Override
     @Mapping(target = "parent", ignore = true)
     @Mapping(target = "externalCategories", source = "dto.externalCategories", qualifiedByName = "getExternalCategoryEntitiesFromUrn")
     public abstract CategoryEntity toEntity(CategoryDto dto);
 
-    @Named("getOperations")
-    public List<ExternalOperationDto> getOperations(Collection<ExternalCategoryEntity> entities) {
-        List<String> urns = entities.stream().map(ExternalCategoryEntity::getUrn).collect(Collectors.toList());
-        List<ExternalOperationEntity> externalOperations = externalOperationService.findByExternalCategoryUrnIn(urns);
-        return externalOperations.stream().map(externalOperationMapper::toDto).collect(Collectors.toList());
+    public List<ExternalOperationDto> getExternalOperations(CategoryEntity category, Map<CategoryEntity, List<ExternalCategoryEntity>> categoriesExternalCategories,
+            List<ExternalOperationEntity> externalOperations) {
+        List<ExternalCategoryDto> externalCategories = getExternalCategories(category, categoriesExternalCategories);
+        return getOperations(externalOperations, externalCategories);
     }
 
     @Named("getExternalCategoryEntitiesFromUrn")
@@ -79,4 +77,53 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
                 .collect(Collectors.toSet());
         // @formatter:on
     }
+
+    // -------------------------------------------------------
+    // -------------------------------------------------------
+    // -------------------------------------------------------
+
+    public List<ExternalCategoryDto> getExternalCategories(CategoryEntity category, Map<CategoryEntity, List<ExternalCategoryEntity>> categoriesExternalCategories) {
+        List<ExternalCategoryDto> list = new ArrayList<>();
+        for (ExternalCategoryEntity entity : categoriesExternalCategories.getOrDefault(category, new ArrayList<>())) {
+            ExternalCategoryDto externalCategoryDto = externalCategoryMapper.toDto(entity);
+            list.add(externalCategoryDto);
+        }
+        return list;
+    }
+
+    public List<ExternalOperationDto> getOperations(List<ExternalOperationEntity> externalOperations, Collection<ExternalCategoryDto> entities) {
+        List<String> urns = entities.stream().map(ExternalCategoryDto::getUrn).collect(Collectors.toList());
+        List<ExternalOperationEntity> filteredExternalOperations = externalOperations.stream().filter(op -> urns.contains(op.getUrn())).collect(Collectors.toList());
+        return filteredExternalOperations.stream().map(externalOperationMapper::toDto).collect(Collectors.toList());
+    }
+
+    public List<CategoryEntity> getChildren(CategoryEntity category, List<CategoryEntity> allCategories) {
+        List<CategoryEntity> list = new ArrayList<>();
+        for (CategoryEntity cat : allCategories) {
+            if (Objects.equals(cat.getParent(), category)) {
+                list.add(cat);
+            }
+        }
+        return list;
+    }
+
+    public List<CategoryDto> toDtos(List<CategoryEntity> allCategories, List<CategoryEntity> categories, Map<CategoryEntity, List<ExternalCategoryEntity>> categoryExternalCategories,
+            List<ExternalOperationEntity> externalOperations, Map<String, Long> subscribers) {
+        List<CategoryDto> list = new ArrayList<>();
+        if (categories.isEmpty()) {
+            return list;
+        }
+        for (CategoryEntity category : categories) {
+            CategoryDto categoryDto = toDto(category, allCategories, categoryExternalCategories, externalOperations, subscribers);
+            list.add(categoryDto);
+        }
+        return list;
+    }
+
+    @Mapping(target = "subscribers", expression = "java(subscribers.getOrDefault(category.getId().toString(), 0L))")
+    @Mapping(target = "externalCategories", expression = "java(getExternalCategories(category, categoriesExternalCategories))")
+    @Mapping(target = "externalOperations", expression = "java(getExternalOperations(category, categoriesExternalCategories, externalOperations))")
+    @Mapping(target = "children", expression = "java(toDtos(allCategories, getChildren(category, allCategories), categoriesExternalCategories, externalOperations, subscribers))")
+    public abstract CategoryDto toDto(CategoryEntity category, List<CategoryEntity> allCategories, Map<CategoryEntity, List<ExternalCategoryEntity>> categoriesExternalCategories,
+            List<ExternalOperationEntity> externalOperations, Map<String, Long> subscribers);
 }

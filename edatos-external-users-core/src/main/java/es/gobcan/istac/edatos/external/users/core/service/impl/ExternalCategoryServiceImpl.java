@@ -58,7 +58,6 @@ public class ExternalCategoryServiceImpl implements ExternalCategoryService {
     }
 
     @Override
-    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "inDbExternalCategories")
     public List<ExternalCategoryEntity> findAll() {
         return externalCategoryRepository.findAll();
     }

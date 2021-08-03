@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.criterion.DetachedCriteria;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,11 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
         this.externalOperationRepository = externalOperationRepository;
         this.queryUtil = queryUtil;
         this.favoriteService = favoriteService;
+    }
+
+    @Override
+    public List<ExternalOperationEntity> findAll() {
+        return externalOperationRepository.findAll();
     }
 
     @Override
@@ -59,7 +63,6 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
     }
 
     @Override
-    @Cacheable(cacheManager = "requestScopedCacheManager", cacheNames = "externalOperationsByUrns")
     public List<ExternalOperationEntity> findByExternalCategoryUrnIn(List<String> urns) {
         return externalOperationRepository.findByExternalCategoryUrnIn(urns);
     }
