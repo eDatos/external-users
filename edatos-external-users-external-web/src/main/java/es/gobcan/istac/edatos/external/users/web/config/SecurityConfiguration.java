@@ -1,6 +1,8 @@
 package es.gobcan.istac.edatos.external.users.web.config;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
+import es.gobcan.istac.edatos.external.users.core.errors.AccessDeniedCustomHandler;
+import es.gobcan.istac.edatos.external.users.core.errors.CustomAuthenticationEntryPoint;
 import es.gobcan.istac.edatos.external.users.web.security.provider.LoginPasswordAuthenticationProvider;
 import es.gobcan.istac.edatos.external.users.web.security.filter.CaptchaFilter;
 import es.gobcan.istac.edatos.external.users.web.security.filter.JWTAuthenticationFilter;
@@ -25,6 +27,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
@@ -130,8 +134,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/apis/operations-internal/**").permitAll()
                 .antMatchers("/api/data-protection-policy").permitAll()
                 .antMatchers("/api/captcha/**").permitAll()
-                .antMatchers("/**").authenticated();
+                .antMatchers("/**").authenticated()
+        .and()
+            .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint());
         //@formatter:on
+    }
+    
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new AccessDeniedCustomHandler();
+    }
+    
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new CustomAuthenticationEntryPoint();
     }
 
     @Bean

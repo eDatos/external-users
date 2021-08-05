@@ -45,6 +45,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
                 Authentication authentication = this.tokenProvider.getAuthentication(jwt);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 renewTicketIfNecessary(res, jwtClaims, authentication);
+            } else {
+                SecurityContextHolder.clearContext();
             }
 
         }
