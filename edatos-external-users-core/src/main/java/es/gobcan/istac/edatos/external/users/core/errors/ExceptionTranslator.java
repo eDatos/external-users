@@ -99,6 +99,7 @@ public class ExceptionTranslator {
 
     @ExceptionHandler(AccessDeniedException.class)
     public void processAccessDeniedException(AccessDeniedException e) {
+        // The issue https://github.com/spring-projects/spring-security/issues/6908 explains why this handler is necessary
         throw e;
     }
 
