@@ -98,10 +98,9 @@ public class ExceptionTranslator {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ResponseBody
-    public ErrorVM processAccessDeniedException(AccessDeniedException e) {
-        return new ErrorVM(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
+    public void processAccessDeniedException(AccessDeniedException e) {
+        // The issue https://github.com/spring-projects/spring-security/issues/6908 explains why this handler is necessary
+        throw e;
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
