@@ -181,7 +181,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
     }
 
-    public List<FavoriteEntity> findByExternalOperation(List<ExternalOperationEntity> listExternalOperation) {
+    public List<FavoriteEntity> findByExternalOperations(List<ExternalOperationEntity> listExternalOperation) {
         return favoriteRepository.findByExternalOperationIn(listExternalOperation);
     }
 }
