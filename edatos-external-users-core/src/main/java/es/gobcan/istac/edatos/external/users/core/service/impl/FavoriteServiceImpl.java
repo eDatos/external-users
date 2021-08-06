@@ -181,6 +181,7 @@ public class FavoriteServiceImpl implements FavoriteService {
         }
     }
 
+    @Override
     public List<FavoriteEntity> findByExternalOperation(List<ExternalOperationEntity> listExternalOperation) {
         return favoriteRepository.findByExternalOperationIn(listExternalOperation);
     }

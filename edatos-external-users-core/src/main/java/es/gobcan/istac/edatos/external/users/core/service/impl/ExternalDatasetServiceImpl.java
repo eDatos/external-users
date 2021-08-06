@@ -51,8 +51,7 @@ public class ExternalDatasetServiceImpl implements ExternalDatasetService {
     @Override
     public List<ExternalDatasetEntity> list() {
         Instant now = ZonedDateTime.now().toInstant();
-        Instant twentyFourHoursBefore = ZonedDateTime.now().minusDays(1).toInstant();
-        return externalDatasetRepository.findAllByChangeRegisterOfDataset(now, twentyFourHoursBefore);
+        return externalDatasetRepository.findAllByChangeRegisterOfDataset(now);
     }
 
 }

@@ -23,6 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class ExternalDatasetEntity extends ExternalItemEntity {
 
+    private static final long serialVersionUID = -3223278152050381860L;
     @NotNull
     @NotBlank
     @Column(nullable = false)
@@ -30,8 +31,8 @@ public class ExternalDatasetEntity extends ExternalItemEntity {
 
     @CreatedDate
     @NotNull
-    @Column(nullable = false, updatable = false)
-    private Instant recivedDate;
+    @Column(name = "recivedDate", nullable = false, updatable = false)
+    private Instant createdDate;
 
     public ExternalDatasetEntity() {
         type = TypeExternalArtefactsEnum.DATASET;
@@ -45,11 +46,11 @@ public class ExternalDatasetEntity extends ExternalItemEntity {
         this.externalOperationUrn = externalOperationUrn;
     }
 
-    public Instant getRecivedDate() {
-        return recivedDate;
+    public Instant getCreatedDate() {
+        return createdDate;
     }
 
-    public void setRecivedDate(Instant recivedDate) {
-        this.recivedDate = recivedDate;
+    public void setCreatedDate(Instant createdDate) {
+        this.createdDate = createdDate;
     }
 }
