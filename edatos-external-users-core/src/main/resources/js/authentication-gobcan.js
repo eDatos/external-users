@@ -66,8 +66,10 @@ var isCaptchaEnabled = function() {
 
 var sendRequestWithCaptcha = function(request, baseUrl, options) {
     var url = new URL(baseUrl);
-	if(isCaptchaEnabled()) {		
-	    url.searchParams.set('userValue', options.captchaEl.querySelector("#captcha-container input").value);
+	var captchaInput = options.captchaEl && options.captchaEl.querySelector("#captcha-container input");
+	var userValue = captchaInput && captchaInput.value;
+	if(isCaptchaEnabled() && userValue && captchaGeneratedId) {		
+	    url.searchParams.set('userValue', userValue);			
 	    url.searchParams.set('sessionKey', captchaGeneratedId);
 	}
     return request(url.href);
