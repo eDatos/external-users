@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
@@ -26,6 +27,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
+import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
 import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
@@ -78,8 +80,8 @@ public class ExternalAccountResource extends AbstractResource {
     
     @PostMapping("/account/logout")
     @Timed
-    public ResponseEntity<String> logout(@RequestHeader (name="Authorization") String token) {
-        externalUserService.logout(token);
+    public ResponseEntity<String> logout(HttpServletRequest request) {
+        externalUserService.logout(SecurityUtils.resolveToken(request));
         return ResponseEntity.ok().build();
     }
 
