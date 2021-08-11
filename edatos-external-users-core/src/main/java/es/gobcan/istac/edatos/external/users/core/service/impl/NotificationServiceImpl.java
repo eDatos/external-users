@@ -125,9 +125,8 @@ public class NotificationServiceImpl implements NotificationService {
         return NoticeBuilder.notification()
             .withMessages(message)
             .withReceivers(receiver)
-            .withSendingApplication(MetamacApplicationsEnum.GESTOR_AVISOS.getName())
+            .withSendingApplication(MetamacApplicationsEnum.GESTOR_EXTERNAL_USERS.getName())
             .withSubject(subject)
-            .withRoles(MetamacRolesEnum.ADMINISTRADOR)
             .build();
         // @formatter:on
     }

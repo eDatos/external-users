@@ -14,6 +14,6 @@ public interface ExternalDatasetService {
     void delete(ExternalDatasetEntity dataset);
     Optional<ExternalDatasetEntity> findByUrn(String urn);
 
-    List<ExternalDatasetEntity> list();
+    List<ExternalDatasetEntity> getLastDayDatasets();
 
 }

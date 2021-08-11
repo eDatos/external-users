@@ -42,7 +42,7 @@ public class SendNoticeOfSubscriptionsJob extends AbstractConsumerQuartzJob {
             public Boolean doInTransaction(TransactionStatus status) {
                 log.info("Job SendNoticeOfSubscriptionsJob running into transaction");
                 try {
-                    List<ExternalDatasetEntity> listDataset = getExternalDatasetService(context).list();
+                    List<ExternalDatasetEntity> listDataset = getExternalDatasetService(context).getLastDayDatasets();
 
                     if (CollectionUtils.isNotEmpty(listDataset)) {
                         List<ExternalOperationEntity> listOperations = getExternalOperationService(context).findByExternalOperationDatasetUrnIn(listDataset);

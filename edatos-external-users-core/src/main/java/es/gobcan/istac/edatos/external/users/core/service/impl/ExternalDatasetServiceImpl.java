@@ -8,10 +8,8 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalDatasetRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalDatasetService;
 import java.time.Instant;
-import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -49,7 +47,7 @@ public class ExternalDatasetServiceImpl implements ExternalDatasetService {
     }
 
     @Override
-    public List<ExternalDatasetEntity> list() {
+    public List<ExternalDatasetEntity> getLastDayDatasets() {
         Instant now = ZonedDateTime.now().toInstant();
         return externalDatasetRepository.findAllByChangeRegisterOfDataset(now);
     }
