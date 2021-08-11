@@ -96,7 +96,7 @@
                         <div class="form-row">
                             <label class="form-label col-md-4">{{ "entity.audits.createdDate" | translate }}</label>
                             <div class="col-md-8 form-input-container">
-                                <label class="form-label">{{filter.createdDate}}</label>
+                                <label class="form-label">{{filter.createdDate | date: 'd/M/yyyy H:mm:ss' }}</label>
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                         <div class="form-row">
                             <label class="form-label col-md-4">{{ "filter.entity.lastAccessDate" | translate }}</label>
                             <div class="col-md-8 form-input-container">
-                                <label class="form-label">{{filter.lastAccessDate}}</label>
+                                <label class="form-label">{{filter.lastAccessDate | date: 'd/M/yyyy H:mm:ss' }}</label>
                             </div>
                         </div>
                     </div>
