@@ -23,11 +23,11 @@
     <ng-template let-node pTemplate="default">
         <span class="label">{{node.label}}</span>&nbsp;
         <span *ngIf="node.data.favoriteType === 'externalOperation'; else onlySubscribedUsers" class="node-info">
-            ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}, {{'structuralResourcesTree.numberOfFilters' | translate:{ amount:
+            ({{'structuralResourcesTree.subscribedUsers' | translate}}: {{node.data.subscribers || 0}}, {{'structuralResourcesTree.numberOfFilters' | translate:{ amount:
             node.data.numberOfFilters || 0 } }})
         </span>
         <ng-template #onlySubscribedUsers>
-            <span class="node-info"> ({{'structuralResourcesTree.subscribedUsers' | translate:{amount: node.data.subscribers || 0} }}) </span>
+            <span class="node-info"> ({{'structuralResourcesTree.subscribedUsers' | translate}}: {{node.data.subscribers || 0}}) </span>
         </ng-template>
         <span *ngIf="node.data.favoriteType === 'externalOperation'" class="notifications-switch">
             <i *ngIf="node.data.notificationsEnabled" aria-hidden="true" class="fa fa-bell notifications-icon"></i>
