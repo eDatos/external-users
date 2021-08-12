@@ -218,7 +218,7 @@
             "publishExternally": "Publish externally",
             "publishInternally": "Publish internally",
             "recuperar": "Recover",
-            "restore": "Restore",
+            "activate": "Activate",
             "save": "Save",
             "select": "Select",
             "view": "Watch"
@@ -276,8 +276,8 @@
         "recuperar": {
             "title": "Confirm recovery"
         },
-        "restore": {
-            "title": "Confirm restoration"
+        "activate": {
+            "title": "Confirm activation"
         },
         "status": "Status",
         "validation": {
@@ -433,8 +433,8 @@
         "permissions": "Permissions",
         "personalData": "Personal Information",
         "profiles": "Roles",
-        "restore": {
-            "question": "Are you sure you want to restore user {{ email }}?"
+        "activate": {
+            "question": "Are you sure you want to activate user {{ email }}?"
         },
         "rol": "Role",
         "roles": "Roles",
@@ -754,7 +754,7 @@
     "structuralResourcesTree": {
         "addNewNode": "Add topic",
         "editionModal": "Multilanguage edition of the resource name",
-        "externalOperations": "Ascribed statistical operations",
+        "externalOperations": "Ascribed categories",
         "helpMessage": "You can drag the elements to reposition them. You can edit the name of the resource by double cliking on them.",
         "noRecordsFound": "No topic or operation found",
         "numberOfFilters": "Custom queries: {{amount}}",
