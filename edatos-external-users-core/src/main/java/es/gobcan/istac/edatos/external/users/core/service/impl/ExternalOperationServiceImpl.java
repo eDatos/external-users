@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
@@ -69,7 +70,8 @@ public class ExternalOperationServiceImpl implements ExternalOperationService {
     }
     @Override
     public List<ExternalOperationEntity> findByExternalOperationDatasetUrnIn(List<ExternalDatasetEntity> listDataset) {
-        List<String> listUrn = listDataset.stream().map(dt -> dt.getUrn()).collect(Collectors.toList());
+        List<String> listUrn = listDataset.stream().map(dt -> dt.getExternalOperationUrn()).collect(Collectors.toList());
+
         return externalOperationRepository.findByUrnIn(listUrn);
     }
 
