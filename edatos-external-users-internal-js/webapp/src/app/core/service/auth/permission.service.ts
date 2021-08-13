@@ -5,6 +5,7 @@ import { Principal } from './principal.service';
 export const USER_MANAGEMENT_ROLES = [Role.GESTOR, Role.ADMINISTRADOR];
 export const TOOLS_ROLES = [Role.GESTOR, Role.ADMINISTRADOR];
 export const ADMIN_ROLES = [Role.ADMINISTRADOR];
+export const NAVBAR_ROLES = [Role.GESTOR, Role.ADMINISTRADOR];
 
 export const FILTER_ROLES = [Role.GESTOR, Role.ADMINISTRADOR];
 export const FAVORITE_ROLES = [Role.GESTOR, Role.ADMINISTRADOR];
@@ -24,5 +25,9 @@ export class PermissionService {
 
     public canNavigateAdminMenu(): boolean {
         return this.principal.rolesRutaMatchesRolesUsuario(ADMIN_ROLES);
+    }
+
+    public canNavigateNavbarMenu(): boolean {
+        return this.principal.rolesRutaMatchesRolesUsuario(NAVBAR_ROLES);
     }
 }
