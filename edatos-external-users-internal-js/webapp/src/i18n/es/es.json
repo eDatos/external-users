@@ -394,12 +394,14 @@
             "labels": {
                 "categories": "Suscripciones temáticas",
                 "fullname": "Nombre o apellidos",
-                "language": "Idioma"
+                "language": "Idioma",
+                "service": "Servicio"
             },
             "placeholders": {
                 "fullname": "Introduzca nombre o apellidos",
                 "language": "Introduzca idiomas del usuario",
-                "noResourceSelected": "No hay ningún recurso seleccionado"
+                "noResourceSelected": "No hay ningún recurso seleccionado",
+                "service": "Introduzca los servicios usados por el usuario"
             },
             "rolEnum": {
                 "label": "Rol"
@@ -438,6 +440,10 @@
         },
         "rol": "Rol",
         "roles": "Roles",
+        "serviceEnum": {
+            "FILTERS": "Filtros",
+            "FAVORITES": "Favoritos"
+        },
         "status": {
             "active": "Activo",
             "deactivated": "Desactivado",

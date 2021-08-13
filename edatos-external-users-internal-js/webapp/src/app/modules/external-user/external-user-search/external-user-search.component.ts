@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Language } from '@app/core/model';
+import { Language, Service } from '@app/core/model';
 import { StructuralResourcesTreeComponent } from '@app/shared/components/structural-resources-tree';
 import { FavoriteResource } from '@app/shared/model';
 import { CategoryService } from '@app/shared/service';
@@ -22,6 +22,7 @@ export class ExternalUserSearchComponent implements OnInit, OnDestroy {
     public languageEnum = Language;
     public selectedResources: FavoriteResource[] = [];
     public isSelectingResource = false;
+    public serviceEnum = Service;
 
     @ViewChild(StructuralResourcesTreeComponent)
     public tree: StructuralResourcesTreeComponent;
