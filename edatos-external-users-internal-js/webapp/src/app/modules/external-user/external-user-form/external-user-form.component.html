@@ -22,7 +22,7 @@
             <ng-container *ngIf="permissionService.canNavigateUserManagement()">
                 <button (click)="restore()" *ngIf="externalUser.deletionDate" [disabled]="editMode" class="btn btn-warning" type="button">
                     <span class="fa fa-undo"></span>
-                    <span translate="entity.action.restore"></span>
+                    <span translate="entity.action.activate"></span>
                 </button>
             </ng-container>
             <ng-container *ngIf="permissionService.canNavigateUserManagement()">

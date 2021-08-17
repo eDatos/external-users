@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Params } from '@angular/router';
-import { Language } from '@app/core/model';
+import { Language, Service } from '@app/core/model';
 import { BaseEntityFilter, EntityFilter } from 'arte-ng/model';
 
 export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter {
@@ -9,6 +9,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
     public includeDeleted: boolean | null;
     public categories: string[] = [];
     public externalOperations: string[] = [];
+    public services: Service[] = [];
 
     constructor(public datePipe?: DatePipe) {
         super(datePipe);
@@ -20,6 +21,7 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         this.languages = queryParams.languages?.split(',') ?? [];
         this.categories = queryParams.categories?.split(',') ?? [];
         this.externalOperations = queryParams.externalOperations?.split(',') ?? [];
+        this.services = queryParams.services?.split(' ') ?? [];
     }
 
     public getCriterias() {
@@ -38,6 +40,9 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
         }
         if (this.externalOperations?.length > 0) {
             criterias.push(`FAVORITE_EXTERNAL_OPERATIONS IN (${this.externalOperations.join(',')})`);
+        }
+        if (this.services?.length > 0) {
+            criterias.push(`SERVICES IN (${this.services.join(',')})`);
         }
         return criterias;
     }
@@ -67,6 +72,11 @@ export class ExternalUserFilter extends BaseEntityFilter implements EntityFilter
             paramName: 'externalOperations',
             updateFilterFromParam: (param) => (this.externalOperations = param),
             clearFilter: () => (this.externalOperations = []),
+        });
+        this.registerParam({
+            paramName: 'services',
+            updateFilterFromParam: (param) => (this.services = param),
+            clearFilter: () => (this.services = []),
         });
     }
 }

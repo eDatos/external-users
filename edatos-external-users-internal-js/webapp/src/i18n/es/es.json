@@ -218,7 +218,7 @@
             "publishExternally": "Publicar externamente",
             "publishInternally": "Publicar internamente",
             "recuperar": "Recuperar",
-            "restore": "Restaurar",
+            "activate": "Activar",
             "save": "Guardar",
             "select": "Seleccionar",
             "view": "Ver"
@@ -276,8 +276,8 @@
         "recuperar": {
             "title": "Confirmar recuperación"
         },
-        "restore": {
-            "title": "Confirmar restauración"
+        "activate": {
+            "title": "Confirmar activación"
         },
         "status": "Estado",
         "validation": {
@@ -394,12 +394,14 @@
             "labels": {
                 "categories": "Suscripciones temáticas",
                 "fullname": "Nombre o apellidos",
-                "language": "Idioma"
+                "language": "Idioma",
+                "service": "Servicio"
             },
             "placeholders": {
                 "fullname": "Introduzca nombre o apellidos",
                 "language": "Introduzca idiomas del usuario",
-                "noResourceSelected": "No hay ningún recurso seleccionado"
+                "noResourceSelected": "No hay ningún recurso seleccionado",
+                "service": "Introduzca los servicios usados por el usuario"
             },
             "rolEnum": {
                 "label": "Rol"
@@ -433,11 +435,15 @@
         "permissions": "Permisos",
         "personalData": "Datos personales",
         "profiles": "Roles",
-        "restore": {
-            "question": "¿Seguro que desea restaurar el usuario {{ email }}?"
+        "activate": {
+            "question": "¿Seguro que desea activar el usuario {{ email }}?"
         },
         "rol": "Rol",
         "roles": "Roles",
+        "serviceEnum": {
+            "FILTERS": "Filtros",
+            "FAVORITES": "Favoritos"
+        },
         "status": {
             "active": "Activo",
             "deactivated": "Desactivado",
@@ -754,7 +760,7 @@
     "structuralResourcesTree": {
         "addNewNode": "Añadir tema",
         "editionModal": "Edición multidioma del nombre del recurso",
-        "externalOperations": "Operaciones estadísticas adscritas",
+        "externalOperations": "Categorías adscritas",
         "helpMessage": "Puede arrastrar los elementos para reposicionarlos. Puede editar el nombre del recurso haciendo doble clic sobre él",
         "noRecordsFound": "No se ha encontrado ningún tema ni operación",
         "numberOfFilters": "Consultas personalizadas: {{amount}}",
