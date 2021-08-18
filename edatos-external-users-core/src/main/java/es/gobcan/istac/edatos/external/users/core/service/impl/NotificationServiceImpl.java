@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
+import es.gobcan.istac.edatos.external.users.core.service.DataProtectionPolicyService;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationOrganismArgsService;
 import io.github.jhipster.config.JHipsterProperties;
 import org.siemac.metamac.rest.notices.v1_0.domain.Message;
@@ -50,12 +51,15 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     private NotificationOrganismArgsService notificationOrganismArgsService;
 
+    @Autowired
+    private DataProtectionPolicyService dataProtectionPolicyService;
+
     @Override
     public void createNewExternalUserAccountNotification(ExternalUserEntity externalUserEntity) {
         String codeSubject = "notice.subject.register_account.title";
         String messageCode = "notice.message.register_account.text";
 
-        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity);
+        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd());
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
@@ -64,7 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void createDeleteExternalUserAccountNotification(ExternalUserEntity externalUserEntity) {
         String codeSubject = "notice.subject.unsubscribe_account.title";
         String messageCode = "notice.message.unsubscribe_account.text";
-        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity);
+        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd());
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
@@ -74,7 +78,7 @@ public class NotificationServiceImpl implements NotificationService {
         String codeSubject = "notice.subject.change_password.title";
         String messageCode = "notice.message.change_password.text";
 
-        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity);
+        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd());
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
@@ -84,7 +88,7 @@ public class NotificationServiceImpl implements NotificationService {
         String codeSubject = "notice.subject.reset_password.title";
         String messageCode = "notice.message.reset_password.text";
         String baseUrl = jHipsterProperties.getMail().getBaseUrl() + BASE_URL + externalUserEntity.getResetKey();
-        ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity)));
+        ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd())));
         argsList.add(baseUrl);
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), argsList.toArray(new String[argsList.size()]));
@@ -97,10 +101,9 @@ public class NotificationServiceImpl implements NotificationService {
 
         for (FavoriteEntity favorite : listFavorites) {
             ExternalUserEntity externalUserEntity = favorite.getExternalUser();
-            String locale = LocaleContextHolder.getLocale().toString();
-            String operation = favorite.getExternalOperation().getName().getLocalisedLabel(locale);
-            ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity)));
-            argsList.add(operation);
+            ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd())));
+            argsList.add(favorite.getExternalOperation().getName().getLocalisedLabel(getLocale()));
+
             if (externalUserEntity.isEmailNotificationsEnabled() && favorite.getExternalOperation().isNotificationsEnabled()) {
                 createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), argsList.toArray(new String[argsList.size()]));
             }
@@ -173,5 +176,15 @@ public class NotificationServiceImpl implements NotificationService {
 
     private String getOrganism() {
         return metadataConfigurationService.retrieveOrganisation();
+    }
+
+    private String getLopd(){
+        return dataProtectionPolicyService.find().getValue().getLocalisedLabel(getLocale());
+    }
+
+    private String getLocale(){
+        String[] locale = LocaleContextHolder.getLocale().toString().split("_");
+        //toLowerCase locale
+        return locale[0];
     }
 }

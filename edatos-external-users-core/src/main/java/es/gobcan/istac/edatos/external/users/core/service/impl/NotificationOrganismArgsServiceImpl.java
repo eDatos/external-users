@@ -23,35 +23,33 @@ public final class NotificationOrganismArgsServiceImpl implements NotificationOr
 
     // EDATOS-3379 Future is likely to vary by organism
     @Override
-    public String[] argsByOrganism(String organism, ExternalUserEntity externalUserEntity) {
+    public String[] argsByOrganism(String organism, ExternalUserEntity externalUserEntity, String lopd) {
         switch (organism.toUpperCase(Locale.ROOT)) {
             case IBESTAT:
-                return ibestatOrganism(externalUserEntity);
+                return ibestatOrganism(externalUserEntity, lopd);
             case ISTAC:
-                return istacOrganism(externalUserEntity);
+                return istacOrganism(externalUserEntity, lopd);
             default:
-                return ibestatOrganism(externalUserEntity);
+                return ibestatOrganism(externalUserEntity, lopd);
         }
     }
 
-    private String[] getBasicArgs(ExternalUserEntity externalUserEntity) {
-        String[] args = {externalUserEntity.getName(), externalUserEntity.getSurname1(), externalUserEntity.getEmail()};
+    private String[] getBasicArgs(ExternalUserEntity externalUserEntity, String lopd) {
+        String[] args = {externalUserEntity.getName(), externalUserEntity.getSurname1(), externalUserEntity.getEmail(), lopd};
         return args;
     }
 
-    private String[] ibestatOrganism(ExternalUserEntity externalUserEntity) {
-        String lopdCode = generateTextI18n("notice.message.lopd");
+    private String[] ibestatOrganism(ExternalUserEntity externalUserEntity, String lopd) {
         String logoCode = generateTextI18n("notice.message.logo.ibestat");
-        String[] args = {logoCode, externalUserEntity.getName(), externalUserEntity.getSurname1(), externalUserEntity.getEmail(), lopdCode};
+        String[] args = {logoCode, externalUserEntity.getName(), externalUserEntity.getSurname1(), externalUserEntity.getEmail(), lopd};
         return args;
     }
 
-    private String[] istacOrganism(ExternalUserEntity externalUserEntity) {
+    private String[] istacOrganism(ExternalUserEntity externalUserEntity, String lopd) {
         // EDATOS-3379 Future is likely to vary by organism - Change de code text
-        String lopdCode = generateTextI18n("notice.message.lopd");
-        String logoCode = generateTextI18n("notice.message.logo.ibestat");
+        String logoCode = generateTextI18n("notice.message.logo.istac");
 
-        String[] args = {logoCode, externalUserEntity.getName(), externalUserEntity.getSurname1(), externalUserEntity.getEmail(), lopdCode};
+        String[] args = {logoCode, externalUserEntity.getName(), externalUserEntity.getSurname1(), externalUserEntity.getEmail(), lopd};
         return args;
     }
 
