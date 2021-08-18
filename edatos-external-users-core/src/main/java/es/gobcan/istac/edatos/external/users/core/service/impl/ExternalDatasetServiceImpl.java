@@ -48,8 +48,7 @@ public class ExternalDatasetServiceImpl implements ExternalDatasetService {
 
     @Override
     public List<ExternalDatasetEntity> getLastDayDatasets() {
-        Instant now = ZonedDateTime.now().toInstant();
-        return externalDatasetRepository.findAllByChangeRegisterOfDataset(now);
+        return externalDatasetRepository.findAll();
     }
 
 }

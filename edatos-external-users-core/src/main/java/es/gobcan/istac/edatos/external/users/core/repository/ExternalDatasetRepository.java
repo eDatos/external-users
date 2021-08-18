@@ -18,7 +18,7 @@ public interface ExternalDatasetRepository extends AbstractExternalItemRepositor
     Optional<ExternalDatasetEntity> findByCode(String code);
     Optional<ExternalDatasetEntity> findByUrn(String urn);
 
-    @Query("SELECT ds FROM ExternalDatasetEntity ds WHERE ds.createdDate <= :endDate")
-    List<ExternalDatasetEntity> findAllByChangeRegisterOfDataset(@Param("endDate") Instant endDate);
+    @Override
+    List<ExternalDatasetEntity> findAll();
 
 }
