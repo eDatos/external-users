@@ -1,11 +1,11 @@
 package es.gobcan.istac.edatos.external.users.core.service.validator;
 
-import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.stereotype.Component;
 
@@ -32,10 +32,11 @@ public class CategoryValidator extends AbstractValidator<CategoryEntity> {
     }
 
     public void checkCategoriesWithSubscribers(List<CategoryEntity> tree, List<CategoryEntity> allCategories) {
-        Set<CategoryEntity> categories = tree.stream().flatMap(CategoryEntity::flattened).collect(Collectors.toSet());
+        Set<CategoryEntity> updatedCategories = tree.stream().flatMap(CategoryEntity::flattened).collect(Collectors.toSet());
 
         // Get categories that are no longer present in the tree but are in the database
-        Collection<CategoryEntity> deletedCategories = CollectionUtils.subtract(allCategories, categories);
+        Set<CategoryEntity> deletedCategories = new HashSet<>(allCategories);
+        deletedCategories.removeIf(c1 -> updatedCategories.stream().anyMatch(c2 -> Objects.equals(c1.getName(), c2.getName())));
 
         for (CategoryEntity category : deletedCategories) {
             if (!favoriteService.findByCategory(category).isEmpty()) {
