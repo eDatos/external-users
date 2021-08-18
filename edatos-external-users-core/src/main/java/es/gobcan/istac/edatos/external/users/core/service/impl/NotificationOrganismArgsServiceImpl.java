@@ -1,7 +1,10 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationOrganismArgsService;
+
+import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -30,7 +33,7 @@ public final class NotificationOrganismArgsServiceImpl implements NotificationOr
             case ISTAC:
                 return istacOrganism(externalUserEntity, lopd);
             default:
-                throw new IllegalArgumentException("Organism does not exists");
+                throw new EDatosException(ServiceExceptionType.GENERIC_ERROR);
         }
     }
 
