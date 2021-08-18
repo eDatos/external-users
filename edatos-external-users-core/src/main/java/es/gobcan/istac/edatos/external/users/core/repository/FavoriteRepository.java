@@ -29,11 +29,12 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Long> 
     void deleteByExternalUserAndExternalOperation(ExternalUserEntity externalUser, ExternalOperationEntity operation);
 
     @Query("select new org.apache.commons.lang3.tuple.ImmutablePair(e.category.id, count(e)) from FavoriteEntity e where e.category is not null group by e.category")
-    List<ImmutablePair<Long, Long>> getCategoriesSubscribers();
+    List<ImmutablePair<String, Long>> getCategoriesSubscribers();
 
-    @Query("select new org.apache.commons.lang3.tuple.ImmutablePair(e.externalOperation.id, count(e)) from FavoriteEntity e where e.externalOperation is not null group by e.externalOperation")
-    List<ImmutablePair<Long, Long>> getOperationsSubscribers();
+    @Query("select new org.apache.commons.lang3.tuple.ImmutablePair(e.externalOperation.urn, count(e)) from FavoriteEntity e where e.externalOperation is not null group by e.externalOperation.urn")
+    List<ImmutablePair<String, Long>> getOperationsSubscribers();
 
     void deleteByCategory(CategoryEntity category);
     void deleteByExternalOperation(ExternalOperationEntity operation);
+    void deleteByExternalOperationUrn(String urn);
 }

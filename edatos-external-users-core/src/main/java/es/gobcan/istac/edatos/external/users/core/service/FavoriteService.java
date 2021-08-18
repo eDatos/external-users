@@ -23,9 +23,9 @@ public interface FavoriteService {
     Page<FavoriteEntity> find(String query, Pageable pageable);
     List<FavoriteEntity> find(String query, Sort sort);
     void delete(FavoriteEntity favorite);
-    Map<Long, Long> getCategorySubscribers();
+    Map<String, Long> getCategorySubscribers();
+    Map<String, Long> getOperationSubscribers();
     void deleteBySuscription(CategoryEntity category);
-    Map<Long, Long> getOperationSubscribers();
     List<FavoriteEntity> findByExternalUser();
     List<FavoriteEntity> findByCategory(CategoryEntity category);
     void deleteBySuscription(ExternalOperationEntity operation);

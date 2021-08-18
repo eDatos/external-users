@@ -1,22 +1,21 @@
 package es.gobcan.istac.edatos.external.users.core.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.CategoryRepository;
 import es.gobcan.istac.edatos.external.users.core.service.CategoryService;
 import es.gobcan.istac.edatos.external.users.core.service.validator.CategoryValidator;
@@ -38,6 +37,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public List<CategoryEntity> findAll() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
     public CategoryEntity findCategoryById(Long id) {
         return categoryRepository.findOne(id);
     }
@@ -56,6 +60,16 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryEntity> getTree() {
         return categoryRepository.getByParentIsNull();
+    }
+
+    @Override
+    public Map<CategoryEntity, List<ExternalCategoryEntity>> getCategoryExternalCategories() {
+        Map<CategoryEntity, List<ExternalCategoryEntity>> map = new HashMap<>();
+        for (ImmutablePair<CategoryEntity, ExternalCategoryEntity> pair : categoryRepository.getCategoryExternalCategories()) {
+            map.computeIfAbsent(pair.getLeft(), k -> new ArrayList<>());
+            map.get(pair.getLeft()).add(pair.getRight());
+        }
+        return map;
     }
 
     @Override

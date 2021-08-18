@@ -28,7 +28,7 @@
                         <tr [class.disabled]="!externalOperation.enabled">
                             <td>{{externalOperation.code}}</td>
                             <td>{{externalOperation.name.val}}</td>
-                            <td>{{externalOperation.publicationDate}}</td>
+                            <td>{{externalOperation.publicationDate | date: 'd/M/yyyy H:mm:ss' }}</td>
                             <td>
                                 <div class="d-flex align-items-center" style="gap: 1em">
                                     <p-inputSwitch

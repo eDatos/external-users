@@ -10,7 +10,7 @@
         <tr [routerLink]="['/filter', filter.id]">
             <td>{{filter.name}}</td>
             <td><a href="{{getVisualizerPath() + filter.permalink}}" target="_blan">{{getVisualizerPath() + filter.permalink}}</a></td>
-            <td>{{filter.lastAccessDate}}</td>
+            <td>{{filter.lastAccessDate | date: 'd/M/yyyy H:mm:ss' }}</td>
         </tr>
     </ng-template>
 </arte-table>

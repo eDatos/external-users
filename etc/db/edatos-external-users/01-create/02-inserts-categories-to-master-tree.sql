@@ -487,7 +487,7 @@ ALTER SEQUENCE seq_tb_categories RESTART WITH 41;
 ------------------------------------------------------------------
 
 INSERT INTO tb_external_items (id, opt_lock, code, name, urn, type)
-VALUES (1, 1, 'op1', '{
+VALUES (41, 1, 'op1', '{
     "texts": [
         {
             "label": "Nacimientos",
@@ -497,12 +497,12 @@ VALUES (1, 1, 'op1', '{
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op1', 'statisticalOperations#operation');
 
 INSERT INTO tb_external_operations (external_category_urn, enabled, notifications_enabled, publication_date, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', true, true, now(), 1);
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', true, true, now(), 41);
 
 ------------------------------------------------------------------
 
 INSERT INTO tb_external_items (id, opt_lock, code, name, urn, type)
-VALUES (2, 1, 'op2', '{
+VALUES (42, 1, 'op2', '{
     "texts": [
         {
             "label": "Fallecimientos",
@@ -512,12 +512,12 @@ VALUES (2, 1, 'op2', '{
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op2', 'statisticalOperations#operation');
 
 INSERT INTO tb_external_operations (external_category_urn, enabled, notifications_enabled, publication_date, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', true, true, now(), 2);
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).1.1', true, true, now(), 42);
 
 ------------------------------------------------------------------
 
 INSERT INTO tb_external_items (id, opt_lock, code, name, urn, type)
-VALUES (3, 1, 'op3', '{
+VALUES (43, 1, 'op3', '{
     "texts": [
         {
             "label": "Producción de energía",
@@ -527,12 +527,12 @@ VALUES (3, 1, 'op3', '{
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op3', 'statisticalOperations#operation');
 
 INSERT INTO tb_external_operations (external_category_urn, enabled, notifications_enabled, publication_date, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', true, true, now(), 3);
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', true, true, now(), 43);
 
 ------------------------------------------------------------------
 
 INSERT INTO tb_external_items (id, opt_lock, code, name, urn, type)
-VALUES (4, 1, 'op4', '{
+VALUES (44, 1, 'op4', '{
     "texts": [
         {
             "label": "Consumo de energía",
@@ -542,7 +542,7 @@ VALUES (4, 1, 'op4', '{
 }', 'urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).op4', 'statisticalOperations#operation');
 
 INSERT INTO tb_external_operations (external_category_urn, enabled, notifications_enabled, publication_date, external_item_fk)
-VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', true, true, now(), 4);
+VALUES ('urn:sdmx:org.sdmx.infomodel.categoryscheme.Category=ISTAC:SDMXStatSubMatDomainsWD1(01.000).2.4.2', true, true, now(), 44);
 
 
 ALTER SEQUENCE seq_tb_external_items RESTART WITH 5;
