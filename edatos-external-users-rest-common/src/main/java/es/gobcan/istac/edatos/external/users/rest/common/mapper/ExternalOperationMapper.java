@@ -49,7 +49,7 @@ public abstract class ExternalOperationMapper implements EntityMapper<ExternalOp
     }
 
     @Mapping(target = "name", source = "title")
-    @Mapping(target = "externalCategoryUrn", source = "urn")
+    @Mapping(target = "externalCategoryUrn", source = "subjectArea.urn")
     @Mapping(target = "publicationDate", source = "inventoryDate")
     @Mapping(target = "type", ignore = true)
     @Mapping(target = "optLock", ignore = true)
