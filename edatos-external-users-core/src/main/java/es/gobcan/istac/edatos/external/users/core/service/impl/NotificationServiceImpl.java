@@ -15,7 +15,6 @@ import org.siemac.metamac.rest.notices.v1_0.domain.Message;
 import org.siemac.metamac.rest.notices.v1_0.domain.Notice;
 import org.siemac.metamac.rest.notices.v1_0.domain.Receivers;
 import org.siemac.metamac.rest.notices.v1_0.domain.enume.MetamacApplicationsEnum;
-import org.siemac.metamac.rest.notices.v1_0.domain.enume.MetamacRolesEnum;
 import org.siemac.metamac.rest.notices.v1_0.domain.utils.MessageBuilder;
 import org.siemac.metamac.rest.notices.v1_0.domain.utils.NoticeBuilder;
 import org.siemac.metamac.rest.notices.v1_0.domain.utils.ReceiverBuilder;
@@ -59,7 +58,7 @@ public class NotificationServiceImpl implements NotificationService {
         String codeSubject = "notice.subject.register_account.title";
         String messageCode = "notice.message.register_account.text";
 
-        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd());
+        String[] args = notificationOrganismArgsService.argsByOrganism(getOrganism(), externalUserEntity, getLopd());
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
@@ -68,7 +67,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void createDeleteExternalUserAccountNotification(ExternalUserEntity externalUserEntity) {
         String codeSubject = "notice.subject.unsubscribe_account.title";
         String messageCode = "notice.message.unsubscribe_account.text";
-        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd());
+        String[] args = notificationOrganismArgsService.argsByOrganism(getOrganism(), externalUserEntity, getLopd());
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
@@ -78,7 +77,7 @@ public class NotificationServiceImpl implements NotificationService {
         String codeSubject = "notice.subject.change_password.title";
         String messageCode = "notice.message.change_password.text";
 
-        String[] args = notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd());
+        String[] args = notificationOrganismArgsService.argsByOrganism(getOrganism(), externalUserEntity, getLopd());
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), args);
     }
@@ -88,7 +87,7 @@ public class NotificationServiceImpl implements NotificationService {
         String codeSubject = "notice.subject.reset_password.title";
         String messageCode = "notice.message.reset_password.text";
         String baseUrl = jHipsterProperties.getMail().getBaseUrl() + BASE_URL + externalUserEntity.getResetKey();
-        ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd())));
+        ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism(getOrganism(), externalUserEntity, getLopd())));
         argsList.add(baseUrl);
 
         createNotificationWithReceiver(codeSubject, messageCode, externalUserEntity.getEmail(), argsList.toArray(new String[argsList.size()]));
@@ -101,7 +100,7 @@ public class NotificationServiceImpl implements NotificationService {
 
         for (FavoriteEntity favorite : listFavorites) {
             ExternalUserEntity externalUserEntity = favorite.getExternalUser();
-            ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism("default", externalUserEntity, getLopd())));
+            ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism(getOrganism(), externalUserEntity, getLopd())));
             argsList.add(favorite.getExternalOperation().getName().getLocalisedLabel(getLocale()));
 
             if (externalUserEntity.isEmailNotificationsEnabled() && favorite.getExternalOperation().isNotificationsEnabled()) {
@@ -160,11 +159,11 @@ public class NotificationServiceImpl implements NotificationService {
             String subject = messageSource.getMessage(codeSubject, null, currentLocale);
 
             Notice notice = NoticeBuilder.notification().withMessages(MessageBuilder.message().withText(message).build()).withReceivers(receivers)
-                .withSendingApplication(MetamacApplicationsEnum.GESTOR_AVISOS.getName()).withSubject(subject).withRoles(MetamacRolesEnum.ADMINISTRADOR).build();
+                .withSendingApplication(MetamacApplicationsEnum.GESTOR_EXTERNAL_USERS.getName()).withSubject(subject).build();
 
             eDatosApisLocator.getNoticesRestInternalFacadeV10().createNotice(notice);
         } catch (Exception e) {
-            log.debug("Error al enviar notificacion : {}", e);
+            log.debug("Error in sending notification : {}", e);
         }
     }
 

@@ -30,7 +30,7 @@ public final class NotificationOrganismArgsServiceImpl implements NotificationOr
             case ISTAC:
                 return istacOrganism(externalUserEntity, lopd);
             default:
-                return ibestatOrganism(externalUserEntity, lopd);
+                throw new IllegalArgumentException("Organism does not exists");
         }
     }
 
