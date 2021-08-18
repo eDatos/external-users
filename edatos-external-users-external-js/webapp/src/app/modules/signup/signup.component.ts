@@ -3,6 +3,8 @@ import { User, Role, Treatment, Language } from '@app/core/model';
 import { Router } from '@angular/router';
 import { AccountUserService } from '@app/core/service/user';
 import { CaptchaService } from '@app/shared/service';
+import { MessageService } from 'primeng/api';
+import { TranslateService } from '@ngx-translate/core';
 
 type SignUp = Omit<User, 'id' | 'roles'>;
 
@@ -23,15 +25,21 @@ export class SignupFormComponent implements OnInit {
 
     private captchaContainerEl: ElementRef;
 
-    @ViewChild('captchaContainer') 
+    @ViewChild('captchaContainer')
     set captchaContainer(captchaContainerEl: ElementRef) {
-        if(captchaContainerEl && !this.captchaContainerEl) {
+        if (captchaContainerEl && !this.captchaContainerEl) {
             this.captchaContainerEl = captchaContainerEl;
             this.captchaService.buildCaptcha(this.captchaContainerEl);
         }
     }
 
-    constructor(private accountUserService: AccountUserService, private router: Router, private captchaService: CaptchaService) {}
+    constructor(
+        private accountUserService: AccountUserService,
+        private router: Router,
+        private captchaService: CaptchaService,
+        private messageService: MessageService,
+        private translateService: TranslateService
+    ) {}
 
     ngOnInit() {
         this.isSaving = false;
@@ -50,9 +58,10 @@ export class SignupFormComponent implements OnInit {
         if (this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
-            this.accountUserService.create(this.captchaContainerEl, this.user)
+            this.accountUserService
+                .create(this.captchaContainerEl, this.user)
                 .then((response) => this.onSaveSuccess(response))
-                .catch(() => this.onSaveError())
+                .catch(() => this.onSaveError());
         }
     }
 
@@ -86,6 +95,13 @@ export class SignupFormComponent implements OnInit {
     }
 
     private onSaveSuccess(result) {
+        this.messageService.add({
+            key: 'customAlertKey',
+            severity: 'success',
+            summary: this.translateService.instant('signup.messages.onSuccessSumary'),
+            detail: this.translateService.instant('signup.messages.onSuccess'),
+            life: 5000,
+        });
         this.isSaving = false;
         this.navigateToLogin();
     }
