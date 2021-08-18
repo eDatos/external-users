@@ -352,7 +352,10 @@
         "userManagement": {
             "usuario-ldap-no-encontrado": "The specified user was not found"
         },
-        "usuario-existe": "The username entered is already in use"
+        "usuario-existe": "The username entered is already in use",
+        "quartz": {
+            "jobExecutionError": "Error while running a job Quartz"
+        }
     },
     "externalCategoriesTable": {
         "alreadySelectedCategory": "You cannot select this category because a node already exists that references it.",
