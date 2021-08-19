@@ -16,6 +16,7 @@
                         [value]="users"
                         [rows]="itemsPerPage"
                         [totalRecords]="totalItems"
+                        [rowsPerPageOptions]="paginatorOptions"
                         tableStyleClass="page-table table-has-pointer-rows"
                         (onLazyLoad)="loadData($event)"
                         [tableStatus]="{

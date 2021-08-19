@@ -30,7 +30,7 @@
     </div>
     <div class="page-body">
         <div class="page-table-container-fluid">
-            <arte-table [columns]="columns" [value]="audits" [rows]="itemsPerPage" [totalRecords]="totalItems"
+            <arte-table [columns]="columns" [value]="audits" [rows]="itemsPerPage" [totalRecords]="totalItems" [rowsPerPageOptions]="paginatorOptions"
                 tableStyleClass="page-table" dataKey="timestamp" (onLazyLoad)="loadData($event)">
 
                 <ng-template pTemplate="body" let-audit>

@@ -5,6 +5,7 @@ import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
 import { LazyLoadEvent } from 'primeng/api';
 import { TableService, Table } from 'primeng/table';
+import { PAGINATION_OPTIONS } from '@app/app.constants';
 
 @Component({
     selector: 'app-audit',
@@ -15,6 +16,7 @@ export class AuditsComponent implements OnInit {
     // Atributos para la paginación
     page: number;
     totalItems: number;
+    paginatorOptions = PAGINATION_OPTIONS;
     itemsPerPage: number;
 
     audits: Audit[];
@@ -130,7 +132,7 @@ export class AuditsComponent implements OnInit {
         }
         this.transition();
     }
-    
+
     transition() {
         this.router.navigate(['/admin', 'audits'], {
             queryParams: {

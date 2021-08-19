@@ -19,6 +19,7 @@ import { Subscription } from 'rxjs';
 export class ExternalUserListComponent implements OnInit, OnDestroy {
     public totalItems: any;
     public itemsPerPage: any;
+    public paginatorOptions = PAGINATION_OPTIONS;
     public page: any;
     public predicate: any;
     public reverse: any;

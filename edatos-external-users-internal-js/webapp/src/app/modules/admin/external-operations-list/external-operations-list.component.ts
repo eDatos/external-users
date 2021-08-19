@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ITEMS_PER_PAGE } from '@app/app.constants';
+import { ITEMS_PER_PAGE, PAGINATION_OPTIONS } from '@app/app.constants';
 import { ResponseWrapper } from '@app/core/utils/response-utils';
 import { ExternalOperation } from '@app/shared/model';
 import { ExternalOperationService } from '@app/shared/service';
@@ -15,6 +15,7 @@ import { LazyLoadEvent } from 'primeng/api';
 export class ExternalOperationsListComponent implements OnInit {
     public totalItems: number | null;
     public itemsPerPage = ITEMS_PER_PAGE;
+    public paginatorOptions = PAGINATION_OPTIONS;
     public page = 1;
     public externalOperations: ExternalOperation[];
     public predicate: string;

@@ -15,6 +15,7 @@ import { LazyLoadEvent } from 'primeng/api';
 export class FilterListComponent implements OnInit {
     public filters: Filter[] = [];
     public totalItems: number | null = null;
+    public paginatorOptions = PAGINATION_OPTIONS;
     public itemsPerPage?: number;
     public columns: any = [
         {
