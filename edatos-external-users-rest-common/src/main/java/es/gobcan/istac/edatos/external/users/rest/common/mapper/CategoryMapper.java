@@ -56,9 +56,9 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
     public abstract CategoryEntity toEntity(CategoryDto dto);
 
     public List<ExternalOperationDto> getExternalOperations(CategoryEntity category, Map<CategoryEntity, List<ExternalCategoryEntity>> categoriesExternalCategories,
-            List<ExternalOperationEntity> externalOperations) {
+            List<ExternalOperationEntity> externalOperations, Map<String, Long> subscribers) {
         List<ExternalCategoryDto> externalCategories = getExternalCategories(category, categoriesExternalCategories);
-        return getOperations(externalOperations, externalCategories);
+        return getOperations(externalOperations, externalCategories, subscribers);
     }
 
     @Named("getExternalCategoryEntitiesFromUrn")
@@ -69,7 +69,7 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
         return externalCategoryService.requestAllExternalCategories().stream()
                 // pick only the selected external categories
                 .filter(externalCategory -> urns.contains(externalCategory.getUrn()))
-                // if the external category was already in db, pick that one; otherwise create a new one (this avoid problems with unique constraints and duplication)
+                // if the external category was already in db, pick that one; otherwise create a new one (this avoids problems with unique constraints and duplication)
                 .map(newExternalCategory -> inDbExternalCategories.stream()
                                                                   .filter(inDbExternalCategory -> Objects.equals(inDbExternalCategory.getUrn(), newExternalCategory.getUrn()))
                                                                   .findAny()
@@ -91,10 +91,14 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
         return list;
     }
 
-    public List<ExternalOperationDto> getOperations(List<ExternalOperationEntity> externalOperations, Collection<ExternalCategoryDto> entities) {
-        List<String> urns = entities.stream().map(ExternalCategoryDto::getUrn).collect(Collectors.toList());
-        List<ExternalOperationEntity> filteredExternalOperations = externalOperations.stream().filter(op -> urns.contains(op.getUrn())).collect(Collectors.toList());
-        return filteredExternalOperations.stream().map(externalOperationMapper::toDto).collect(Collectors.toList());
+    public List<ExternalOperationDto> getOperations(List<ExternalOperationEntity> externalOperations, Collection<ExternalCategoryDto> entities, Map<String, Long> subscribers) {
+        List<String> externalCategoriesUrns = entities.stream().map(ExternalCategoryDto::getUrn).collect(Collectors.toList());
+        List<ExternalOperationEntity> adscribedExternalOperations = externalOperations.stream().filter(operation -> externalCategoriesUrns.contains(operation.getExternalCategoryUrn())).collect(Collectors.toList());
+        return adscribedExternalOperations.stream().map(entity -> {
+            ExternalOperationDto dto = externalOperationMapper.toDto(entity);
+            dto.setSubscribers(subscribers.getOrDefault(entity.getUrn(), 0L));
+            return dto;
+        }).collect(Collectors.toList());
     }
 
     public List<CategoryEntity> getChildren(CategoryEntity category, List<CategoryEntity> allCategories) {
@@ -122,7 +126,7 @@ public abstract class CategoryMapper implements EntityMapper<CategoryDto, Catego
 
     @Mapping(target = "subscribers", expression = "java(subscribers.getOrDefault(category.getId().toString(), 0L))")
     @Mapping(target = "externalCategories", expression = "java(getExternalCategories(category, categoriesExternalCategories))")
-    @Mapping(target = "externalOperations", expression = "java(getExternalOperations(category, categoriesExternalCategories, externalOperations))")
+    @Mapping(target = "externalOperations", expression = "java(getExternalOperations(category, categoriesExternalCategories, externalOperations, subscribers))")
     @Mapping(target = "children", expression = "java(toDtos(allCategories, getChildren(category, allCategories), categoriesExternalCategories, externalOperations, subscribers))")
     public abstract CategoryDto toDto(CategoryEntity category, List<CategoryEntity> allCategories, Map<CategoryEntity, List<ExternalCategoryEntity>> categoriesExternalCategories,
             List<ExternalOperationEntity> externalOperations, Map<String, Long> subscribers);
