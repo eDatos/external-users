@@ -18,5 +18,5 @@ export const DEFAULT_LANG = 'es';
 
 export const DEFAULT_PATH = '/external-users';
 
-export const ITEMS_PER_PAGE = 20;
-export const PAGINATION_OPTIONS = [5, 10, 15, 20];
+export const PAGINATION_OPTIONS = [100, 150, 200];
+export const ITEMS_PER_PAGE = PAGINATION_OPTIONS[0];

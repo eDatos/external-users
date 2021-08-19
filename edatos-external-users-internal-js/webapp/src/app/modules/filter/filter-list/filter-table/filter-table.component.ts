@@ -40,6 +40,7 @@ export class FilterTableComponent implements OnInit {
     ];
     public filterAmount: number | null;
     public itemsPerPage = ITEMS_PER_PAGE;
+    public paginatorOptions = PAGINATION_OPTIONS;
     public filters: Filter[];
 
     @Input()

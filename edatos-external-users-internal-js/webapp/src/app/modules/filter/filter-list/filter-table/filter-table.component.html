@@ -2,6 +2,7 @@
     [columns]="filterTableColumns"
     [value]="filters"
     [rows]="itemsPerPage"
+    [rowsPerPageOptions]="paginatorOptions"
     [totalRecords]="filterAmount"
     tableStyleClass="page-table table-has-pointer-rows"
     (onLazyLoad)="loadData($event)"

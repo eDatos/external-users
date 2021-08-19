@@ -5,6 +5,7 @@ import { LazyLoadEvent } from 'primeng/api';
 import { Table, TableService } from 'primeng/table';
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
+import { PAGINATION_OPTIONS } from '@app/app.constants';
 
 @Component({
     selector: 'app-audit',
@@ -16,6 +17,7 @@ export class AuditsComponent implements OnInit {
     page: number;
     totalItems: number;
     itemsPerPage: number;
+    paginatorOptions = PAGINATION_OPTIONS;
 
     audits: Audit[];
     fromDate: Date;
