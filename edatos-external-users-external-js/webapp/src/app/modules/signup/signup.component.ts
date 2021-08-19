@@ -58,31 +58,8 @@ export class SignupFormComponent implements OnInit {
         if (this.passwordDoNotMatch()) {
             this.validUser = false;
         } else {
-            this.accountUserService
-                .create(this.captchaContainerEl, this.user)
-                .then((response) => this.onSaveSuccess(response))
-                .catch(() => this.onSaveError());
-        }
-    }
-
-    validarUsuario(inputDirty = true) {
-        if (inputDirty) {
-            if (this.user.email) {
-                this.accountUserService.buscarUsuarioPorEmail(this.user.email).subscribe(
-                    (usuario) => {
-                        if (usuario) {
-                            this.user = usuario;
-                            this.validUser = true;
-                        } else {
-                            this.validUser = false;
-                        }
-                    },
-                    (error) => {
-                        this.validUser = false;
-                        console.log(error);
-                    }
-                );
-            }
+            this.accountUserService.create(this.captchaContainerEl, this.user).then((response) => this.onSaveSuccess(response));
+            this.isSaving = false;
         }
     }
 
@@ -104,9 +81,5 @@ export class SignupFormComponent implements OnInit {
         });
         this.isSaving = false;
         this.navigateToLogin();
-    }
-
-    private onSaveError() {
-        this.isSaving = false;
     }
 }
