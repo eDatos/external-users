@@ -10,6 +10,7 @@ import { finalize } from 'rxjs/operators';
 @Component({
     selector: 'app-favorite-tree',
     templateUrl: './favorite-tree.component.html',
+    styleUrls: ['./favorite-tree.component.scss'],
 })
 export class FavoriteTreeComponent implements OnInit {
     public inEditMode = false;
