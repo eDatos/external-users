@@ -17,21 +17,28 @@ export class LoginComponent implements OnInit {
     origin: String;
     captchaContainerEl: ElementRef;
 
-    @ViewChild('captchaContainer') 
+    @ViewChild('captchaContainer')
     set captchaContainer(captchaContainerEl: ElementRef) {
-        if(captchaContainerEl && !this.captchaContainerEl) {
+        if (captchaContainerEl && !this.captchaContainerEl) {
             this.captchaContainerEl = captchaContainerEl;
             this.captchaService.buildCaptcha(this.captchaContainerEl);
         }
     }
 
-    constructor(private accountUserService: AccountUserService, private router: Router, private principal: Principal, private route: ActivatedRoute, 
-                private authServerProvider: AuthServerProvider, @Inject(DOCUMENT) readonly document: Document, private captchaService: CaptchaService, 
-                private externalUserService: ExternalLoginService) {
+    constructor(
+        private accountUserService: AccountUserService,
+        private router: Router,
+        private principal: Principal,
+        private route: ActivatedRoute,
+        private authServerProvider: AuthServerProvider,
+        @Inject(DOCUMENT) readonly document: Document,
+        private captchaService: CaptchaService,
+        private externalUserService: ExternalLoginService
+    ) {
         this.credentials = new Credentials();
-        this.route.queryParams.subscribe(queryParams => {
-            if(queryParams["origin"]) {
-                this.origin = queryParams["origin"].replace(/^http:\/\//i, 'https://');
+        this.route.queryParams.subscribe((queryParams) => {
+            if (queryParams['origin']) {
+                this.origin = queryParams['origin'].replace(/^http:\/\//i, 'https://');
                 this.externalUserService.urlToReturnToAfterLogin = this.origin.toString();
             } else {
                 this.origin = this.externalUserService.urlToReturnToAfterLogin;
@@ -44,7 +51,7 @@ export class LoginComponent implements OnInit {
     login() {
         this.accountUserService.login(this.captchaContainerEl, this.credentials).then((foo: any) => {
             this.principal.identity().then(() => {
-                if(this.origin) {
+                if (this.origin) {
                     this.navigateToOrigin();
                 } else {
                     this.navigateToFilter();
@@ -58,8 +65,8 @@ export class LoginComponent implements OnInit {
     }
 
     private navigateToOrigin() {
-        const originRouteWithTokenParam = addQueryParamToRoute(this.origin.toString(), "token", encodeURIComponent(this.authServerProvider.getToken()));
-        this.document.defaultView.open(originRouteWithTokenParam, "_self");
+        const originRouteWithTokenParam = addQueryParamToRoute(this.origin.toString(), 'token', encodeURIComponent(this.authServerProvider.getToken()));
+        this.document.defaultView.open(originRouteWithTokenParam, '_self');
     }
 
     public navigateToSignup() {

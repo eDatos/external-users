@@ -35,7 +35,9 @@
             },
             "delete": {
                 "text": "Al confirmar se dará de baja en el sistema."
-            }
+            },
+            "onSuccessSumary": "Usuario editado",
+            "onSuccess": "Se han modificado los datos del usuario correctamente."
         }
     }
 }

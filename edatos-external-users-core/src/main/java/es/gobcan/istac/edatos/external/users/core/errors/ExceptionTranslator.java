@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.siemac.edatos.core.common.exception.EDatosExceptionItem;
 import org.slf4j.Logger;
@@ -131,11 +132,12 @@ public class ExceptionTranslator {
     @ResponseBody
     public ParameterizedErrorVM processParameterizedValidationError(EDatosException eDatosException) {
         List<ParameterizedErrorItem> items = new ArrayList<>();
-        for (EDatosExceptionItem item : eDatosException.getExceptionItems()) {
-            eDatosException.setPrincipalException(item);
+        List<EDatosExceptionItem> exceptionItems = eDatosException.getExceptionItems();
+        EDatosExceptionItem principalException = CollectionUtils.isNotEmpty(exceptionItems) ? exceptionItems.get(exceptionItems.size() - 1) : null;
+        exceptionItems.remove(principalException);
+        for (EDatosExceptionItem item : exceptionItems) {
             items.add(toParameterizedErrorItem(item));
         }
-        EDatosExceptionItem principalException = eDatosException.getPrincipalException();
         if (principalException != null) {
             List<String> params = principalException.getMessageParameters() != null
                     ? Stream.of(principalException.getMessageParameters()).map(Object::toString).collect(Collectors.toList())
