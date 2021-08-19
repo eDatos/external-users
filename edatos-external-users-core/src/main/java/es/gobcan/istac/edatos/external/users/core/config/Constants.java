@@ -22,6 +22,8 @@ public final class Constants {
 
     public static final List<String> AVAILABLE_LANGS = Arrays.asList(Constants.DEFAULT_LANG, "en");
 
+    public static final int HEALTH_INDICATOR_REQUEST_TIMEOUT_MS = 3000;
+
     private Constants() {
     }
 }

@@ -146,6 +146,12 @@ public class CategoryServiceTest {
     }
 
     @Test
+    public void testDeleteRootNode() {
+        categoryService.delete(node1.getId());
+        assertThat(categoryRepository.findAll()).hasSize(3);
+    }
+
+    @Test
     public void testCannotDeleteCategoryIfItHasSubscribers() {
         ExternalUserEntity externalUser = new ExternalUserEntity();
         externalUser.setName("User 1");
