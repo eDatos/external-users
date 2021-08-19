@@ -16,6 +16,7 @@
                         [value]="filters"
                         [rows]="itemsPerPage"
                         [totalRecords]="totalItems"
+                        [rowsPerPageOptions]="paginatorOptions"
                         tableStyleClass="page-table table-has-pointer-rows table-layou-fixed"
                         (onLazyLoad)="loadData($event)"
                     >
