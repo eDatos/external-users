@@ -1,8 +1,8 @@
 <div class="app">
     <app-navbar></app-navbar>
     <div class="h-100 ui-fluid">
-        <p-toast [key]="errorAlertKey" styleClass="toast-errors" [autoZIndex]="false"></p-toast>
-        <p-toast key="customAlertKey" [autoZIndex]="false"></p-toast>
+        <p-toast [key]="errorAlertKey" styleClass="toast-errors" [autoZIndex]="false" [baseZIndex]="9999"></p-toast>
+        <p-toast key="customAlertKey" [autoZIndex]="false" [baseZIndex]="9999"></p-toast>
         <router-outlet></router-outlet>
         <router-outlet name="popup"></router-outlet>
     </div>
