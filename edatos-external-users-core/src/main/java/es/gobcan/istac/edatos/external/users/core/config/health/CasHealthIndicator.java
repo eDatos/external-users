@@ -29,11 +29,15 @@ public class CasHealthIndicator extends AbstractHealthIndicator {
     protected void doHealthCheck(Health.Builder builder) throws Exception {
         final String casEndPoint = metadataProperties.getMetamacCasPrefix();
         builder.withDetail("endpoint", casEndPoint);
-        if (HttpStatus.ACCEPTED.equals(getUrlStatus(casEndPoint)) || HttpStatus.OK.equals(getUrlStatus(casEndPoint))) {
-            builder.up();
-        } else {
-            logger.warn("Cas not available. " + "Impossible to reach");
-            builder.down();
+        try {
+            if (HttpStatus.ACCEPTED.equals(getUrlStatus(casEndPoint)) || HttpStatus.OK.equals(getUrlStatus(casEndPoint))) {
+                builder.up();
+            } else {
+                logger.warn("Cas not available. " + "Impossible to reach");
+                builder.down();
+            }
+        } catch (Exception e) {
+            builder.withException(e).down();
         }
     }
 
