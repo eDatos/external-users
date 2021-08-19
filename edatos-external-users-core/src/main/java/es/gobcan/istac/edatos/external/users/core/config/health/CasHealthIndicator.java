@@ -17,6 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 
+import static es.gobcan.istac.edatos.external.users.core.config.Constants.HEALTH_INDICATOR_REQUEST_TIMEOUT_MS;
+
 @Component
 public class CasHealthIndicator extends AbstractHealthIndicator {
 
@@ -43,8 +45,8 @@ public class CasHealthIndicator extends AbstractHealthIndicator {
 
     public final HttpStatus getUrlStatus(String url) {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(3000);
-        factory.setReadTimeout(3000);
+        factory.setConnectTimeout(HEALTH_INDICATOR_REQUEST_TIMEOUT_MS);
+        factory.setReadTimeout(HEALTH_INDICATOR_REQUEST_TIMEOUT_MS);
         RestTemplate restTemplate = new RestTemplate(factory);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);

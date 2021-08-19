@@ -8,6 +8,8 @@ import org.springframework.web.client.RestTemplate;
 
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
 
+import static es.gobcan.istac.edatos.external.users.core.config.Constants.HEALTH_INDICATOR_REQUEST_TIMEOUT_MS;
+
 @Component
 public class StructuralResourcesExternalHealthIndicator extends AbstractHealthIndicator {
     private final MetadataConfigurationService metadataConfigurationService;
@@ -20,8 +22,8 @@ public class StructuralResourcesExternalHealthIndicator extends AbstractHealthIn
     protected void doHealthCheck(Health.Builder builder) {
         String endpoint = metadataConfigurationService.retrieveSrmExternalApiUrlBase() + "?_wadl";
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setConnectTimeout(3000);
-        factory.setReadTimeout(3000);
+        factory.setConnectTimeout(HEALTH_INDICATOR_REQUEST_TIMEOUT_MS);
+        factory.setReadTimeout(HEALTH_INDICATOR_REQUEST_TIMEOUT_MS);
         RestTemplate restTemplate = new RestTemplate(factory);
         try {
             restTemplate.getForObject(endpoint, String.class);
