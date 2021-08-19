@@ -2,6 +2,7 @@ package es.gobcan.istac.edatos.external.users.health;
 
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,7 +19,10 @@ public class NoticesInternalHealthIndicator extends AbstractHealthIndicator {
     @Override
     protected void doHealthCheck(Health.Builder builder) {
         String endpoint = metadataConfigurationService.retrieveNoticesInternalApiUrlBase() + "?_wadl";
-        RestTemplate restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3000);
+        factory.setReadTimeout(3000);
+        RestTemplate restTemplate = new RestTemplate(factory);
         try {
             restTemplate.getForObject(endpoint, String.class);
             builder.withDetail("endpoint", endpoint).up();

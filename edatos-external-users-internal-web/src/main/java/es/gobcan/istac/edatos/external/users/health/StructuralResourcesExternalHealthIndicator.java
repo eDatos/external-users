@@ -1,29 +1,31 @@
 package es.gobcan.istac.edatos.external.users.health;
 
-import org.siemac.metamac.srm.rest.external.v1_0.service.SrmRestExternalFacadeV10;
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-import es.gobcan.istac.edatos.external.users.core.service.EDatosApisLocator;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
 
 @Component
 public class StructuralResourcesExternalHealthIndicator extends AbstractHealthIndicator {
-    private final EDatosApisLocator eDatosApisLocator;
     private final MetadataConfigurationService metadataConfigurationService;
 
-    public StructuralResourcesExternalHealthIndicator(EDatosApisLocator eDatosApisLocator, MetadataConfigurationService metadataConfigurationService) {
-        this.eDatosApisLocator = eDatosApisLocator;
+    public StructuralResourcesExternalHealthIndicator(MetadataConfigurationService metadataConfigurationService) {
         this.metadataConfigurationService = metadataConfigurationService;
     }
 
     @Override
     protected void doHealthCheck(Health.Builder builder) {
-        SrmRestExternalFacadeV10 srmRestExternal = eDatosApisLocator.srmExternal();
+        String endpoint = metadataConfigurationService.retrieveSrmExternalApiUrlBase() + "?_wadl";
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3000);
+        factory.setReadTimeout(3000);
+        RestTemplate restTemplate = new RestTemplate(factory);
         try {
-            srmRestExternal.findCategories("~all", "~all", "~all", null, null, "1", null);
-            builder.withDetail("endpoint", metadataConfigurationService.retrieveSrmExternalApiUrlBase()).up();
+            restTemplate.getForObject(endpoint, String.class);
+            builder.withDetail("endpoint", endpoint).up();
         } catch (Exception e) {
             builder.withException(e).down();
         }

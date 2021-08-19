@@ -32,7 +32,7 @@ public class KafkaHealthIndicator extends AbstractHealthIndicator {
                    .withDetail("controller.port", node.port());
             builder.up();
         } catch (Exception e) {
-            builder.down();
+            builder.withException(e).down();
         }
     }
 }
