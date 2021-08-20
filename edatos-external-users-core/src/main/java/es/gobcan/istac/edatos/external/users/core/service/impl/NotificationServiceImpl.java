@@ -10,7 +10,6 @@ import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 import es.gobcan.istac.edatos.external.users.core.service.DataProtectionPolicyService;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationOrganismArgsService;
-import io.github.jhipster.config.JHipsterProperties;
 import org.siemac.metamac.rest.notices.v1_0.domain.Message;
 import org.siemac.metamac.rest.notices.v1_0.domain.Notice;
 import org.siemac.metamac.rest.notices.v1_0.domain.Receivers;
@@ -34,7 +33,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final Logger log = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
-    private static String BASE_URL = "/#/reset-password/change-password?key=";
     @Autowired
     private MessageSource messageSource;
 
@@ -43,9 +41,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Autowired
     private EDatosApisLocator eDatosApisLocator;
-
-    @Autowired
-    private JHipsterProperties jHipsterProperties;
 
     @Autowired
     private NotificationOrganismArgsService notificationOrganismArgsService;
@@ -86,7 +81,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void createResetPasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity) {
         String codeSubject = "notice.subject.reset_password.title";
         String messageCode = "notice.message.reset_password.text";
-        String baseUrl = jHipsterProperties.getMail().getBaseUrl() + BASE_URL + externalUserEntity.getResetKey();
+        String baseUrl = metadataConfigurationService.retrieveResetPassowrdUrl() + externalUserEntity.getResetKey();
         ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism(getOrganism(), externalUserEntity, getLopd())));
         argsList.add(baseUrl);
 
@@ -140,7 +135,7 @@ public class NotificationServiceImpl implements NotificationService {
         return  MessageBuilder.message()
             .withText(localisedMessage)
             .build();
-        // @formatter:off
+        // @formatter:on
     }
 
     private Receivers createReceiversList(List<String> emails) {
@@ -158,8 +153,13 @@ public class NotificationServiceImpl implements NotificationService {
             Locale currentLocale = metadataConfigurationService.retrieveLanguageDefaultLocale();
             String subject = messageSource.getMessage(codeSubject, null, currentLocale);
 
-            Notice notice = NoticeBuilder.notification().withMessages(MessageBuilder.message().withText(message).build()).withReceivers(receivers)
-                .withSendingApplication(MetamacApplicationsEnum.GESTOR_EXTERNAL_USERS.getName()).withSubject(subject).build();
+            // @formatter:off
+            Notice notice = NoticeBuilder.notification()
+                .withMessages(MessageBuilder.message().withText(message).build())
+                .withReceivers(receivers)
+                .withSendingApplication(MetamacApplicationsEnum.GESTOR_EXTERNAL_USERS.getName())
+                .withSubject(subject).build();
+            // @formatter:on
 
             eDatosApisLocator.getNoticesRestInternalFacadeV10().createNotice(notice);
         } catch (Exception e) {
@@ -177,13 +177,13 @@ public class NotificationServiceImpl implements NotificationService {
         return metadataConfigurationService.retrieveOrganisation();
     }
 
-    private String getLopd(){
+    private String getLopd() {
         return dataProtectionPolicyService.find().getValue().getLocalisedLabel(getLocale());
     }
 
-    private String getLocale(){
+    private String getLocale() {
         String[] locale = LocaleContextHolder.getLocale().toString().split("_");
-        //toLowerCase locale
+        // toLowerCase locale
         return locale[0];
     }
 }

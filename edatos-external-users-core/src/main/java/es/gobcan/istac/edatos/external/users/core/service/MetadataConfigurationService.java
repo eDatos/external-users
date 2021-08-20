@@ -4,7 +4,7 @@ import org.siemac.edatos.core.common.conf.ConfigurationService;
 import org.siemac.edatos.core.common.exception.EDatosException;
 
 public interface MetadataConfigurationService extends ConfigurationService {
-    
+
     boolean retrieveCaptchaEnable() throws EDatosException;
 
     String retrieveCaptchaProvider() throws EDatosException;
@@ -12,4 +12,8 @@ public interface MetadataConfigurationService extends ConfigurationService {
     String retrieveRecaptchaSiteKey() throws EDatosException;
 
     String retrieveRecaptchaSecretKey() throws EDatosException;
+
+    String retrieveResetPassowrdUrl() throws EDatosException;
+
+    String retrieveCronExpressionSendNoticeJob() throws EDatosException;
 }

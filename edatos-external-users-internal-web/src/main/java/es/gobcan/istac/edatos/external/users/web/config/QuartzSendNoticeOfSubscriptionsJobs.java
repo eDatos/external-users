@@ -12,8 +12,6 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 @Configuration
 public class QuartzSendNoticeOfSubscriptionsJobs {
 
-    private static final String DATASETS_SUBSCRIPTIONS_CRON = "0 0 6 * * ? *";
-
     private final MetadataConfigurationService metadataService;
     private final ApplicationProperties applicationProperties;
 
@@ -29,7 +27,6 @@ public class QuartzSendNoticeOfSubscriptionsJobs {
 
     @Bean(name = "sendNoticeOfSubscriptionsTrigger")
     public CronTriggerFactoryBean triggerMemberClassStats(@Qualifier("sendNoticeOfSubscriptions") JobDetail jobDetail) {
-        return QuartzConfiguration.createCronTrigger(jobDetail, DATASETS_SUBSCRIPTIONS_CRON
-        /* metadataService.findProperty(applicationProperties.getMetadata().getMetamacEUsuariosCronSendNoticeJob()) */, QuartzConstants.DATASETS_SUBSCRIPTIONS_TRIGGER);
+        return QuartzConfiguration.createCronTrigger(jobDetail, metadataService.retrieveCronExpressionSendNoticeJob(), QuartzConstants.DATASETS_SUBSCRIPTIONS_TRIGGER);
     }
 }
