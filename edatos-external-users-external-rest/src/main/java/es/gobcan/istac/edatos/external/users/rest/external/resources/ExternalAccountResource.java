@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
+import es.gobcan.istac.edatos.external.users.core.service.NotificationService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ChangePasswordDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountBaseDto;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserAccountDto;
@@ -49,13 +50,16 @@ public class ExternalAccountResource extends AbstractResource {
 
     private final AuditEventPublisher auditPublisher;
 
+    private final NotificationService notificationService;
+
     public ExternalAccountResource(ExternalUserRepository externalUserRepository, MailService mailService, ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper,
-            AuditEventPublisher auditPublisher) {
+            AuditEventPublisher auditPublisher, NotificationService notificationService) {
         this.externalUserRepository = externalUserRepository;
         this.mailService = mailService;
         this.externalUserService = externalUserService;
         this.externalUserMapper = externalUserMapper;
         this.auditPublisher = auditPublisher;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/{id}")
@@ -70,14 +74,15 @@ public class ExternalAccountResource extends AbstractResource {
     public ResponseEntity<ExternalUserAccountDto> create(@Valid @RequestBody ExternalUserAccountDto externalUserDto) throws URISyntaxException {
         ExternalUserEntity newExternalUser = externalUserMapper.toEntity(externalUserDto);
         externalUserService.create(newExternalUser);
-        mailService.sendExternalUserEmailTemplate(newExternalUser, MailConstants.MAIL_CREATION_EXT_USER);
+
+        notificationService.createNewExternalUserAccountNotification(newExternalUser);
         ExternalUserAccountDto newExternalUserDto = externalUserMapper.toDto(newExternalUser);
 
         auditPublisher.publish(AuditConstants.USUARIO_CREACION, newExternalUserDto.getEmail());
         return ResponseEntity.created(new URI("/api/account/signup/" + newExternalUserDto.getEmail())).headers(HeaderUtil.createAlert("userManagement.created", newExternalUserDto.getEmail()))
                 .body(newExternalUserDto);
     }
-    
+
     @PostMapping("/account/logout")
     @Timed
     public ResponseEntity<String> logout(HttpServletRequest request) {
@@ -117,7 +122,7 @@ public class ExternalAccountResource extends AbstractResource {
         try {
             ExternalUserEntity user = externalUserRepository.findOne(id);
             externalUserService.delete(id);
-            mailService.sendExternalUserEmailTemplate(user, MailConstants.MAIL_DELETE_EXT_USER);
+            notificationService.createDeleteExternalUserAccountNotification(user);
             auditPublisher.publish(AuditConstants.EXT_USUARIO_DESACTIVACION, user.getEmail());
             return ResponseEntity.ok().build();
         } catch (Exception e) {
@@ -132,7 +137,7 @@ public class ExternalAccountResource extends AbstractResource {
         ExternalUserEntity user = externalUserService.getUsuarioWithAuthorities();
         externalUserService.updateExternalUserAccountPassword(user, passwordDto.getCurrentPassword(), passwordDto.getNewPassword());
 
-        mailService.sendExternalUserEmailTemplate(user, MailConstants.MAIL_CHANGE_PASSWORD_EXT_USER);
+        notificationService.createChangePasswordExternaluserAccountNotification(user);
         ExternalUserAccountBaseDto updatedUserDto = externalUserMapper.toBaseDto(user);
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_EDICION, updatedUserDto.getEmail());

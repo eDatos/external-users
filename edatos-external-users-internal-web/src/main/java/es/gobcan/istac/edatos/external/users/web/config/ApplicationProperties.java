@@ -28,6 +28,7 @@ public class ApplicationProperties {
         private String metamacCasLoginUrlKey;
         private String metamacCasLogoutUrlKey;
         private String metamacFaviconUrlKey;
+        private String metamacEUsuariosCronSendNoticeJob;
 
         public String getEndpoint() {
             return endpoint;
@@ -75,6 +76,14 @@ public class ApplicationProperties {
 
         public void setMetamacFaviconUrlKey(String metamacFaviconUrlKey) {
             this.metamacFaviconUrlKey = metamacFaviconUrlKey;
+        }
+
+        public String getMetamacEUsuariosCronSendNoticeJob() {
+            return metamacEUsuariosCronSendNoticeJob;
+        }
+
+        public void setMetamacEUsuariosCronSendNoticeJob(String metamacEUsuariosCronSendNoticeJob) {
+            this.metamacEUsuariosCronSendNoticeJob = metamacEUsuariosCronSendNoticeJob;
         }
     }
 

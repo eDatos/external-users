@@ -12,6 +12,9 @@ public final class ErrorMessagesConstants {
     public static final String QUERY_NO_SOPORTADA = "Parámetro query no soportado: '%s'";
     public static final String PASSWORD_NOT_MATCH = "La contraseña debe ser la misma que la del usuario autorizado.";
 
+    // QUARTZ
+    public static final String QUARTZ_JOB_EXECUTION_ERROR = "Error durante la ejecución de un job Quartz";
+
     private ErrorMessagesConstants() {
     }
 

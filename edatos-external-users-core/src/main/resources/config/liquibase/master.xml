@@ -2,6 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180117115714_added_function_lower_unaccent.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20210621134824_added_entities_Quartz.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210223122800_added_entity_ExternalUser.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210316084510_added_entity_ExternalItem.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20210316085219_added_entity_ExternalOperation.xml" relativeToChangelogFile="false"/>

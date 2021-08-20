@@ -19,7 +19,7 @@ public class MetadataConfigurationServiceImpl extends ConfigurationServiceImpl i
     public String retrieveCaptchaProvider() throws EDatosException {
         return retrieveProperty(ExternalUsersConfigurationConstants.CAPTCHA_PROVIDER);
     }
-    
+
     @Override
     public String retrieveRecaptchaSiteKey() throws EDatosException {
         return retrieveProperty(ExternalUsersConfigurationConstants.CAPTCHA_RECAPTCHA_SITE_KEY);
@@ -28,5 +28,15 @@ public class MetadataConfigurationServiceImpl extends ConfigurationServiceImpl i
     @Override
     public String retrieveRecaptchaSecretKey() throws EDatosException {
         return retrieveProperty(ExternalUsersConfigurationConstants.CAPTCHA_RECAPTCHA_SECRET_KEY);
+    }
+
+    @Override
+    public String retrieveBaseUrl() throws EDatosException {
+        return retrieveProperty(ExternalUsersConfigurationConstants.BASE_URL);
+    }
+
+    @Override
+    public String retrieveCronExpressionSendNoticeJob() throws EDatosException {
+        return retrieveProperty(ExternalUsersConfigurationConstants.CRON_EXPRESSION_SEND_NOTICE_JOB);
     }
 }
