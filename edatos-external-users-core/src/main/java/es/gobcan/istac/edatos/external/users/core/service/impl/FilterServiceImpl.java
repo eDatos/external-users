@@ -80,9 +80,8 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public FilterEntity findByPermalinkAndExternalUser(String permalink) {
-        ExternalUserEntity externalUser = externalUserRepository.findOneByEmail(SecurityUtils.getCurrentUserLogin()).orElse(null);
-        return filterRepository.findOneByPermalinkAndExternalUser(permalink, externalUser);
+    public FilterEntity findByPermalink(String permalink) {
+        return filterRepository.findOneByPermalink(permalink);
     }
 
     @Override

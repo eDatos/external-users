@@ -119,9 +119,8 @@ public class FilterResource extends AbstractResource {
     
     @PutMapping("/last-access/{permalink}")
     @Timed
-    @PreAuthorize("@secCheckerExternal.canUpdateFilters(authentication)")
     public ResponseEntity<FilterDto> updateFilterLastAccess(@PathVariable String permalink) {
-        FilterEntity filterEntity = filterService.findByPermalinkAndExternalUser(permalink);
+        FilterEntity filterEntity = filterService.findByPermalink(permalink);
         if (filterEntity == null) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_INCORRECT, "permalink");
         }
