@@ -55,7 +55,7 @@ export class MetricsMonitoringComponent implements OnInit {
 
     refreshThreadDumpData() {
         this.metricsService.threadDump().subscribe((data) => {
-            const modalRef = this.modalService.open(MetricsMonitoringModalComponent, { size: 'lg' });
+            const modalRef = this.modalService.open(MetricsMonitoringModalComponent, { size: 'lg', container: '.page' });
             modalRef.componentInstance.threadDump = data;
             modalRef.result.then(
                 (result) => {

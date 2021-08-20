@@ -9,6 +9,8 @@
     clear: both;
 }
 
+.modal { overflow: auto !important; }
+
 /* BEGIN BOOTSTRAP */
 .btn {
     &.btn-frameless {
