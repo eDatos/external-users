@@ -13,11 +13,9 @@ import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 public class QuartzSendNoticeOfSubscriptionsJobs {
 
     private final MetadataConfigurationService metadataService;
-    private final ApplicationProperties applicationProperties;
 
-    public QuartzSendNoticeOfSubscriptionsJobs(MetadataConfigurationService metadataService, ApplicationProperties applicationProperties) {
+    public QuartzSendNoticeOfSubscriptionsJobs(MetadataConfigurationService metadataService) {
         this.metadataService = metadataService;
-        this.applicationProperties = applicationProperties;
     }
 
     @Bean(name = "sendNoticeOfSubscriptions")
