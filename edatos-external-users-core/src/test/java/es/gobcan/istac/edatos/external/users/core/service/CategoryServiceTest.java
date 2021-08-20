@@ -148,7 +148,7 @@ public class CategoryServiceTest {
     @Test
     public void testDeleteRootNode() {
         categoryService.delete(node1.getId());
-        assertThat(categoryRepository.findAll()).hasSize(3);
+        assertThat(categoryRepository.findAll()).isEmpty();
     }
 
     @Test
