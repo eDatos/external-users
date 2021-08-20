@@ -32,7 +32,7 @@ export class MetricsMonitoringComponent implements OnInit {
             this.cachesStats = {};
             Object.keys(metrics.timers).forEach((key) => {
                 const value = metrics.timers[key];
-                if (key.indexOf('web.rest') !== -1 || key.indexOf('service') !== -1) {
+                if (key.indexOf('web.rest') !== -1 || key.indexOf('service') !== -1 || key.indexOf('rest.internal.resources') !== -1) {
                     this.servicesStats[key] = value;
                 }
             });
