@@ -39,6 +39,9 @@ public final class ErrorConstants {
      *********/
     public static final String QUERY_NO_SOPORTADA = "error.query-no-soportada";
 
+    // QUARTZ
+    public static final String QUARTZ_JOB_EXECUTION_ERROR = "error.quartz.jobExecutionError";
+
     private ErrorConstants() {
     }
 

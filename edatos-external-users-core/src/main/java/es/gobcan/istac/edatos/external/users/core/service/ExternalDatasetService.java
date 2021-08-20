@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalDatasetEntity;
 
+import java.util.List;
+
 public interface ExternalDatasetService {
 
     ExternalDatasetEntity create(ExternalDatasetEntity dataset);
@@ -11,4 +13,7 @@ public interface ExternalDatasetService {
     void delete(String urn);
     void delete(ExternalDatasetEntity dataset);
     Optional<ExternalDatasetEntity> findByUrn(String urn);
+
+    List<ExternalDatasetEntity> getLastDayDatasets();
+
 }
