@@ -136,8 +136,8 @@
             <button (click)="clickedDelete = false; deleteNode(node)" *ngIf="clickedDelete" class="btn btn-outline-danger node-btn-sm" type="button">
                 {{ 'entity.eliminar.title' | translate }}
             </button>
-            <button class="btn btn-primary node-btn-sm" type="button">
-                <i (click)="remapNode(node)" aria-hidden="true" class="fa fa-search"></i>
+            <button (click)="remapNode(node)" class="btn btn-primary node-btn-sm" type="button">
+                <i aria-hidden="true" class="fa fa-search"></i>
             </button>
         </div>
     </ng-template>
