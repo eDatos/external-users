@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-lg">
+<nav class="navbar navbar-dark navbar-expand-lg" *ngIf="isCorrectlyLogged">
     <button
         class="navbar-toggler"
         type="button"
@@ -13,7 +13,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
-        <ul *ngIf="isCorrectlyLogged" class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
             <li>
                 <a class="nav-link btn" routerLink="filter" routerLinkActive="active">
                     <i class="fa fa-filter" aria-hidden="true"></i>
@@ -26,7 +26,7 @@
                     <span translate="favorite.home.title"></span>
                 </a>
             </li>
-            <li *ngIf="isCorrectlyLogged" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+            <li ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
                 <a class="nav-link dropdown-toggle btn" ngbDropdownToggle id="info-menu">
                     <span>
                         <i class="fa fa-info" aria-hidden="true"></i>
@@ -55,7 +55,7 @@
                     </li>
                 </ul>
             </li>
-            <li *ngIf="isCorrectlyLogged" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
+            <li ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}">
                 <a class="nav-link dropdown-toggle btn" ngbDropdownToggle id="user-menu">
                     <span>
                         <i class="fa fa-user" aria-hidden="true"></i>
