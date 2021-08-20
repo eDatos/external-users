@@ -16,7 +16,6 @@ import {
     ExternalLoginService,
     PageTitleService,
     ProfileService,
-    IssuesService,
     EUsuariosAlertService,
 } from './service';
 import { UserRouteAccessGuard } from './guard';
@@ -47,7 +46,6 @@ registerLocaleData(localeEs, 'es');
             useValue: 'es',
         },
         ProfileService,
-        IssuesService,
     ],
 })
 export class CoreModule {
