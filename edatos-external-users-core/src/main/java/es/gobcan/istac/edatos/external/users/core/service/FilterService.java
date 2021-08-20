@@ -32,5 +32,5 @@ public interface FilterService {
 
     Map<String, Long> getOperationFilters();
 
-    FilterEntity findByPermalinkAndExternalUser(String permalink);
+    FilterEntity findByPermalink(String permalink);
 }

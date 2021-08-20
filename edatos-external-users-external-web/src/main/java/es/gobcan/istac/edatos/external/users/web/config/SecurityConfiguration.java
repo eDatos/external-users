@@ -133,6 +133,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/apis/operations-internal/**").permitAll()
                 .antMatchers("/api/data-protection-policy").permitAll()
                 .antMatchers("/api/captcha/**").permitAll()
+                .antMatchers("/api/filters/last-access/**").permitAll()
                 .antMatchers("/**").authenticated();
         //@formatter:on
     }
