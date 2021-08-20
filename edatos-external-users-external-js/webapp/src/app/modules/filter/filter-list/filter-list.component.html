@@ -31,7 +31,13 @@
                 </div>
             </ng-container>
             <ng-template #emptyList>
-                <arte-entity-list-empty></arte-entity-list-empty>
+                <div class="no-content">
+                    <img src="assets/images/no-results.png" [alt]="'arte.entity-list-empty.detail' | translate"/>
+                    <div class="no-content-text">
+                        <div class="title" translate="filter.list.noFilterCreated"></div>
+                        <div class="detail" translate="filter.list.wouldYouLikeToCreateAFilter"></div>
+                    </div>
+                </div>
             </ng-template>
         </ng-container>
     </div>

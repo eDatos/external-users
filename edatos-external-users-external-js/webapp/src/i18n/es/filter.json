@@ -23,6 +23,10 @@
             "createLabel": "Crear consulta personalizada",
             "title": "Consultas personalizadas"
         },
+        "list": {
+            "noFilterCreated": "Parece que todavía no has creado ninguna consulta",
+            "wouldYouLikeToCreateAFilter": "Puedes crearla desde cualquier visualización en el portal de datos"
+        },
         "name": "Consulta personalizada"
     }
 }
