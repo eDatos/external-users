@@ -33,6 +33,8 @@ public class NotificationServiceImpl implements NotificationService {
 
     private final Logger log = LoggerFactory.getLogger(NotificationServiceImpl.class);
 
+    private static String RESET_PASSWORD_URL = "/#/reset-password/change-password?key=";
+
     @Autowired
     private MessageSource messageSource;
 
@@ -81,7 +83,7 @@ public class NotificationServiceImpl implements NotificationService {
     public void createResetPasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity) {
         String codeSubject = "notice.subject.reset_password.title";
         String messageCode = "notice.message.reset_password.text";
-        String baseUrl = metadataConfigurationService.retrieveResetPassowrdUrl() + externalUserEntity.getResetKey();
+        String baseUrl = metadataConfigurationService.retrieveBaseUrl() + RESET_PASSWORD_URL + externalUserEntity.getResetKey();
         ArrayList<String> argsList = new ArrayList<String>(Arrays.asList(notificationOrganismArgsService.argsByOrganism(getOrganism(), externalUserEntity, getLopd())));
         argsList.add(baseUrl);
 

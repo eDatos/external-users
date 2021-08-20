@@ -31,8 +31,8 @@ public class MetadataConfigurationServiceImpl extends ConfigurationServiceImpl i
     }
 
     @Override
-    public String retrieveResetPassowrdUrl() throws EDatosException {
-        return retrieveProperty(ExternalUsersConfigurationConstants.RESET_PASSWORD_URL);
+    public String retrieveBaseUrl() throws EDatosException {
+        return retrieveProperty(ExternalUsersConfigurationConstants.BASE_URL);
     }
 
     @Override
