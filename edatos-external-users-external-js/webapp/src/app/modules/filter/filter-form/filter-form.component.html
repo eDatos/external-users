@@ -59,7 +59,7 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="!inEditMode" class="form-group form-group-inline col-md-6">
+                    <div class="form-group form-group-inline col-md-6">
                         <div class="form-row">
                             <label class="form-label col-md-4" for="permalink">{{ "filter.entity.permalink" | translate }}</label>
                             <div class="col-md-8 form-input-container errors-on-hover">
@@ -100,6 +100,14 @@
                         <label class="form-label col-md-4" for="permalink">{{ "filter.entity.createdDate" | translate }}</label>
                         <div class="col-md-8 form-input-container">
                             <arte-input name="createdDate" [ngModel]="filter.createdDate | date: 'dd/MM/yyyy HH:mm:ss'"></arte-input>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-group-inline col-md-6">
+                    <div class="form-row">
+                        <label class="form-label col-md-4" for="name">{{ "filter.entity.lastModifiedDate" | translate }}</label>
+                        <div class="col-md-8 form-input-container">
+                            <arte-input name="lastModifiedDate" [ngModel]="filter.lastModifiedDate | date: 'dd/MM/yyyy HH:mm:ss'"></arte-input>
                         </div>
                     </div>
                 </div>
