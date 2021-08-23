@@ -13,13 +13,15 @@
 
 
 endpoints:
-    enabled: false
     configprops:
         enabled: true
     health:
         enabled: true
     env:
         enabled: true
+    actuator:
+        enabled: true
+
 
 management:
     security:

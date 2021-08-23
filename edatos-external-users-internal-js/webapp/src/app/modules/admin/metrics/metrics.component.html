@@ -208,46 +208,6 @@
         </div>
 
         <div class="page-section">
-            <h3 translate="metrics.cache.title"></h3>
-            <div class="page-table-container-fluid table-responsive" *ngIf="!updatingMetrics">
-                <table class="page-table table">
-                    <thead>
-                        <tr>
-                            <th style="width: 12%" translate="metrics.cache.cachename"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.hits"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.misses"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.gets"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.puts"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.removals"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.evictions"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.hitPercent"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.missPercent"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.averageGetTime"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.averagePutTime"></th>
-                            <th style="width: 8%" class="text-right" data-translate="metrics.cache.averageRemoveTime"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let entry of cachesStats | keyvalue">
-                            <td>{{entry.key}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-hits'].value}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-misses'].value}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-gets'].value}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-puts'].value}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-removals'].value}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-evictions'].value}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-hit-percentage'].value}}</td>
-                            <td class="text-right">{{metrics.gauges[entry.key + '.cache-miss-percentage'].value }}</td>
-                            <td class="text-right">{{filterNaN(metrics.gauges[entry.key + '.average-get-time'].value) | number : '1.2-2' }}</td>
-                            <td class="text-right">{{filterNaN(metrics.gauges[entry.key + '.average-put-time'].value) | number : '1.2-2'}}</td>
-                            <td class="text-right">{{filterNaN(metrics.gauges[entry.key + '.average-remove-time'].value) | number : '1.2-2' }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="page-section">
             <h3
                 translate="metrics.datasource.title"
                 *ngIf="metrics.gauges && metrics.gauges['HikariPool-1.pool.TotalConnections'] && metrics.gauges['HikariPool-1.pool.TotalConnections'].value > 0"

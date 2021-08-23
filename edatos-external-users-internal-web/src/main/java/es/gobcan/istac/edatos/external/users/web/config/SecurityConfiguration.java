@@ -215,6 +215,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/management/metrics").access("@secChecker.canAccessMetrics(authentication)")
             .antMatchers("/management/health").access("@secChecker.canAccessHealth(authentication)")
+            .antMatchers("/management/dump").access("@secChecker.canAccessThreadDump(authentication)")
             .antMatchers("/management/env").access("@secChecker.canAccessConfig(authentication)")
             .antMatchers("/management/configprops").access("@secChecker.canAccessConfig(authentication)")
             .antMatchers("/v2/api-docs/**").permitAll()
