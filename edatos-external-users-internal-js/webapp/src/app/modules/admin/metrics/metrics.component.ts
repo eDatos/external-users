@@ -10,14 +10,10 @@ import { MetricsService } from './metrics.service';
 })
 export class MetricsMonitoringComponent implements OnInit {
     metrics: any = {};
-    cachesStats: any = {};
     servicesStats: any = {};
     updatingMetrics = true;
-    JCACHE_KEY: string;
 
-    constructor(private modalService: NgbModal, private metricsService: MetricsService) {
-        this.JCACHE_KEY = 'jcache.statistics';
-    }
+    constructor(private modalService: NgbModal, private metricsService: MetricsService) {}
 
     ngOnInit() {
         this.refresh();
@@ -29,25 +25,10 @@ export class MetricsMonitoringComponent implements OnInit {
             this.metrics = metrics;
             this.updatingMetrics = false;
             this.servicesStats = {};
-            this.cachesStats = {};
             Object.keys(metrics.timers).forEach((key) => {
                 const value = metrics.timers[key];
                 if (key.indexOf('web.rest') !== -1 || key.indexOf('service') !== -1 || key.indexOf('rest.internal.resources') !== -1) {
                     this.servicesStats[key] = value;
-                }
-            });
-            Object.keys(metrics.gauges).forEach((key) => {
-                if (key.indexOf('jcache.statistics') !== -1) {
-                    const value = metrics.gauges[key].value;
-                    // remove gets or puts
-                    const index = key.lastIndexOf('.');
-                    const newKey = key.substr(0, index);
-
-                    // Keep the name of the domain
-                    this.cachesStats[newKey] = {
-                        name: this.JCACHE_KEY.length,
-                        value,
-                    };
                 }
             });
         });
