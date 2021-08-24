@@ -120,7 +120,7 @@ public class FilterResource extends AbstractResource {
     
     @PutMapping("/last-access/{permalink}")
     @Timed
-    public ResponseEntity<?> updateFilterLastAccess(@PathVariable String permalink) {
+    public ResponseEntity<Void> updateFilterLastAccess(@PathVariable String permalink) {
         List<FilterEntity> filters = filterService.findByPermalink(permalink);
         if (filters == null || filters.size() == 0) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_INCORRECT, "permalink");
@@ -131,7 +131,7 @@ public class FilterResource extends AbstractResource {
         List<FilterDto> newDtos = filterMapper.toDtos(filterService.update(filters));
         
         List<String> ids = newDtos.stream().map(dto -> dto.getId().toString()).collect(Collectors.toList());
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, String.join(",", ids))).build();
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, String.join(",", ids))).build();
     }
 
     @DeleteMapping("/{id}")
