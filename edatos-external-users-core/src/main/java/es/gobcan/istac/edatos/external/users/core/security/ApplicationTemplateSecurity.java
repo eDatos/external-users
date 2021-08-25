@@ -107,6 +107,10 @@ public class ApplicationTemplateSecurity {
         return isAdmin(authentication);
     }
 
+    public boolean canAccessThreadDump(Authentication authentication) {
+        return isAdmin(authentication);
+    }
+
     public boolean canAccessConfig(Authentication authentication) {
         return isAdmin(authentication);
     }

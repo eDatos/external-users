@@ -12,7 +12,6 @@ export class LoginService {
     logout() {
         this.authServerProvider.logout().subscribe();
         this.principal.authenticate(null);
-        this.http.get('logout').subscribe();
     }
 
     loginInCas() {

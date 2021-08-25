@@ -22,7 +22,7 @@
             <div>
                 <strong translate="global.alerts.title.info"></strong>
             </div>
-            <div class="mt-2" translate="logs.nbloggers" [translateParams]="{total: loggers.length}"></div>
+            <div class="mt-2" [innerHTML]="'logs.nbloggers' | translate:{total: loggers.length}"></div>
         </div>
         <div class="page-table-container-fluid">
             <table class="page-table table table-hover">
