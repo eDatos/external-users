@@ -22,4 +22,20 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet author="arte" id="1618216857047-3">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">
+                select count(*) from tb_data_protection_policy;
+            </sqlCheck>
+        </preConditions>
+        <insert tableName="tb_data_protection_policy" >
+            <column name="id" value="1"/>
+            <column name="created_by" value="system"/>
+            <column name="created_date" value="now()"/>
+            <column name="last_modified_by" value="system"/>
+            <column name="last_modified_date" value="now()"/>
+            <column name="opt_lock" value="1"/>
+            <column name="value">{"texts": []}</column>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
