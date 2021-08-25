@@ -16,7 +16,7 @@ import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
 @Repository
 public interface FilterRepository extends JpaRepository<FilterEntity, Long> {
 
-    FilterEntity findOneByPermalink(String permalink);
+    List<FilterEntity> findByPermalink(String permalink);
     
     Page<FilterEntity> findAll(DetachedCriteria criteria, Pageable pageable);
 

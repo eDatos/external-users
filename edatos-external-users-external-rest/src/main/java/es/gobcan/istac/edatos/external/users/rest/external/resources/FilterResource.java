@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
@@ -119,17 +120,18 @@ public class FilterResource extends AbstractResource {
     
     @PutMapping("/last-access/{permalink}")
     @Timed
-    public ResponseEntity<FilterDto> updateFilterLastAccess(@PathVariable String permalink) {
-        FilterEntity filterEntity = filterService.findByPermalink(permalink);
-        if (filterEntity == null) {
+    public ResponseEntity<Void> updateFilterLastAccess(@PathVariable String permalink) {
+        List<FilterEntity> filters = filterService.findByPermalink(permalink);
+        if (filters == null || filters.size() == 0) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_INCORRECT, "permalink");
         }
         
-        filterEntity.setLastAccessDate(Instant.now());
-        filterEntity = filterService.update(filterEntity);
-        FilterDto newDto = filterMapper.toDto(filterEntity);
+        Instant now = Instant.now();
+        filters.stream().forEach(filter -> filter.setLastAccessDate(now));
+        List<FilterDto> newDtos = filterMapper.toDtos(filterService.update(filters));
         
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
+        List<String> ids = newDtos.stream().map(dto -> dto.getId().toString()).collect(Collectors.toList());
+        return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, String.join(",", ids))).build();
     }
 
     @DeleteMapping("/{id}")

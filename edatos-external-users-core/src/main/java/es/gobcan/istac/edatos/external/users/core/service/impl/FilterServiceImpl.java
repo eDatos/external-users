@@ -43,6 +43,11 @@ public class FilterServiceImpl implements FilterService {
     public FilterEntity update(FilterEntity filter) {
         return filterRepository.saveAndFlush(filter);
     }
+    
+    @Override
+    public List<FilterEntity> update(List<FilterEntity> filters) {
+        return filterRepository.save(filters);
+    }
 
     @Override
     public FilterEntity find(Long id) {
@@ -80,8 +85,8 @@ public class FilterServiceImpl implements FilterService {
     }
 
     @Override
-    public FilterEntity findByPermalink(String permalink) {
-        return filterRepository.findOneByPermalink(permalink);
+    public List<FilterEntity> findByPermalink(String permalink) {
+        return filterRepository.findByPermalink(permalink);
     }
 
     @Override
