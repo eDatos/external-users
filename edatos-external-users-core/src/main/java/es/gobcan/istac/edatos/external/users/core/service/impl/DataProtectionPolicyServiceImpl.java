@@ -24,6 +24,12 @@ public class DataProtectionPolicyServiceImpl implements DataProtectionPolicyServ
     public DataProtectionPolicyServiceImpl(DataProtectionPolicyRepository configurationRepository, MetadataProperties metadataProperties) {
         this.dataProtectionPolicyRepository = configurationRepository;
         this.metadataProperties = metadataProperties;
+        if(this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc() == null) {
+            DataProtectionPolicyEntity entity = new DataProtectionPolicyEntity();
+            InternationalStringVO internationalString = new InternationalStringVO();
+            entity.setValue(internationalString);
+            this.dataProtectionPolicyRepository.saveAndFlush(entity);
+        }
     }
 
     @Override
