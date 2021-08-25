@@ -11,7 +11,4 @@ public interface MailService {
 
     void sendCreationEmail(UsuarioEntity user);
 
-    void sendFromTemplate(ExternalUserEntity user, String templateName, String titleKey);
-
-    void sendExternalUserEmailTemplate(ExternalUserEntity user, String mailTemplate);
 }

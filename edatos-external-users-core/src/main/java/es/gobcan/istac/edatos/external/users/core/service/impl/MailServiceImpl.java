@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import javax.mail.internet.MimeMessage;
 
-import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
@@ -88,25 +87,6 @@ public class MailServiceImpl implements MailService {
     public void sendCreationEmail(UsuarioEntity user) {
         log.debug("Sending creation email to '{}'", user.getEmail());
         sendFromTemplate(user, "creationEmail", "email.creation.title");
-    }
-
-    @Override
-    @Async
-    public void sendFromTemplate(ExternalUserEntity user, String templateName, String titleKey) {
-        Locale locale = Constants.DEFAULT_LOCALE;
-        Context context = new Context(locale);
-        context.setVariable(USER, user);
-        context.setVariable(BASE_URL, jHipsterProperties.getMail().getBaseUrl());
-        String content = templateEngine.process(templateName, context);
-        String subject = messageSource.getMessage(titleKey, null, locale);
-        send(user.getEmail(), subject, content, false, true);
-    }
-
-    @Override
-    @Async
-    public void sendExternalUserEmailTemplate(ExternalUserEntity user, String mailTemplate) {
-        log.debug("Sending creation email to '{}'", user.getEmail());
-        sendFromTemplate(user, mailTemplate, "email.creation.title");
     }
 
 }
