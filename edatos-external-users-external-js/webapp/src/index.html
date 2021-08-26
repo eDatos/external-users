@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<th:lang="${#locale.language}">
-
     <head>
         <meta charset="utf-8" />
         <title>Usuarios externos</title>
@@ -13,7 +10,7 @@
     </head>
     <body>
         <div th:utext="${headerHtml}"></div>
-        
+
         <script th:inline="javascript">
             /*<![CDATA[*/
             window.CONFIGURATION = {};
