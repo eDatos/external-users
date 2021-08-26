@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import org.siemac.edatos.core.common.exception.CommonServiceExceptionType;
 import org.siemac.edatos.core.common.exception.EDatosException;
 import org.springframework.data.domain.Page;
@@ -34,7 +33,7 @@ import es.gobcan.istac.edatos.external.users.core.errors.ErrorConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
-import es.gobcan.istac.edatos.external.users.core.service.MailService;
+import es.gobcan.istac.edatos.external.users.core.service.NotificationService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ExternalUserDto;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserMapper;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
@@ -54,16 +53,16 @@ public class ExternalUserResource extends AbstractResource {
     private final ExternalUserRepository externalUserRepository;
     private final ExternalUserService externalUserService;
     private final ExternalUserMapper externalUserMapper;
-    private final MailService mailService;
+    private final NotificationService notificationService;
     private final AuditEventPublisher auditPublisher;
 
-    public ExternalUserResource(ExternalUserRepository externalUserRepository, ExternalUserService externalUserService, ExternalUserMapper externalUserMapper, MailService mailService,
-            AuditEventPublisher auditPublisher) {
+    public ExternalUserResource(ExternalUserRepository externalUserRepository, ExternalUserService externalUserService, ExternalUserMapper externalUserMapper, AuditEventPublisher auditPublisher,
+            NotificationService notificationService) {
         this.externalUserRepository = externalUserRepository;
         this.externalUserService = externalUserService;
         this.externalUserMapper = externalUserMapper;
-        this.mailService = mailService;
         this.auditPublisher = auditPublisher;
+        this.notificationService = notificationService;
     }
 
     @Timed
@@ -80,7 +79,7 @@ public class ExternalUserResource extends AbstractResource {
         }
 
         ExternalUserEntity userEntity = externalUserService.create(externalUserMapper.toEntity(externalUser));
-        mailService.sendExternalUserEmailTemplate(userEntity, MailConstants.MAIL_CREATION_EXT_USER);
+        notificationService.createNewExternalUserAccountNotification(userEntity);
         ExternalUserDto userDto = externalUserMapper.toDto(userEntity);
 
         auditPublisher.publish(AuditConstants.EXT_USUARIO_CREACION, userDto.getEmail());

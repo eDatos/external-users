@@ -7,7 +7,6 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationService;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.ChangePasswordDto;
@@ -30,7 +29,6 @@ import es.gobcan.istac.edatos.external.users.core.errors.ErrorMessagesConstants;
 import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.security.SecurityUtils;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
-import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.common.util.HeaderUtil;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 
@@ -41,21 +39,15 @@ public class ExternalAccountResource extends AbstractResource {
     private static final String ENTITY_NAME = "userManagement";
 
     private final ExternalUserRepository externalUserRepository;
-
-    private final MailService mailService;
-
     private final ExternalUserService externalUserService;
-
     private final ExternalUserAccountMapper externalUserMapper;
-
     private final AuditEventPublisher auditPublisher;
 
     private final NotificationService notificationService;
 
-    public ExternalAccountResource(ExternalUserRepository externalUserRepository, MailService mailService, ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper,
+    public ExternalAccountResource(ExternalUserRepository externalUserRepository, ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper,
             AuditEventPublisher auditPublisher, NotificationService notificationService) {
         this.externalUserRepository = externalUserRepository;
-        this.mailService = mailService;
         this.externalUserService = externalUserService;
         this.externalUserMapper = externalUserMapper;
         this.auditPublisher = auditPublisher;

@@ -2,7 +2,6 @@ package es.gobcan.istac.edatos.external.users.rest.external.resources;
 
 import javax.validation.Valid;
 
-import es.gobcan.istac.edatos.external.users.core.config.MailConstants;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
 import es.gobcan.istac.edatos.external.users.core.service.NotificationService;
@@ -18,9 +17,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
 import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
-import es.gobcan.istac.edatos.external.users.core.repository.ExternalUserRepository;
 import es.gobcan.istac.edatos.external.users.core.service.ExternalUserService;
-import es.gobcan.istac.edatos.external.users.core.service.MailService;
 import es.gobcan.istac.edatos.external.users.rest.common.mapper.ExternalUserAccountMapper;
 
 import java.util.Locale;
@@ -32,9 +29,6 @@ public class PasswordResource extends AbstractResource {
 
     public static final String BASE_URL = "/api/recover-password";
 
-    private final ExternalUserRepository externalUserRepository;
-
-    private final MailService mailService;
     private final ExternalUserService externalUserService;
     private final NotificationService notificationService;
 
@@ -42,10 +36,8 @@ public class PasswordResource extends AbstractResource {
     private final AuditEventPublisher auditPublisher;
     private final MessageSource messageSource;
 
-    public PasswordResource(ExternalUserRepository externalUserRepository, MailService mailService, ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper,
-            AuditEventPublisher auditPublisher, MessageSource messageSource, NotificationService notificationService) {
-        this.externalUserRepository = externalUserRepository;
-        this.mailService = mailService;
+    public PasswordResource(ExternalUserService externalUserService, ExternalUserAccountMapper externalUserMapper, AuditEventPublisher auditPublisher, MessageSource messageSource,
+            NotificationService notificationService) {
         this.externalUserService = externalUserService;
         this.externalUserMapper = externalUserMapper;
         this.auditPublisher = auditPublisher;
