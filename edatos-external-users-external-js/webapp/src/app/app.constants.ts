@@ -2,7 +2,7 @@
 /* tslint:disable */
 let _VERSION = '0.0.1-SNAPSHOT'; // This value will be overwritten by webpack
 let _DEBUG_INFO_ENABLED = true; // This value will be overwritten by webpack
-let _AVAILABLE_LANGUAGES = ['es', 'en'];
+let _AVAILABLE_LANGUAGES = ['es', 'en', 'ca'];
 /* @toreplace VERSION */
 /* @toreplace DEBUG_INFO_ENABLED */
 /* @toreplace AVAILABLE_LANGUAGES */
