@@ -1,0 +1,18 @@
+{
+    "language": {
+        "SPANISH": "Castellà",
+        "es": "ES",
+        "CATALAN": "Català",
+        "ca": "CA"
+    },
+    "localeToLanguage": {
+        "CA": "Català",
+        "DE": "Alemany",
+        "EN": "Anglès",
+        "ES": "Castellà",
+        "FR": "Francès",
+        "PT": "Portuguès",
+        "RU": "Rus",
+        "ZH": "Xinès"
+    }
+}

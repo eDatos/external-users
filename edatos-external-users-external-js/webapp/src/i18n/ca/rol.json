@@ -1,0 +1,30 @@
+{
+    "edatosExternalUsersApp": {
+        "rol": {
+            "accion": "Acció",
+            "created": "S'ha creat el rol {{ param }}",
+            "delete": {
+                "question": "¿Segur que vol eliminar el rol {{ id }}?"
+            },
+            "deleted": "S'ha eliminat el rol {{ param }}",
+            "nombre": "Nom",
+            "roles": "Rols",
+            "sujeto": "Subjecte",
+            "updated": "S'ha actualitzat el rol {{ param }}"
+        },
+        "rolesEnum": {
+            "ADMINISTRADOR": "Administrador",
+            "ANY_ROLE_ALLOWED": "Qualsevol rol permès",
+            "JEFE_NORMALIZACION": "Cap de normalització",
+            "LECTOR": "Lector",
+            "TECNICO_APOYO_DIFUSION": "Tècnic de suport de difusió",
+            "TECNICO_APOYO_NORMALIZACION": "Tècnic de suport de normalització",
+            "TECNICO_APOYO_PLANIFICACION": "Tècnic de suport de planificació",
+            "TECNICO_APOYO_PRODUCCION": "Tècnic de suport de producció",
+            "TECNICO_DIFUSION": "Tècnic de difusió",
+            "TECNICO_NORMALIZACION": "Tècnic de normalització",
+            "TECNICO_PLANIFICACION": "Tècnic de planificació",
+            "TECNICO_PRODUCCION": "Tècnic de producció"
+        }
+    }
+}

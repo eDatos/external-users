@@ -1,0 +1,25 @@
+{
+    "signup": {
+        "home": {
+            "title": "Registre d'usuari"
+        },
+        "form": {
+            "name": "Nom",
+            "surname1": "Primer cognom",
+            "surname2": "Segon cognom",
+            "password": "Contrasenya",
+            "confirmPassword": "Confirmar contrasenya",
+            "email": "Correu electrònic",
+            "treatment": "Tractament",
+            "language": "Idioma",
+            "phoneNumber": "Número telèfon",
+            "organism": "Organisme",
+            "enableEmailNotifications": "Habilitar notificacions a través de correu electrònic per a aquest usuari",
+            "captchaModal": "Resolgui el captcha per a acabar el registre"
+        },
+        "messages": {
+            "onSuccessSumary": "Registre de nou usuari",
+            "onSuccess": "L'usuari s'ha registrat amb èxit"
+        }
+    }
+}

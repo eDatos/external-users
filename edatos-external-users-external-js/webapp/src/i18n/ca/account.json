@@ -1,0 +1,43 @@
+{
+    "account": {
+        "title": "El meu compte",
+        "form": {
+            "nombre": "Nom",
+            "nombre.placeholder": "El seu nom",
+            "apellido1": "Primer cognom",
+            "apellido2": "Segon cognom",
+            "apellido1.placeholder": "El seu primer cognom",
+            "apellido2.placeholder": "El seu segon cognom",
+            "button": "Guardar"
+        },
+        "messages": {
+            "error": {
+                "emailexists": "<strong>¡L'adreça de correu electrònic ja existeix!</strong> Si us plau, triï una altra.",
+                "fail": "<strong>¡Ha ocorregut un error!</strong> Els ajustos no s'han pogut guardar."
+            },
+            "success": "<strong>¡Ajustos guardats!</strong>",
+            "validate": {
+                "apellido1": {
+                    "maxlength": "El seu primer cognom no pot tenir més de 50 caràcters",
+                    "minlength": "Es requereix que el seu primer cognom tingui almenys 1 caràcter",
+                    "required": "Es requereix que ingressi el seu primer cognom."
+                },
+                "apellido2": {
+                    "maxlength": "El seu segon cognom no pot tenir més de 50 caràcters",
+                    "minlength": "Es requereix que el seu segon cognom tingui almenys 1 caràcter",
+                    "required": "Es requereix que ingressi el seu segon cognom."
+                },
+                "nombre": {
+                    "maxlength": "El seu nom no pot tenir més de 50 caràcters",
+                    "minlength": "Es requereix que el seu nom tingui almenys 1 caràcter",
+                    "required": "Es requereix que ingressi el seu nom."
+                }
+            },
+            "delete": {
+                "text": "En confirmar es donarà de baixa en el sistema."
+            },
+            "onSuccessSumary": "Usuari editat",
+            "onSuccess": "S'han modificat les dades de l'usuari correctament."
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "favorite": {
+        "entity": {
+            "email": "Email"
+        },
+        "form": {
+            "cancel": "Cancelar",
+            "edit": "Editar favorito",
+            "goBack": "Volver al listado",
+            "legend": "Detalles del favorito",
+            "new": "Crear un nuevo favorito",
+            "save": "Guardar favorito"
+        },
+        "home": {
+            "createLabel": "Crear favorito",
+            "title": "Favoritos"
+        },
+        "name": "Favorito"
+    },
+    "structuralResourcesTree": {
+        "noRecordsFound": "No s'ha trobat cap tema ni operació"
+    }
+}
