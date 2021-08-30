@@ -7,5 +7,6 @@ export interface GenericConfig {
     };
     metadata: {
         defaultLanguage: string;
+        availableLanguages: string[];
     };
 }
