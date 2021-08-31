@@ -1,0 +1,65 @@
+{
+    "userManagement": {
+        "permissions": "Permisos",
+        "personalData": "Dades personals",
+        "activado": "Activat",
+        "created": "S'ha creat l'usuari {{ param }}",
+        "createdDate": "Data de registre",
+        "deactivate": {
+            "question": "¿Segur que desitja desactivar l'usuari <strong>{{ email }}</strong>?"
+        },
+        "deleted": "S'ha eliminat l'usuari {{ param }}",
+        "deletionDate": "Data d'esborrat",
+        "desactivado": "Desactivat",
+        "detail": {
+            "title": "Usuari"
+        },
+        "home": {
+            "createDeactivatedTooltip": "La creació d'usuaris està desactivada",
+            "createLabel": "Afegir nou usuari",
+            "createOrEditLabel": "Crear o editar un usuari",
+            "favorites": "Favorits",
+            "filters": "Filtres",
+            "includeDeleted": "Incloure desactivats",
+            "title": "Usuaris"
+        },
+        "updated": "S'ha actualitzat l'usuari {{ param }}",
+        "delete": {
+            "question": "¿Està segur que desitja eliminar la família <strong>{{title}}</strong>?"
+        },
+        "restore": {
+            "question": "¿Segur que vols restaurar l'usuari {{ login }}?"
+        },
+        "name": "Nom",
+        "surname1": "Primer cognom",
+        "surname2": "Segon cognom",
+        "email": "Email",
+        "password": {
+            "new": "Nova contrasenya",
+            "confirmNew": "Confirmar contrasenya",
+            "old": "Contrasenya actual"
+        },
+        "activated": "Activat",
+        "deactivated": "Desactivat",
+        "profiles": "Rols",
+        "roles": "Rols",
+        "rol": "Rol",
+        "filters": {
+            "name": {
+                "label": "Usuari",
+                "placeholder": "Introdueixi nom, usuari o cognoms"
+            },
+            "rolEnum": {
+                "label": "Rol"
+            },
+            "rolLong": {
+                "label": "Cerca per rol (ac-autocomplete-long-list)",
+                "placeholder": "Introdueixi el rol (ac-autocomplete-long-list)"
+            },
+            "rolShort": {
+                "label": "Cerca per rol (ac-autocomplete-short-list)",
+                "placeholder": "Introdueixi el rol (ac-autocomplete-short-list)"
+            }
+        }
+    }
+}

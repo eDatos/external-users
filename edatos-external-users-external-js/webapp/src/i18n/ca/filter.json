@@ -1,0 +1,31 @@
+{
+    "filter": {
+        "entity": {
+            "email": "Email",
+            "lastAccessDate": "Data d'últim accés",
+            "createdDate": "Data de creació",
+            "name": "Nom",
+            "notes": "Notes",
+            "owner": "Propietari",
+            "permalink": "URL"
+        },
+        "form": {
+            "cancel": "Cancel·lar",
+            "delete": "Eliminar consulta",
+            "edit": "Editar consulta",
+            "goBack": "Tornat al llistat",
+            "legend": "Detalls de la consulta personalitzada",
+            "new": "Crear una nova consulta personalitzada",
+            "save": "Guardar consulta"
+        },
+        "home": {
+            "createLabel": "Crear consulta personalizada",
+            "title": "Crear consulta personalitzada"
+        },
+        "name": "Consulta personalitzada",
+        "list": {
+            "noFilterCreated": "Sembla que encara no has creat cap consulta",
+            "wouldYouLikeToCreateAFilter": "Pots crear-la des de qualsevol visualització en el portal de dades"
+        }
+    }
+}
