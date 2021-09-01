@@ -24,7 +24,7 @@ public class DataProtectionPolicyServiceImpl implements DataProtectionPolicyServ
     public DataProtectionPolicyServiceImpl(DataProtectionPolicyRepository configurationRepository, MetadataProperties metadataProperties) {
         this.dataProtectionPolicyRepository = configurationRepository;
         this.metadataProperties = metadataProperties;
-        if(this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc() == null) {
+        if (this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc() == null) {
             DataProtectionPolicyEntity entity = new DataProtectionPolicyEntity();
             InternationalStringVO internationalString = new InternationalStringVO();
             entity.setValue(internationalString);
@@ -37,7 +37,7 @@ public class DataProtectionPolicyServiceImpl implements DataProtectionPolicyServ
         DataProtectionPolicyEntity entity = this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
         dataProtectionPolicyRepository.detachEntity(entity);
         Set<LocalisedStringVO> texts = new HashSet<>();
-        List<String> languages = metadataProperties.getLanguages().stream().map(language -> language.toLowerCase()).collect(Collectors.toList());
+        List<String> languages = metadataProperties.getAvailableLanguages().stream().map(language -> language.toLowerCase()).collect(Collectors.toList());
         for (String language : languages) {
             LocalisedStringVO localisedString = entity.getValue().getLocalisedLabelEntity(language);
             if (localisedString == null) {
@@ -55,7 +55,7 @@ public class DataProtectionPolicyServiceImpl implements DataProtectionPolicyServ
     @Override
     public DataProtectionPolicyEntity update(DataProtectionPolicyEntity updatedEntity) {
         DataProtectionPolicyEntity entity = this.dataProtectionPolicyRepository.findFirstByOrderByIdAsc();
-        List<String> languages = metadataProperties.getLanguages().stream().map(language -> language.toLowerCase()).collect(Collectors.toList());
+        List<String> languages = metadataProperties.getAvailableLanguages().stream().map(language -> language.toLowerCase()).collect(Collectors.toList());
         for (LocalisedStringVO localisedString : new ArrayList<>(updatedEntity.getValue().getTexts())) {
             if (localisedString != null) {
                 LocalisedStringVO storedLocalisedString = entity.getValue().getLocalisedLabelEntity(localisedString.getLocale());
