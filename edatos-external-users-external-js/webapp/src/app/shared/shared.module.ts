@@ -28,7 +28,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { EditorModule } from 'primeng/editor';
 import { TreeModule } from 'primeng/tree';
-
+import { DropdownModule } from 'primeng';
 import { NgArrayPipesModule } from 'ngx-pipes';
 import { QuillModule } from 'ngx-quill';
 
@@ -38,6 +38,7 @@ import { MultiLanguageEditorComponent } from './components/multi-language-editor
 import { MultiLanguageInputComponent } from './components/multi-language-input/multi-language-input.component';
 import { NbButtonModule, NbCardModule } from '@nebular/theme';
 import { EUsuariosAlertService } from '@app/core/service';
+import { SwitchLocaleComponent } from './components/switch-locale/switch-locale.component';
 
 @NgModule({
     imports: [
@@ -74,6 +75,7 @@ import { EUsuariosAlertService } from '@app/core/service';
         QuillModule.forRoot(),
         NbButtonModule,
         NbCardModule,
+        DropdownModule,
     ],
     declarations: [
         PasswordMatchValidatorDirective,
@@ -81,6 +83,7 @@ import { EUsuariosAlertService } from '@app/core/service';
         MultiLanguageEditorComponent,
         MultiLanguageInputComponent,
         StructuralResourcesTreeComponent,
+        SwitchLocaleComponent,
     ],
     providers: [
         FormcontrolStatusService,
@@ -113,6 +116,7 @@ import { EUsuariosAlertService } from '@app/core/service';
         TableModule,
         TooltipModule,
         TreeModule,
+        DropdownModule,
         NgArrayPipesModule,
         ReactiveFormsModule,
         ArteInputModule,
@@ -129,6 +133,7 @@ import { EUsuariosAlertService } from '@app/core/service';
         NbButtonModule,
         NbCardModule,
         MultiLanguageInputComponent,
+        SwitchLocaleComponent,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

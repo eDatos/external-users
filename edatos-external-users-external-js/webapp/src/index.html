@@ -11,6 +11,7 @@
     <body>
         <div th:utext="${headerHtml}"></div>
 
+        <app-switch-locale></app-switch-locale>
         <script th:inline="javascript">
             /*<![CDATA[*/
             window.CONFIGURATION = {};
@@ -25,6 +26,8 @@
 
             window.CONFIGURATION.metadata = {};
             window.CONFIGURATION.metadata.defaultLanguage = /*[[${@metadataProperties.defaultLanguage}]]*/ 'es';
+
+            window.CONFIGURATION.metadata.availableLanguages = /*[[${@metadataProperties.availableLanguages}]]*/ ['es', 'en'];
             /*]]>*/
         </script>
         <script src="http://localhost:8080/api/captcha/authentication.js" th:src="${captchaAuthenticationUrl}"></script>

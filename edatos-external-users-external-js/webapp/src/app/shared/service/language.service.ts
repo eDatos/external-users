@@ -16,4 +16,8 @@ export class LanguageService {
             setCurrentLanguage(e.lang);
         });
     }
+
+    public changeLanguage(lang: string) {
+        this.translateService.use(lang);
+    }
 }
