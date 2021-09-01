@@ -29,6 +29,6 @@ public class LanguageResource extends AbstractResource {
     @Timed
     @PreAuthorize("@secCheckerExternal.canAccessCategory(authentication)")
     public ResponseEntity<List<String>> getAllowedLanguages() {
-        return ResponseEntity.ok(metadataProperties.getLanguages().stream().map(String::toLowerCase).collect(Collectors.toList()));
+        return ResponseEntity.ok(metadataProperties.getAvailableLanguages().stream().map(String::toLowerCase).collect(Collectors.toList()));
     }
 }

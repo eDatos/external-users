@@ -1,22 +1,21 @@
-.statistical-operations-external-content,
-.statistical-operations-external-content * {
+.switch-locale-external-content,
+.switch-locale-external-content * {
+    max-width: 20em;
     margin: 0;
     box-sizing: border-box;
     display: flex;
     justify-content: flex-end;
     padding: 0em 2em;
+    margin-top: -1.7em;
+    float: right;
 }
 
-.statistical-operations-external-content ul {
+.switch-locale-external-content ul {
     list-style: none;
     margin: 0;
 }
-.statistical-operations-external-content .links a,
-.statistical-operations-external-content a.link {
-    text-decoration: underline;
-}
 
-.statistical-operations-external-content tr {
+.switch-locale-external-content tr {
     vertical-align: top;
 }
 
@@ -27,6 +26,7 @@
     margin-left: 5px;
     background-color: white;
     cursor: pointer;
+    padding: 0 !important;
 }
 :host ::ng-deep .ui-dropdown.ui-dropdown-clearable .ui-dropdown-label {
     padding-right: 4em;
@@ -38,6 +38,10 @@
     overflow: hidden;
     width: 100%;
     font-weight: 400;
+}
+
+:host ::ng-deep .ui-dropdown {
+    min-width: 8em;
 }
 
 :host ::ng-deep body .ui-inputtext {
@@ -56,6 +60,7 @@
     margin: 0;
     outline: medium none;
     padding: .25em;
+    background-image: none;
 }
 
 :host ::ng-deep ul.ui-dropdown-items.ui-dropdown-list.ui-widget-content.ui-widget.ui-corner-all.ui-helper-reset{

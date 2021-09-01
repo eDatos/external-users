@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.config;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 
@@ -8,8 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
+import es.gobcan.istac.edatos.external.users.core.service.HtmlService;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
 
 @Component("metadataProperties")
@@ -20,12 +23,16 @@ public class MetadataProperties {
     @Autowired
     private MetadataConfigurationService configurationService;
 
+    @Autowired
+    private HtmlService htmlService;
+
     private String metamacNavbar;
     private String metamacCasPrefix;
     private String metamacCasLoginUrl;
     private String metamacCasLogoutUrl;
     private String defaultLanguage;
-    
+    private List<String> availableLanguages;
+
     private boolean captchaEnable;
     private String captchaProvider;
     private String recaptchaSiteKey;
@@ -44,8 +51,8 @@ public class MetadataProperties {
             recaptchaSiteKey = configurationService.retrieveRecaptchaSiteKey();
             recaptchaSecretKey = configurationService.retrieveRecaptchaSecretKey();
             captchaUrl = normalizeUrl(configurationService.retrieveCaptchaExternalApiUrlBase());
-            List<String> languages = configurationService.retrieveLanguages();
-            defaultLanguage = languages.get(0);
+            availableLanguages = configurationService.retrieveLanguages();
+            defaultLanguage = availableLanguages.get(0);
         } catch (Exception e) {
             log.error("Error getting the value of a metadata {}", e);
         }
@@ -91,10 +98,9 @@ public class MetadataProperties {
         return captchaUrl;
     }
 
-    // 
-    public List<String> getLanguages() {
+    public List<String> getAvailableLanguages() {
         // The languages are retrieved each time it is needed so that multi-language fields can be updated
-        return configurationService.retrieveLanguages();
+        return availableLanguages;
     }
 
     private String normalizeUrl(String url) {

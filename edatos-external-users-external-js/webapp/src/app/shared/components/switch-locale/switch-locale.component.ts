@@ -24,7 +24,7 @@ export class SwitchLocaleComponent implements OnInit {
         this.selectedLanguage = { key: locale, name: this.dictionary[locale] };
     }
 
-    public onChangeLang(event: any, locale: string) {
+    public onChangeLang(event: any) {
         this.cookieService.set(LANG_KEY, event.value.key);
         this.languageService.changeLanguage(event.value.key);
     }
