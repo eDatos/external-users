@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.web.security.jwt;
 
+import static es.gobcan.istac.edatos.external.users.web.util.SecurityCookiesUtil.SERVICE_TICKET_COOKIE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
@@ -8,33 +9,44 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import es.gobcan.istac.edatos.external.users.core.repository.InternalEnabledTokenRepository;
+import es.gobcan.istac.edatos.external.users.core.service.impl.InternalEnabledTokenServiceImpl;
 import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+@RunWith(SpringRunner.class)
 public class TokenProviderTest {
 
     private final static String ANONYMOUS = "ROLE_ANONYMOUS";
+    private final static String SERVICE_TICKET = "ST-13-bGFVKRi9AwprEZutH8HdRgBvQh0estadisticas";
 
     private final String secretKey = "e5c9ee274ae87bc031adda32e27fa98b9290da83";
     private final long ONE_MINUTE = 60000;
     private JHipsterProperties jHipsterProperties;
     private JHipsterExtraProperties jHipsterExtraProperties;
+    private InternalEnabledTokenRepository internalEnabledTokenRepository;
     private TokenProvider tokenProvider;
 
     @Before
     public void setup() {
         jHipsterProperties = Mockito.mock(JHipsterProperties.class);
         jHipsterExtraProperties = Mockito.mock(JHipsterExtraProperties.class);
-        tokenProvider = new TokenProvider(jHipsterProperties, jHipsterExtraProperties);
+        internalEnabledTokenRepository = Mockito.mock(InternalEnabledTokenRepository.class);
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setAttribute(SERVICE_TICKET_COOKIE, SERVICE_TICKET);
+        tokenProvider = new TokenProvider(jHipsterProperties, jHipsterExtraProperties, new InternalEnabledTokenServiceImpl(internalEnabledTokenRepository), request);
         ReflectionTestUtils.setField(tokenProvider, "secretKey", secretKey);
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", ONE_MINUTE);
         ReflectionTestUtils.setField(tokenProvider, "tokenRenewPeriodInMilliseconds", 20000);

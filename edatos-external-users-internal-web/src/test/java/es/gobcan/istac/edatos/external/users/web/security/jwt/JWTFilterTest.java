@@ -24,7 +24,7 @@ public class JWTFilterTest {
     public void setup() {
         JHipsterProperties jHipsterProperties = new JHipsterProperties();
         JHipsterExtraProperties jHipsterExtraProperties = new JHipsterExtraProperties();
-        tokenProvider = new TokenProvider(jHipsterProperties, jHipsterExtraProperties);
+        tokenProvider = new TokenProvider(jHipsterProperties, jHipsterExtraProperties, null, null);
         ReflectionTestUtils.setField(tokenProvider, "secretKey", "test secret");
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInMilliseconds", 60000);
         ReflectionTestUtils.setField(tokenProvider, "tokenRenewPeriodInMilliseconds", 20000);
