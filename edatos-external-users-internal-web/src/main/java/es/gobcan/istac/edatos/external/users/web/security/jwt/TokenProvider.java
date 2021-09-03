@@ -109,6 +109,7 @@ public class TokenProvider {
         try {
             claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
             if(!enabledTokenService.existsByToken(authToken)) {
+                claimsJws = null;
                 throw new CredentialsExpiredException("The authentication token is disabled. Login again.");
             }
         } catch (SignatureException e) {
