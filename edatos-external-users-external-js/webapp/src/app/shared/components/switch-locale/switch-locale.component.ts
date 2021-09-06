@@ -19,7 +19,9 @@ export class SwitchLocaleComponent implements OnInit {
     constructor(private cookieService: CookieService, private configService: ConfigService, private languageService: LanguageService) {}
 
     ngOnInit() {
-        this.languages = AVAILABLE_LANGUAGES.map((locale) => ({ key: locale, name: this.dictionary[locale] }))
+        this.languages = this.configService
+            .getConfig()
+            .metadata.availableLanguages.map((locale) => ({ key: locale, name: this.dictionary[locale] }))
             .filter((language) => !!language.name)
             .sort((a, b) => (a.name > b.name ? 1 : -1));
 
