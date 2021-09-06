@@ -2,6 +2,9 @@ package es.gobcan.istac.edatos.external.users.web.security.jwt;
 
 import static es.gobcan.istac.edatos.external.users.web.util.SecurityCookiesUtil.SERVICE_TICKET_COOKIE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,9 +22,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import es.gobcan.istac.edatos.external.users.core.domain.InternalEnabledTokenEntity;
 import es.gobcan.istac.edatos.external.users.core.repository.InternalEnabledTokenRepository;
 import es.gobcan.istac.edatos.external.users.core.service.impl.InternalEnabledTokenServiceImpl;
 import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
+
 import io.github.jhipster.config.JHipsterProperties;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -95,6 +100,24 @@ public class TokenProviderTest {
         boolean isTokenValid = (tokenProvider.validateToken("") != null);
 
         assertThat(isTokenValid).isEqualTo(false);
+    }
+
+    @Test
+    public void testReturnFalseWhenJWTisNotInTheDatabase() {
+        Authentication authentication = createAuthentication();
+        String token = tokenProvider.createToken(authentication, false);
+        Mockito.when(internalEnabledTokenRepository.existsByToken(token)).thenReturn(false);
+        boolean isTokenValid = (tokenProvider.validateToken(token) != null);
+
+        assertThat(isTokenValid).isEqualTo(false);
+    }
+
+    @Test
+    public void testJwtIsBeingSavedInTheDatabase() {
+        Authentication authentication = createAuthentication();
+        String token = tokenProvider.createToken(authentication, false);
+
+        verify(internalEnabledTokenRepository, times(1)).save(new InternalEnabledTokenEntity(token, SERVICE_TICKET, any()));
     }
 
     private Authentication createAuthentication() {

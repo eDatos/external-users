@@ -59,4 +59,16 @@ public class InternalEnabledTokenEntity {
     public void setExpirationDate(Instant expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        InternalEnabledTokenEntity that = (InternalEnabledTokenEntity) o;
+        return serviceTicket.equals(that.serviceTicket) && token.equals(that.token) && expirationDate.equals(that.expirationDate);
+    }
 }
