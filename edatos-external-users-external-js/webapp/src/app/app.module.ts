@@ -17,10 +17,11 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AVAILABLE_LANGUAGES, DEFAULT_LANG, LANG_KEY } from './app.constants';
+import { ConfigService } from './config';
 import { ConfigModule } from './config/config.module';
 import { MissingTranslationHandlerImpl } from './config/missing-translation-handler-impl';
 import { CoreModule } from './core/core.module';
-import { AuthExpiredInterceptor, AuthInterceptor, ErrorHandlerInterceptor } from './core/interceptor';
+import { AuthExpiredInterceptor, AuthInterceptor, ErrorHandlerInterceptor, LocaleInterceptor } from './core/interceptor';
 import { ErrorComponent, ErrorRoutingModule } from './layouts/error';
 import { NavbarComponent } from './layouts/navbar';
 import { AboutDialogComponent, DeleteConfirmDialogComponent } from './modules/account';
@@ -81,6 +82,12 @@ export function initTranslations(translateService: TranslateService, cookieServi
             provide: APP_INITIALIZER,
             useFactory: (languageService: LanguageService) => () => languageService.init(),
             deps: [LanguageService],
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LocaleInterceptor,
+            deps: [CookieService, ConfigService],
             multi: true,
         },
         {
