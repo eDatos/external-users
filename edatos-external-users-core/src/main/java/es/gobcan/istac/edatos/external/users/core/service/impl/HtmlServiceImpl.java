@@ -30,7 +30,6 @@ public class HtmlServiceImpl implements HtmlService {
         String appName = messageSource.getMessage("global.title", null, locale);
 
         return renderHtml(String.format("%s?appName=%s", navbarUrl, appName));
-
     }
 
     @Override

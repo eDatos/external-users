@@ -1,6 +1,7 @@
 package es.gobcan.istac.edatos.external.users.rest.common.config;
 
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -35,6 +37,8 @@ public class LocaleConfiguration extends WebMvcConfigurerAdapter {
                 }
             } else if (!isValidLang(lang)) {
                 this.redirect(request, response);
+            } else {
+                Locale.setDefault(Locale.forLanguageTag(lang));
             }
 
             return true;
