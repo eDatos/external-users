@@ -1,10 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { convert, ResponseWrapper } from '@app/core/utils/response-utils';
-import { Category, ExternalCategory, ExternalOperation } from '@app/shared/model';
-import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { Category, ExternalCategory } from '@app/shared/model';
 import { createRequestOption } from 'arte-ng/utils';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',

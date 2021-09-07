@@ -88,7 +88,7 @@ WHERE SEQUENCE_NAME = 'DATA_CONFIGURATIONS';
 
 insert into TB_DATA_CONFIGURATIONS (ID, VERSION, SYSTEM_PROPERTY, CONF_KEY, CONF_VALUE)
 values (GET_NEXT_SEQUENCE_VALUE('DATA_CONFIGURATIONS'), 1, 1,
-        'metamac.edatos_external_users.job.send_notice.cron_expression', '0 0 6 * * ? *');
+        'metamac.edatos_external_users.rest.internal.job.send_notice.cron_expression', '0 0 6 * * ? *');
 UPDATE TB_SEQUENCES
 SET SEQUENCE_NEXT_VALUE = SEQUENCE_NEXT_VALUE + 1
 WHERE SEQUENCE_NAME = 'DATA_CONFIGURATIONS';
