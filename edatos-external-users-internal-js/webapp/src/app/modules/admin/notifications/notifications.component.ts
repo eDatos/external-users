@@ -5,7 +5,7 @@ import { NotificationService } from '@app/shared/service';
 import { TranslateService } from '@ngx-translate/core';
 import { ArteEventManager } from 'arte-ng/services';
 import { MessageService } from 'primeng/api';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-notifications',
@@ -13,10 +13,10 @@ import { Subscription } from 'rxjs';
 })
 export class NotificationsComponent implements OnInit, OnDestroy {
     public subscription: Subscription;
-    public isSaving: boolean;
 
     public externalUsers: ExternalUser[] = [];
     public notification: Notification;
+    public selectedReceivers: string[] = [];
 
     constructor(
         private eventManager: ArteEventManager,
@@ -27,7 +27,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     ) {}
 
     public ngOnInit() {
-        this.isSaving = false;
+        this.notification = new Notification();
         this.searchExternalUsers();
     }
 
@@ -36,23 +36,32 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     }
 
     public send() {
-        this.isSaving = true;
-        this.notificationService.send(this.notification).subscribe(
-            () => this.onSaveSuccess(),
-            () => this.onSaveError()
+        this.notification.receivers = this.selectedReceivers;
+        this.subscribeToSendResponse(this.notificationService.send(this.notification));
+    }
+
+    public onSelectReceivers(receivers: ExternalUser) {
+        this.selectedReceivers.push(receivers.email);
+    }
+
+    public onUnselectReceivers(receivers) {
+        const index = this.selectedReceivers.indexOf(receivers.email);
+        if (index > -1) {
+            this.selectedReceivers.splice(index, 1);
+        }
+    }
+
+    private subscribeToSendResponse(result: Observable<Notification>) {
+        result.subscribe(
+            (res: Notification) => this.onSaveSuccess(),
+            (res: Response) => this.onSaveError()
         );
     }
 
     private searchExternalUsers() {
-        this.externalUserService
-            .find({
-                page: 0,
-                size: 100000000,
-                sort: ['asc'],
-            })
-            .subscribe((results) => {
-                this.externalUsers = results.body;
-            });
+        this.externalUserService.find().subscribe((results) => {
+            this.externalUsers = results.body;
+        });
     }
 
     private onSaveSuccess() {
@@ -65,7 +74,5 @@ export class NotificationsComponent implements OnInit, OnDestroy {
         });
     }
 
-    private onSaveError() {
-        this.isSaving = false;
-    }
+    private onSaveError() {}
 }
