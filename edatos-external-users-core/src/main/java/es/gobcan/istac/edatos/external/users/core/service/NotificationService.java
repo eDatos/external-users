@@ -5,6 +5,8 @@ import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
 
 import java.util.List;
 
+import org.siemac.metamac.rest.notices.v1_0.domain.Receivers;
+
 public interface NotificationService {
 
     void createNewExternalUserAccountNotification(ExternalUserEntity externalUserEntity);
@@ -14,4 +16,6 @@ public interface NotificationService {
 
     void createNoticeOfSusbcritionsJob(List<FavoriteEntity> listFavorites);
 
+    void createNotificationWithReceivers(String message, String subject, Receivers receivers);
+    Receivers createReceiversList(List<String> emails);
 }

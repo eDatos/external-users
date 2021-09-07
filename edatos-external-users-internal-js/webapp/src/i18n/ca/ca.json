@@ -590,6 +590,7 @@
                 "main": "Administració",
                 "metrics": "Mètriques",
                 "treeTopicsAdministration": "Administrar arbre de temes",
+                "notifications": "Notificacions",
                 "userManagement": "Gestió d'usuaris"
             },
             "administracion": {
@@ -773,5 +774,20 @@
         "globalSearchPlaceholder": "Introduir termes de cerca",
         "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}",
         "pageReport": "{first}–{last} de {totalRecords}"
+    },
+    "notifications": {
+        "home": {
+            "title": "Notificacions"
+        },
+        "form": {
+            "subject": "Assumpte",
+            "message": "Missatge",
+            "receivers": "Destinataris",
+            "send": "Enviar"
+        },
+        "message": {
+            "onSuccessSumary": "Notificació enviada",
+            "onSuccess": "La notificació s'ha enviat correctament."
+        }
     }
 }

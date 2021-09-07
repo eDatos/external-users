@@ -1,0 +1,60 @@
+<div class="page">
+    <div class="page-header page-header-top">
+        <h2 class="page-header-title">
+            <span class="page-header-title-text">{{ 'notifications.home.title' | translate }}</span>
+        </h2>
+        <button class="btn btn-primary mr-2" (click)="send()">
+            <span class="fa fa-send"></span>
+            <span translate="notifications.form.send"></span>
+        </button>
+    </div>
+    <div class="page-body">
+        <form class="page-form" id="notification-form" name="notificationForm" role="form" novalidate #notificationForm="ngForm" autocomplete="off">
+            <fieldset class="d-flex flex-column" arteAutofocus>
+                <div class="row">
+                    <div class="form-group form-group-inline col-md-6 required" [formControlStatus]="notificationForm.controls.email">
+                        <div class="form-row">
+                            <label class="form-label col-md-4" translate="notifications.form.receivers" for="field_emails"></label>
+                            <div class="col-md-8 form-input-container">
+                                <arte-autocomplete-short-list
+                                    inputId="field_emails"
+                                    name="email"
+                                    [(ngModel)]="notification.receivers"
+                                    [suggestions]="externalUsers"
+                                    dataKey="email"
+                                    [required]="true"
+                                    [properties]="['email']"
+                                    [multiple]="true"
+                                >
+                                </arte-autocomplete-short-list>
+                                <div class="form-errors-messages" *hasErrors="let messages">
+                                    <span *ngFor="let m of messages">{{m}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group form-group-inline col-md-6">
+                        <div class="form-row">
+                            <label class="col-form-label col-md-4" translate="notifications.form.subject"></label>
+                            <div class="col-md-8">
+                                <arte-input name="subject" [(ngModel)]="notification.subject" [maxlength]="255" required></arte-input>
+                            </div>
+                        </div>
+
+                        <div *ngIf="notificationForm.controls.subject?.dirty && notificationForm.controls.subject?.invalid" class="entity-field-error">
+                            <small
+                                class="form-text text-danger"
+                                *ngIf="notificationForm.controls.subject?.errors?.maxlength"
+                                translate="entity.validation.maxlength"
+                                [translateParams]="{ max: 255 }"
+                            >
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
