@@ -9,7 +9,9 @@
     clear: both;
 }
 
-.modal { overflow: auto !important; }
+.modal {
+    overflow: auto !important;
+}
 
 /* BEGIN BOOTSTRAP */
 .btn {
@@ -52,6 +54,9 @@
     }
 }
 .toast-errors {
+    z-index: $zindex-sticky + 1;
+}
+.toast-success {
     z-index: $zindex-sticky + 1;
 }
 /* END PRIMENG */

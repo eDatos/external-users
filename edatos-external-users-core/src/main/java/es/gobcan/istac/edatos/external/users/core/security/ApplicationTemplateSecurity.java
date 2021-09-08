@@ -130,4 +130,8 @@ public class ApplicationTemplateSecurity {
     public boolean canUpdateLogs(Authentication authentication) {
         return isAdmin(authentication);
     }
+
+    public boolean canSendNotification(Authentication authentication) {
+        return isAdmin(authentication) || isManager(authentication);
+    }
 }

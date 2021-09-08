@@ -140,7 +140,8 @@ public class NotificationServiceImpl implements NotificationService {
         // @formatter:on
     }
 
-    private Receivers createReceiversList(List<String> emails) {
+    @Override
+    public Receivers createReceiversList(List<String> emails) {
         Receivers receivers = new Receivers();
         for (String email : emails) {
             receivers.getReceivers().add(ReceiverBuilder.receiver().withUsername(email).build());
@@ -150,11 +151,9 @@ public class NotificationServiceImpl implements NotificationService {
         return receivers;
     }
 
-    private void createNotificationWithReceivers(String message, String codeSubject, Receivers receivers) {
+    @Override
+    public void createNotificationWithReceivers(String message, String subject, Receivers receivers) {
         try {
-            Locale currentLocale = metadataConfigurationService.retrieveLanguageDefaultLocale();
-            String subject = messageSource.getMessage(codeSubject, null, currentLocale);
-
             // @formatter:off
             Notice notice = NoticeBuilder.notification()
                 .withMessages(MessageBuilder.message().withText(message).build())

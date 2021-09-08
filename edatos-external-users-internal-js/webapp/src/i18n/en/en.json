@@ -590,6 +590,7 @@
                 "main": "Administration",
                 "metrics": "Metrics",
                 "treeTopicsAdministration": "Manage topics tree",
+                "notifications": "Notifications",
                 "userManagement": "User management"
             },
             "administracion": {
@@ -773,5 +774,20 @@
         "globalSearchPlaceholder": "Enter search terms",
         "pageCount": "{{pageFirst}} - {{pageLast}} of {{total}}",
         "pageReport": "{first}–{last} of {totalRecords}"
+    },
+    "notifications": {
+        "home": {
+            "title": "Notifications"
+        },
+        "form": {
+            "subject": "Subject",
+            "message": "Message",
+            "receivers": "Receivers",
+            "send": "Send"
+        },
+        "message": {
+            "onSuccessSumary": "Notification sent",
+            "onSuccess": "The notification has been sent correctly."
+        }
     }
 }
