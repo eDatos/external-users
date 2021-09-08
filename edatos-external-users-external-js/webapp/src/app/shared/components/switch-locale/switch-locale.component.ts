@@ -1,8 +1,9 @@
-import { Component, Inject, OnInit, Renderer2, RendererFactory2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '@app/config';
 import { CookieService } from 'ngx-cookie-service';
-import { AVAILABLE_LANGUAGES, LANG_KEY } from '@app/app.constants';
+import { LANG_KEY } from '@app/app.constants';
 import { LanguageService } from '@app/shared/service';
+import { Router } from '@angular/router';
 @Component({
     selector: 'app-switch-locale',
     templateUrl: './switch-locale.component.html',
@@ -11,12 +12,10 @@ import { LanguageService } from '@app/shared/service';
 export class SwitchLocaleComponent implements OnInit {
     public selectedLanguage: any;
     public languages: any;
-    public origin: String;
 
     private dictionary = { es: 'Castellano', en: 'English', ca: 'Català' };
 
-    renderer: Renderer2 = null;
-    constructor(private cookieService: CookieService, private configService: ConfigService, private languageService: LanguageService) {}
+    constructor(private router: Router, private cookieService: CookieService, private configService: ConfigService, private languageService: LanguageService) {}
 
     ngOnInit() {
         this.languages = this.configService
@@ -32,5 +31,8 @@ export class SwitchLocaleComponent implements OnInit {
     public onChangeLang(event: any) {
         this.cookieService.set(LANG_KEY, event.value.key);
         this.languageService.changeLanguage(event.value.key);
+        this.router.navigate([this.router.url]).then(() => {
+            window.location.reload();
+        });
     }
 }
