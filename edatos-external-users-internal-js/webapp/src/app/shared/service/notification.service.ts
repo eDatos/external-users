@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
     providedIn: 'root',
 })
 export class NotificationService {
-    public readonly resourceUrl = 'api/notification';
+    public readonly resourceUrl = 'api/notifications';
 
     constructor(private http: HttpClient) {}
 
