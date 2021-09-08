@@ -1,9 +1,9 @@
 package es.gobcan.istac.edatos.external.users.web.security.filter;
 
 import es.gobcan.istac.edatos.external.users.core.config.Constants;
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.errors.ParameterizedErrorVM;
 import es.gobcan.istac.edatos.external.users.rest.common.dto.LoginDto;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 import es.gobcan.istac.edatos.external.users.web.security.provider.LoginAuthenticationException;
 import es.gobcan.istac.edatos.external.users.web.security.provider.TokenProvider;
 import io.github.jhipster.config.JHipsterProperties;
@@ -42,18 +42,18 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final JHipsterProperties jHipsterProperties;
     private long tokenValidityInSeconds;
 
-    private final ApplicationProperties applicationProperties;
-
     private final Environment env;
 
+    private final MetadataProperties metadataProperties;
+
     public JWTAuthenticationFilter(AuthenticationProvider authenticationManager, TokenProvider tokenProvider, ObjectMapper mapper, JHipsterProperties jHipsterProperties,
-            ApplicationProperties applicationProperties, Environment env) {
+            Environment env, MetadataProperties metadataProperties) {
         this.authenticationManager = authenticationManager;
         this.tokenProvider = tokenProvider;
         this.mapper = mapper;
         this.jHipsterProperties = jHipsterProperties;
-        this.applicationProperties = applicationProperties;
         this.env = env;
+        this.metadataProperties = metadataProperties;
 
         this.tokenValidityInSeconds = jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
 
@@ -102,11 +102,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     private String getCookiePath() {
-        if (org.apache.commons.lang3.StringUtils.isBlank(applicationProperties.getEndpoint().getAppUrl())) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(metadataProperties.getExternalAppUrl())) {
             return ROOT_PATH;
         }
 
-        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(applicationProperties.getEndpoint().getAppUrl()).build();
+        UriComponents uriComponents = UriComponentsBuilder.fromHttpUrl(metadataProperties.getExternalAppUrl()).build();
         String path = uriComponents.getPath();
 
         if (org.apache.commons.lang3.StringUtils.isBlank(path)) {

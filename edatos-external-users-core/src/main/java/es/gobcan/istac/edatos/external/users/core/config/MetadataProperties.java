@@ -1,7 +1,6 @@
 package es.gobcan.istac.edatos.external.users.core.config;
 
 import java.util.List;
-import java.util.Locale;
 
 import javax.annotation.PostConstruct;
 
@@ -9,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
 
 import es.gobcan.istac.edatos.external.users.core.service.HtmlService;
@@ -39,6 +37,10 @@ public class MetadataProperties {
     private String recaptchaSecretKey;
     private String captchaUrl;
 
+    private String externalAppUrl;
+    private String internalAppUrl;
+    private String casService;
+
     @PostConstruct
     public void setValues() {
         try {
@@ -52,6 +54,9 @@ public class MetadataProperties {
             recaptchaSecretKey = configurationService.retrieveRecaptchaSecretKey();
             captchaUrl = normalizeUrl(configurationService.retrieveCaptchaExternalApiUrlBase());
             availableLanguages = configurationService.retrieveLanguages();
+            externalAppUrl = normalizeUrl(configurationService.retrieveExternalUsersExternalWebApplicationUrlBase());
+            internalAppUrl = normalizeUrl(configurationService.retrieveExternalUsersInternalWebApplicationUrlBase());
+            casService = internalAppUrl + "/login/cas";
             defaultLanguage = availableLanguages.get(0);
         } catch (Exception e) {
             log.error("Error getting the value of a metadata {}", e);
@@ -96,6 +101,18 @@ public class MetadataProperties {
 
     public String getCaptchaUrl() {
         return captchaUrl;
+    }
+
+    public String getExternalAppUrl() {
+        return externalAppUrl;
+    }
+
+    public String getInternalAppUrl() {
+        return internalAppUrl;
+    }
+
+    public String getCasService() {
+        return casService;
     }
 
     public List<String> getAvailableLanguages() {

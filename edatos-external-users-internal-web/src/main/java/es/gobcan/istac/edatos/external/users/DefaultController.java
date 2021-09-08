@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class DefaultController {
     private ApplicationProperties applicationProperties;
 
     @Autowired
+    private MetadataProperties metadataProperties;
+
+    @Autowired
     private MetadataConfigurationService metadataService;
 
     private final Logger log = LoggerFactory.getLogger(DefaultController.class);
@@ -40,8 +44,6 @@ public class DefaultController {
     public ModelAndView index(HttpServletRequest request) {
         log.debug("DefaultController: Contextpath = {}  ServletPath = {}", request.getContextPath(), request.getServletPath());
         Map<String, Object> model = new HashMap<>();
-        model.put("cas", applicationProperties.getCas());
-        model.put("endpoint", applicationProperties.getEndpoint());
         model.put("faviconUrl", this.faviconUrl);
 
         Map<String, Object> flashMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);

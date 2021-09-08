@@ -22,7 +22,7 @@
             window.CONFIGURATION.metamac.visualizerPath = 'https://estadisticas.arte-consultores.com/istac/visualizer/data.html?permalink=';
 
             window.CONFIGURATION.endpoint = {};
-            window.CONFIGURATION.endpoint.appUrl = /*[[${endpoint.getAppUrl()}]]*/ 'http://localhost:4200';
+            window.CONFIGURATION.endpoint.appUrl = /*[[${@metadataProperties.externalAppUrl}]]*/ 'http://localhost:4200';
 
             window.CONFIGURATION.metadata = {};
             window.CONFIGURATION.metadata.defaultLanguage = /*[[${@metadataProperties.defaultLanguage}]]*/ 'es';

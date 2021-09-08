@@ -91,7 +91,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public ServiceProperties serviceProperties() {
         ServiceProperties serviceProperties = new ServiceProperties();
-        serviceProperties.setService(StringUtils.removeEnd(applicationProperties.getCas().getService(), "/"));
+        serviceProperties.setService(StringUtils.removeEnd(metadataProperties.getCasService(), "/"));
         serviceProperties.setSendRenew(false);
         return serviceProperties;
     }
@@ -131,7 +131,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, applicationProperties, env);
+        return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, metadataProperties, env);
     }
 
     @Bean
@@ -143,7 +143,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     public JWTSingleSignOutHandler singleSignOutHandler() {
-        return new JWTSingleSignOutHandler(jHipsterProperties, applicationProperties, env, internalEnabledTokenService);
+        return new JWTSingleSignOutHandler(jHipsterProperties, metadataProperties, env, internalEnabledTokenService);
     }
 
     public JWTSingleSignOutFilter singleSignOutFilter() {

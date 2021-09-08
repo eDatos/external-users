@@ -13,7 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import es.gobcan.istac.edatos.external.users.core.config.Constants;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import io.github.jhipster.config.JHipsterProperties;
 
 import static es.gobcan.istac.edatos.external.users.web.util.SecurityCookiesUtil.getCookiePath;
@@ -26,12 +26,12 @@ public class JWTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
     private Environment env;
     private long tokenValidityInSeconds;
     private TokenProvider tokenProvider;
-    private ApplicationProperties applicationProperties;
+    private MetadataProperties metadataProperties;
 
-    public JWTAuthenticationSuccessHandler(TokenProvider tokenProvider, JHipsterProperties jHipsterProperties, ApplicationProperties applicationProperties, Environment env) {
+    public JWTAuthenticationSuccessHandler(TokenProvider tokenProvider, JHipsterProperties jHipsterProperties, MetadataProperties metadataProperties, Environment env) {
         this.tokenProvider = tokenProvider;
         this.tokenValidityInSeconds = jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
-        this.applicationProperties = applicationProperties;
+        this.metadataProperties = metadataProperties;
         this.env = env;
     }
 
@@ -43,7 +43,7 @@ public class JWTAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
         cookie.setSecure(env.acceptsProfiles(Constants.SPRING_PROFILE_ENV));
         cookie.setMaxAge((int) tokenValidityInSeconds);
         cookie.setHttpOnly(false);
-        cookie.setPath(getCookiePath(applicationProperties));
+        cookie.setPath(getCookiePath(metadataProperties));
         response.addCookie(cookie);
 
         // For evict JSESSIONID, invalidate the session of CASFilter

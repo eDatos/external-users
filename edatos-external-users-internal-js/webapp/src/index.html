@@ -17,12 +17,12 @@
             window.CONFIGURATION.metamac.visualizerPath = 'https://estadisticas.arte-consultores.com/istac/visualizer/data.html?permalink=';
 
             window.CONFIGURATION.endpoint = {};
-            window.CONFIGURATION.endpoint.appUrl = /*[[${endpoint.getAppUrl()}]]*/ 'http://localhost:4200';
+            window.CONFIGURATION.endpoint.appUrl = /*[[${@metadataProperties.internalAppUrl}]]*/ 'http://localhost:4200';
 
             window.CONFIGURATION.cas = {};
             window.CONFIGURATION.cas.login = /*[[${@metadataProperties.metamacCasLoginUrl}]]*/ 'https://estadisticas.arte-consultores.com/authentication-service-internal/login';
             window.CONFIGURATION.cas.logout = /*[[${@metadataProperties.metamacCasLogoutUrl}]]*/ 'https://estadisticas.arte-consultores.com/authentication-service-internal/logout';
-            window.CONFIGURATION.cas.service = /*[[${cas.service}]]*/ 'http://localhost:4200/login/cas';
+            window.CONFIGURATION.cas.service = /*[[${@metadataProperties.casService}]]*/ 'http://localhost:4200/login/cas';
 
             window.CONFIGURATION.metadata = {};
             window.CONFIGURATION.metadata.navbarScriptUrl = /*[[${@metadataProperties.metamacNavbar}]]*/ '//estadisticas.arte-consultores.com/navigation-bar-internal/';

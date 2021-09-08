@@ -9,15 +9,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ApplicationProperties {
 
     private final Metadata metadata = new Metadata();
-    private final Cas cas = new Cas();
-    private final Endpoint endpoint = new Endpoint();
 
     public Metadata getMetadata() {
         return metadata;
-    }
-
-    public Endpoint getEndpoint() {
-        return endpoint;
     }
 
     public static class Metadata {
@@ -85,39 +79,6 @@ public class ApplicationProperties {
         public void setMetamacEUsuariosCronSendNoticeJob(String metamacEUsuariosCronSendNoticeJob) {
             this.metamacEUsuariosCronSendNoticeJob = metamacEUsuariosCronSendNoticeJob;
         }
-    }
-
-    public static class Endpoint {
-
-        // Required
-        private String appUrl;
-
-        public String getAppUrl() {
-            return appUrl;
-        }
-
-        public void setAppUrl(String appUrl) {
-            this.appUrl = appUrl;
-        }
-    }
-
-    public Cas getCas() {
-        return cas;
-    }
-
-    public static class Cas {
-
-        // Required
-        private String service;
-
-        public String getService() {
-            return service;
-        }
-
-        public void setService(String service) {
-            this.service = service;
-        }
-
     }
 
 }

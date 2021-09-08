@@ -37,7 +37,7 @@ public class DefaultController {
 
     @Autowired
     private MetadataConfigurationService metadataService;
-    
+
     @Autowired
     private MetadataProperties metadataProperties;
 
@@ -59,12 +59,11 @@ public class DefaultController {
     public ModelAndView index(HttpServletRequest request) {
         log.debug("DefaultController: Contextpath = {}  ServletPath = {}", request.getContextPath(), request.getServletPath());
         Map<String, Object> model = new HashMap<>();
-        model.put("endpoint", applicationProperties.getEndpoint());
         model.put("metamac", applicationProperties.getMetamac());
         model.put("faviconUrl", this.faviconUrl);
         model.put("headerHtml", htmlService.getHeaderHtml());
         model.put("footerHtml", htmlService.getFooterHtml());
-        
+
         UriBuilder urlBuilder = UriBuilder.fromUri(metadataProperties.getCaptchaUrl());
         urlBuilder.path("authentication.js");
         model.put("captchaAuthenticationUrl", urlBuilder.build().toString());

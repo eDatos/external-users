@@ -9,15 +9,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ApplicationProperties {
 
     private final Metadata metadata = new Metadata();
-    private final Endpoint endpoint = new Endpoint();
     private final Metamac metamac = new Metamac();
 
     public Metadata getMetadata() {
         return metadata;
-    }
-
-    public Endpoint getEndpoint() {
-        return endpoint;
     }
 
     public Metamac getMetamac() {
@@ -72,19 +67,4 @@ public class ApplicationProperties {
         }
 
     }
-
-    public static class Endpoint {
-
-        // Required
-        private String appUrl;
-
-        public String getAppUrl() {
-            return appUrl;
-        }
-
-        public void setAppUrl(String appUrl) {
-            this.appUrl = appUrl;
-        }
-    }
-
 }

@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import es.gobcan.istac.edatos.external.users.core.config.Constants;
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.service.InternalEnabledTokenService;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 import io.github.jhipster.config.JHipsterProperties;
 import org.apache.commons.codec.binary.Base64;
 import org.jasig.cas.client.Protocol;
@@ -62,14 +62,14 @@ public class JWTSingleSignOutHandler {
 
     private final Environment env;
 
-    private final ApplicationProperties applicationProperties;
+    private final MetadataProperties metadataProperties;
 
 
-    public JWTSingleSignOutHandler(JHipsterProperties jHipsterProperties, ApplicationProperties applicationProperties, Environment env, InternalEnabledTokenService enabledTokenService) {
+    public JWTSingleSignOutHandler(JHipsterProperties jHipsterProperties, MetadataProperties metadataProperties, Environment env, InternalEnabledTokenService enabledTokenService) {
         this.tokenValidityInSeconds = jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
         this.env = env;
         this.enabledTokenService = enabledTokenService;
-        this.applicationProperties = applicationProperties;
+        this.metadataProperties = metadataProperties;
     }
 
     public void setArtifactParameterOverPost(final boolean artifactParameterOverPost) {
@@ -220,7 +220,7 @@ public class JWTSingleSignOutHandler {
         Cookie cookie = new Cookie(SERVICE_TICKET_COOKIE, serviceTicket);
         cookie.setSecure(env.acceptsProfiles(Constants.SPRING_PROFILE_ENV));
         cookie.setHttpOnly(true);
-        cookie.setPath(getCookiePath(applicationProperties));
+        cookie.setPath(getCookiePath(metadataProperties));
         cookie.setMaxAge((int) tokenValidityInSeconds);
         response.addCookie(cookie);
     }
