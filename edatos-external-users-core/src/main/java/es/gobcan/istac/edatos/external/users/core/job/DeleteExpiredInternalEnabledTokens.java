@@ -20,7 +20,7 @@ public class DeleteExpiredInternalEnabledTokens {
     }
 
     @Transactional
-    @Scheduled(cron = "0 0 4 * * *") // Every day at 04:00
+    @Scheduled(cron = "${application.jobs.cron.enabledTokens}")
     public void execute() {
         LOG.info("Starting to clean expired internal enabled tokens...");
         internalEnabledTokenRepository.deleteByExpirationDateBefore(Instant.now());
