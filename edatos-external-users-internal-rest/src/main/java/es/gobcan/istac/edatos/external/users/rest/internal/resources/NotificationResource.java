@@ -21,7 +21,7 @@ import es.gobcan.istac.edatos.external.users.rest.common.dto.NotificationDto;
 @RequestMapping(NotificationResource.BASE_URL)
 public class NotificationResource extends AbstractResource {
 
-    public static final String BASE_URL = "/api/notification";
+    public static final String BASE_URL = "/api/notifications";
 
     private final NotificationService notificationService;
 
