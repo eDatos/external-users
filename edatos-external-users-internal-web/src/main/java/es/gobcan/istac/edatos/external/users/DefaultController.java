@@ -16,13 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 
 @Controller
 public class DefaultController {
-
-    @Autowired
-    private ApplicationProperties applicationProperties;
 
     @Autowired
     private MetadataProperties metadataProperties;
@@ -36,7 +32,7 @@ public class DefaultController {
 
     @PostConstruct
     public void init() {
-        this.faviconUrl = metadataService.findProperty(applicationProperties.getMetadata().getMetamacFaviconUrlKey());
+        this.faviconUrl = metadataService.retrieveAppStyleFaviconUrl();
     }
 
     @RequestMapping(value = {"", "/index.html", "/**/{path:[^\\.]*}"})

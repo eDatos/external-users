@@ -20,13 +20,12 @@ import org.springframework.core.env.Environment;
 
 import es.gobcan.istac.edatos.external.users.core.config.Constants;
 import es.gobcan.istac.edatos.external.users.core.config.DefaultProfileUtil;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
 import io.github.jhipster.config.JHipsterConstants;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class, JHipsterExtraProperties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, JHipsterExtraProperties.class})
 public class EdatosExternalUsersInternalApp {
 
     private static final Logger log = LoggerFactory.getLogger(EdatosExternalUsersInternalApp.class);

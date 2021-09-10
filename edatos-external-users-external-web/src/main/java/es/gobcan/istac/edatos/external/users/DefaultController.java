@@ -27,13 +27,9 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.service.HtmlService;
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 
 @Controller
 public class DefaultController {
-
-    @Autowired
-    private ApplicationProperties applicationProperties;
 
     @Autowired
     private MetadataConfigurationService metadataService;
@@ -50,8 +46,7 @@ public class DefaultController {
 
     @PostConstruct
     public void init() {
-        // TODO EDATOS-3215 y EDATOS-3266 Pendiente de cambio : this.faviconUrl = this.metadataService.retrieveFaviconUrl();
-        this.faviconUrl = metadataService.findProperty(applicationProperties.getMetadata().getMetamacFaviconUrlKey());
+        this.faviconUrl = metadataService.retrieveAppStyleFaviconUrl();
     }
 
     @RequestMapping(value = {"", "/index.html", "/**/{path:[^\\.]*}"})
@@ -59,7 +54,6 @@ public class DefaultController {
     public ModelAndView index(HttpServletRequest request) {
         log.debug("DefaultController: Contextpath = {}  ServletPath = {}", request.getContextPath(), request.getServletPath());
         Map<String, Object> model = new HashMap<>();
-        model.put("metamac", applicationProperties.getMetamac());
         model.put("faviconUrl", this.faviconUrl);
         model.put("headerHtml", htmlService.getHeaderHtml());
         model.put("footerHtml", htmlService.getFooterHtml());

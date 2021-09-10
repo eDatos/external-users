@@ -186,14 +186,6 @@ logging:
 # ===================================================================
 
 application:
-    metadata:
-        metamacNavbarKey: metamac.navbar.url
-        metamacCasPrefixKey: metamac.security.cas_server_url_prefix
-        metamacCasLoginUrlKey: metamac.security.cas_service_login_url
-        metamacCasLogoutUrlKey: metamac.security.cas_service_logout_url
-        metamacFaviconUrlKey: metamac.app.style.favicon.url
-        metamacHeaderUrlKey: metamac.api.style.header.url
-        metamacFooterUrlKey: metamac.api.style.footer.url
     jobs:
         cron:
             enabledTokens: 0 0 4 * * *

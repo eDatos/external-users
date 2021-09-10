@@ -140,9 +140,6 @@ logging:
 # ===================================================================
 
 application:
-    metadata:
-        metamacFaviconUrlKey: metamac.app.style.favicon.url
-        metamacPortalVisualizer: metamac.portal.web.external.visualizer
     jobs:
         cron:
             enabledTokens: 0 0 4 * * *

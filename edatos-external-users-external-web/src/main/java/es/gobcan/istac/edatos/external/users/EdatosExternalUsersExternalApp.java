@@ -7,7 +7,6 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +25,7 @@ import io.github.jhipster.config.JHipsterConstants;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
-@EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class, JHipsterExtraProperties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, JHipsterExtraProperties.class})
 public class EdatosExternalUsersExternalApp {
 
     private static final Logger log = LoggerFactory.getLogger(EdatosExternalUsersExternalApp.class);

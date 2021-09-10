@@ -56,8 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private JHipsterProperties jHipsterProperties;
 
-    private ApplicationProperties applicationProperties;
-
     private MetadataProperties metadataProperties;
 
     private final InternalEnabledTokenService internalEnabledTokenService;
@@ -65,13 +63,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final Environment env;
 
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, CorsFilter corsFilter, JHipsterProperties jHipsterProperties,
-            ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env, InternalEnabledTokenService internalEnabledTokenService) {
+            MetadataProperties metadataProperties, Environment env, InternalEnabledTokenService internalEnabledTokenService) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.jHipsterProperties = jHipsterProperties;
-        this.applicationProperties = applicationProperties;
         this.metadataProperties = metadataProperties;
         this.internalEnabledTokenService = internalEnabledTokenService;
         this.env = env;
