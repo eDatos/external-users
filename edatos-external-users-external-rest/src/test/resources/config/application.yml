@@ -37,9 +37,6 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
             hibernate.hbm2ddl.auto: validate
-    mail:
-        host: localhost
-        port: 0
     messages:
         basename: i18n/test_messages, i18n/messages
     mvc:
@@ -77,9 +74,6 @@ jhipster:
             host: localhost
             port: 5000
             queue-size: 512
-    mail:
-        from: test@localhost
-        base-url: http://127.0.0.1:8080
     security:
         authentication:
             jwt:
@@ -102,18 +96,15 @@ jhipster:
 # ===================================================================
 
 application:
-    cas:
-        endpoint: https://docker-machine:9443/cas # Required: Cas Endpoint
-        service: http://localhost:9000/login/cas # Required: Aplication service
-        login:  # Optional: Only change if needed (Leave empty for cas.enpoint + '/login')
-        logout: # Optional: Only change if needed(Leave empty for cas.enpoint + '/logout')
-        validate: # Optional: Only change if needed (Leave empty for 2.0 Cas Protocol). For CAS 3.0 protocol change for 'p3'
     ldap:
         url: FILL_URL # Ejemplo: ldap://ldap.miorganizacion.com
         username: FILL_USERNAME # Ejemplo: cn=username,dc=miorganizacion,dc=com
         password: FILL_PASSWORD # Ejemplo: mipassword
         base: ou=usuarios,dc=miorganizacion,dc=com # Ejemplo ou=usuarios,dc=miorganizacion,dc=com
         searchUsersProperty: FILL_SEARCH_USERS_PROPERTY # Ejemplo: uid
+    jobs:
+        cron:
+            enabledTokens: 0 0 4 * * *
 
 environment:
     edatos:

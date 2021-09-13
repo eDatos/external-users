@@ -27,9 +27,7 @@ management:
     security:
         enabled: false
     context-path: /management
-    health:
-        mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true
+
 spring:
     application:
         name: edatos_external_users
@@ -63,17 +61,6 @@ spring:
         default-domain: edatos_external_users
     hikari:
         pool-name: edatos_external_users_pool
-    mail:
-        host: FILL_HOST
-        port: FILL_PORT
-        username: FILL_USER
-        password: FILL_PASS
-        protocol: smtp
-        tls: true
-        properties.mail.smtp:
-            auth: true
-            starttls.enable: true
-            ssl.trust: smtp.gmail.com
     messages:
         basename: i18n/messages-external_users
     mvc:
@@ -165,9 +152,6 @@ jhipster:
                 token-validity-in-seconds: 36001
                 # 30 days
                 token-validity-in-seconds-for-remember-me: 2592000
-    mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: edatos_external_users@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
         logs: # Reports Dropwizard metrics in the logs
@@ -202,19 +186,6 @@ logging:
 # ===================================================================
 
 application:
-    metadata:
-        metamacNavbarKey: metamac.navbar.url
-        metamacCasPrefixKey: metamac.security.cas_server_url_prefix
-        metamacCasLoginUrlKey: metamac.security.cas_service_login_url
-        metamacCasLogoutUrlKey: metamac.security.cas_service_logout_url
-        metamacFaviconUrlKey: metamac.app.style.favicon.url
-        metamacHeaderUrlKey: metamac.api.style.header.url
-        metamacFooterUrlKey: metamac.api.style.footer.url
-    endpoint:
-        # Required: Aplication URL
-        app-url: FILL_APP_URL
-    cas:
-        endpoint: FILL_ENDPOINT_URL # Required: Cas Endpoint
-        service: FILL_SERVICE_URL # Required: Aplication service
-        login: # Optional: Only change if needed (Leave empty for cas.enpoint + '/login')
-        logout: # Optional: Only change if needed(Leave empty for cas.enpoint + '/logout')
+    jobs:
+        cron:
+            enabledTokens: 0 0 4 * * *

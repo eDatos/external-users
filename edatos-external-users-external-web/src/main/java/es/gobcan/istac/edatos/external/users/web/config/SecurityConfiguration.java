@@ -40,19 +40,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private JHipsterProperties jHipsterProperties;
 
-    private ApplicationProperties applicationProperties;
-    
     @Autowired
     private MetadataProperties metadataProperties;
 
     private final Environment env;
 
-    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, JHipsterProperties jHipsterProperties,
-            ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env) {
+    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, JHipsterProperties jHipsterProperties, Environment env) {
 
         this.tokenProvider = tokenProvider;
         this.jHipsterProperties = jHipsterProperties;
-        this.applicationProperties = applicationProperties;
         this.env = env;
     }
 
@@ -109,7 +105,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         //@formatter:off
         http
             .addFilterBefore(new CaptchaFilter(metadataProperties), JWTAuthenticationFilter.class)
-            .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, applicationProperties, env))
+            .addFilter(new JWTAuthenticationFilter(authenticationProvider(), tokenProvider, mapper(),jHipsterProperties, env, metadataProperties))
             .addFilter(new JWTAuthorizationFilter(authenticationManager(), tokenProvider))
             .exceptionHandling()
             .accessDeniedHandler(accessDeniedHandler())
@@ -137,7 +133,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").authenticated();
         //@formatter:on
     }
-    
+
     @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return new AccessDeniedCustomHandler();

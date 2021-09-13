@@ -42,17 +42,6 @@ spring:
         default-domain: edatos_external_users
     hikari:
         pool-name: edatos_external_users_pool
-    mail:
-        host: FILL_HOST
-        port: 000
-        username: FILL_USER
-        password: FILL_PASS
-        protocol: smtp
-        tls: true
-        properties.mail.smtp:
-            auth: true
-            starttls.enable: true
-            ssl.trust: smtp.gmail.com
     messages:
         basename: i18n/messages-external_users, i18n/messages-common, i18n/messages-rest-common
     mvc:
@@ -136,9 +125,6 @@ jhipster:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
         cache: # Used by the CachingHttpHeadersFilter
             timeToLiveInDays: 1461
-    mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: edatos_external_users@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
 
 # ===================================================================
 # Change log levels
@@ -154,9 +140,6 @@ logging:
 # ===================================================================
 
 application:
-    metadata:
-        metamacFaviconUrlKey: metamac.app.style.favicon.url
-        metamacPortalVisualizer: metamac.portal.web.external.visualizer
-    endpoint:
-        # Required: Aplication URL
-        app-url: FILL_APP_URL
+    jobs:
+        cron:
+            enabledTokens: 0 0 4 * * *

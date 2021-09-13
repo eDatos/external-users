@@ -56,8 +56,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private JHipsterProperties jHipsterProperties;
 
-    private ApplicationProperties applicationProperties;
-
     private MetadataProperties metadataProperties;
 
     private final InternalEnabledTokenService internalEnabledTokenService;
@@ -65,13 +63,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final Environment env;
 
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, CorsFilter corsFilter, JHipsterProperties jHipsterProperties,
-            ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env, InternalEnabledTokenService internalEnabledTokenService) {
+            MetadataProperties metadataProperties, Environment env, InternalEnabledTokenService internalEnabledTokenService) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.jHipsterProperties = jHipsterProperties;
-        this.applicationProperties = applicationProperties;
         this.metadataProperties = metadataProperties;
         this.internalEnabledTokenService = internalEnabledTokenService;
         this.env = env;
@@ -91,7 +88,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public ServiceProperties serviceProperties() {
         ServiceProperties serviceProperties = new ServiceProperties();
-        serviceProperties.setService(StringUtils.removeEnd(applicationProperties.getCas().getService(), "/"));
+        serviceProperties.setService(StringUtils.removeEnd(metadataProperties.getCasService(), "/"));
         serviceProperties.setSendRenew(false);
         return serviceProperties;
     }
@@ -131,7 +128,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, applicationProperties, env);
+        return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, metadataProperties, env);
     }
 
     @Bean
@@ -143,7 +140,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     public JWTSingleSignOutHandler singleSignOutHandler() {
-        return new JWTSingleSignOutHandler(jHipsterProperties, applicationProperties, env, internalEnabledTokenService);
+        return new JWTSingleSignOutHandler(jHipsterProperties, metadataProperties, env, internalEnabledTokenService);
     }
 
     public JWTSingleSignOutFilter singleSignOutFilter() {
