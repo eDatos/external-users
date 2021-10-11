@@ -16,6 +16,10 @@
             "organism": "Organism",
             "enableEmailNotifications": "Enable email notifications",
             "captchaModal": "Solve the captcha to finish the registration"
+        },
+        "messages": {
+            "onSuccessSumary": "New user registration",
+            "onSuccess": "The user has successfully registered"
         }
     }
 }

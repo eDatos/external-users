@@ -1,0 +1,9 @@
+{
+    "userManagement": {
+        "password": {
+            "new": "New password",
+            "confirmNew": "Confirm password",
+            "old": "Current password"
+        }
+    }
+}
