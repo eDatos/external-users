@@ -1,0 +1,32 @@
+{
+    "filter": {
+        "entity": {
+            "email": "E-mail",
+            "lastAccessDate": "Last Access Date",
+            "createdDate": "Creation Date",
+            "name": "First Name",
+            "notes": "Notes",
+            "owner": "Owner",
+            "permalink": "URL"
+        },
+        "form": {
+            "audit": "Audit",
+            "cancel": "Cancel",
+            "delete": "Delete Custom Query",
+            "edit": "Edit Custom Query",
+            "goBack": "Back to List",
+            "legend": "Custom Query Details",
+            "new": "Create a new custom query",
+            "save": "Save Custom Query"
+        },
+        "home": {
+            "createLabel": "Create Custom Query",
+            "title": "Custom queries"
+        },
+        "list": {
+            "noFilterCreated": "It looks like you haven’t created a query yet",
+            "wouldYouLikeToCreateAFilter": "You can create it from any view in the data portal"
+        },
+        "name": "Custom query"
+    }
+}
