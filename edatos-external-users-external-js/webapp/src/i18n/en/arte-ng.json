@@ -11,10 +11,10 @@
             "invalidFileTypeMessageDetail": "tipos de documento permitidos: {0}.",
             "download": "Download",
             "filename": "File name",
-            "emptyFileList": "No hay archivos subidos",
-            "filesToUpload": "Archivos para subir",
-            "noUploadPending": "No hay archivos pendientes de subir",
-            "maxFileSizeExceeded": "No pueden adjuntarse ficheros de más de {{0}} MB."
+            "emptyFileList": "No files are uploaded",
+            "filesToUpload": "Files to upload",
+            "noUploadPending": "No files to upload",
+            "maxFileSizeExceeded": "Files of more than {{0}} MB."
         },
         "entity-list-empty": {
             "sorry": "We're sorry.",
