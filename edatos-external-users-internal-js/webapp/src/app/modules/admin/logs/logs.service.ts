@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LogsService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     changeLevel(log: Log): Observable<any> {
         return this.http.put('management/logs', log);

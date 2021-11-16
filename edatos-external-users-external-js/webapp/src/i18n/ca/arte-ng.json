@@ -1,0 +1,80 @@
+{
+    "arte": {
+        "arte-table-count": {
+            "itemCount": "{{itemFirst}} - {{itemLast}} de {{total}}"
+        },
+        "audit-info": {
+            "createdBy": "Creat per",
+            "createdDate": "Data de creació",
+            "deletedBy": "Eliminat per",
+            "deletionDate": "Data d'eliminació",
+            "lastModifiedBy": "Modificat per",
+            "lastModifiedDate": "Data de modificació",
+            "title": "Auditoria"
+        },
+        "autocomplete": {
+            "createNewItem": "(Afegir nou)",
+            "emptyMessage": "No s'han obtingut resultats que compleixin els criteris de cerca.",
+            "placeholder": "Seleccioni una de les opcions disponibles"
+        },
+        "autocomplete-long-list": {
+            "placeholder": "Comenci a escriure per a suggerir resultats"
+        },
+        "calendar": {
+            "placeholder": "Seleccioni en el calendari la data desitjada"
+        },
+        "entity-list-empty": {
+            "detail": "No s'han obtingut resultats que compleixin els criteris de cerca.",
+            "sorry": "Ho sentim"
+        },
+        "file-upload": {
+            "cancel": "Cancel·lar",
+            "choose": "Triar",
+            "delete": "Eliminar",
+            "download": "Descarregar",
+            "emptyFileList": "No hi ha arxius pujats",
+            "filename": "Nom arxivo",
+            "filesToUpload": "Arxius per a pujar",
+            "invalidFileSizeMessageDetail": "la grandària màxima és {0}.",
+            "invalidFileSizeMessageSummary": "{0}: Tamany incorrecta",
+            "invalidFileTypeMessageDetail": "tipus de document permesos: {0}.",
+            "invalidFileTypeMessageSummary": "{0}: Tipus de document no vàlid, ",
+            "maxFileSizeExceeded": "No poden adjuntar-se fitxers de més de {{0}} MB.",
+            "noUploadPending": "No hi ha arxius pendents de pujar",
+            "upload": "Pujar"
+        },
+        "form-control-status": {
+            "error-messages": {
+                "ZonedDateTimelocal": "Aquest camp ha de ser una data i hora.",
+                "datetimelocal": "Este campo debe ser una fecha y hora.",
+                "email": "Aquest camp no conté un email vàlid",
+                "max": "Aquest camp no pot ser superior a {{max}}.",
+                "maxbytes": "Aquest camp no pot tenir més de {{max}} bytes.",
+                "maxlength": "Aquest camp no pot superar més de {{max}} caràcters.",
+                "min": "Aquest camp ha de ser superior a {{min}}.",
+                "minbytes": "Aquest camp ha de tenir com a mínim {{min}} bytes.",
+                "minlength": "Aquest camp requereix almenys {{requiredLength}} caràcters.",
+                "not-valid": "El valor d'aquest camp no és vàlid",
+                "number": "Aquest camp ha de ser un número.",
+                "pattern": "Aquest camp ha de seguir el patró {{pattern}}.",
+                "required": "Aquest camp és obligatori."
+            }
+        },
+        "input": {
+            "placeholder": "Introdueixi el text desitjat"
+        },
+        "input-number": {
+            "placeholder": "Introdueixi el número desitjat"
+        },
+        "input-text": {
+            "placeholder": "Introdueixi el text desitjat"
+        },
+        "multi-input": {
+            "placeholder": "Escrigui el valor i premi enter per a afegir-lo"
+        },
+        "tri-input-switch": {
+            "no": "No",
+            "yes": "Sí"
+        }
+    }
+}

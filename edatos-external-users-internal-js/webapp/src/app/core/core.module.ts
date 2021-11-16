@@ -1,33 +1,30 @@
-import { NgModule, Optional, SkipSelf, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import localeEs from '@angular/common/locales/es';
+import { LOCALE_ID, NgModule, Optional, SkipSelf } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CookieModule } from 'ngx-cookie';
+import { UserRouteAccessGuard } from './guard';
 
 import {
     AuthServerProvider,
     CSRFService,
+    ExternalUserService,
     LoginService,
+    PageTitleService,
     PermissionService,
     Principal,
+    ProfileService,
     StateStorageService,
     throwIfAlreadyLoaded,
     UserService,
-    PageTitleService,
-    ProfileService
 } from './service';
-import { UserRouteAccessGuard } from './guard';
-import localeEs from '@angular/common/locales/es';
-import { registerLocaleData } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
-    imports: [
-        BrowserAnimationsModule,
-        HttpClientModule,
-        CookieModule.forRoot()
-    ],
+    imports: [BrowserAnimationsModule, HttpClientModule, CookieModule.forRoot()],
     providers: [
         AuthServerProvider,
         CSRFService,
@@ -41,10 +38,11 @@ registerLocaleData(localeEs, 'es');
         Title,
         {
             provide: LOCALE_ID,
-            useValue: 'es'
+            useValue: 'es',
         },
-        ProfileService
-    ]
+        ProfileService,
+        ExternalUserService,
+    ],
 })
 export class CoreModule {
     constructor(@Optional() @SkipSelf() parentModule: CoreModule) {

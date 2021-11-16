@@ -1,5 +1,7 @@
 package es.gobcan.istac.edatos.external.users.core.domain.interfaces;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -9,7 +11,7 @@ import es.gobcan.istac.edatos.external.users.core.optlock.OptimisticLockChecker;
 
 @MappedSuperclass
 @EntityListeners(OptimisticLockChecker.class)
-public abstract class AbstractVersionedEntity implements VersionedEntity {
+public abstract class AbstractVersionedEntity implements VersionedEntity, Serializable {
 
     @Version
     @Column(name = "opt_lock")

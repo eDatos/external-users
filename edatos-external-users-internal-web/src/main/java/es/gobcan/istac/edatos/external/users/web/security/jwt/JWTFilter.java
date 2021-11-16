@@ -57,7 +57,7 @@ public class JWTFilter extends GenericFilterBean {
     /**
      * Expand the ticket expiration time if necessary (Renew the ticket)
      * Only if the current ticket has less than 30 minutes left.
-     * 
+     *
      * @param servletResponse
      * @param jwtClaims
      * @param authentication
@@ -68,7 +68,7 @@ public class JWTFilter extends GenericFilterBean {
             Boolean rememberMe = false;
             String renewedJwt = tokenProvider.createToken(authentication, rememberMe);
             HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
-            httpServletResponse.addHeader(JWTAuthenticationSuccessHandler.JHI_AUTHENTICATIONTOKEN, renewedJwt);
+            httpServletResponse.addHeader(JWTAuthenticationSuccessHandler.AUTHENTICATIONTOKEN, renewedJwt);
             logger.debug("Renewed token JWT: " + renewedJwt);
         }
 
@@ -82,7 +82,7 @@ public class JWTFilter extends GenericFilterBean {
         }
         // Cookie
         if (request.getCookies() != null) {
-            Optional<Cookie> tokenCookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals(JWTAuthenticationSuccessHandler.JHI_AUTHENTICATIONTOKEN)).findFirst();
+            Optional<Cookie> tokenCookie = Arrays.stream(request.getCookies()).filter(c -> c.getName().equals(JWTAuthenticationSuccessHandler.AUTHENTICATIONTOKEN)).findFirst();
             if (tokenCookie.isPresent()) {
                 return tokenCookie.get().getValue();
             }

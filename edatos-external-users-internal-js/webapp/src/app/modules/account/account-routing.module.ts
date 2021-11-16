@@ -9,22 +9,22 @@ export const accountRoutes: Routes = [
         path: '',
         component: AccountComponent,
         data: {
-            pageTitle: 'account.title'
+            pageTitle: 'account.title',
         },
-        canActivate: [UserRouteAccessGuard]
+        canActivate: [UserRouteAccessGuard],
     },
     {
         path: 'edit',
         component: AccountComponent,
         data: {
-            pageTitle: 'account.title'
+            pageTitle: 'account.title',
         },
-        canActivate: [UserRouteAccessGuard]
-    }
+        canActivate: [UserRouteAccessGuard],
+    },
 ];
 
 @NgModule({
     imports: [RouterModule.forChild(accountRoutes)],
-    exports: [RouterModule]
+    exports: [RouterModule],
 })
 export class AccountRoutingModule {}

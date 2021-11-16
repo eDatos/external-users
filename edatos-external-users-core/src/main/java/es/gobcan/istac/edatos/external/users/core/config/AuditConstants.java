@@ -10,6 +10,11 @@ public final class AuditConstants {
     public static final String USUARIO_DESACTIVACION = "USUARIO_DESACTIVACION";
     public static final String USUARIO_ACTIVACION = "USUARIO_ACTIVACION";
 
+    public static final String EXT_USUARIO_CREACION = "EXT_USUARIO_CREACION";
+    public static final String EXT_USUARIO_EDICION = "EXT_USUARIO_EDICION";
+    public static final String EXT_USUARIO_DESACTIVACION = "EXT_USUARIO_DESACTIVACION";
+    public static final String EXT_USUARIO_ACTIVACION = "EXT_USUARIO_ACTIVACION";
+
     public static final String FAMILY_CREATION = "FAMILY_CREATION";
     public static final String FAMILY_EDITION = "FAMILY_EDITION";
     public static final String FAMILY_DELETION = "FAMILY_DELETION";
@@ -25,6 +30,14 @@ public final class AuditConstants {
     public static final String NEED_CREATION = "NEED_CREATION";
     public static final String NEED_EDITION = "NEED_EDITION";
     public static final String NEED_DELETION = "NEED_DELETION";
+
+    public static final String FILTER_CREATION = "FILTER_CREATION";
+    public static final String FILTER_EDITION = "FILTER_EDITION";
+    public static final String FILTER_DELETION = "FILTER_DELETION";
+
+    public static final String FAVORITE_CREATION = "FAVORITE_CREATION";
+    public static final String FAVORITE_EDITION = "FAVORITE_EDITION";
+    public static final String FAVORITE_DELETION = "FAVORITE_DELETION";
 
     private AuditConstants() {
     }

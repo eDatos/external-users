@@ -10,5 +10,8 @@ export interface GenericConfig {
     metadata: {
         navbarScriptUrl: string;
         defaultLanguage: string;
-    }
+    };
+    metamac: {
+        visualizerPath: string;
+    };
 }

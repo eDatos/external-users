@@ -21,14 +21,14 @@ export class HealthService {
         return response;
     }
 
-    getBaseName(name): string {
+    getBaseName(name): string | undefined {
         if (name) {
             const split = name.split('.');
             return split[0];
         }
     }
 
-    getSubSystemName(name): string {
+    getSubSystemName(name): string | undefined {
         if (name) {
             const split = name.split('.');
             split.splice(0, 1);
@@ -40,7 +40,7 @@ export class HealthService {
     /* private methods */
     private addHealthObject(result, isLeaf, healthObject, name): any {
         const healthData: any = {
-            name
+            name,
         };
 
         const details = {};

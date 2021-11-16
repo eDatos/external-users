@@ -3,12 +3,12 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Audit } from './audit.model';
-import { ResponseWrapper } from 'arte-ng/src/lib/model';
-import { ResponseUtils } from 'arte-ng/src/lib/utils';
+import { ResponseWrapper } from 'arte-ng/model';
+import { ResponseUtils } from 'arte-ng/utils';
 
 @Injectable()
 export class AuditsService {
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     find(req: any): Observable<ResponseWrapper> {
         let params: HttpParams = new HttpParams();

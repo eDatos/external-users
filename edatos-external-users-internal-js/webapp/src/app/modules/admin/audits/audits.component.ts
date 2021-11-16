@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LazyLoadEvent } from 'primeng/api';
+import { Table, TableService } from 'primeng/table';
 import { Audit } from './audit.model';
 import { AuditsService } from './audits.service';
-import { LazyLoadEvent } from 'primeng/api';
-import { TableService, Table } from 'primeng/table';
+import { PAGINATION_OPTIONS } from '@app/app.constants';
 
 @Component({
     selector: 'app-audit',
     templateUrl: './audits.component.html',
-    providers: [Table, TableService]
+    providers: [Table, TableService],
 })
 export class AuditsComponent implements OnInit {
     // Atributos para la paginación
     page: number;
     totalItems: number;
     itemsPerPage: number;
+    paginatorOptions = PAGINATION_OPTIONS;
 
     audits: Audit[];
     fromDate: Date;
@@ -34,41 +36,36 @@ export class AuditsComponent implements OnInit {
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'audits.table.header.date'
-            }
+                translatePath: 'audits.table.header.date',
+            },
         },
         {
             fieldName: 'principal',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'audits.table.header.principal'
-            }
+                translatePath: 'audits.table.header.principal',
+            },
         },
         {
             fieldName: 'auditEventType',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'audits.table.header.status'
-            }
+                translatePath: 'audits.table.header.status',
+            },
         },
         {
             fieldName: 'data',
             sortable: true,
             header: {
                 handler: 'translate',
-                translatePath: 'audits.table.header.data'
-            }
+                translatePath: 'audits.table.header.data',
+            },
         },
-    ]
+    ];
 
-    constructor(
-        private auditsService: AuditsService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
-        private datePipe: DatePipe
-    ) {
+    constructor(private auditsService: AuditsService, private router: Router, private activatedRoute: ActivatedRoute, private datePipe: DatePipe) {
         this.routeData = this.activatedRoute.data.subscribe((data) => {
             this.page = data['pagingParams'].page;
             this.reverse = data['pagingParams'].ascending;
@@ -113,31 +110,31 @@ export class AuditsComponent implements OnInit {
                 size: this.itemsPerPage,
                 sort: this.sort(),
                 fromDate: this.dateToString(this.fromDate),
-                toDate: this.dateToString(this.toDate)
+                toDate: this.dateToString(this.toDate),
             })
             .subscribe((res) => {
                 this.audits = res.json;
-                this.totalItems = +res.headers.get('X-Total-Count');
+                this.totalItems = +res.headers.get('X-Total-Count')!;
             });
     }
 
     loadData(e: LazyLoadEvent) {
-        this.page = (e.first / e.rows) + 1;
-        this.itemsPerPage = e.rows;
+        this.page = e.first! / e.rows! + 1;
+        this.itemsPerPage = e.rows!;
         if (e.sortField != null) {
             this.predicate = e.sortField;
             this.reverse = e.sortOrder == 1;
         }
         this.transition();
     }
-    
+
     transition() {
         this.router.navigate(['/admin', 'audits'], {
             queryParams: {
                 page: this.page,
                 size: this.itemsPerPage,
-                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
-            }
+                sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc'),
+            },
         });
     }
 
@@ -151,7 +148,7 @@ export class AuditsComponent implements OnInit {
         return sort;
     }
 
-    private dateToString(date: Date): string {
+    private dateToString(date: Date): string | null {
         const dateFormat = 'yyyy-MM-dd';
         return this.datePipe.transform(date, dateFormat);
     }

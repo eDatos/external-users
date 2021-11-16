@@ -1,91 +1,87 @@
 package es.gobcan.istac.edatos.external.users.core.domain;
 
-import java.io.Serializable;
+import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.validator.constraints.Length;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.NotBlank;
 import org.siemac.edatos.core.common.enume.TypeExternalArtefactsEnum;
 import org.siemac.edatos.core.common.enume.converter.TypeExternalArtefactsEnumConverter;
 
+import es.gobcan.istac.edatos.external.users.core.domain.interfaces.AbstractVersionedEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.vo.InternationalStringVO;
+
 /**
- * Entity for store information about ExternalItems.
+ * External items are entities used in other eDatos services (like structural resources or
+ * indicators). This class represents those entities in a generalized way. When a particular
+ * external item (like categories) needs a field that is not represented in this class, a new,
+ * ad hoc entity is created (see {@link ExternalCategoryEntity}, {@link ExternalOperationEntity}).
+ * That entity inherits this one, so all the fields of the external items are available to it,
+ * while adding whatever specific field it may need.
+ * <p>
+ * The inheritance is established though the Hibernate {@link InheritanceType#JOINED} strategy,
+ * meaning that the DB has a table for {@link ExternalItemEntity} as well as for every child entity
+ * that inherits it. Those child tables only have the fields they declared on the entity, while
+ * referencing the parent table though a foreign key.
+ * <p>
+ * To read more on this, you can check this resources:
+ * <ul>
+ *   <li><a href="https://www.baeldung.com/hibernate-inheritance">Baeldung: Hibernate Inheritance</a></li>
+ *   <li><a href="https://thorben-janssen.com/complete-guide-inheritance-strategies-jpa-hibernate">Thorben Janssen: Inheritance Strategies with JPA and Hibernate</a></li>
+ *   <li>High-Performance Java Persistence, Vlad Milhacea, chapter 12.2 (p. 223)</li>
+ * </ul>
  */
 @Entity
 @Table(name = "tb_external_items")
-@Cache(usage = CacheConcurrencyStrategy.NONE)
-public class ExternalItemEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Inheritance(strategy = InheritanceType.JOINED)
+public class ExternalItemEntity extends AbstractVersionedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_tb_external_items")
     @SequenceGenerator(name = "seq_tb_external_items", sequenceName = "seq_tb_external_items", allocationSize = 50, initialValue = 1)
-    private Long id;
+    protected Long id;
 
-    @Column(name = "code", nullable = false, length = 255)
     @NotNull
-    private String code;
+    @Column(nullable = false)
+    protected String code;
 
-    @Column(name = "code_nested", length = 255)
-    private String codeNested;
-
-    @Column(name = "uri", nullable = false, length = 4000)
-    @Length(max = 4000)
+    @NaturalId
     @NotNull
-    private String uri;
+    @NotBlank
+    @Column(nullable = false, unique = true, length = 4000)
+    protected String urn;
 
-    @Column(name = "urn", length = 4000)
-    @Length(max = 4000)
-    private String urn;
+    @NotNull
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb", nullable = false)
+    protected InternationalStringVO name;
 
-    @Column(name = "urn_provider", length = 4000)
-    @Length(max = 4000)
-    private String urnProvider;
-
-    @Column(name = "management_app_url", length = 4000)
-    @Length(max = 4000)
-    private String managementAppUrl;
-
-    @Version
-    @Column(name = "version", nullable = false)
-    private Long version;
-
-    @Column(name = "type", nullable = false)
+    @NotNull
+    @Column(nullable = false)
     @Convert(converter = TypeExternalArtefactsEnumConverter.class)
-    @NotNull
-    private TypeExternalArtefactsEnum type;
+    protected TypeExternalArtefactsEnum type;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "title_fk")
-    private InternationalStringEntity title;
-
+    @Override
     public Long getId() {
         return id;
     }
 
-    /**
-     * The id is not intended to be changed or assigned manually, but
-     * for test purpose it is allowed to assign the id.
-     */
-    protected void setId(Long id) {
-        if ((this.id != null) && !this.id.equals(id)) {
-            throw new IllegalArgumentException("Not allowed to change the id property.");
-        }
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -97,22 +93,6 @@ public class ExternalItemEntity implements Serializable {
         this.code = code;
     }
 
-    public String getCodeNested() {
-        return codeNested;
-    }
-
-    public void setCodeNested(String codeNested) {
-        this.codeNested = codeNested;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
     public String getUrn() {
         return urn;
     }
@@ -121,28 +101,12 @@ public class ExternalItemEntity implements Serializable {
         this.urn = urn;
     }
 
-    public String getUrnProvider() {
-        return urnProvider;
+    public InternationalStringVO getName() {
+        return name;
     }
 
-    public void setUrnProvider(String urnProvider) {
-        this.urnProvider = urnProvider;
-    }
-
-    public String getManagementAppUrl() {
-        return managementAppUrl;
-    }
-
-    public void setManagementAppUrl(String managementAppUrl) {
-        this.managementAppUrl = managementAppUrl;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
+    public void setName(InternationalStringVO name) {
+        this.name = name;
     }
 
     public TypeExternalArtefactsEnum getType() {
@@ -153,28 +117,20 @@ public class ExternalItemEntity implements Serializable {
         this.type = type;
     }
 
-    public InternationalStringEntity getTitle() {
-        return title;
-    }
-
-    public void setTitle(InternationalStringEntity title) {
-        this.title = title;
-    }
-
-    /**
-     * This method is used by equals and hashCode.
-     * 
-     * @return {@link #getId}
-     */
-    public Object getKey() {
-        return getId();
-    }
-
-    public final class Properties {
-
-        private Properties() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
         }
+        if (!(o instanceof ExternalItemEntity)) {
+            return false;
+        }
+        ExternalItemEntity that = (ExternalItemEntity) o;
+        return Objects.equals(urn, that.urn);
+    }
 
-        public static final String URN = "urn";
+    @Override
+    public int hashCode() {
+        return Objects.hash(urn);
     }
 }

@@ -1,14 +1,13 @@
 package es.gobcan.istac.edatos.external.users.core.domain.vo;
 
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
-public class InternationalStringVO {
+public class InternationalStringVO implements Serializable {
 
-    private Set<LocalisedStringVO> texts = new HashSet<>();
-
-    public InternationalStringVO() {
-    }
+    private final Set<LocalisedStringVO> texts = new HashSet<>();
 
     public Set<LocalisedStringVO> getTexts() {
         return texts;
@@ -51,7 +50,24 @@ public class InternationalStringVO {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof InternationalStringVO)) {
+            return false;
+        }
+        InternationalStringVO that = (InternationalStringVO) o;
+        return Objects.equals(texts, that.texts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(texts);
+    }
+
+    @Override
     public String toString() {
-        return "InternationalStringVO [texts=" + texts + "]";
+        return texts.toString();
     }
 }

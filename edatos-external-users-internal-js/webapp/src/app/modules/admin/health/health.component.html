@@ -19,13 +19,9 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let health of healthData" (click)="showHealth(health)">
-                        <td>{{'health.indicator.' + baseName(health.name) | translate}} {{subSystemName(health.name)}}
-                        </td>
+                        <td>{{'health.indicator.' + baseName(health.name) | translate}} {{subSystemName(health.name)}}</td>
                         <td class="text-center">
-                            <span class="badge" [ngClass]="getBadgeClass(health.status)"
-                                translate="{{'health.status.' + health.status}}">
-                                {{health.status}}
-                            </span>
+                            <span class="badge" [ngClass]="getBadgeClass(health.status)" translate="{{'health.status.' + health.status}}"> {{health.status}} </span>
                         </td>
                     </tr>
                 </tbody>

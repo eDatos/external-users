@@ -1,5 +1,6 @@
 package es.gobcan.istac.edatos.external.users.web.security;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,12 @@ public class CasUserDetailsService extends AbstractCasAssertionUserDetailsServic
     protected UserDetails loadUserDetails(Assertion assertion) {
 
         Map<String, Object> attributes = assertion.getPrincipal().getAttributes();
-        LinkedList<String> acls = (LinkedList<String>) attributes.get(ACL_KEY);
+        LinkedList<String> acls;
+        if(attributes.get(ACL_KEY) instanceof String) {
+            acls = new LinkedList<>(Arrays.asList((String) attributes.get(ACL_KEY)));
+        } else {
+            acls = (LinkedList<String>) attributes.get(ACL_KEY);
+        }
         List<GrantedAuthority> grantedAuthorities = acls.stream().map(acl -> new SimpleGrantedAuthority(acl)).collect(Collectors.toList());
 
         return new User(assertion.getPrincipal().getName(), StringUtils.EMPTY, grantedAuthorities);

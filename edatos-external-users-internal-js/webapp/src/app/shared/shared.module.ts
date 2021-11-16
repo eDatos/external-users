@@ -1,35 +1,34 @@
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-
-import { ArteNgModule } from 'arte-ng';
-import { GenericModalService } from 'arte-ng/src/lib/services';
-
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { StructuralResourcesTreeModule } from '@app/shared/components/structural-resources-tree';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { TranslateModule } from '@ngx-translate/core';
-import { CalendarModule } from 'primeng/calendar';
+
+import { ArteAutocompleteModule, ArteEntityListEmptyModule, ArteInputModule, ArteOrderListModule, ArteSpinnerModule, ArteTableModule } from 'arte-ng';
+import { FormcontrolStatusService } from 'arte-ng/directives';
+import { GenericModalService } from 'arte-ng/services';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgArrayPipesModule } from 'ngx-pipes';
+import { QuillModule } from 'ngx-quill';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { ChipsModule } from 'primeng/chips';
 import { ButtonModule } from 'primeng/button';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ChipsModule } from 'primeng/chips';
+import { DropdownModule } from 'primeng/dropdown';
+import { EditorModule } from 'primeng/editor';
+import { FileUploadModule } from 'primeng/fileupload';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ListboxModule } from 'primeng/listbox';
 import { OrderListModule } from 'primeng/orderlist';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { FileUploadModule } from 'primeng/fileupload';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
-import {TooltipModule} from 'primeng/tooltip';
-import { NgArrayPipesModule } from 'ngx-pipes';
-
-import {
-    FamilyService,
-    OperationService
-} from './service';
+import { TooltipModule } from 'primeng/tooltip';
+import { AppAuditInfoComponent } from './components/audit-info/audit-info.component';
+import { MultiLanguageEditorComponent } from './components/multi-language-editor/multi-language-editor.component';
 
 @NgModule({
     imports: [
@@ -53,17 +52,25 @@ import {
         NgArrayPipesModule,
         FormsModule,
         TooltipModule,
-        ArteNgModule
+        ArteInputModule,
+        ArteTableModule,
+        ArteOrderListModule,
+        ArteAutocompleteModule,
+        ArteSpinnerModule,
+        ArteEntityListEmptyModule,
+        DropdownModule,
+        EditorModule,
+        QuillModule,
     ],
     providers: [
+        FormcontrolStatusService,
         DatePipe,
-        FamilyService,
-        OperationService,
-        { // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
+        {
+            // INFRASTR-205 Way to avoid null injection of NgbModal in GenericModalService constructor
             provide: GenericModalService,
             useClass: GenericModalService,
-            deps: [ NgbModal ]
-        } // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
+            deps: [NgbModal],
+        }, // Add at this point toa void No component factory found for <Component>. Did you add it to @NgModule.entryComponents?
     ],
     exports: [
         FormsModule,
@@ -85,8 +92,15 @@ import {
         TooltipModule,
         NgArrayPipesModule,
         ReactiveFormsModule,
-        ArteNgModule
+        ArteInputModule,
+        ArteTableModule,
+        ArteOrderListModule,
+        ArteEntityListEmptyModule,
+        StructuralResourcesTreeModule,
+        AppAuditInfoComponent,
+        MultiLanguageEditorComponent,
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    declarations: [AppAuditInfoComponent, MultiLanguageEditorComponent],
 })
 export class SharedModule {}

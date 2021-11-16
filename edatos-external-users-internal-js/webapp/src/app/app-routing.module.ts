@@ -1,52 +1,61 @@
-import { NgModule } from "@angular/core";
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HERRAMIENTAS_ROLES, FAMILY_ROLES, OPERATION_ROLES } from './core/service';
-import { UserRouteAccessGuard } from './core/guard';
+import { ErrorComponent } from '@app/layouts/error';
 import { DEFAULT_PATH } from './app.constants';
+import { UserRouteAccessGuard } from './core/guard';
+import { EXTERNAL_USER_ROLES, FAVORITE_ROLES, FILTER_ROLES, TOOLS_ROLES } from './core/service';
 
 const APP_ROUTES: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: DEFAULT_PATH
+        redirectTo: DEFAULT_PATH,
     },
     {
         path: 'account',
-        loadChildren: () => import('./modules/account/account.module').then(m => m.AccountModule),
-        canLoad: [UserRouteAccessGuard]
+        loadChildren: () => import('./modules/account/account.module').then((m) => m.AccountModule),
+        canLoad: [UserRouteAccessGuard],
     },
     {
         path: 'admin',
-        loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+        loadChildren: () => import('./modules/admin/admin.module').then((m) => m.AdminModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: HERRAMIENTAS_ROLES
-        }
+            roles: TOOLS_ROLES,
+        },
     },
     {
-        path: 'family',
-        loadChildren: () => import('./modules/family/family.module').then(m => m.FamilyModule),
+        path: 'filter',
+        loadChildren: () => import('./modules/filter/filter.module').then((m) => m.FilterModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: FAMILY_ROLES,
-        }
+            roles: FILTER_ROLES,
+        },
     },
     {
-        path: 'operation',
-        loadChildren: () => import('./modules/operation/operation.module').then(m => m.OperationModule),
+        path: 'category-subscriptions',
+        loadChildren: () => import('./modules/category-subscriptions/category-subscriptions.module').then((m) => m.CategorySubscriptionsModule),
         canLoad: [UserRouteAccessGuard],
         data: {
-            roles: OPERATION_ROLES,
-        }
+            roles: FAVORITE_ROLES,
+        },
+    },
+    {
+        path: 'external-users',
+        loadChildren: () => import('./modules/external-user/external-user.module').then((m) => m.ExternalUserModule),
+        canLoad: [UserRouteAccessGuard],
+        data: {
+            roles: EXTERNAL_USER_ROLES,
+        },
     },
     {
         path: '**',
-        redirectTo: 'notfound'
-    }
+        component: ErrorComponent,
+    },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(APP_ROUTES, { useHash: true })],
-    exports: [RouterModule]
+    imports: [RouterModule.forRoot(APP_ROUTES, { useHash: true, onSameUrlNavigation: 'reload' })],
+    exports: [RouterModule],
 })
 export class AppRoutingModule {}

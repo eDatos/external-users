@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>Usuarios externos</title>
+        <base href="/" th:href="@{/}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" th:href="${faviconUrl}" />
+        <link rel="manifest" href="manifest.webmanifest" />
+    </head>
+    <body>
+        <div th:utext="${headerHtml}"></div>
+
+        <app-switch-locale></app-switch-locale>
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            window.CONFIGURATION = {};
+
+            window.CONFIGURATION.metamac = {};
+
+            // TODO-3338 it is pending to add the property in the database
+            window.CONFIGURATION.metamac.visualizerPath = 'https://estadisticas.arte-consultores.com/istac/visualizer/data.html?permalink=';
+
+            window.CONFIGURATION.endpoint = {};
+            window.CONFIGURATION.endpoint.appUrl = /*[[${@metadataProperties.externalAppUrl}]]*/ 'http://localhost:4200';
+
+            window.CONFIGURATION.metadata = {};
+            window.CONFIGURATION.metadata.defaultLanguage = /*[[${@metadataProperties.defaultLanguage}]]*/ 'es';
+
+            window.CONFIGURATION.metadata.availableLanguages = /*[[${@metadataProperties.availableLanguages}]]*/ ['es', 'en', 'ca'];
+            /*]]>*/
+        </script>
+        <script src="http://localhost:8080/api/captcha/authentication.js" th:src="${captchaAuthenticationUrl}"></script>
+
+        <app-root></app-root>
+        <div th:utext="${footerHtml}"></div>
+    </body>
+</html>

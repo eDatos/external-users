@@ -2,6 +2,8 @@ package es.gobcan.istac.edatos.external.users.web.config;
 
 import javax.annotation.PostConstruct;
 
+import es.gobcan.istac.edatos.external.users.core.service.InternalEnabledTokenService;
+import es.gobcan.istac.edatos.external.users.web.security.jwt.*;
 import org.apache.commons.lang3.StringUtils;
 import org.ehcache.Cache;
 import org.ehcache.CacheManager;
@@ -9,7 +11,6 @@ import org.ehcache.config.builders.CacheConfigurationBuilder;
 import org.ehcache.config.builders.CacheManagerBuilder;
 import org.ehcache.config.builders.ResourcePoolsBuilder;
 import org.ehcache.core.Ehcache;
-import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
@@ -38,11 +39,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
-import es.gobcan.istac.edatos.external.users.web.security.jwt.JWTAuthenticationSuccessHandler;
-import es.gobcan.istac.edatos.external.users.web.security.jwt.JWTFilter;
-import es.gobcan.istac.edatos.external.users.web.security.jwt.TokenProvider;
 import es.gobcan.istac.edatos.external.users.web.security.CasUserDetailsService;
-import es.gobcan.istac.edatos.external.users.web.security.jwt.CasEhCacheBasedTicketCache;
 import io.github.jhipster.config.JHipsterProperties;
 import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
 
@@ -59,21 +56,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private JHipsterProperties jHipsterProperties;
 
-    private ApplicationProperties applicationProperties;
-
     private MetadataProperties metadataProperties;
+
+    private final InternalEnabledTokenService internalEnabledTokenService;
 
     private final Environment env;
 
     public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, CorsFilter corsFilter, JHipsterProperties jHipsterProperties,
-            ApplicationProperties applicationProperties, MetadataProperties metadataProperties, Environment env) {
+            MetadataProperties metadataProperties, Environment env, InternalEnabledTokenService internalEnabledTokenService) {
 
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.jHipsterProperties = jHipsterProperties;
-        this.applicationProperties = applicationProperties;
         this.metadataProperties = metadataProperties;
+        this.internalEnabledTokenService = internalEnabledTokenService;
         this.env = env;
     }
 
@@ -91,7 +88,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public ServiceProperties serviceProperties() {
         ServiceProperties serviceProperties = new ServiceProperties();
-        serviceProperties.setService(StringUtils.removeEnd(applicationProperties.getCas().getService(), "/"));
+        serviceProperties.setService(StringUtils.removeEnd(metadataProperties.getCasService(), "/"));
         serviceProperties.setSendRenew(false);
         return serviceProperties;
     }
@@ -131,7 +128,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, applicationProperties, env);
+        return new JWTAuthenticationSuccessHandler(tokenProvider, jHipsterProperties, metadataProperties, env);
     }
 
     @Bean
@@ -142,8 +139,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return casAuthenticationFilter;
     }
 
-    public SingleSignOutFilter singleSignOutFilter() {
-        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+    public JWTSingleSignOutHandler singleSignOutHandler() {
+        return new JWTSingleSignOutHandler(jHipsterProperties, metadataProperties, env, internalEnabledTokenService);
+    }
+
+    public JWTSingleSignOutFilter singleSignOutFilter() {
+        JWTSingleSignOutFilter singleSignOutFilter = new JWTSingleSignOutFilter(singleSignOutHandler());
         singleSignOutFilter.setCasServerUrlPrefix(metadataProperties.getMetamacCasPrefix());
         return singleSignOutFilter;
     }
@@ -201,6 +202,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         	.authenticationEntryPoint(http401UnauthorizedEntryPoint())
         .and()
             .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .ignoringAntMatchers("/login/cas")
         .and()
 
             .headers()
@@ -213,10 +215,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/profile-info").permitAll()
-            .antMatchers("/management/metrics").access("@secChecker.puedeConsultarMetrica(authentication)")
-            .antMatchers("/management/health").access("@secChecker.puedeConsultarSalud(authentication)")
-            .antMatchers("/management/env").access("@secChecker.puedeConsultarConfig(authentication)")
-            .antMatchers("/management/configprops").access("@secChecker.puedeConsultarConfig(authentication)")
+            .antMatchers("/management/metrics").access("@secChecker.canAccessMetrics(authentication)")
+            .antMatchers("/management/health").access("@secChecker.canAccessHealth(authentication)")
+            .antMatchers("/management/dump").access("@secChecker.canAccessThreadDump(authentication)")
+            .antMatchers("/management/env").access("@secChecker.canAccessConfig(authentication)")
+            .antMatchers("/management/configprops").access("@secChecker.canAccessConfig(authentication)")
             .antMatchers("/v2/api-docs/**").permitAll()
             .antMatchers("/apis/operations-internal/**").permitAll()
             .antMatchers("/**").authenticated();

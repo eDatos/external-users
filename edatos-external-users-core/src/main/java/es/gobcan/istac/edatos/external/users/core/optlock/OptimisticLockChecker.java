@@ -41,7 +41,7 @@ public class OptimisticLockChecker {
     private void check(VersionedEntity entity) {
         Long attemptVersion = entity.getOptLock();
         if (attemptVersion == null) {
-            throw new NullPointerException("Submitted entity must have a version");
+            throw new NullPointerException("Submitted entity (type: " + entity.getClass().getName() + ", id: " + entity.getId() + ") must have a version");
         }
 
         Class<?> entityClass = entity.getClass();

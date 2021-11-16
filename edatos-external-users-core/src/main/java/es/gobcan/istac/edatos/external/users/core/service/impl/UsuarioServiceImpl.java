@@ -4,8 +4,6 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Optional;
 
-import javax.validation.constraints.NotNull;
-
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -33,16 +31,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private QueryUtil queryUtil;
 
     @Override
-    public UsuarioEntity create(@NotNull UsuarioEntity user) {
-        UsuarioEntity newUser = new UsuarioEntity();
-        newUser.setLogin(user.getLogin());
-        newUser.setNombre(user.getNombre());
-        newUser.setApellido1(user.getApellido1());
-        newUser.setApellido2(user.getApellido2());
-        newUser.setEmail(user.getEmail());
-        newUser.setRoles(user.getRoles());
-        usuarioRepository.saveAndFlush(newUser);
-        return newUser;
+    public UsuarioEntity create(UsuarioEntity user) {
+        return usuarioRepository.saveAndFlush(user);
     }
 
     @Override
@@ -90,7 +80,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             queryBuilder.append(query);
         }
         String finalQuery = getFinalQuery(includeDeleted, queryBuilder);
-        return queryUtil.queryToUserCriteria(pageable, finalQuery);
+        return queryUtil.queryToUserExternalUserCriteria(pageable, finalQuery);
     }
 
     private String getFinalQuery(Boolean includeDeleted, StringBuilder queryBuilder) {

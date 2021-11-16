@@ -1,0 +1,31 @@
+{
+    "global": {
+        "title": "EDatos External Users",
+        "version": "Version",
+        "yes": "Yes",
+        "no": "No",
+        "menu": {
+            "account": {
+                "main": "Account",
+                "sessions": "Sessions",
+                "login": "Login",
+                "logout": "Logout",
+                "myAccount": "My account"
+            }
+        },
+        "messages": {
+            "recoverPasswordEmail": "Email sent correctly"
+        },
+        "pageSizeSelector": "Page size",
+        "loading": "Loading",
+        "alerts": {
+            "title": {
+                "info": "Information"
+            }
+        }
+    },
+    "home": {
+        "pageTitle": "Welcome",
+        "title": "Welcome, {{user}}"
+    }
+}

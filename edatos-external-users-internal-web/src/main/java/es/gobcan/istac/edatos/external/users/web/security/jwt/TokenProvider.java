@@ -9,9 +9,13 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
+import es.gobcan.istac.edatos.external.users.core.domain.InternalEnabledTokenEntity;
+import es.gobcan.istac.edatos.external.users.core.service.InternalEnabledTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,6 +34,9 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+
+import static es.gobcan.istac.edatos.external.users.web.util.SecurityCookiesUtil.SERVICE_TICKET_COOKIE;
+import static es.gobcan.istac.edatos.external.users.web.util.SecurityCookiesUtil.getServiceTicketCookie;
 
 @Component
 public class TokenProvider {
@@ -50,9 +57,15 @@ public class TokenProvider {
 
     private final JHipsterExtraProperties jHipsterExtraProperties;
 
-    public TokenProvider(JHipsterProperties jHipsterProperties, JHipsterExtraProperties jHipsterExtraProperties) {
+    private final InternalEnabledTokenService enabledTokenService;
+
+    private final HttpServletRequest httpServletRequest;
+
+    public TokenProvider(JHipsterProperties jHipsterProperties, JHipsterExtraProperties jHipsterExtraProperties, InternalEnabledTokenService enabledTokenService, HttpServletRequest httpServletRequest) {
         this.jHipsterProperties = jHipsterProperties;
         this.jHipsterExtraProperties = jHipsterExtraProperties;
+        this.enabledTokenService = enabledTokenService;
+        this.httpServletRequest = httpServletRequest;
     }
 
     @PostConstruct
@@ -74,8 +87,10 @@ public class TokenProvider {
         } else {
             validity = new Date(now + this.tokenValidityInMilliseconds);
         }
-
-        return Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities).signWith(SignatureAlgorithm.HS512, secretKey).setExpiration(validity).compact();
+        String token = Jwts.builder().setSubject(authentication.getName()).claim(AUTHORITIES_KEY, authorities).signWith(SignatureAlgorithm.HS512, secretKey).setExpiration(validity).compact();
+        String serviceTicket = httpServletRequest.getAttribute(SERVICE_TICKET_COOKIE) == null ? getServiceTicketCookie(httpServletRequest.getCookies()) : httpServletRequest.getAttribute(SERVICE_TICKET_COOKIE).toString();
+        enabledTokenService.updateOrCreate(new InternalEnabledTokenEntity(token, serviceTicket, validity.toInstant()));
+        return token;
     }
 
     public Authentication getAuthentication(String token) {
@@ -92,7 +107,11 @@ public class TokenProvider {
     public Jws<Claims> validateToken(String authToken) {
         Jws<Claims> claimsJws = null;
         try {
-            return claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
+            claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);
+            if(!enabledTokenService.existsByToken(authToken)) {
+                claimsJws = null;
+                throw new CredentialsExpiredException("The authentication token is disabled. Login again.");
+            }
         } catch (SignatureException e) {
             log.info("JWT: Firma no válida.");
             log.trace("JWT: Firma no válida traza: {}", e);
@@ -108,6 +127,9 @@ public class TokenProvider {
         } catch (IllegalArgumentException e) {
             log.info("JWT: token del handler no es válido.");
             log.trace("JWT: token del handler no es válido trace: {}", e);
+        } catch (CredentialsExpiredException e) {
+            log.info("JWT: token deshabilitado.");
+            log.trace("JWT: token deshabilitado trace: {}", e);
         }
 
         return claimsJws;

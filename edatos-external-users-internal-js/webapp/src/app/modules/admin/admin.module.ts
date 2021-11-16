@@ -1,46 +1,59 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+
 import { SharedModule } from '@app/shared';
+import { ArteAuditInfoModule, ArteAutocompleteModule, ArteCalendarModule, ArteSideMenuModule, ArteSpinnerModule, ArteTriInputSwitchModule } from 'arte-ng';
+import { ArteDirectivesModule } from 'arte-ng/directives';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import {
+    AdminRoutingModule,
     AuditsComponent,
-    UserMgmtComponent,
-    UserMgmtFormComponent,
-    UserMgmtDeleteDialogComponent,
-    LogsComponent,
-    MetricsMonitoringModalComponent,
-    MetricsMonitoringComponent,
-    HealthModalComponent,
-    HealthCheckComponent,
-    ConfigurationComponent,
     AuditsService,
+    ConfigurationComponent,
     ConfigurationService,
+    HealthCheckComponent,
+    HealthModalComponent,
     HealthService,
-    MetricsService,
+    LogsComponent,
     LogsService,
-    AdminRoutingModule
+    MetricsMonitoringComponent,
+    MetricsMonitoringModalComponent,
+    MetricsService,
 } from '.';
-import { UserSearchComponent } from './user-management/user-search';
+import { CategoryMasterTreeComponent } from './category-master-tree/category-master-tree.component';
+import { DataProtectionPolicyComponent } from './data-protection-policy/data-protection-policy.component';
+import { DataProtectionPolicyService } from './data-protection-policy/data-protection-policy.service';
+import { ExternalOperationsListComponent } from './external-operations-list/external-operations-list.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 @NgModule({
     imports: [
         SharedModule,
-        AdminRoutingModule
+        AdminRoutingModule,
+        ArteCalendarModule,
+        ArteSideMenuModule,
+        ArteDirectivesModule,
+        ArteAutocompleteModule,
+        ArteAuditInfoModule,
+        ArteTriInputSwitchModule,
+        ArteSpinnerModule,
+        InputSwitchModule,
     ],
     declarations: [
         AuditsComponent,
-        UserSearchComponent,
-        UserMgmtComponent,
-        UserMgmtFormComponent,
-        UserMgmtDeleteDialogComponent,
         LogsComponent,
         ConfigurationComponent,
         HealthCheckComponent,
         HealthModalComponent,
         MetricsMonitoringComponent,
-        MetricsMonitoringModalComponent
+        MetricsMonitoringModalComponent,
+        DataProtectionPolicyComponent,
+        CategoryMasterTreeComponent,
+        ExternalOperationsListComponent,
+        NotificationsComponent,
     ],
-    entryComponents: [UserMgmtFormComponent, UserMgmtDeleteDialogComponent, HealthModalComponent, MetricsMonitoringModalComponent],
-    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA]
+    entryComponents: [HealthModalComponent, MetricsMonitoringModalComponent],
+    providers: [AuditsService, ConfigurationService, HealthService, MetricsService, LogsService, DataProtectionPolicyService],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AdminModule {}

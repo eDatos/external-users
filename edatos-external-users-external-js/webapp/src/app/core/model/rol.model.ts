@@ -1,0 +1,5 @@
+export enum Role {
+    USER = 'USER',
+    HERRAMIENTAS_ROLES = 'HERRAMIENTAS_ROLES',
+    ANY_ROLE_ALLOWED = 'ANY_ROLE_ALLOWED',
+}

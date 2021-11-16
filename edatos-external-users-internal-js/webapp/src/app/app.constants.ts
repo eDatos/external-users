@@ -2,7 +2,7 @@
 /* tslint:disable */
 let _VERSION = '0.0.1-SNAPSHOT'; // This value will be overwritten by webpack
 let _DEBUG_INFO_ENABLED = true; // This value will be overwritten by webpack
-let _AVAILABLE_LANGUAGES = ['es', 'en'];
+let _AVAILABLE_LANGUAGES = ['es', 'en', 'ca'];
 /* @toreplace VERSION */
 /* @toreplace DEBUG_INFO_ENABLED */
 /* @toreplace AVAILABLE_LANGUAGES */
@@ -10,13 +10,13 @@ let _AVAILABLE_LANGUAGES = ['es', 'en'];
 export const VERSION = _VERSION;
 export const DEBUG_INFO_ENABLED = _DEBUG_INFO_ENABLED;
 export const AVAILABLE_LANGUAGES = _AVAILABLE_LANGUAGES;
-export const TOKEN_AUTH_NAME = 'authenticationtoken';
+export const TOKEN_AUTH_NAME = 'authentication_token_internal';
 export const BASE_DECIMAL = 10;
 export const ERROR_ALERT_KEY = 'alert-errors';
 export const LANG_KEY = 'lang';
 export const DEFAULT_LANG = 'es';
 
-export const DEFAULT_PATH = '/family';
+export const DEFAULT_PATH = '/external-users';
 
-export const ITEMS_PER_PAGE = 20;
-export const PAGINATION_OPTIONS = [5, 10, 15, 20];
+export const PAGINATION_OPTIONS = [100, 150, 200];
+export const ITEMS_PER_PAGE = PAGINATION_OPTIONS[0];

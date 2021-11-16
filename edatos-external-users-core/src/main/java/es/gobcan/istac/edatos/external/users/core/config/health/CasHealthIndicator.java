@@ -11,10 +11,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
+
+import static es.gobcan.istac.edatos.external.users.core.config.Constants.HEALTH_INDICATOR_REQUEST_TIMEOUT_MS;
 
 @Component
 public class CasHealthIndicator extends AbstractHealthIndicator {
@@ -28,16 +31,23 @@ public class CasHealthIndicator extends AbstractHealthIndicator {
     protected void doHealthCheck(Health.Builder builder) throws Exception {
         final String casEndPoint = metadataProperties.getMetamacCasPrefix();
         builder.withDetail("endpoint", casEndPoint);
-        if (HttpStatus.ACCEPTED.equals(getUrlStatus(casEndPoint)) || HttpStatus.OK.equals(getUrlStatus(casEndPoint))) {
-            builder.up();
-        } else {
-            logger.warn("Cas not available. " + "Impossible to reach");
-            builder.down();
+        try {
+            if (HttpStatus.ACCEPTED.equals(getUrlStatus(casEndPoint)) || HttpStatus.OK.equals(getUrlStatus(casEndPoint))) {
+                builder.up();
+            } else {
+                logger.warn("Cas not available. " + "Impossible to reach");
+                builder.down();
+            }
+        } catch (Exception e) {
+            builder.withException(e).down();
         }
     }
 
     public final HttpStatus getUrlStatus(String url) {
-        RestTemplate restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(HEALTH_INDICATOR_REQUEST_TIMEOUT_MS);
+        factory.setReadTimeout(HEALTH_INDICATOR_REQUEST_TIMEOUT_MS);
+        RestTemplate restTemplate = new RestTemplate(factory);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> request = restTemplate.getForEntity(url, String.class);

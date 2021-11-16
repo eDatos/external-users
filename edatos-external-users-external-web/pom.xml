@@ -18,12 +18,29 @@
 	<dependencies>
 		<dependency>
 			<groupId>es.gobcan.istac.edatos-external-users</groupId>
-			<artifactId>edatos-external-users-external-api-impl</artifactId>
+			<artifactId>edatos-external-users-external-rest</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>org.siemac.metamac</groupId>
+            <artifactId>edatos-rest-common</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 
 	<build>
@@ -106,6 +123,13 @@
 				<!-- log configuration -->
 				<logback.loglevel>INFO</logback.loglevel>
 			</properties>
+
+			<dependencies>
+				<dependency>
+					<groupId>es.gobcan.istac.edatos-external-users</groupId>
+					<artifactId>edatos-external-users-external-js</artifactId>
+				</dependency>
+			</dependencies>
 		</profile>
 	</profiles>
 </project>

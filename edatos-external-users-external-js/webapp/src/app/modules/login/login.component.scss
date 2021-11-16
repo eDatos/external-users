@@ -1,0 +1,23 @@
+div.card {
+    min-width: 320px;
+}
+
+button > small {
+    color: #007bff;
+}
+
+.panel-container-buttons button:first-child {
+    margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+    fieldset.page-section {
+        margin-top: unset;
+    }
+}
+
+@media (min-width: 768px) {
+    fieldset.page-section {
+        margin-top: 15vh;
+    }
+}

@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import javax.annotation.PostConstruct;
 
+import es.gobcan.istac.edatos.external.users.web.config.JHipsterExtraProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +25,7 @@ import io.github.jhipster.config.JHipsterConstants;
 
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
-@EnableConfigurationProperties({LiquibaseProperties.class})
+@EnableConfigurationProperties({LiquibaseProperties.class, JHipsterExtraProperties.class})
 public class EdatosExternalUsersExternalApp {
 
     private static final Logger log = LoggerFactory.getLogger(EdatosExternalUsersExternalApp.class);
@@ -35,15 +36,6 @@ public class EdatosExternalUsersExternalApp {
         this.env = env;
     }
 
-    /**
-     * Initializes edatos_external_users.
-     * <p>
-     * Spring profiles can be configured with a program arguments
-     * --spring.profiles.active=your-active-profile
-     * <p>
-     * You can find more information on how profiles work with JHipster on <a href=
-     * "https://jhipster.github.io/profiles/">https://jhipster.github.io/profiles/</a>.
-     */
     @PostConstruct
     public void initApplication() {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());

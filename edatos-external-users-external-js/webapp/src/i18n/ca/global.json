@@ -1,0 +1,134 @@
+{
+    "global": {
+        "title": "eDatos External Users",
+        "version": "Versió",
+        "no": "No",
+        "pageSizeSelector": "Tamany de pàgina",
+        "yes": "Sí",
+        "browsehappy": "Està fent servir un navegador <strong>no actualitzat</strong>. Si us plau, <a href=\"http://browsehappy.com/?locale=en\">actualitzi el seu navegador</a> per millorar la seva experiència.",
+        "form": {
+            "email": "Correu electrònic",
+            "email.placeholder": "El seu correu electrònic"
+        },
+        "item-count": "{{first}} - {{second}} de {{total}}",
+        "loading": "Carregant",
+        "menu": {
+            "entities": {
+                "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+            },
+            "home": "Inici",
+            "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+            "account": {
+                "login": "Iniciar sessió",
+                "logout": "Tencar la sessió",
+                "main": "Compte",
+                "myAccount": "El meu compte",
+                "sessions": "Sessions"
+            }
+        },
+        "messages": {
+            "validate": {
+                "email": {
+                    "invalid": "El seu correu electrònic no és vàlid.",
+                    "maxlength": "El seu correu electrònic no pot tenir més de 50 caràcters",
+                    "minlength": "Es requereix que el seu correu electrònic tingui almenys 5 caràcters",
+                    "required": "Es requereix un correu electrònic."
+                }
+            },
+            "recoverPasswordEmail": "Email enviat correctament"
+        },
+        "alerts": {
+            "title": {
+                "info": "Informació"
+            }
+        }
+    },
+    "entity": {
+        "action": {
+            "back": "Volver",
+            "cancel": "Cancelar",
+            "delete": "Eliminar",
+            "edit": "Editar",
+            "restore": "Restaurar",
+            "open": "Abrir",
+            "save": "Guardar",
+            "view": "Ver",
+            "filtersReset": "Reiniciar filtros",
+            "eliminar": "Eliminar",
+            "recuperar": "Recuperar",
+            "close": "Cerrar",
+            "confirm": "Confirmar",
+            "crear": "Crear",
+            "modificar": "Modificar",
+            "publishInternally": "Publicar internamente",
+            "publishExternally": "Publicar externamente",
+            "change-password": "Cambiar contraseña",
+            "data-protection-policy": "Política de protección de datos",
+            "unsubscribe": "Darse de baja",
+            "about": "Acerca de"
+        },
+        "delete": {
+            "title": "Confirmar operación de borrado"
+        },
+        "restore": {
+            "title": "Confirmar restauración"
+        },
+        "recuperar": {
+            "title": "Confirmar recuperación"
+        },
+        "eliminar": {
+            "title": "Confirmar eliminación"
+        },
+        "crear": {
+            "title": "Confirmar creación"
+        },
+        "modificar": {
+            "title": "Confirmar modificación"
+        },
+        "validation": {
+            "required": "Este campo es obligatorio.",
+            "minlength": "Este campo requiere al menos {{requiredLength}} caracteres.",
+            "maxlength": "Este campo no puede superar más de {{max}} caracteres.",
+            "min": "Este campo debe ser mayor que {{min}}.",
+            "max": "Este campo no puede ser mayor que {{max}}.",
+            "minbytes": "Este campo debe tener como mínimo {{min}} bytes.",
+            "maxbytes": "Este campo no puede tener más de {{max}} bytes.",
+            "pattern": "Este campo debe seguir el patrón {{pattern}}.",
+            "number": "Este campo debe ser un número.",
+            "datetimelocal": "Este campo debe ser una fecha y hora.",
+            "ZonedDateTimelocal": "Este campo debe ser una fecha y hora.",
+            "not-valid": "El valor de este campo no es válido"
+        },
+        "list": {
+            "empty": {
+                "createNewIitem": "(Afegir nou)",
+                "detail": "No s'han obtingut resultats que compleixin els criteris de cerca.",
+                "multiInput": "Escrigui el valor i premi enter per a afegir-lo",
+                "selectOption": "Seleccioni una de les opcions disponibles",
+                "sorry": "Ho sentim.",
+                "writeForSuggestions": "Comenci a escriure per a suggerir resultats"
+            }
+        },
+        "input": {
+            "placeholder": "Introdueixi el text desitjat"
+        },
+        "currency": {
+            "errors": {
+                "notANumber": "El valor introduït ha de ser numèric"
+            }
+        },
+        "calendar": {
+            "placeholder": "Seleccioni en el calendari la data desitjada"
+        }
+    },
+    "home": {
+        "detail": "Accedeixi a l'apartat desitjat a través del menú de navegació",
+        "pageTitle": "Benvingut",
+        "title": "Benvingut, {{user}}"
+    },
+    "table": {
+        "globalSearchPlaceholder": "Introduir termes de cerca",
+        "pageCount": "{{pageFirst}} - {{pageLast}} de {{total}}",
+        "pageReport": "{first}–{last} de {totalRecords}"
+    }
+}

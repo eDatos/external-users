@@ -1,0 +1,76 @@
+{
+    "arte": {
+        "file-upload": {
+            "choose": "Elegir",
+            "upload": "Subir",
+            "cancel": "Cancelar",
+            "delete": "Eliminar",
+            "invalidFileSizeMessageSummary": "{0}: Tamaño incorrecto",
+            "invalidFileSizeMessageDetail": "el tamaño máximo es {0}.",
+            "invalidFileTypeMessageSummary": "{0}: Tipo de documento no válido, ",
+            "invalidFileTypeMessageDetail": "tipos de documento permitidos: {0}.",
+            "download": "Descargar",
+            "filename": "Nombre archivo",
+            "emptyFileList": "No hay archivos subidos",
+            "filesToUpload": "Archivos para subir",
+            "noUploadPending": "No hay archivos pendientes de subir",
+            "maxFileSizeExceeded": "No pueden adjuntarse ficheros de más de {{0}} MB."
+        },
+        "entity-list-empty": {
+            "sorry": "Lo sentimos.",
+            "detail": "No se han obtenido resultados que cumplan los criterios de búsqueda."
+        },
+        "input": {
+            "placeholder": "Introduzca el texto deseado"
+        },
+        "input-number": {
+            "placeholder": "Introduzca el número deseado"
+        },
+        "input-text": {
+            "placeholder": "Introduzca el texto deseado"
+        },
+        "autocomplete-long-list": {
+            "placeholder": "Empiece a escribir para sugerir resultados"
+        },
+        "autocomplete": {
+            "emptyMessage": "No se han obtenido resultados que cumplan los criterios de búsqueda.",
+            "placeholder": "Seleccione una de las opciones disponibles",
+            "createNewItem": "(Añadir nuevo)"
+        },
+        "calendar": {
+            "placeholder": "Seleccione en el calendario la fecha deseada"
+        },
+        "multi-input": {
+            "placeholder": "Escriba el valor y pulse enter para añadirlo"
+        },
+        "tri-input-switch": {
+            "yes": "Sí",
+            "no": "No"
+        },
+        "form-control-status": {
+            "error-messages": {
+                "required": "Este campo es obligatorio.",
+                "minlength": "Este campo requiere al menos {{requiredLength}} caracteres.",
+                "maxlength": "Este campo no puede superar más de {{max}} caracteres.",
+                "min": "Este campo debe ser mayor que {{min}}.",
+                "max": "Este campo no puede ser mayor que {{max}}.",
+                "minbytes": "Este campo debe tener como mínimo {{min}} bytes.",
+                "maxbytes": "Este campo no puede tener más de {{max}} bytes.",
+                "pattern": "Este campo debe seguir el patrón {{pattern}}.",
+                "number": "Este campo debe ser un número.",
+                "datetimelocal": "Este campo debe ser una fecha y hora.",
+                "ZonedDateTimelocal": "Este campo debe ser una fecha y hora.",
+                "not-valid": "El valor de este campo no es válido",
+                "passwordMatch": "Asegúrese de que sus contraseñas coinciden",
+                "email": "Su correo electrónico no es válido.",
+                "passwordNotMatch": "La contraseña actual y la nueva NO pueden ser la misma."
+            }
+        },
+        "alert-service": {
+            "entities": {}
+        },
+        "arte-table-count": {
+            "itemCount": "{{itemFirst}} - {{itemLast}} de {{total}}"
+        }
+    }
+}

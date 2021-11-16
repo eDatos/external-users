@@ -19,10 +19,15 @@ $severidad-menor: #85bb43;
 $severidad-mayor: #ff9900;
 $severidad-menor: #d4333f;
 
+$istac-blue: #0072a2;
+$istac-blue-dark: #005d83;
+$istac-gray: #59656e;
+$istac-gray-dark: #434b52;
+
 $navbar-content-height: 30px;
 $navbar-padding-y: 5px;
 // $navbar-height: $navbar-content-height + ($navbar-padding-y) * 2;
-$navbar-height: 42px; // TODO: sincronizar con el navbar de bootstrap
+$navbar-height: 58px; // TODO: sincronizar con el navbar de bootstrap
 $nav-link-padding: $navbar-padding-y 1em;
 
 $font-weight-light: 300;
@@ -104,14 +109,14 @@ $grid-breakpoints: (
     sm: 576px,
     md: 768px,
     lg: 992px,
-    xl: 1200px
+    xl: 1200px,
 );
 $grid-gutter-widths: (
     xs: $grid-gutter-width-base,
     sm: $grid-gutter-width-base,
     md: $grid-gutter-width-base,
     lg: $grid-gutter-width-base,
-    xl: $grid-gutter-width-base
+    xl: $grid-gutter-width-base,
 );
 
 $spacer-y: 1rem;
@@ -147,11 +152,19 @@ $border-required-none: $border-width-required solid transparent;
 $border-required-error: $border-width-required solid $accent-dark;
 $border-required-valid: $border-width-required solid $brand-success;
 
+$primary-navbar-height: 70px;
+$primary-navbar-zindex: 20;
+$secondary-navbar-height: 58px;
+$secondary-navbar-zindex: 15;
 
-
-
-
+$page-padding-top: 15px;
 $page-padding-left: 40px;
-$page-padding-right: 20px;
-$page-header-height: 50px;
+$page-padding-right: 40px;
+$page-padding-bottom: 15px;
+
+$page-body-padding-top: 60px;
+
+$page-header-height: 70px;
 $page-header-zindex: 10;
+
+$side-menu-zindex: 10;

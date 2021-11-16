@@ -3,14 +3,14 @@ import { Observable } from 'rxjs';
 import { User } from '@app/core/model';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { ResponseWrapper } from 'arte-ng/src/lib/model';
-import { createRequestOption, ResponseUtils } from 'arte-ng/src/lib/utils';
+import { ResponseWrapper } from 'arte-ng/model';
+import { createRequestOption, ResponseUtils } from 'arte-ng/utils';
 
 @Injectable()
 export class UserService {
     private resourceUrl = 'api/usuarios';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
 
     create(user: User): Observable<User> {
         return this.http.post(this.resourceUrl, user).pipe(map((res) => ResponseUtils.convert(res, User)));

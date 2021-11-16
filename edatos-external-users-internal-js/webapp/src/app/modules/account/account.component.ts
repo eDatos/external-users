@@ -4,15 +4,15 @@ import { UserService } from '@app/core/service/user';
 
 @Component({
     selector: 'ac-account',
-    templateUrl: './account.component.html'
+    templateUrl: './account.component.html',
 })
 export class AccountComponent implements OnInit {
-    error: string;
-    success: string;
+    error: string | null;
+    success: string | null;
     isSaving: Boolean;
     account: any;
 
-    constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) { }
+    constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit() {
         this.isSaving = false;

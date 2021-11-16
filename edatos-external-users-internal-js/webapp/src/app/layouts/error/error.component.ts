@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-error',
-    templateUrl: './error.component.html'
+    templateUrl: './error.component.html',
 })
 export class ErrorComponent implements OnInit {
     public errorMessage: string;
@@ -18,17 +18,14 @@ export class ErrorComponent implements OnInit {
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit() {
+        this.title = 'error.404.title';
+        this.detail = 'error.404.detail';
         this.route.data.subscribe((routeData) => {
             this.title = 'error.title';
 
             if (routeData.error403) {
                 this.title = 'error.403.title';
                 this.detail = 'error.403.detail';
-            }
-
-            if (routeData.error404) {
-                this.title = 'error.404.title';
-                this.detail = 'error.404.detail';
             }
 
             if (routeData.nonExistentUser) {

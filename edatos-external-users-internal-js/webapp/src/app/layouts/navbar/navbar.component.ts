@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { VERSION } from '@app/app.constants';
 import { ConfigService } from '@app/config';
+import { Role } from '@app/core/model';
 import { LoginService, PermissionService, Principal, ProfileService } from '@app/core/service';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['navbar.component.scss']
+    styleUrls: ['navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-    inProduction: boolean;
-    isNavbarCollapsed: boolean;
-    modalRef: NgbModalRef;
-    version: string;
+    public inProduction: boolean;
+    public isNavbarCollapsed: boolean;
+    public version: string;
+    public login: string | undefined;
+    public isAdmin: boolean;
 
     constructor(
         private loginService: LoginService,
         public permissionService: PermissionService,
-        private principal: Principal,
+        public principal: Principal,
         private profileService: ProfileService,
         private configService: ConfigService
     ) {
@@ -26,28 +27,33 @@ export class NavbarComponent implements OnInit {
         this.isNavbarCollapsed = true;
     }
 
-    ngOnInit() {
+    public ngOnInit() {
         this.profileService.getProfileInfo().subscribe((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
         });
+
+        this.principal.identity().then((user) => {
+            this.login = user?.login;
+            this.isAdmin = user?.hasRole(Role.ADMINISTRADOR) ?? false;
+        });
     }
 
-    collapseNavbar() {
+    public collapseNavbar() {
         this.isNavbarCollapsed = true;
     }
 
-    isAuthenticated() {
+    public isAuthenticated() {
         return this.principal.isAuthenticated();
     }
 
-    logout() {
+    public logout() {
         this.collapseNavbar();
         this.loginService.logout();
         const config = this.configService.getConfig();
         window.location.href = config.cas.logout;
     }
 
-    toggleNavbar() {
+    public toggleNavbar() {
         this.isNavbarCollapsed = !this.isNavbarCollapsed;
     }
 
@@ -55,7 +61,7 @@ export class NavbarComponent implements OnInit {
         return Boolean(this.principal.correctlyLogged());
     }
 
-    public puedeNavegarAdministracion(): boolean {
-        return this.permissionService.puedeNavegarAdministracion();
+    public canNavigateAdminMenu(): boolean {
+        return this.permissionService.canNavigateAdminMenu();
     }
 }

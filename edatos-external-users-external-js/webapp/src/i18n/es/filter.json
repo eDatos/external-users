@@ -1,0 +1,32 @@
+{
+    "filter": {
+        "entity": {
+            "email": "Email",
+            "lastAccessDate": "Fecha de último acceso",
+            "createdDate": "Fecha de creación",
+            "name": "Nombre",
+            "notes": "Notas",
+            "permalink": "URL",
+            "owner": "Propietario"
+        },
+        "form": {
+            "cancel": "Cancelar",
+            "edit": "Editar",
+            "goBack": "Volver al listado",
+            "audit": "Auditoría",
+            "legend": "Detalles de la consulta personalizada",
+            "new": "Crear una nueva consulta personalizada",
+            "save": "Guardar",
+            "delete": "Eliminar"
+        },
+        "home": {
+            "createLabel": "Crear consulta personalizada",
+            "title": "Consultas personalizadas"
+        },
+        "list": {
+            "noFilterCreated": "Parece que todavía no has creado ninguna consulta",
+            "wouldYouLikeToCreateAFilter": "Puedes crearla desde cualquier visualización en el portal de datos"
+        },
+        "name": "Consulta personalizada"
+    }
+}

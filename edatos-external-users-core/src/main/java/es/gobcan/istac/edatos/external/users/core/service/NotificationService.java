@@ -1,10 +1,21 @@
 package es.gobcan.istac.edatos.external.users.core.service;
 
-import es.gobcan.istac.edatos.external.users.core.domain.OperationEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
+import es.gobcan.istac.edatos.external.users.core.domain.FavoriteEntity;
+
+import java.util.List;
+
+import org.siemac.metamac.rest.notices.v1_0.domain.Receivers;
 
 public interface NotificationService {
 
-    void createNotificationForPublishInternallyOperation(OperationEntity operation);
+    void createNewExternalUserAccountNotification(ExternalUserEntity externalUserEntity);
+    void createDeleteExternalUserAccountNotification(ExternalUserEntity externalUserEntity);
+    void createChangePasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity);
+    void createResetPasswordExternaluserAccountNotification(ExternalUserEntity externalUserEntity);
 
-    void createNotificationForPublishExternallyOperation(OperationEntity operation);
+    void createNoticeOfSusbcritionsJob(List<FavoriteEntity> listFavorites);
+
+    void createNotificationWithReceivers(String message, String subject, Receivers receivers);
+    Receivers createReceiversList(List<String> emails);
 }

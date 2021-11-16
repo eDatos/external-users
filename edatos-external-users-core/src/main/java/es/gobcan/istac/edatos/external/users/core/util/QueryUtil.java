@@ -2,6 +2,7 @@ package es.gobcan.istac.edatos.external.users.core.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.criterion.DetachedCriteria;
+import org.siemac.edatos.core.common.exception.EDatosException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -14,11 +15,13 @@ import com.arte.libs.grammar.antlr.QueryExprCompiler;
 import com.arte.libs.grammar.domain.QueryRequest;
 import com.arte.libs.grammar.orm.jpa.criteria.AbstractCriteriaProcessor;
 
-import es.gobcan.istac.edatos.external.users.core.service.criteria.FamilyCriteriaProcessor;
-import es.gobcan.istac.edatos.external.users.core.service.criteria.InstanceCriteriaProcessor;
-import es.gobcan.istac.edatos.external.users.core.service.criteria.NeedCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.errors.ServiceExceptionType;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.CategoryCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.ExternalOperationCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.ExternalUserCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.FavoriteCriteriaProcessor;
+import es.gobcan.istac.edatos.external.users.core.service.criteria.FilterCriteriaProcessor;
 import es.gobcan.istac.edatos.external.users.core.service.criteria.OperationCriteriaProcessor;
-import es.gobcan.istac.edatos.external.users.core.service.criteria.UsuarioCriteriaProcessor;
 
 @Component
 public class QueryUtil {
@@ -27,20 +30,25 @@ public class QueryUtil {
     private static final String INCLUDE_DELETED_HINT = "HINT INCLUDE_DELETED SET 'true'";
     private QueryExprCompiler queryExprCompiler = new QueryExprCompiler();
 
-    public DetachedCriteria queryToUserCriteria(Pageable pageable, String query) {
-        return queryToCriteria(pageable, query, new UsuarioCriteriaProcessor());
+    private final FilterCriteriaProcessor filterCriteriaProcessor;
+    private final CategoryCriteriaProcessor categoryCriteriaProcessor;
+    private final FavoriteCriteriaProcessor favoriteCriteriaProcessor;
+    private final ExternalOperationCriteriaProcessor externalOperationCriteriaProcessor;
+
+    public QueryUtil(FilterCriteriaProcessor filterCriteriaProcessor, CategoryCriteriaProcessor categoryCriteriaProcessor, FavoriteCriteriaProcessor favoriteCriteriaProcessor,
+            ExternalOperationCriteriaProcessor externalOperationCriteriaProcessor) {
+        this.filterCriteriaProcessor = filterCriteriaProcessor;
+        this.categoryCriteriaProcessor = categoryCriteriaProcessor;
+        this.favoriteCriteriaProcessor = favoriteCriteriaProcessor;
+        this.externalOperationCriteriaProcessor = externalOperationCriteriaProcessor;
+    }
+
+    public DetachedCriteria queryToUserExternalUserCriteria(Pageable pageable, String query) {
+        return queryToCriteria(pageable, query, new ExternalUserCriteriaProcessor());
     }
 
     public String queryIncludingDeleted(String query) {
         return new StringBuilder(query).append(" ").append(INCLUDE_DELETED_HINT).toString();
-    }
-
-    public DetachedCriteria queryToFamilyCriteria(Pageable pageable, String query) {
-        return queryToCriteria(pageable, query, new FamilyCriteriaProcessor());
-    }
-
-    public DetachedCriteria queryToFamilySortCriteria(Sort sort, String query) {
-        return queryToCriteria(sort, query, new FamilyCriteriaProcessor());
     }
 
     public DetachedCriteria queryToOperationCriteria(Pageable pageable, String query) {
@@ -49,14 +57,6 @@ public class QueryUtil {
 
     public DetachedCriteria queryToOperationSortCriteria(Sort sort, String query) {
         return queryToCriteria(sort, query, new OperationCriteriaProcessor());
-    }
-
-    public DetachedCriteria queryToInstanceCriteria(Pageable pageable, String query) {
-        return queryToCriteria(pageable, query, new InstanceCriteriaProcessor());
-    }
-
-    public DetachedCriteria queryToInstanceSortCriteria(Sort sort, String query) {
-        return queryToCriteria(sort, query, new InstanceCriteriaProcessor());
     }
 
     private String pageableSortToQueryString(Pageable pageable) {
@@ -92,13 +92,29 @@ public class QueryUtil {
     }
 
     private DetachedCriteria queryToCriteria(Pageable pageable, String query, AbstractCriteriaProcessor processor) {
-        String sortedQuery = pageableSortToQueryString(pageable);
-        return queryToCriteria(sortedQuery, query, processor);
+        try {
+            String sortedQuery = pageableSortToQueryString(pageable);
+            return queryToCriteria(sortedQuery, query, processor);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
+                // Catches a query/sort parameter that isn't recognized.
+                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+            }
+            throw ex;
+        }
     }
 
     private DetachedCriteria queryToCriteria(Sort sort, String query, AbstractCriteriaProcessor processor) {
-        String sortedQuery = sortToQueryString(sort);
-        return queryToCriteria(sortedQuery, query, processor);
+        try {
+            String sortedQuery = sortToQueryString(sort);
+            return queryToCriteria(sortedQuery, query, processor);
+        } catch (IllegalArgumentException ex) {
+            if (ex.getMessage().startsWith("Incorrect order property") || ex.getMessage().startsWith("Incorrect query property")) {
+                // Catches a query/sort parameter that isn't recognized.
+                throw new EDatosException(ServiceExceptionType.QUERY_NOT_SUPPORTED, getQueryParameter(ex));
+            }
+            throw ex;
+        }
     }
 
     private DetachedCriteria queryToCriteria(String sortedQuery, String query, AbstractCriteriaProcessor processor) {
@@ -118,12 +134,35 @@ public class QueryUtil {
         return processor.process(queryRequest);
     }
 
-    public DetachedCriteria queryToNeedCriteria(String query, Pageable pageable) {
-        return queryToCriteria(pageable, query, new NeedCriteriaProcessor());
+    public DetachedCriteria queryToFilterCriteria(String query, Pageable pageable) {
+        return queryToCriteria(pageable, query, filterCriteriaProcessor);
     }
 
-    public DetachedCriteria queryToNeedSortCriteria(String query, Sort sort) {
-        return queryToCriteria(sort, query, new NeedCriteriaProcessor());
+    public DetachedCriteria queryToFilterSortCriteria(String query, Sort sort) {
+        return queryToCriteria(sort, query, filterCriteriaProcessor);
     }
 
+    public DetachedCriteria queryToCategoryCriteria(String query, Pageable pageable) {
+        return queryToCriteria(pageable, query, categoryCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToCategorySortCriteria(String query, Sort sort) {
+        return queryToCriteria(sort, query, categoryCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToFavoriteCriteria(String query, Pageable pageable) {
+        return queryToCriteria(pageable, query, favoriteCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToExternalOperationCriteria(String query, Pageable pageable) {
+        return queryToCriteria(pageable, query, externalOperationCriteriaProcessor);
+    }
+
+    public DetachedCriteria queryToFavoriteSortCriteria(String query, Sort sort) {
+        return queryToCriteria(sort, query, favoriteCriteriaProcessor);
+    }
+
+    private String getQueryParameter(IllegalArgumentException ex) {
+        return StringUtils.substringBetween(ex.getMessage(), "Current: ", " Expected");
+    }
 }

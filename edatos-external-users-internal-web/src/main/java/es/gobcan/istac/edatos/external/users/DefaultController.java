@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
 import es.gobcan.istac.edatos.external.users.core.service.MetadataConfigurationService;
-import es.gobcan.istac.edatos.external.users.web.config.ApplicationProperties;
 
 @Controller
 public class DefaultController {
 
     @Autowired
-    private ApplicationProperties applicationProperties;
+    private MetadataProperties metadataProperties;
 
     @Autowired
     private MetadataConfigurationService metadataService;
@@ -32,7 +32,7 @@ public class DefaultController {
 
     @PostConstruct
     public void init() {
-        this.faviconUrl = metadataService.findProperty(applicationProperties.getMetadata().getMetamacFaviconUrlKey());
+        this.faviconUrl = metadataService.retrieveAppStyleFaviconUrl();
     }
 
     @RequestMapping(value = {"", "/index.html", "/**/{path:[^\\.]*}"})
@@ -40,8 +40,6 @@ public class DefaultController {
     public ModelAndView index(HttpServletRequest request) {
         log.debug("DefaultController: Contextpath = {}  ServletPath = {}", request.getContextPath(), request.getServletPath());
         Map<String, Object> model = new HashMap<>();
-        model.put("cas", applicationProperties.getCas());
-        model.put("endpoint", applicationProperties.getEndpoint());
         model.put("faviconUrl", this.faviconUrl);
 
         Map<String, Object> flashMap = (Map<String, Object>) RequestContextUtils.getInputFlashMap(request);

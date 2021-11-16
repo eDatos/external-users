@@ -13,22 +13,6 @@
 spring:
     jpa:
         show-sql: false
-    mail:
-        host: FILL_HOST
-        port: FILL_PORT
-        username: FILL_USER
-        password: FILL_PASS
-
-# ===================================================================
-# JHipster specific properties
-#
-# Full reference is available at: https://jhipster.github.io/common-application-properties/
-# ===================================================================
-
-jhipster:
-    mail: 
-        from: FILL_EMAIL
-        base-url: http://FILL_APPLICATION_URL 
 
 # ===================================================================
 # Application specific properties
@@ -43,19 +27,7 @@ environment:
                 username: FILL_ME
                 password: FILL_ME
 
-application:
-    metadata:
-        endpoint: FILL_ME
-    endpoint:
-        # Required: Aplication URL
-        app-url: FILL_APP_URL
-    cas:
-        endpoint: FILL_ENDPOINT_URL # Required: Cas Endpoint
-        service:  FILL_SERVICE_URL # Required: Aplication service
-        login: # Optional: Only change if needed (Leave empty for cas.enpoint + '/login')
-        logout: # Optional: Only change if needed(Leave empty for cas.enpoint + '/logout')
-
-# ===================================================================        
+# ===================================================================
 # Application debug properties
 #
 # Uncomment if debug mode needed

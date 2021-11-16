@@ -1,43 +1,40 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { PageTitleService } from '@app/core/service';
+import { filter, map } from 'rxjs/operators';
 import { ERROR_ALERT_KEY } from './app.constants';
-import { ConfigService } from './config';
+import 'reflect-metadata';
 
-declare const MetamacNavBar;
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
     public errorAlertKey = ERROR_ALERT_KEY;
 
-    constructor(private configService: ConfigService) { }
+    constructor(private pageTitleService: PageTitleService, private router: Router) {}
 
-    ngOnInit() {
-        const navbarScriptUrl = this.configService.getConfig().metadata.navbarScriptUrl;
-        this.loadScript(`${navbarScriptUrl}/js/metamac-navbar.js`)
-            .then(
-                _ => {
-                    MetamacNavBar.loadNavbar({
-                        element: 'metamac-navbar'
-                    });
-                },
-                (err) => {
-                    // TODO: preguntar qué hacer;
-                    console.error('Error al obtener el navbar', err);
-                })
+    public ngOnInit() {
+        this.router.events
+            .pipe(
+                filter((event) => event instanceof NavigationEnd),
+                map(() => this.router)
+            )
+            .subscribe((_) => {
+                const titleKey = this.getTitle(this.router.routerState, this.router.routerState.root).join(' - ');
+                this.pageTitleService.update(titleKey);
+            });
     }
 
-    private loadScript(dynamicScript) {
-        return new Promise((resolve, reject) => {
-            const scriptEle = document.createElement('script');
-            scriptEle.onload = resolve;
-            scriptEle.onerror = reject;
-            scriptEle.src = dynamicScript;
-            scriptEle.type = 'text/javascript';
-            scriptEle.async = false;
-            scriptEle.charset = 'utf-8';
-            document.getElementsByTagName('head')[0].appendChild(scriptEle);
-        })
-        
+    private getTitle(state, parent) {
+        const data: string[] = [];
+        if (parent?.snapshot.data?.pageTitle) {
+            data.push(parent.snapshot.data.pageTitle);
+        }
+
+        if (state && parent) {
+            data.push(...this.getTitle(state, state.firstChild(parent)));
+        }
+        return data;
     }
 }

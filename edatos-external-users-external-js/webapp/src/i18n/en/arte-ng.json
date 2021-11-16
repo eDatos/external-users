@@ -1,0 +1,76 @@
+{
+    "arte": {
+        "file-upload": {
+            "choose": "Choose",
+            "upload": "Upload",
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "invalidFileSizeMessageSummary": "{0}: Invalid size",
+            "invalidFileSizeMessageDetail": "el tamaño máximo es {0}.",
+            "invalidFileTypeMessageSummary": "{0}: Invalid file type, ",
+            "invalidFileTypeMessageDetail": "tipos de documento permitidos: {0}.",
+            "download": "Download",
+            "filename": "File name",
+            "emptyFileList": "No files are uploaded",
+            "filesToUpload": "Files to upload",
+            "noUploadPending": "No files to upload",
+            "maxFileSizeExceeded": "Files of more than {{0}} MB."
+        },
+        "entity-list-empty": {
+            "sorry": "We're sorry.",
+            "detail": "No results have been obtained that meet the search criteria."
+        },
+        "input": {
+            "placeholder": "Enter the desired text"
+        },
+        "input-number": {
+            "placeholder": "Enter the desired number"
+        },
+        "input-text": {
+            "placeholder": "Enter the desired text"
+        },
+        "autocomplete-long-list": {
+            "placeholder": "Start typing to suggest results"
+        },
+        "autocomplete": {
+            "emptyMessage": "No results have been obtained that meet the search criteria.",
+            "placeholder": "Select one of the available options",
+            "createNewItem": "(Add new)"
+        },
+        "calendar": {
+            "placeholder": "Select the desired date in the calendar"
+        },
+        "multi-input": {
+            "placeholder": "Write the value and press enter to add it"
+        },
+        "tri-input-switch": {
+            "yes": "Yes",
+            "no": "No"
+        },
+        "form-control-status": {
+            "error-messages": {
+                "required": "This field is mandatory.",
+                "minlength": "This field requires at least {{requiredLength}} characters.",
+                "maxlength": "This field cannot exceed more than {{max}} characters.",
+                "min": "This field should be larger than {{min}}.",
+                "max": "This field cannot be greater than {{max}}.",
+                "minbytes": "This field must have at least {{min}} bytes.",
+                "maxbytes": "This field can not have more than {{max}} bytes.",
+                "pattern": "This field should follow the pattern {{pattern}}.",
+                "number": "This field should be a number.",
+                "datetimelocal": "This field should be a date and time.",
+                "ZonedDateTimelocal": "This field should be a date and time.",
+                "not-valid": "The value of this field is invalid",
+                "passwordMatch": "Make sure your passwords match",
+                "email": "Your email address is not valid.",
+                "passwordNotMatch": "Current password and new password cannot be the same"
+            }
+        },
+        "alert-service": {
+            "entities": {}
+        },
+        "arte-table-count": {
+            "itemCount": "{{itemFirst}} - {{itemLast}} of {{total}}"
+        }
+    }
+}

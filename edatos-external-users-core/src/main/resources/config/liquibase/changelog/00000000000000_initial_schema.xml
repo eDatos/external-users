@@ -8,7 +8,6 @@
     <property name="now" value="current_timestamp" dbms="postgresql" />
 
     <changeSet id="00000000000000" author="arte">
-        <createSequence sequenceName="hibernate_sequence" startValue="1000" incrementBy="50" />
         <createSequence sequenceName="seq_tb_usuarios" startValue="1" incrementBy="50" />
         <createSequence sequenceName="seq_admin_audit_event" startValue="1" incrementBy="50" />
     </changeSet>
@@ -101,6 +100,8 @@
 
         <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="admin_audit_event_data" constraintName="fk_admin_audit_event_data_admin_audit_event_event_id"
             referencedColumnNames="event_id" referencedTableName="admin_audit_event" />
+
+        <addUniqueConstraint columnNames="login" constraintName="UC_TB_USUARIOSLOGIN_COL" tableName="tb_usuarios" />
     </changeSet>
 
 </databaseChangeLog>

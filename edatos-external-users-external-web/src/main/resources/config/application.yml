@@ -36,25 +36,14 @@ spring:
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
-# spring.jmx.default-domain y spring.hikari.pool-name evitan que al levantar dos aplicaciones con un spring boot similar al template
-# (con beans de jmx configurado) la primera registre sus beans impidiendo a las siguientes registrar los suyos
+    # spring.jmx.default-domain y spring.hikari.pool-name evitan que al levantar dos aplicaciones con un spring boot similar al template
+    # (con beans de jmx configurado) la primera registre sus beans impidiendo a las siguientes registrar los suyos
     jmx:
         default-domain: edatos_external_users
     hikari:
         pool-name: edatos_external_users_pool
-    mail:
-        host: FILL_HOST
-        port: 000
-        username: FILL_USER
-        password: FILL_PASS
-        protocol: smtp
-        tls: true
-        properties.mail.smtp:
-            auth: true
-            starttls.enable: true
-            ssl.trust: smtp.gmail.com
     messages:
-        basename: i18n/messages-external-users, i18n/messages-common, i18n/messages-rest-common, messages-rest-operations
+        basename: i18n/messages-external_users, i18n/messages-common, i18n/messages-rest-common
     mvc:
         favicon:
             enabled: false
@@ -124,8 +113,8 @@ jhipster:
         core-pool-size: 2
         max-pool-size: 50
         queue-capacity: 10000
-    # By default CORS is disabled. Uncomment to enable.
-    #cors:
+        # By default CORS is disabled. Uncomment to enable.
+        #cors:
         #allowed-origins: "*"
         #allowed-methods: GET, PUT, POST, DELETE, OPTIONS
         #allowed-headers: "*"
@@ -136,9 +125,6 @@ jhipster:
         version: V_1_1 # To use HTTP/2 you will need SSL support (see above the "server.ssl" configuration)
         cache: # Used by the CachingHttpHeadersFilter
             timeToLiveInDays: 1461
-    mail: # specific JHipster mail property, for standard properties see MailProperties
-        from: edatos_external_users@localhost
-        base-url: http://my-server-url-to-change # Modify according to your server's URL
 
 # ===================================================================
 # Change log levels
@@ -147,3 +133,13 @@ jhipster:
 logging:
     level:
         org.hibernate.orm.deprecation: ERROR
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here
+# ===================================================================
+
+application:
+    jobs:
+        cron:
+            enabledTokens: 0 0 4 * * *

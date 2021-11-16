@@ -1,6 +1,9 @@
 package es.gobcan.istac.edatos.external.users.core.domain.vo;
 
-public class LocalisedStringVO {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class LocalisedStringVO implements Serializable {
 
     String label;
     String locale;
@@ -30,7 +33,24 @@ public class LocalisedStringVO {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof LocalisedStringVO)) {
+            return false;
+        }
+        LocalisedStringVO that = (LocalisedStringVO) o;
+        return Objects.equals(label, that.label) && Objects.equals(locale, that.locale);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(label, locale);
+    }
+
+    @Override
     public String toString() {
-        return "LocalisedStringVO [label=" + label + ", locale=" + locale + "]";
+        return locale + ": " + label;
     }
 }

@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { HasTitlesContainer } from 'arte-ng';
 
 import { ConfigurationService } from './configuration.service';
-import { HasTitlesContainer } from 'arte-ng';
 
 @Component({
     selector: 'app-configuration',
-    templateUrl: './configuration.component.html'
+    templateUrl: './configuration.component.html',
 })
 export class ConfigurationComponent implements OnInit, HasTitlesContainer {
     allConfiguration: any = [];
