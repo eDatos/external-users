@@ -53,10 +53,10 @@ public class ExternalUserServiceImpl implements ExternalUserService {
         externalUserValidator.checkEmailEnUso(user);
         return externalUserRepository.saveAndFlush(user);
     }
-    
+
     @Override
     public void logout(String token) {
-        if(StringUtils.isNotBlank(token)) {
+        if (StringUtils.isNotBlank(token)) {
             if (token.startsWith("Bearer ")) {
                 token = token.substring(7, token.length());
             }
@@ -64,11 +64,11 @@ public class ExternalUserServiceImpl implements ExternalUserService {
             Base64.Decoder decoder = Base64.getDecoder();
 
             String payload = new String(decoder.decode(chunks[1]));
-            
+
             JSONObject obj = new JSONObject(payload);
-            
+
             Instant expirationDate = Instant.ofEpochSecond(obj.getLong("exp"));
-            if(Instant.now().isBefore(expirationDate)) {
+            if (Instant.now().isBefore(expirationDate)) {
                 DisabledTokenEntity disabledToken = new DisabledTokenEntity(token, expirationDate);
                 disabledTokenRepository.save(disabledToken);
             }
@@ -92,7 +92,6 @@ public class ExternalUserServiceImpl implements ExternalUserService {
     @Override
     public void delete(Long id) {
         ExternalUserEntity usuario = externalUserRepository.findOneByIdAndDeletionDateIsNull(id).orElseThrow(() -> new EDatosException(ServiceExceptionType.EXTERNAL_USER_DELETED));
-        // TODO EDATOS-3338 Is pending confirm if delete is logical or complete
 
         filterRepository.deleteAllByExternalUser(usuario);
         externalUserRepository.delete(id);
