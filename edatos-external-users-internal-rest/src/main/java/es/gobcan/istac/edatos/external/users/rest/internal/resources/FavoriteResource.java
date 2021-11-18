@@ -92,6 +92,9 @@ public class FavoriteResource extends AbstractResource {
         List<FavoriteEntity> entities = favoriteMapper.toEntities(dto);
         entities = favoriteService.updateFavorites(entities, this.externalUserService.find(externalUserId));
         List<FavoriteDto> dtos = favoriteMapper.toDtos(entities);
+        for (FavoriteDto favorite : dtos) {
+            auditPublisher.publish(AuditConstants.FAVORITE_EDITION, favorite.getId().toString());
+        }
         return ResponseEntity.ok(dtos);
     }
 
