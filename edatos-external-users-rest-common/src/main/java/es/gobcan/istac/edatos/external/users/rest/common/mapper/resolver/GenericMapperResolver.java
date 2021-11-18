@@ -20,7 +20,7 @@ public class GenericMapperResolver {
         try {
             return (dto != null && dto.getId() != null) ? em.find(type, dto.getId()) : type.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
-            throw new RuntimeException(e); // TODO EDATOS-3124 Miguel check this!
+            throw new GenericMapperExcetion("Unexpected error when mapping the entity " + type.getName(), e);
         }
     }
 
