@@ -13,29 +13,6 @@ public class StatisticalOperationsCheckTranslationsTest extends CheckTranslation
     // MORE TESTS
     // ----------------------------------------------------------------------------------------
 
-    // TODO EDATOS-3131
-    // @Test
-    // public void testCheckExistsAllTranslationsForServiceNoticeActions() throws Exception {
-    // checkExistsAllTranslationsForStrings(getServiceNoticeActionClasses(), getLocalesToTranslate());
-    // }
-    //
-    //
-    // @SuppressWarnings("rawtypes")
-    // public Class[] getServiceNoticeActionClasses() {
-    // return new Class[]{ServiceNoticeAction.class};
-    // }
-    //
-    // @Test
-    // public void testCheckExistsAllTranslationsForServiceNoticeMessages() throws Exception {
-    // checkExistsAllTranslationsForStrings(getServiceNoticeMessagesClasses(), getLocalesToTranslate());
-    // }
-    //
-    //
-    // @SuppressWarnings("rawtypes")
-    // public Class[] getServiceNoticeMessagesClasses() {
-    // return new Class[]{ServiceNoticeMessage.class};
-    // }
-
     // ----------------------------------------------------------------------------------------
     // OVERRIDE METHODS
     // ----------------------------------------------------------------------------------------
