@@ -95,11 +95,6 @@ export class FilterFormComponent implements OnInit {
         this.loadExternalUsersList(event);
     }
 
-    public getVisualizerPath(): string {
-        const config = this.configService.getConfig();
-        return config.metamac.visualizerPath;
-    }
-
     private loadExternalUsersList(event?) {
         this.externalUserService.find(event ? { query: `NAME ILIKE '%${event.query}%' OR EMAIL ILIKE '%${event.query}%'` } : undefined).subscribe((results) => {
             this.externalUserList = results.body;

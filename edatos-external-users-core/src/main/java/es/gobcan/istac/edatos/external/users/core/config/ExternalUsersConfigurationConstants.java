@@ -13,6 +13,8 @@ public final class ExternalUsersConfigurationConstants extends ConfigurationCons
 
     public static final String CRON_EXPRESSION_SEND_NOTICE_JOB = "metamac.edatos_external_users.rest.internal.job.send_notice.cron_expression";
 
+    public static final String VISUALIZER_PATH = "metamac.edatos_external_users.web.visualizer_path";
+
     private ExternalUsersConfigurationConstants() {
 
     }

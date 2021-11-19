@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import es.gobcan.istac.edatos.external.users.core.config.MetadataProperties;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalUserEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.FilterEntity;
@@ -24,8 +25,12 @@ public abstract class FilterMapper implements EntityMapper<FilterDto, FilterEnti
     @Autowired
     private ExternalOperationRepository externalOperationRepository;
 
+    @Autowired
+    private MetadataProperties metadataProperties;
+
     @Override
     @Mapping(target = "resourceName", ignore = true)
+    @Mapping(target = "urlPermalink", source = "permalink", qualifiedByName = "getUrlPermalink")
     public abstract FilterDto toDto(FilterEntity entity);
 
     /**
@@ -33,11 +38,10 @@ public abstract class FilterMapper implements EntityMapper<FilterDto, FilterEnti
      * this case, mapstruct will generate the next piece of code:
      *
      * <pre>
-     * if ( dto.getName() != null ) {
-     *     filterEntity.setName( dto.getName() );
-     * }
-     * else {
-     *     filterEntity.setName( dto.getResourceName() );
+     * if (dto.getName() != null) {
+     *     filterEntity.setName(dto.getName());
+     * } else {
+     *     filterEntity.setName(dto.getResourceName());
      * }
      * </pre>
      */
@@ -53,6 +57,14 @@ public abstract class FilterMapper implements EntityMapper<FilterDto, FilterEnti
     @Mapping(target = "externalUser", source = "externalUser.id", qualifiedByName = "externalUserFromId")
     @Mapping(target = "externalOperation", source = "externalOperationCode", qualifiedByName = "externalOperationFromCode")
     public abstract FilterEntity toEntity(FilterWithOperationCodeDto dto);
+
+    @Named("getUrlPermalink")
+    public String getUrlPermalink(String permalink) {
+        if (permalink == null) {
+            return null;
+        }
+        return metadataProperties.getVisualizerPath() + permalink;
+    }
 
     @Named("externalUserFromId")
     public ExternalUserEntity externalUserFromId(Long id) {

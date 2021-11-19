@@ -39,4 +39,9 @@ public class MetadataConfigurationServiceImpl extends ConfigurationServiceImpl i
     public String retrieveCronExpressionSendNoticeJob() throws EDatosException {
         return retrieveProperty(ExternalUsersConfigurationConstants.CRON_EXPRESSION_SEND_NOTICE_JOB);
     }
+
+    @Override
+    public String retrieveVizualizerPath() throws EDatosException {
+        return retrieveProperty(ExternalUsersConfigurationConstants.VISUALIZER_PATH);
+    }
 }
