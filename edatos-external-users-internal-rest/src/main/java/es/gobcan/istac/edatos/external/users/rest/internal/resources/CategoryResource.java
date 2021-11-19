@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
+import es.gobcan.istac.edatos.external.users.core.config.AuditConstants;
+import es.gobcan.istac.edatos.external.users.core.config.audit.AuditEventPublisher;
 import es.gobcan.istac.edatos.external.users.core.domain.CategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalCategoryEntity;
 import es.gobcan.istac.edatos.external.users.core.domain.ExternalOperationEntity;
@@ -49,17 +51,22 @@ public class CategoryResource extends AbstractResource {
     private final ExternalCategoryMapper externalCategoryMapper;
     private final ExternalOperationService externalOperationService;
     private final FavoriteService favoriteService;
+    private final AuditEventPublisher auditPublisher;
 
-    // TODO(EDATOS-3357): Add audits
-
-    public CategoryResource(CategoryService categoryService, CategoryMapper categoryMapper, ExternalCategoryService externalCategoryService, ExternalCategoryMapper externalCategoryMapper,
-            ExternalOperationService externalOperationService, FavoriteService favoriteService) {
+    public CategoryResource(CategoryService categoryService,
+        CategoryMapper categoryMapper,
+        ExternalCategoryService externalCategoryService,
+        ExternalCategoryMapper externalCategoryMapper,
+        ExternalOperationService externalOperationService,
+        FavoriteService favoriteService,
+        AuditEventPublisher auditPublisher) {
         this.categoryService = categoryService;
         this.categoryMapper = categoryMapper;
         this.externalCategoryService = externalCategoryService;
         this.externalCategoryMapper = externalCategoryMapper;
         this.externalOperationService = externalOperationService;
         this.favoriteService = favoriteService;
+        this.auditPublisher = auditPublisher;
     }
 
     @GetMapping("/{id}")
@@ -117,6 +124,7 @@ public class CategoryResource extends AbstractResource {
     @PreAuthorize("@secChecker.canDeleteCategory(authentication)")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         categoryService.delete(id);
+        auditPublisher.publish(AuditConstants.CATEGORY_DELETE, id.toString());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }

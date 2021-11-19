@@ -104,7 +104,3 @@ solucionar este problema hubo intentos de monkey-patching, pero sin éxito.
 
 Hasta que no haya nuevas versiones de `avro-python3` o `confluent-kafka` que solucionen este problema, el consumidor de
 Kafka no funciona con enums (y por tanto, no funciona con los esquemas Avro de operaciones y datasets).
-
-## Referencias útiles
-
-- Conectarse al Kafka de demo estadísticas: TODO.

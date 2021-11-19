@@ -39,6 +39,10 @@ public final class AuditConstants {
     public static final String FAVORITE_EDITION = "FAVORITE_EDITION";
     public static final String FAVORITE_DELETION = "FAVORITE_DELETION";
 
+    public static final String EXTERNAL_OPERATION_EDITION = "EXTERNAL_OPERATION_EDITION";
+
+    public static final String CATEGORY_DELETE = "CATEGORY_DELETE";
+
     private AuditConstants() {
     }
 }

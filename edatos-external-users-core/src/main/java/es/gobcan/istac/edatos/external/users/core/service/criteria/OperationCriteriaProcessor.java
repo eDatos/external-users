@@ -43,7 +43,8 @@ public class OperationCriteriaProcessor extends AbstractCriteriaProcessor {
                 .withEntityProperty(ExternalOperationEntity.Properties.CODE)
                 .build());
 
-        // TODO(EDATOS-3294): Criteria processors don't work with json/jsonb fields.
+        // Criteria processors don't work with json/jsonb fields.
+        // This is addressed on LLCC-313.
         registerOrderProcessor(
                 OrderProcessorBuilder.orderProcessor()
                 .withQueryProperty(QueryProperty.NAME)
