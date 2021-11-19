@@ -74,7 +74,6 @@ public class ExternalUserResource extends AbstractResource {
         }
 
         if (externalUserRepository.findOneByEmail(externalUser.getEmail().toLowerCase()).isPresent()) {
-            // TODO(EDATOS-3278): Create a particular exception for this case.
             return ResponseEntity.status(HttpStatus.CONFLICT).headers(HeaderUtil.createFailureAlert(ENTITY_NAME, ErrorConstants.USUARIO_EXISTE, ErrorMessagesConstants.USUARIO_EXISTE)).body(null);
         }
 
