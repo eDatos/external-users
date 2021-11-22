@@ -53,8 +53,6 @@ public class FilterResource extends AbstractResource {
 
     private final LoginValidator loginValidator;
 
-    private static final String PERMALINK_PATH = "https://visualizer/data.html?permalink=";
-
     public FilterResource(FilterService filterService, FilterMapper filterMapper, AuditEventPublisher auditPublisher, LoginValidator loginValidator) {
         this.filterService = filterService;
         this.filterMapper = filterMapper;
@@ -71,10 +69,6 @@ public class FilterResource extends AbstractResource {
             loginValidator.checkUserAuthenticated(filterDto.getExternalUser().getEmail());
         }
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(filterDto));
-    }
-
-    private String getPermalinkUrl(String permalink) {
-        return PERMALINK_PATH + permalink;
     }
 
     @GetMapping
@@ -117,7 +111,7 @@ public class FilterResource extends AbstractResource {
         auditPublisher.publish(AuditConstants.FILTER_EDITION, newDto.getExternalUser().getId().toString());
         return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, newDto.getId().toString())).body(newDto);
     }
-    
+
     @PutMapping("/last-access/{permalink}")
     @Timed
     public ResponseEntity<Void> updateFilterLastAccess(@PathVariable String permalink) {
@@ -125,11 +119,11 @@ public class FilterResource extends AbstractResource {
         if (filters == null || filters.size() == 0) {
             throw new EDatosException(CommonServiceExceptionType.PARAMETER_INCORRECT, "permalink");
         }
-        
+
         Instant now = Instant.now();
         filters.stream().forEach(filter -> filter.setLastAccessDate(now));
         List<FilterDto> newDtos = filterMapper.toDtos(filterService.update(filters));
-        
+
         List<String> ids = newDtos.stream().map(dto -> dto.getId().toString()).collect(Collectors.toList());
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, String.join(",", ids))).build();
     }

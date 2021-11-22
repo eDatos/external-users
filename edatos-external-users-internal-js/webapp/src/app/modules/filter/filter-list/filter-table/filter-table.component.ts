@@ -91,9 +91,4 @@ export class FilterTableComponent implements OnInit {
         this.filterAmount = response.totalCount();
         this.filters = response.body;
     }
-
-    public getVisualizerPath(): string {
-        const config = this.configService.getConfig();
-        return config.metamac.visualizerPath;
-    }
 }
