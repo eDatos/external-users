@@ -41,6 +41,8 @@ public class MetadataProperties {
     private String internalAppUrl;
     private String casService;
 
+    private String visualizerPath;
+
     @PostConstruct
     public void setValues() {
         try {
@@ -57,6 +59,7 @@ public class MetadataProperties {
             externalAppUrl = normalizeUrl(configurationService.retrieveExternalUsersExternalWebApplicationUrlBase());
             internalAppUrl = normalizeUrl(configurationService.retrieveExternalUsersInternalWebApplicationUrlBase());
             casService = internalAppUrl + "/login/cas";
+            visualizerPath = configurationService.retrievePortalExternalWebApplicationUrlVisualizer();
             defaultLanguage = availableLanguages.get(0);
         } catch (Exception e) {
             log.error("Error getting the value of a metadata {}", e);
@@ -122,5 +125,9 @@ public class MetadataProperties {
 
     private String normalizeUrl(String url) {
         return StringUtils.removeEnd(url, "/");
+    }
+
+    public String getVisualizerPath() {
+        return visualizerPath;
     }
 }

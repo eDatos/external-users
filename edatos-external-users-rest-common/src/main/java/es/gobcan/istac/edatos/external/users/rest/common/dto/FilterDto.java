@@ -15,6 +15,7 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
     private String resourceName;
     private ExternalUserDto externalUser;
     private String permalink;
+    private String urlPermalink;
     private Instant lastAccessDate;
     private String notes;
     private ExternalOperationDto externalOperation;
@@ -83,5 +84,13 @@ public class FilterDto extends AbstractVersionedAndAuditingDto implements Serial
 
     public void setExternalOperation(ExternalOperationDto externalOperation) {
         this.externalOperation = externalOperation;
+    }
+
+    public String getUrlPermalink() {
+        return urlPermalink;
+    }
+
+    public void setUrlPermalink(String urlPermalink) {
+        this.urlPermalink = urlPermalink;
     }
 }
