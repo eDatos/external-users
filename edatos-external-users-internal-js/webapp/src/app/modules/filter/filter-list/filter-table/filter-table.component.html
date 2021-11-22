@@ -10,7 +10,7 @@
     <ng-template pTemplate="body" let-filter>
         <tr [routerLink]="['/filter', filter.id]">
             <td>{{filter.name}}</td>
-            <td><a href="{{filter.urlPermalink}}" target="_blan">{{filter.urlPermalink}}</a></td>
+            <td><a href="{{filter.urlPermalink}}" target="_blank">{{filter.urlPermalink}}</a></td>
             <td>{{filter.lastAccessDate | date: 'd/M/yyyy H:mm:ss' }}</td>
         </tr>
     </ng-template>
