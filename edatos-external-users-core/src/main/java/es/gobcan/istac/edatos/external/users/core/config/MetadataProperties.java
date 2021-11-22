@@ -59,7 +59,7 @@ public class MetadataProperties {
             externalAppUrl = normalizeUrl(configurationService.retrieveExternalUsersExternalWebApplicationUrlBase());
             internalAppUrl = normalizeUrl(configurationService.retrieveExternalUsersInternalWebApplicationUrlBase());
             casService = internalAppUrl + "/login/cas";
-            visualizerPath = configurationService.retrieveVizualizerPath();
+            visualizerPath = configurationService.retrievePortalExternalWebApplicationUrlVisualizer();
             defaultLanguage = availableLanguages.get(0);
         } catch (Exception e) {
             log.error("Error getting the value of a metadata {}", e);

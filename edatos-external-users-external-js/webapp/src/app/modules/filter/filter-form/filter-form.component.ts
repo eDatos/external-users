@@ -35,11 +35,6 @@ export class FilterFormComponent implements OnInit {
         this.account = this.activatedRoute.snapshot.data.user;
     }
 
-    public getVisualizerPath(): string {
-        const config = this.configService.getConfig();
-        return config.metamac.visualizerPath;
-    }
-
     public toggleEditMode(): void {
         this.inEditMode = !this.inEditMode;
     }

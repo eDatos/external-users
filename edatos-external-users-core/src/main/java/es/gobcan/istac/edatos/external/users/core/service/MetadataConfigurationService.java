@@ -16,6 +16,4 @@ public interface MetadataConfigurationService extends ConfigurationService {
     String retrieveBaseUrl() throws EDatosException;
 
     String retrieveCronExpressionSendNoticeJob() throws EDatosException;
-
-    String retrieveVizualizerPath() throws EDatosException;
 }
